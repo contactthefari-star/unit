@@ -1,0 +1,10 @@
+# Secrets / clés — JAMAIS commités
+.env
+.env.*
+*.local
+
+# Système
+.DS_Store
+
+# Dépendances (si un jour on ajoute un build)
+node_modules/
