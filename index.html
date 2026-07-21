@@ -158,6 +158,21 @@ button{font-family:inherit;cursor:pointer}
 .comtot .v{font-family:'Fraunces';font-size:16px;font-weight:600}
 .comtot .l{font-size:9px;color:var(--ink2);text-transform:uppercase;letter-spacing:.8px;margin-top:3px;font-weight:700}
 /* ACADEMY */
+/* NOTES FORMATION */
+.note{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:10px}
+.note .nhd{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.note .ntt{font-weight:600;font-size:14.5px;line-height:1.25}
+.note .ndt{font-size:11px;color:var(--ink2);margin-top:3px}
+.note .nact{display:flex;gap:4px;flex-shrink:0}
+.note .nact button{background:none;border:none;color:var(--ink3);font-size:14px;cursor:pointer;padding:2px 4px;line-height:1}
+.note .nbody{font-size:13px;color:var(--ink);margin:8px 0 4px;white-space:pre-wrap;line-height:1.4}
+.note img.nph{width:100%;max-height:220px;object-fit:cover;border-radius:11px;margin:9px 0 4px;cursor:pointer;display:block}
+.ntask{display:flex;align-items:center;gap:9px;padding:6px 0}
+.ntask .ck{width:20px;height:20px;border:1.5px solid var(--line2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;flex-shrink:0;color:#fff}
+.ntask.done .ck{background:var(--olive);border-color:var(--olive)}
+.ntask.done .tt{text-decoration:line-through;color:var(--ink3)}
+.ntask .tt{font-size:13px;flex:1;line-height:1.3}
+.ntask .del{color:var(--ink3);cursor:pointer;font-size:12px;padding:0 2px}
 .xpcard{background:linear-gradient(135deg,var(--bronze),var(--orange));color:#fff;border-radius:20px;padding:19px;box-shadow:0 10px 30px rgba(232,100,27,.28);margin-bottom:15px}
 .xpcard .lv{font-family:'Fraunces';font-size:12px;letter-spacing:1px;opacity:.9;text-transform:uppercase}.xpcard .lvn{font-family:'Fraunces';font-size:32px;font-weight:600;line-height:1;margin-top:4px}
 .xpbar{height:9px;background:rgba(255,255,255,.28);border-radius:6px;overflow:hidden;margin-top:13px}.xpbar i{display:block;height:100%;background:#fff;border-radius:6px;transition:.6s}
@@ -284,6 +299,11 @@ input.in:focus,select.in:focus,textarea.in:focus{outline:none;border-color:var(-
   <div class="xpcard"><div class="lv">Niveau UNIT</div><div class="lvn" id="axLvl">1</div><div class="xpbar"><i id="axBar" style="width:0%"></i></div><div class="xpmeta"><span id="axXp">0 XP</span><span id="axNext"></span></div></div>
   <div class="kicker">Ta lecture du jour</div>
   <div class="todcard"><div class="inner"><span class="tag2" id="todTag">Module</span><h2 id="todTitle">…</h2><div class="meta" id="todMeta"></div><button class="go" id="todGo">Lire le module →</button></div></div>
+  <div class="kicker">📓 Après la vidéo — notes & actions</div>
+  <div class="card">
+    <button class="btn sm orange" onclick="openNoteEditor()" style="width:100%">＋ Nouvelle note de formation</button>
+    <div id="noteList" style="margin-top:12px"></div>
+  </div>
   <div class="kicker">💡 Idées de contenu</div>
   <div class="card">
     <div style="display:flex;gap:8px"><input class="in" id="ideaIn" placeholder="Idée de vidéo, post, hook..." style="flex:1"><button class="btn sm orange" onclick="addIdea()">＋</button></div>
@@ -325,7 +345,7 @@ input.in:focus,select.in:focus,textarea.in:focus{outline:none;border-color:var(-
 
 <script>
 /* ================= STORAGE ================= */
-const DEF={counts:{},daily:{},journal:{},debriefs:[],leads:[],comms:[],ideas:[],events:[],hidden:{},reschedule:[],academy:{done:[],xp:0},prio:{week:'',bilan:''},objectives:{aT:100,aA:100,convs:40,rdv:8,ventes:2,contenu:5}};
+const DEF={counts:{},daily:{},journal:{},debriefs:[],leads:[],comms:[],ideas:[],notes:[],events:[],hidden:{},reschedule:[],academy:{done:[],xp:0},prio:{week:'',bilan:''},objectives:{aT:100,aA:100,convs:40,rdv:8,ventes:2,contenu:5}};
 let S=JSON.parse(JSON.stringify(DEF));
 const K=k=>'unitA:'+k;
 async function loadAll(){for(const k of Object.keys(DEF)){try{const r=await window.storage.get(K(k));if(r&&r.value){const v=JSON.parse(r.value);S[k]=Array.isArray(DEF[k])?v:(typeof DEF[k]==='object'?Object.assign(JSON.parse(JSON.stringify(DEF[k])),v):v);}}catch(e){}}}
@@ -642,7 +662,7 @@ function renderAcademy(){renderAcademyHead();
  $('todTitle').textContent=td.ti;$('todTag').textContent='Module · '+td.mins+' min';$('todMeta').textContent=DOMAINS[td.d].icon+' '+DOMAINS[td.d].name+' · '+td.book+(isDone(td.id)?' · validé ✓':'');$('todGo').onclick=()=>openModule(td.id);
  $('domGrid').innerHTML=DORDER.map(d=>{const mods=MODS.filter(x=>x.d===d);const done=mods.filter(x=>isDone(x.id)).length;const o=DOMAINS[d];
   return `<button class="dom" onclick="openDomain('${d}')"><div class="di" style="background:${o.bg}">${o.icon}</div><div class="dn">${o.name}</div><div class="dp">${done}/${mods.length} modules</div><div class="dbar"><i style="width:${mods.length?done/mods.length*100:0}%;background:${o.fg}"></i></div></button>`;}).join('');
- renderIdeas();}
+ renderIdeas();renderNotes();}
 function openDomain(d){const o=DOMAINS[d];const mods=MODS.filter(x=>x.d===d);
  $('modal').innerHTML=`<div class="modal-h"><h3>${o.icon} ${o.name}</h3><button class="x" onclick="closeWF()">✕</button></div>`+mods.map(x=>`<div class="slot" onclick="openModule('${x.id}')"><div class="si">${isDone(x.id)?'✓':'📖'}</div><div class="sb"><div class="st">${x.ti}</div><div class="ss">${x.book} · ${x.mins} min${isDone(x.id)?' · validé':''}</div></div><span style="color:var(--ink3)">›</span></div>`).join('');
  $('ov').classList.add('on');}
@@ -665,6 +685,45 @@ function valMod(id){if(!isDone(id)){S.academy.done.push(id);awardXP(15);}save('a
 function addIdea(){const v=$('ideaIn').value.trim();if(!v)return;S.ideas.unshift({id:Date.now(),t:v,done:false,d:today()});save('ideas');$('ideaIn').value='';renderIdeas();toast('💡 Idée notée');}
 function renderIdeas(){const el=$('ideaList');if(!el)return;
  el.innerHTML=S.ideas.length?S.ideas.map(i=>`<div class="idea ${i.done?'done':''}"><div class="ck" onclick="const x=S.ideas.find(y=>y.id===${i.id});x.done=!x.done;save('ideas');renderIdeas()">${i.done?'✓':''}</div><div class="ib"><div class="it">${esc(i.t)}</div><div class="id2">${i.d}${i.done?' · tourné ✓':''}</div></div><button onclick="S.ideas=S.ideas.filter(x=>x.id!==${i.id});save('ideas');renderIdeas()">✕</button></div>`).join(''):'<div class="empty">Toutes les idées de vidéos, hooks et posts vont ici.</div>';}
+
+/* Notes & actions de formation */
+const nid=p=>p+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+function renderNotes(){const el=$('noteList');if(!el)return;
+ if(!S.notes.length){el.innerHTML='<div class="empty">Après une vidéo : note le sujet, ajoute une photo et fixe tes actions (ex. analyser les concurrents directs et comprendre leurs déclencheurs).</div>';return;}
+ el.innerHTML=S.notes.map(n=>{const tk=n.tasks||[];const done=tk.filter(t=>t.done).length;
+  return `<div class="note"><div class="nhd"><div><div class="ntt">${esc(n.t)||'Sans titre'}</div><div class="ndt">${n.d}${tk.length?` · ${done}/${tk.length} actions`:''}</div></div>`
+   +`<div class="nact"><button onclick="openNoteEditor('${n.id}')" title="Modifier">✎</button><button onclick="delNote('${n.id}')" title="Supprimer">✕</button></div></div>`
+   +(n.img?`<img class="nph" src="${n.img}" onclick="viewPhoto('${n.id}')">`:'')
+   +(n.body?`<div class="nbody">${esc(n.body)}</div>`:'')
+   +(tk.length?`<div style="margin-top:6px">`+tk.map(t=>`<div class="ntask ${t.done?'done':''}"><div class="ck" onclick="toggleTask('${n.id}','${t.id}')">${t.done?'✓':''}</div><div class="tt">${esc(t.t)}</div></div>`).join('')+`</div>`:'')
+   +`</div>`;}).join('');}
+let curNote=null;
+function openNoteEditor(id){
+ if(id){const n=S.notes.find(x=>x.id===id);if(!n)return;curNote=JSON.parse(JSON.stringify(n));if(!curNote.tasks)curNote.tasks=[];}
+ else curNote={id:nid('n'),t:'',body:'',img:null,tasks:[],d:today()};
+ renderNoteEditor();$('ov').classList.add('on');}
+function renderNoteEditor(){
+ $('modal').innerHTML=`<div class="modal-h"><h3>📓 Note de formation</h3><button class="x" onclick="closeWF()">✕</button></div>`
+ +`<label class="fld"><span class="lab">Sujet de la vidéo</span><input class="in" id="nfT" value="${esc(curNote.t)}" placeholder="Ex. Analyser ses concurrents" oninput="curNote.t=this.value"></label>`
+ +`<label class="fld"><span class="lab">Notes</span><textarea class="in" id="nfB" rows="4" placeholder="Ce que tu retiens de la vidéo..." oninput="curNote.body=this.value" style="resize:vertical">${esc(curNote.body)}</textarea></label>`
+ +`<div class="fld"><span class="lab">Photo</span>`
+ +(curNote.img?`<div style="margin-top:6px"><img class="nph" src="${curNote.img}"><button class="btn sm ghost" style="margin-top:6px" onclick="curNote.img=null;renderNoteEditor()">Retirer la photo</button></div>`:`<input class="in" type="file" accept="image/*" onchange="addNotePhoto(this)">`)
+ +`</div>`
+ +`<div class="fld"><span class="lab">Actions à faire</span>`
+ +`<div id="nfTasks">`+curNote.tasks.map(t=>`<div class="ntask"><div class="tt">• ${esc(t.t)}</div><div class="del" onclick="curNote.tasks=curNote.tasks.filter(x=>x.id!=='${t.id}');renderNoteEditor()">✕</div></div>`).join('')+`</div>`
+ +`<div style="display:flex;gap:8px;margin-top:6px"><input class="in" id="nfNewTask" placeholder="Ex. Analyser les concurrents directs" style="flex:1" onkeydown="if(event.key==='Enter'){event.preventDefault();addNoteTask();}"><button class="btn sm orange" onclick="addNoteTask()">＋</button></div>`
+ +`</div>`
+ +`<button class="btn orange" style="width:100%;margin-top:6px" onclick="saveNote()">Enregistrer</button>`;}
+function addNoteTask(){const i=$('nfNewTask');if(!i)return;const v=i.value.trim();if(!v)return;curNote.tasks.push({id:nid('t'),t:v,done:false});renderNoteEditor();const nx=$('nfNewTask');if(nx)nx.focus();}
+function addNotePhoto(input){const f=input.files&&input.files[0];if(!f)return;const rd=new FileReader();rd.onload=e=>{const img=new Image();img.onload=()=>{const max=1000;let w=img.width,h=img.height;if(w>max||h>max){const r=Math.min(max/w,max/h);w=Math.round(w*r);h=Math.round(h*r);}const cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);curNote.img=cv.toDataURL('image/jpeg',0.7);renderNoteEditor();};img.src=e.target.result;};rd.readAsDataURL(f);}
+function saveNote(){if($('nfT'))curNote.t=$('nfT').value.trim();if($('nfB'))curNote.body=$('nfB').value;
+ if(!curNote.t&&!curNote.body&&!curNote.img&&!curNote.tasks.length){toast('Note vide');return;}
+ const i=S.notes.findIndex(x=>x.id===curNote.id);
+ if(i>=0)S.notes[i]=curNote;else S.notes.unshift(curNote);
+ save('notes');closeWF();renderNotes();toast('📓 Note enregistrée');curNote=null;}
+function toggleTask(noteId,taskId){const n=S.notes.find(x=>x.id===noteId);if(!n)return;const t=(n.tasks||[]).find(x=>x.id===taskId);if(!t)return;t.done=!t.done;save('notes');renderNotes();}
+function delNote(id){S.notes=S.notes.filter(x=>x.id!==id);save('notes');renderNotes();toast('Note supprimée');}
+function viewPhoto(id){const n=S.notes.find(x=>x.id===id);if(!n||!n.img)return;$('modal').innerHTML=`<div class="modal-h"><h3>${esc(n.t)||'Photo'}</h3><button class="x" onclick="closeWF()">✕</button></div><img src="${n.img}" style="width:100%;border-radius:12px">`;$('ov').classList.add('on');}
 
 /* ================= DASHBOARD ================= */
 const CHECKS=[['sport','💪','Sport'],['calls','📞','Cold calls'],['relances','🔁','Relances'],['contenu','🎬','Contenu agence'],['formation','🎓','Formation Hamza'],['lecture','📖','1 page lue'],['journal','📓','Journal rempli']];
