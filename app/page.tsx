@@ -5,6 +5,7 @@ import { KpiGauges } from "@/components/dashboard/KpiGauges";
 import { VisualCrm } from "@/components/dashboard/VisualCrm";
 import { Scheduler } from "@/components/dashboard/Scheduler";
 import { SmartSecretary } from "@/components/dashboard/SmartSecretary";
+import { ContentFactory } from "@/components/dashboard/ContentFactory";
 
 export default function DashboardPage() {
   return (
@@ -23,6 +24,9 @@ export default function DashboardPage() {
 
         {/* Smart secretary — Cmd+K fast drop + Jérémy bridge */}
         <SmartSecretary />
+
+        {/* Content factory — editorial calendar + Friday batching */}
+        <ContentFactory />
 
         {/* CA & commissions */}
         <CaTracker />

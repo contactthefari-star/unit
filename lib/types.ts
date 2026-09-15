@@ -124,6 +124,44 @@ export interface RescheduledTask {
   reason: string;
 }
 
+export type ContentStatus = "idea" | "ready" | "published";
+
+export const CONTENT_STATUS_META: Record<
+  ContentStatus,
+  { label: string; text: string; softBg: string; dot: string }
+> = {
+  idea: {
+    label: "Idée",
+    text: "text-deck-mute",
+    softBg: "bg-deck-line/60",
+    dot: "bg-deck-faint",
+  },
+  ready: {
+    label: "Prêt à filmer",
+    text: "text-pole-secretary",
+    softBg: "bg-pole-secretary/10",
+    dot: "bg-pole-secretary",
+  },
+  published: {
+    label: "Publié",
+    text: "text-pole-delivery",
+    softBg: "bg-pole-delivery/10",
+    dot: "bg-pole-delivery",
+  },
+};
+
+export const WEEK_DAYS = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"] as const;
+export type WeekDay = (typeof WEEK_DAYS)[number];
+
+export interface ContentCard {
+  id: string;
+  day: WeekDay;
+  hook: string;
+  angle: string;
+  status: ContentStatus;
+  objection?: string;
+}
+
 export interface SecretaryRequest {
   id: string;
   text: string;

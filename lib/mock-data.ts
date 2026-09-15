@@ -1,5 +1,6 @@
 import {
   ClientCard,
+  ContentCard,
   JeremyTask,
   KpiGauge,
   NotificationItem,
@@ -266,6 +267,57 @@ export const RESCHEDULED: RescheduledTask[] = [
     reason: "Session récurrente dédiée",
   },
 ];
+
+export const CONTENT: ContentCard[] = [
+  {
+    id: "c1",
+    day: "Lun",
+    hook: "« J'ai perdu 3 deals cette semaine à cause de ça »",
+    angle: "Erreur n°1 en closing : parler prix trop tôt",
+    status: "published",
+    objection: "C'est trop cher",
+  },
+  {
+    id: "c2",
+    day: "Mar",
+    hook: "Le silence qui fait signer",
+    angle: "Technique du silence après l'annonce du prix",
+    status: "ready",
+    objection: "Je dois réfléchir",
+  },
+  {
+    id: "c3",
+    day: "Mer",
+    hook: "Ton prospect dit « je dois en parler à… »",
+    angle: "Isoler la vraie objection en 2 questions",
+    status: "ready",
+    objection: "Décision partagée",
+  },
+  {
+    id: "c4",
+    day: "Jeu",
+    hook: "3 phrases qui tuent un call",
+    angle: "Ce qu'un closer ne devrait jamais dire",
+    status: "idea",
+  },
+  {
+    id: "c5",
+    day: "Ven",
+    hook: "Comment je prépare un call en 5 min",
+    angle: "Mini-routine de briefing avant chaque RDV",
+    status: "idea",
+    objection: "Manque de préparation",
+  },
+];
+
+export const FRIDAY_BATCHING = {
+  when: "Vendredi · 08:55 → 12:00",
+  steps: [
+    "Relire les hooks « Prêt à filmer » (5 min)",
+    "Tournage enchaîné, une prise par angle (2 h)",
+    "Marquer chaque carte comme « Publié » à l'export",
+  ],
+};
 
 export const SECRETARY_REQUESTS: SecretaryRequest[] = [
   {
