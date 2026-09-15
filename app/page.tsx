@@ -7,6 +7,7 @@ import { Scheduler } from "@/components/dashboard/Scheduler";
 import { SmartSecretary } from "@/components/dashboard/SmartSecretary";
 import { ContentFactory } from "@/components/dashboard/ContentFactory";
 import { EmergencyTools } from "@/components/dashboard/EmergencyTools";
+import { VideoLearning } from "@/components/dashboard/VideoLearning";
 
 export default function DashboardPage() {
   return (
@@ -31,6 +32,9 @@ export default function DashboardPage() {
 
         {/* Emergency ADHD tools — micro-sprint + task decomposer */}
         <EmergencyTools />
+
+        {/* Video learning — split-screen player + capture -> task */}
+        <VideoLearning />
 
         {/* CA & commissions */}
         <CaTracker />
