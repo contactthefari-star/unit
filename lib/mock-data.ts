@@ -1,9 +1,11 @@
 import {
   ClientCard,
+  JeremyTask,
   KpiGauge,
   NotificationItem,
   RescheduledTask,
   ScheduleBlock,
+  SecretaryRequest,
 } from "./types";
 
 /**
@@ -262,6 +264,44 @@ export const RESCHEDULED: RescheduledTask[] = [
     from: "Hier 18:00 — non terminé",
     to: "Dimanche 10:00",
     reason: "Session récurrente dédiée",
+  },
+];
+
+export const SECRETARY_REQUESTS: SecretaryRequest[] = [
+  {
+    id: "s1",
+    text: "Client Andréa — demande de report du RDV de jeudi",
+    pole: "acquisition",
+    minutes: 10,
+    slot: "Auj. 15:30",
+    deadline: "Réponse avant 18:00",
+    priority: "P2",
+  },
+  {
+    id: "s2",
+    text: "Studio K. — envoyer le récap d'audit + prochaines étapes",
+    pole: "delivery",
+    minutes: 20,
+    slot: "Auj. 16:30",
+    deadline: "Réponse avant demain 10:00",
+    priority: "P1",
+  },
+];
+
+export const JEREMY_TASKS: JeremyTask[] = [
+  {
+    id: "j1",
+    title: "Préparer le contrat Studio K. (signature)",
+    source: "Notion",
+    priority: "P1",
+    slot: "Auto → Auj. 17:30",
+  },
+  {
+    id: "j2",
+    title: "Mettre à jour le CRM après les calls du jour",
+    source: "Slack",
+    priority: "P3",
+    slot: "Auto → Demain 09:00",
   },
 ];
 

@@ -124,6 +124,24 @@ export interface RescheduledTask {
   reason: string;
 }
 
+export interface SecretaryRequest {
+  id: string;
+  text: string;
+  pole: Pole;
+  minutes: number;
+  slot: string;
+  deadline: string;
+  priority: Priority;
+}
+
+export interface JeremyTask {
+  id: string;
+  title: string;
+  source: "Notion" | "Slack";
+  priority: Priority;
+  slot: string;
+}
+
 export const PRIORITY_META: Record<
   Priority,
   { label: string; text: string; softBg: string; dot: string }

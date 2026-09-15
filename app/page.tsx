@@ -4,6 +4,7 @@ import { CaTracker } from "@/components/dashboard/CaTracker";
 import { KpiGauges } from "@/components/dashboard/KpiGauges";
 import { VisualCrm } from "@/components/dashboard/VisualCrm";
 import { Scheduler } from "@/components/dashboard/Scheduler";
+import { SmartSecretary } from "@/components/dashboard/SmartSecretary";
 
 export default function DashboardPage() {
   return (
@@ -19,6 +20,9 @@ export default function DashboardPage() {
 
         {/* Smart pacing & scheduler — 80/20 auto-rescheduling */}
         <Scheduler />
+
+        {/* Smart secretary — Cmd+K fast drop + Jérémy bridge */}
+        <SmartSecretary />
 
         {/* CA & commissions */}
         <CaTracker />
