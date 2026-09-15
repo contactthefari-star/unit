@@ -102,3 +102,48 @@ export interface NotificationItem {
   meta: string;
   priority?: Priority;
 }
+
+export type BlockStatus = "done" | "now" | "todo" | "break";
+
+export interface ScheduleBlock {
+  id: string;
+  start: string; // "HH:MM"
+  end: string; // "HH:MM"
+  title: string;
+  pole: Pole;
+  priority?: Priority;
+  status: BlockStatus;
+}
+
+export interface RescheduledTask {
+  id: string;
+  title: string;
+  priority: Priority;
+  from: string; // original slot label
+  to: string; // new auto slot label
+  reason: string;
+}
+
+export const PRIORITY_META: Record<
+  Priority,
+  { label: string; text: string; softBg: string; dot: string }
+> = {
+  P1: {
+    label: "Haut impact · Delivery & Closing",
+    text: "text-pole-alert",
+    softBg: "bg-pole-alert/10",
+    dot: "bg-pole-alert",
+  },
+  P2: {
+    label: "Moyen · Contenu & Objections",
+    text: "text-pole-secretary",
+    softBg: "bg-pole-secretary/10",
+    dot: "bg-pole-secretary",
+  },
+  P3: {
+    label: "Bas · Research & Admin",
+    text: "text-pole-acquisition",
+    softBg: "bg-pole-acquisition/10",
+    dot: "bg-pole-acquisition",
+  },
+};

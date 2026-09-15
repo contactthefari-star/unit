@@ -1,4 +1,10 @@
-import { ClientCard, KpiGauge, NotificationItem } from "./types";
+import {
+  ClientCard,
+  KpiGauge,
+  NotificationItem,
+  RescheduledTask,
+  ScheduleBlock,
+} from "./types";
 
 /**
  * Placeholder cockpit data. Wire these to the real sources (Notion / Slack /
@@ -173,4 +179,98 @@ export const COUNTS = {
   activeTasks: 7,
   rescheduled: 2,
   secretary: 3,
+};
+
+export const SCHEDULE: ScheduleBlock[] = [
+  {
+    id: "b1",
+    start: "09:00",
+    end: "09:45",
+    title: "Prospection — 20 messages ciblés",
+    pole: "acquisition",
+    priority: "P2",
+    status: "done",
+  },
+  {
+    id: "b2",
+    start: "10:00",
+    end: "10:45",
+    title: "Audit calls closer — Léhi",
+    pole: "delivery",
+    priority: "P1",
+    status: "done",
+  },
+  {
+    id: "b3",
+    start: "11:00",
+    end: "11:15",
+    title: "Pause obligatoire",
+    pole: "secretary",
+    status: "break",
+  },
+  {
+    id: "b4",
+    start: "14:30",
+    end: "15:15",
+    title: "Call closing — prospect Studio K.",
+    pole: "delivery",
+    priority: "P1",
+    status: "now",
+  },
+  {
+    id: "b5",
+    start: "15:30",
+    end: "16:15",
+    title: "Relances pipeline tiède",
+    pole: "acquisition",
+    priority: "P2",
+    status: "todo",
+  },
+  {
+    id: "b6",
+    start: "16:30",
+    end: "17:15",
+    title: "Batch objections — Arthur",
+    pole: "content",
+    priority: "P2",
+    status: "todo",
+  },
+  {
+    id: "b7",
+    start: "17:30",
+    end: "18:15",
+    title: "Bloc Delivery — brief recrutement setter",
+    pole: "delivery",
+    priority: "P1",
+    status: "todo",
+  },
+];
+
+export const RESCHEDULED: RescheduledTask[] = [
+  {
+    id: "r1",
+    title: "Extraire 5 objections récurrentes (Arthur)",
+    priority: "P2",
+    from: "Aujourd'hui 11:30 — manqué",
+    to: "Demain 10:00",
+    reason: "Créneau libre 80/20 le plus proche",
+  },
+  {
+    id: "r2",
+    title: "Market research — nouveaux frameworks US",
+    priority: "P3",
+    from: "Hier 18:00 — non terminé",
+    to: "Dimanche 10:00",
+    reason: "Session récurrente dédiée",
+  },
+];
+
+export const MARKET_RESEARCH = {
+  title: "US Market Benchmarking",
+  when: "Dimanche · 10:00 → 10:45",
+  template: [
+    "Nouveau framework repéré",
+    "Script / accroche à tester",
+    "Idée d'A/B test cette semaine",
+  ],
 };
