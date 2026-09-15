@@ -6,6 +6,7 @@ import { VisualCrm } from "@/components/dashboard/VisualCrm";
 import { Scheduler } from "@/components/dashboard/Scheduler";
 import { SmartSecretary } from "@/components/dashboard/SmartSecretary";
 import { ContentFactory } from "@/components/dashboard/ContentFactory";
+import { EmergencyTools } from "@/components/dashboard/EmergencyTools";
 
 export default function DashboardPage() {
   return (
@@ -27,6 +28,9 @@ export default function DashboardPage() {
 
         {/* Content factory — editorial calendar + Friday batching */}
         <ContentFactory />
+
+        {/* Emergency ADHD tools — micro-sprint + task decomposer */}
+        <EmergencyTools />
 
         {/* CA & commissions */}
         <CaTracker />
