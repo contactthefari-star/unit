@@ -8,6 +8,7 @@ import { SmartSecretary } from "@/components/dashboard/SmartSecretary";
 import { ContentFactory } from "@/components/dashboard/ContentFactory";
 import { EmergencyTools } from "@/components/dashboard/EmergencyTools";
 import { VideoLearning } from "@/components/dashboard/VideoLearning";
+import { NotionSync } from "@/components/dashboard/NotionSync";
 
 export default function DashboardPage() {
   return (
@@ -35,6 +36,9 @@ export default function DashboardPage() {
 
         {/* Video learning — split-screen player + capture -> task */}
         <VideoLearning />
+
+        {/* Notion two-way sync — status + webhook bridge */}
+        <NotionSync />
 
         {/* CA & commissions */}
         <CaTracker />
