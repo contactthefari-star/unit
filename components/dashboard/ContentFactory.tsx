@@ -11,6 +11,7 @@ import {
   WeekDay,
 } from "@/lib/types";
 import { IconBolt, IconPlay } from "@/components/ui/Icons";
+import { VoiceButton } from "@/components/ui/VoiceButton";
 
 const STATUS_ORDER: ContentStatus[] = ["idea", "ready", "published"];
 
@@ -97,6 +98,11 @@ export function ContentFactory() {
           onKeyDown={(e) => e.key === "Enter" && addIdea()}
           placeholder="Fast Drop — balance une idée, une objection, une phrase entendue…"
           className="min-w-[200px] flex-1 bg-transparent px-1 py-1.5 text-sm text-deck-ink outline-none placeholder:text-deck-faint"
+        />
+        <VoiceButton
+          onText={(t) => setIdea((v) => (v ? `${v} ${t}` : t))}
+          title="Dicter une idée"
+          className="h-8 w-8"
         />
         <select
           value={dropDay}

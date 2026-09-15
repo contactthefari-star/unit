@@ -31,9 +31,16 @@ Sidebar fixe à gauche, 6 onglets (deep-link `?tab=<id>`) :
 - **Deep Work Shield** : gèle la navigation automatiquement pendant un focus.
 - **Énergie du jour** : met en avant/estompe les priorités P1/P2/P3 dans l'agenda.
 - **⌘K Fast Drop** : capture une requête → estime le temps → slot 80/20 → deadline.
-- **Persistance locale** : les saisies (contenu, resources, journal, énergie,
-  file de recyclage) sont sauvegardées via `localStorage` (hook
-  `hooks/usePersistentState.ts`).
+- **CRM éditable** : ajouter / modifier / supprimer un client (pôle, étape,
+  prochaine action, KPI cible/réel). Persisté en local.
+- **Agenda éditable** : créer / modifier / supprimer un bloc, cocher « fait »
+  d'un clic. Tri chronologique automatique. Persisté en local.
+- **Dictée vocale** : bouton 🎤 sur les champs texte (nom, offre, action, KPI,
+  intitulé de bloc, idée de contenu) via l'API navigateur Web Speech
+  (`hooks/useVoiceInput.ts`). Se masque si le navigateur ne la gère pas.
+- **Persistance locale** : les saisies (clients, agenda, contenu, resources,
+  journal, énergie, file de recyclage) sont sauvegardées via `localStorage`
+  (hook `hooks/usePersistentState.ts`).
 
 ## Structure
 
@@ -50,9 +57,11 @@ hooks/          usePersistentState
 
 ## Données
 
-Tout est en **données de démonstration** dans `lib/mock-data.ts` — l'UI ne lit
-que ces structures. À remplacer par les vraies sources (Notion / Slack / notes
-de call).
+Les **données de démonstration** vivent dans `lib/mock-data.ts` et servent de
+graine initiale. Les modules éditables (clients, agenda, contenu, resources,
+journal) recopient cette graine dans `localStorage` au premier lancement, puis
+lisent/écrivent ta version. À remplacer par les vraies sources (Notion / Slack /
+notes de call) ou une base serveur pour un usage multi-appareils.
 
 ## Notion Sync (à configurer)
 
