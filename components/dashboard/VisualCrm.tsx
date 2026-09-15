@@ -74,6 +74,37 @@ function Card({ card }: { card: ClientCard }) {
 
       <StageBar card={card} />
 
+      {/* KPI barometer — target vs actual */}
+      {(() => {
+        const ratio = card.kpi.target > 0 ? card.kpi.actual / card.kpi.target : 0;
+        const pct = Math.min(100, Math.round(ratio * 100));
+        const tone =
+          ratio >= 0.9
+            ? { bar: "bg-pole-delivery", text: "text-pole-delivery", label: "Dans la cible" }
+            : ratio >= 0.6
+              ? { bar: "bg-pole-secretary", text: "text-pole-secretary", label: "À surveiller" }
+              : { bar: "bg-pole-alert", text: "text-pole-alert", label: "Sous la cible" };
+        return (
+          <div className="mt-3 rounded-xl border border-deck-line bg-deck-panel2 p-3">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-deck-faint">
+                {card.kpi.label}
+              </span>
+              <span className={`text-[10px] font-bold ${tone.text}`}>{tone.label}</span>
+            </div>
+            <div className="mt-1.5 flex items-center gap-2">
+              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-deck-line">
+                <div className={`h-full rounded-full ${tone.bar}`} style={{ width: `${pct}%` }} />
+              </div>
+              <span className="tnum text-[11px] font-semibold text-deck-ink">
+                {card.kpi.actual}
+                <span className="text-deck-faint">/{card.kpi.target}{card.kpi.unit ?? ""}</span>
+              </span>
+            </div>
+          </div>
+        );
+      })()}
+
       <div className="mt-3 rounded-xl border border-deck-line bg-deck-panel2 p-3">
         <div className="text-[10px] font-semibold uppercase tracking-wider text-deck-faint">
           Prochaine action

@@ -76,6 +76,7 @@ export const CLIENTS: ClientCard[] = [
     totalCalls: 10,
     lastCallLabel: "Call closing — 12:40",
     monthlyCa: 9200,
+    kpi: { label: "RDV closing / sem.", target: 10, actual: 8 },
     onboarding: [
       { label: "Panier moyen", value: "3 500 €" },
       { label: "Volume leads/sem.", value: "45" },
@@ -93,6 +94,7 @@ export const CLIENTS: ClientCard[] = [
     totalCalls: 6,
     lastCallLabel: "Discovery — hier 16:10",
     monthlyCa: 5100,
+    kpi: { label: "Leads qualifiés / sem.", target: 45, actual: 42 },
     onboarding: [
       { label: "Canal", value: "Cold DM + Ads" },
       { label: "CPL cible", value: "12 €" },
@@ -110,6 +112,7 @@ export const CLIENTS: ClientCard[] = [
     totalCalls: 4,
     lastCallLabel: "Kick-off — lun. 09:30",
     monthlyCa: 2650,
+    kpi: { label: "Posts publiés / sem.", target: 5, actual: 2 },
     onboarding: [
       { label: "Format", value: "Short vidéo" },
       { label: "Cadence", value: "5 / sem." },
@@ -127,6 +130,7 @@ export const CLIENTS: ClientCard[] = [
     totalCalls: 6,
     lastCallLabel: "Suivi — mar. 11:00",
     monthlyCa: 1500,
+    kpi: { label: "MRR", target: 2000, actual: 1500, unit: "\u20ac" },
     onboarding: [
       { label: "Ancienneté", value: "4 mois" },
       { label: "MRR", value: "1 500 €" },

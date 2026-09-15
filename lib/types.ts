@@ -71,6 +71,13 @@ export const HEX: Record<Pole, string> = {
 export type CrmStage = "Audit" | "Script" | "Recrutement" | "Scale";
 export const CRM_STAGES: CrmStage[] = ["Audit", "Script", "Recrutement", "Scale"];
 
+export interface ClientKpi {
+  label: string;
+  target: number;
+  actual: number;
+  unit?: string;
+}
+
 export interface ClientCard {
   id: string;
   name: string;
@@ -83,6 +90,7 @@ export interface ClientCard {
   lastCallLabel: string;
   onboarding: { label: string; value: string }[];
   monthlyCa: number;
+  kpi: ClientKpi;
 }
 
 export interface KpiGauge {
