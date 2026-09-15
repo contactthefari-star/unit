@@ -1,3 +1,5 @@
+"use client";
+
 import { CLIENTS } from "@/lib/mock-data";
 import {
   ClientCard,
@@ -5,7 +7,8 @@ import {
   POLE_CLASSES,
   POLE_LABEL,
 } from "@/lib/types";
-import { IconArrow, IconPlay } from "@/components/ui/Icons";
+import { useCockpit } from "@/components/shell/CockpitContext";
+import { IconArrow, IconPlay, IconMegaphone } from "@/components/ui/Icons";
 
 function StageBar({ card }: { card: ClientCard }) {
   const current = CRM_STAGES.indexOf(card.stage);
@@ -15,9 +18,7 @@ function StageBar({ card }: { card: ClientCard }) {
       <div className="flex items-center gap-1">
         {CRM_STAGES.map((s, i) => (
           <div key={s} className="flex-1">
-            <div
-              className={`h-1.5 rounded-full ${i <= current ? c.bg : "bg-deck-line"}`}
-            />
+            <div className={`h-1.5 rounded-full ${i <= current ? c.bg : "bg-deck-line"}`} />
           </div>
         ))}
       </div>
@@ -43,6 +44,18 @@ function StageBar({ card }: { card: ClientCard }) {
 
 function Card({ card }: { card: ClientCard }) {
   const c = POLE_CLASSES[card.pole];
+  const { addRepurposed, setTab } = useCockpit();
+
+  const repurpose = () => {
+    addRepurposed({
+      id: `rp-${card.id}-${Date.now()}`,
+      from: card.name,
+      hook: `Retour d'expérience — ${card.name}`,
+      angle: `${card.offer} : 1 objection fréquente → 1 solution concrète`,
+    });
+    setTab("content");
+  };
+
   return (
     <article
       className={`flex w-[320px] shrink-0 flex-col rounded-2xl border border-deck-line bg-deck-panel p-4 shadow-deck ring-1 ring-inset ${c.ring}`}
@@ -61,7 +74,6 @@ function Card({ card }: { card: ClientCard }) {
 
       <StageBar card={card} />
 
-      {/* Next single action */}
       <div className="mt-3 rounded-xl border border-deck-line bg-deck-panel2 p-3">
         <div className="text-[10px] font-semibold uppercase tracking-wider text-deck-faint">
           Prochaine action
@@ -72,7 +84,6 @@ function Card({ card }: { card: ClientCard }) {
         </div>
       </div>
 
-      {/* Audited calls + player */}
       <div className="mt-3 flex items-center gap-3">
         <button
           className={`grid h-9 w-9 place-items-center rounded-full ${c.softBg} ${c.text} transition hover:brightness-125`}
@@ -88,7 +99,6 @@ function Card({ card }: { card: ClientCard }) {
         </div>
       </div>
 
-      {/* Prefilled onboarding */}
       <div className="mt-3 border-t border-deck-line pt-3">
         <div className="text-[10px] font-semibold uppercase tracking-wider text-deck-faint">
           Onboarding pré-rempli
@@ -104,6 +114,15 @@ function Card({ card }: { card: ClientCard }) {
           ))}
         </dl>
       </div>
+
+      {/* Content Repurposing Bridge */}
+      <button
+        onClick={repurpose}
+        className="mt-3 inline-flex items-center justify-center gap-2 rounded-xl border border-pole-content/40 bg-pole-content/10 px-3 py-2 text-sm font-semibold text-pole-content transition hover:brightness-125"
+      >
+        <IconMegaphone width={15} height={15} />
+        Convertir en contenu
+      </button>
     </article>
   );
 }
@@ -115,9 +134,7 @@ export function VisualCrm() {
         <span className="text-xs font-semibold uppercase tracking-[0.18em] text-deck-mute">
           CRM visuel · pipeline clients
         </span>
-        <span className="text-[11px] text-deck-faint">
-          {CLIENTS.length} clients actifs
-        </span>
+        <span className="text-[11px] text-deck-faint">{CLIENTS.length} clients actifs</span>
       </header>
       <div className="flex gap-4 overflow-x-auto pb-2">
         {CLIENTS.map((c) => (

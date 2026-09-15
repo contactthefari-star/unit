@@ -124,6 +124,13 @@ export interface RescheduledTask {
   reason: string;
 }
 
+export interface RepurposedDraft {
+  id: string;
+  from: string; // client source
+  hook: string;
+  angle: string;
+}
+
 export type ContentStatus = "idea" | "ready" | "published";
 
 export const CONTENT_STATUS_META: Record<

@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { TabId } from "@/lib/nav";
 import { useCockpit } from "./CockpitContext";
 import { Sidebar } from "./Sidebar";
@@ -22,27 +21,20 @@ const VIEWS: Record<TabId, () => JSX.Element> = {
 };
 
 export function AppShell() {
-  const [active, setActive] = useState<TabId>("dashboard");
-  const { shieldActive, toggleShield } = useCockpit();
-  const View = VIEWS[active];
-
-  // Deep-link: /?tab=clients ouvre directement l'onglet correspondant.
-  useEffect(() => {
-    const t = new URLSearchParams(window.location.search).get("tab");
-    if (t && t in VIEWS) setActive(t as TabId);
-  }, []);
+  const { shieldActive, toggleShield, tab, setTab } = useCockpit();
+  const View = VIEWS[tab];
 
   return (
     <div className="flex min-h-screen">
       <Sidebar
-        active={active}
-        onSelect={setActive}
+        active={tab}
+        onSelect={setTab}
         shield={shieldActive}
         onToggleShield={toggleShield}
       />
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <TopBar active={active} shield={shieldActive} />
+        <TopBar active={tab} shield={shieldActive} />
         <main className="flex-1 px-4 py-4 md:px-6">
           <div className="mx-auto max-w-[1400px]">
             <View />
