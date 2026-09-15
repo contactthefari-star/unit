@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePersistentState } from "@/hooks/usePersistentState";
 import { IconBolt } from "@/components/ui/Icons";
 
 type ResType = "Framework" | "Lien" | "Citation";
@@ -25,7 +26,7 @@ const SEED: Resource[] = [
 ];
 
 export function ResourceHub() {
-  const [items, setItems] = useState<Resource[]>(SEED);
+  const [items, setItems] = usePersistentState<Resource[]>("ufd.resources", SEED);
   const [type, setType] = useState<ResType>("Framework");
   const [text, setText] = useState("");
 

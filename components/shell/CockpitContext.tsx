@@ -10,6 +10,7 @@ import {
 } from "react";
 import { TabId } from "@/lib/nav";
 import { RepurposedDraft } from "@/lib/types";
+import { usePersistentState } from "@/hooks/usePersistentState";
 
 export type Energy = "low" | "medium" | "high";
 export type Phase = "focus" | "break";
@@ -63,10 +64,13 @@ export function CockpitProvider({ children }: { children: React.ReactNode }) {
   const [remaining, setRemaining] = useState(FOCUS_SECONDS);
   const [running, setRunning] = useState(false);
   const [cycles, setCycles] = useState(0);
-  const [energy, setEnergy] = useState<Energy>("high");
+  const [energy, setEnergy] = usePersistentState<Energy>("ufd.energy", "high");
   const [manualShield, setManualShield] = useState(false);
   const [tab, setTab] = useState<TabId>("dashboard");
-  const [repurposed, setRepurposed] = useState<RepurposedDraft[]>([]);
+  const [repurposed, setRepurposed] = usePersistentState<RepurposedDraft[]>(
+    "ufd.repurposed",
+    [],
+  );
   const tick = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Deep-link: /?tab=clients ouvre directement l'onglet correspondant.
