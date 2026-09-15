@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TabId } from "@/lib/nav";
 import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
@@ -24,6 +24,12 @@ export function AppShell() {
   const [active, setActive] = useState<TabId>("dashboard");
   const [shield, setShield] = useState(false);
   const View = VIEWS[active];
+
+  // Deep-link: /?tab=clients ouvre directement l'onglet correspondant.
+  useEffect(() => {
+    const t = new URLSearchParams(window.location.search).get("tab");
+    if (t && t in VIEWS) setActive(t as TabId);
+  }, []);
 
   return (
     <div className="flex min-h-screen">
