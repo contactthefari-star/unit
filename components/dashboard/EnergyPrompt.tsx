@@ -1,9 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useCockpit, Energy } from "@/components/shell/CockpitContext";
 import { IconBolt } from "@/components/ui/Icons";
-
-type Energy = "low" | "medium" | "high";
 
 const LEVELS: { key: Energy; label: string; color: string; advice: string }[] = [
   {
@@ -27,7 +25,7 @@ const LEVELS: { key: Energy; label: string; color: string; advice: string }[] = 
 ];
 
 export function EnergyPrompt() {
-  const [energy, setEnergy] = useState<Energy>("high");
+  const { energy, setEnergy } = useCockpit();
   const current = LEVELS.find((l) => l.key === energy)!;
 
   return (
@@ -59,6 +57,9 @@ export function EnergyPrompt() {
       <p className="mt-3 text-[12px] leading-snug text-deck-mute">
         <span className="font-semibold text-deck-ink">Reco 80/20 : </span>
         {current.advice}
+      </p>
+      <p className="mt-1 text-[11px] text-deck-faint">
+        L&apos;agenda met en avant tes priorités selon ce niveau.
       </p>
     </div>
   );

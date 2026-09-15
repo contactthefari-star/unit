@@ -1,12 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCockpit } from "@/components/shell/CockpitContext";
 import { IconPlay, IconPause, IconRefresh, IconLock, IconClock } from "@/components/ui/Icons";
 
 const FOCUS_SECONDS = 45 * 60;
 const BREAK_SECONDS = 15 * 60;
-
-type Phase = "focus" | "break";
 
 function fmt(total: number) {
   const m = Math.floor(total / 60)
@@ -17,49 +15,10 @@ function fmt(total: number) {
 }
 
 export function FocusTimer() {
-  const [phase, setPhase] = useState<Phase>("focus");
-  const [remaining, setRemaining] = useState(FOCUS_SECONDS);
-  const [running, setRunning] = useState(false);
-  const [cycles, setCycles] = useState(0);
-  const tick = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const total = phase === "focus" ? FOCUS_SECONDS : BREAK_SECONDS;
-  const progress = 1 - remaining / total;
-
-  const switchPhase = useCallback((next: Phase) => {
-    setPhase(next);
-    setRemaining(next === "focus" ? FOCUS_SECONDS : BREAK_SECONDS);
-  }, []);
-
-  useEffect(() => {
-    if (!running) return;
-    tick.current = setInterval(() => {
-      setRemaining((r) => {
-        if (r > 1) return r - 1;
-        // phase finished
-        if (phase === "focus") {
-          setCycles((c) => c + 1);
-          queueMicrotask(() => switchPhase("break"));
-          return 0;
-        }
-        queueMicrotask(() => {
-          switchPhase("focus");
-          setRunning(false); // require explicit start after a mandatory break
-        });
-        return 0;
-      });
-    }, 1000);
-    return () => {
-      if (tick.current) clearInterval(tick.current);
-    };
-  }, [running, phase, switchPhase]);
-
-  const reset = () => {
-    setRunning(false);
-    switchPhase("focus");
-  };
-
+  const { phase, remaining, running, cycles, start, pause, reset } = useCockpit();
   const onBreak = phase === "break";
+  const total = onBreak ? BREAK_SECONDS : FOCUS_SECONDS;
+  const progress = 1 - remaining / total;
 
   return (
     <>
@@ -110,11 +69,13 @@ export function FocusTimer() {
             <p className="text-sm text-deck-mute">
               {onBreak
                 ? "Pause obligatoire — l'écran se verrouille pour couper le contexte."
-                : "45 minutes de focus profond. Une seule tâche, zéro friction."}
+                : running
+                  ? "Deep Work Shield actif : navigation gelée jusqu'à la pause."
+                  : "45 minutes de focus profond. Une seule tâche, zéro friction."}
             </p>
             <div className="mt-4 flex items-center gap-2">
               <button
-                onClick={() => setRunning((r) => !r)}
+                onClick={() => (running ? pause() : start())}
                 className="inline-flex items-center gap-2 rounded-xl bg-pole-acquisition px-4 py-2.5 text-sm font-semibold text-white transition hover:brightness-110 active:scale-[0.98]"
               >
                 {running ? <IconPause /> : <IconPlay />}
@@ -134,7 +95,7 @@ export function FocusTimer() {
 
       {/* Mandatory-break full-screen lock */}
       {onBreak && running && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-deck-bg/95 backdrop-blur-md">
+        <div className="fixed inset-0 z-[60] flex flex-col items-center justify-center gap-6 bg-deck-bg/95 backdrop-blur-md">
           <div className="flex items-center gap-2 text-pole-secretary">
             <IconLock />
             <span className="text-sm font-bold uppercase tracking-[0.25em]">
@@ -146,10 +107,7 @@ export function FocusTimer() {
             Lève-toi, hydrate-toi, respire. Le cockpit se rouvre à la fin de la pause.
           </p>
           <button
-            onClick={() => {
-              setRunning(false);
-              switchPhase("focus");
-            }}
+            onClick={reset}
             className="text-[11px] uppercase tracking-widest text-deck-faint transition hover:text-deck-mute"
           >
             Terminer la pause plus tôt

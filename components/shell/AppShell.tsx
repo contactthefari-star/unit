@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { TabId } from "@/lib/nav";
+import { useCockpit } from "./CockpitContext";
 import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
 import { DashboardView } from "@/components/views/DashboardView";
@@ -22,7 +23,7 @@ const VIEWS: Record<TabId, () => JSX.Element> = {
 
 export function AppShell() {
   const [active, setActive] = useState<TabId>("dashboard");
-  const [shield, setShield] = useState(false);
+  const { shieldActive, toggleShield } = useCockpit();
   const View = VIEWS[active];
 
   // Deep-link: /?tab=clients ouvre directement l'onglet correspondant.
@@ -36,12 +37,12 @@ export function AppShell() {
       <Sidebar
         active={active}
         onSelect={setActive}
-        shield={shield}
-        onToggleShield={() => setShield((s) => !s)}
+        shield={shieldActive}
+        onToggleShield={toggleShield}
       />
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <TopBar active={active} shield={shield} />
+        <TopBar active={active} shield={shieldActive} />
         <main className="flex-1 px-4 py-4 md:px-6">
           <div className="mx-auto max-w-[1400px]">
             <View />
