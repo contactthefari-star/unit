@@ -8,3 +8,9 @@
 
 # Dépendances (si un jour on ajoute un build)
 node_modules/
+
+# Next.js build
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
