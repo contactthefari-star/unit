@@ -63,6 +63,37 @@ journal) recopient cette graine dans `localStorage` au premier lancement, puis
 lisent/écrivent ta version. À remplacer par les vraies sources (Notion / Slack /
 notes de call) ou une base serveur pour un usage multi-appareils.
 
+## Cloud Sync — Supabase (multi-appareils + login)
+
+Sans clés, l'app marche en local (localStorage). Avec Supabase, tes données
+(clients, agenda, contenu, resources, journal, énergie) suivent sur tous tes
+appareils connectés au même compte. Mise en place, **une seule fois** :
+
+1. Crée un projet gratuit sur [supabase.com](https://supabase.com).
+2. **SQL Editor → New query** → colle le contenu de
+   [`supabase/schema.sql`](supabase/schema.sql) → **Run** (crée la table
+   `app_state` + la sécurité RLS : chacun ne voit que ses lignes).
+3. **Settings → API** → copie *Project URL* et *anon public key* dans
+   `.env.local` :
+
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+   ```
+
+4. Relance `npm run dev`, va dans l'onglet **UNIT → Cloud Sync**, entre ton
+   email : tu reçois un **lien magique**, tu cliques, tu es connecté et
+   synchronisé.
+
+Détails techniques :
+- Login par **lien magique** (Supabase Auth, aucun mot de passe à gérer).
+- Modèle **clé-valeur JSON** (`app_state`) : pas de migration à refaire quand
+  l'app évolue. Sécurité par **RLS** (`auth.uid() = user_id`).
+- **Offline-first** : `hooks/useSyncedState.ts` écrit d'abord en local puis
+  pousse dans le cloud (debounce). Au chargement, la valeur distante gagne.
+- Sur Vercel : ajoute les 2 variables `NEXT_PUBLIC_SUPABASE_*` dans
+  *Project → Settings → Environment Variables*, puis redeploie.
+
 ## Notion Sync (à configurer)
 
 Structure prête (`app/api/notion/route.ts` + `lib/notion.ts`). Renseigner les
@@ -79,6 +110,6 @@ Webhook entrant : `POST /api/notion` (auth par header `x-unit-signature`).
 ## Roadmap (prochaines étapes)
 
 - [ ] Brancher les vraies clés Notion (sync 2 sens réelle).
-- [ ] Persistance serveur + authentification (base de données) pour un usage
+- [x] Persistance serveur + authentification (Supabase) pour un usage
       multi-appareils.
 - [ ] Notifications push natives (service worker + backend planifié).

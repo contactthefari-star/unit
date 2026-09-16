@@ -10,7 +10,7 @@ import {
   POLE_CLASSES,
   POLE_LABEL,
 } from "@/lib/types";
-import { usePersistentState } from "@/hooks/usePersistentState";
+import { useSyncedState } from "@/hooks/useSyncedState";
 import { useCockpit } from "@/components/shell/CockpitContext";
 import {
   IconArrow,
@@ -438,7 +438,7 @@ function ClientForm({
 }
 
 export function VisualCrm() {
-  const [clients, setClients] = usePersistentState<ClientCard[]>("ufd.clients", CLIENTS);
+  const [clients, setClients] = useSyncedState<ClientCard[]>("ufd.clients", CLIENTS);
   const [draft, setDraft] = useState<DraftClient | null>(null);
 
   const openNew = () => setDraft(emptyDraft());

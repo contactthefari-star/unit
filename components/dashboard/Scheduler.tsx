@@ -11,7 +11,7 @@ import {
   Priority,
   ScheduleBlock,
 } from "@/lib/types";
-import { usePersistentState } from "@/hooks/usePersistentState";
+import { useSyncedState } from "@/hooks/useSyncedState";
 import { useCockpit, Energy } from "@/components/shell/CockpitContext";
 import {
   IconClock,
@@ -216,7 +216,7 @@ function BlockForm({
 }
 
 function Timeline({ energy }: { energy: Energy }) {
-  const [blocks, setBlocks] = usePersistentState<ScheduleBlock[]>("ufd.schedule", SCHEDULE);
+  const [blocks, setBlocks] = useSyncedState<ScheduleBlock[]>("ufd.schedule", SCHEDULE);
   const [draft, setDraft] = useState<DraftBlock | null>(null);
 
   const openNew = () => setDraft(emptyBlock());

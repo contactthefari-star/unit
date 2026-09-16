@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { usePersistentState } from "@/hooks/usePersistentState";
+import { useSyncedState } from "@/hooks/useSyncedState";
 import { IconBolt } from "@/components/ui/Icons";
 
 interface Entry {
@@ -19,7 +19,7 @@ const SEED: Entry[] = [
 ];
 
 export function PostWritingJournal() {
-  const [entries, setEntries] = usePersistentState<Entry[]>("ufd.journal", SEED);
+  const [entries, setEntries] = useSyncedState<Entry[]>("ufd.journal", SEED);
   const [text, setText] = useState("");
 
   const add = () => {

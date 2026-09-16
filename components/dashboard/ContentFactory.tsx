@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { usePersistentState } from "@/hooks/usePersistentState";
+import { useSyncedState } from "@/hooks/useSyncedState";
 import { CONTENT, FRIDAY_BATCHING } from "@/lib/mock-data";
 import {
   ContentCard,
@@ -41,7 +41,7 @@ function Card({ card, onCycle }: { card: ContentCard; onCycle: (id: string) => v
 }
 
 export function ContentFactory() {
-  const [cards, setCards] = usePersistentState<ContentCard[]>("ufd.content", CONTENT);
+  const [cards, setCards] = useSyncedState<ContentCard[]>("ufd.content", CONTENT);
   const [idea, setIdea] = useState("");
   const [dropDay, setDropDay] = useState<WeekDay>("Jeu");
 
