@@ -727,12 +727,14 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
 .fix { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 14px; background: var(--soft); transition: opacity .3s; }
 .fix.applied { opacity: .45; } .fix.applied .btn { display: none; }
 @media (max-width: 520px) { .fix { grid-template-columns: 1fr; } }
-.navedit { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; padding: 8px 10px; border-radius: 14px; background: var(--soft); border: 1px dashed var(--line); font-weight: 600; cursor: grab; animation: wiggle .4s ease-in-out infinite alternate; }
+.navedit { display: grid; grid-template-columns: auto 1fr; touch-action: none; user-select: none; -webkit-user-select: none; gap: 8px; align-items: center; padding: 8px 10px; border-radius: 14px; background: var(--soft); border: 1px dashed var(--line); font-weight: 600; cursor: grab; animation: wiggle .4s ease-in-out infinite alternate; }
 .navedit:nth-child(even) { animation-delay: .2s; }
 @keyframes wiggle { from { transform: rotate(-.6deg); } to { transform: rotate(.6deg); } }
 .navedit.drag { opacity: .4; } .navedit.over { border-color: var(--pri); background: var(--tint); }
 .navedit .grip { color: var(--muted); letter-spacing: -2px; }
-.navedit .mv { display: flex; gap: 2px; } .navedit .mv button { font: inherit; width: 26px; height: 26px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.navedit.dragging { animation: none; cursor: grabbing; position: relative; z-index: 5; background: linear-gradient(120deg, var(--pri), var(--sec)); color: #fff; border-color: transparent; box-shadow: 0 14px 28px -12px var(--pri); }
+.nav.dragging .navedit:not(.dragging) { animation: none; transition: transform .15s; }
+@media (max-width: 900px) { .nav.editing { display: grid; overflow: visible; } }
 .nav.editing { gap: 6px; }
 .autocard { border: 1px solid color-mix(in oklab, var(--pri) 30%, var(--line)); }
 .autos { display: grid; gap: 8px; }
@@ -772,6 +774,42 @@ details.fold > summary { cursor: pointer; }
 .reply { padding: 10px 12px; border-radius: 12px; background: color-mix(in oklab, var(--pri) 10%, var(--surface)); border-left: 3px solid var(--pri); }
 .reply p { margin: 4px 0 0; white-space: pre-wrap; } .postit .reply { background: rgba(255,255,255,.55); color: #2d1633; }
 .cal-title { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; } .cal-title h2 { font-size: 1.35rem; } .cal-title .muted { font-size: 13px; }
+/* ---------- v7 : ambiances de saison et effet waouh ---------- */
+:root[data-season="noel"] { --pri: #b3263b; --sec: #1f5c47; --ter: #d9a441; }
+:root[data-season="halloween"] { --pri: #d2601d; --sec: #5b2a6e; --ter: #f2b544; }
+:root[data-season="paques"] { --pri: #df7f9f; --sec: #7fb26e; --ter: #f3d36f; }
+:root[data-season="ete"] { --pri: #ef7449; --sec: #1997ad; --ter: #ffcf63; }
+.season-fx { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; }
+.shell { position: relative; z-index: 1; }
+.hero.season { background: #0b1630; animation: none; min-height: 250px; align-content: end; padding-top: 70px; }
+.hero.season::before, .hero.season::after, .hero.season .smile, .hero.season .twinkle, .hero.season .decor { display: none; }
+.hero .scene-wrap { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.hero .scene-wrap::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,6,20,.62) 0%, rgba(8,6,20,.32) 42%, rgba(8,6,20,0) 70%); }
+.hero .scene { width: 100%; height: 100%; display: block; }
+.hero .scene [data-depth] { transition: transform .6s cubic-bezier(.2,.8,.2,1); will-change: transform; }
+.hero .hero-fx { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.hero.season > :not(.scene-wrap):not(.hero-fx) { position: relative; z-index: 2; text-shadow: 0 2px 18px rgba(0,0,0,.35); }
+.hero.s-paques .scene-wrap::after { background: linear-gradient(90deg, rgba(255,255,255,.72) 0%, rgba(255,255,255,.35) 45%, rgba(255,255,255,0) 72%); }
+.hero.s-paques { color: #3b2337; } .hero.s-paques > :not(.scene-wrap):not(.hero-fx) { text-shadow: 0 1px 12px rgba(255,255,255,.6); }
+.scene .twk { animation: twk 2.8s ease-in-out infinite; } .scene .twk.slow { animation-duration: 5s; }
+@keyframes twk { 50% { opacity: .15; } }
+.scene .glow { animation: glow 3.5s ease-in-out infinite alternate; } @keyframes glow { to { opacity: .55; } }
+.scene .fog { animation: fog 18s ease-in-out infinite alternate; } .scene .fog.f2 { animation-duration: 24s; animation-direction: alternate-reverse; }
+@keyframes fog { to { transform: translateX(60px); } }
+.scene .bat { animation: batfly var(--d) linear infinite; transform-box: fill-box; }
+@keyframes batfly { 0% { translate: 140px 20px; } 50% { translate: -160px -24px; } 100% { translate: -460px 10px; } }
+.scene .rays { animation: rays 8s ease-in-out infinite alternate; transform-origin: 180px 70px; } @keyframes rays { to { opacity: .75; transform: scale(1.06); } }
+.scene .wave.w1 { animation: wave1 9s linear infinite; } .scene .wave.w2 { animation: wave2 6s linear infinite; }
+@keyframes wave1 { to { translate: 200px 0; } } @keyframes wave2 { to { translate: 240px 0; } }
+.scene .palm { animation: palm 5s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 0 0; } @keyframes palm { to { rotate: 3deg; } }
+.scene .clouds { animation: fog 40s linear infinite alternate; }
+/* reflet qui suit le curseur */
+.card, .stat, .member, .avis, .shortcut { position: relative; }
+.card::after, .stat::after, .member::after, .avis::after, .shortcut::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .35s;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), color-mix(in oklab, var(--pri) 14%, transparent), transparent 60%); }
+.card:hover::after, .stat:hover::after, .member:hover::after, .avis:hover::after, .shortcut:hover::after { opacity: 1; }
+.stat b { font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { .season-fx, .hero-fx { display: none; } }
 </style>
 <div id="app"></div>
 <script type="application/json" id="plan-data">{"assistants": [{"id": "Soraya", "daily": 456, "weekly": 1824, "couleur": ["#e0559a", "#f59ac0"], "resp": true, "jours": [1, 2, 3, 4], "off": "CP"}, {"id": "Laura", "daily": 456, "weekly": 2280, "couleur": ["#f07a5a", "#ffc09a"], "jours": [1, 2, 3, 4, 5]}, {"id": "Lora", "daily": 408, "weekly": 2040, "couleur": ["#8a63e6", "#c4a8ff"], "jours": [1, 2, 3, 4, 5]}, {"id": "Aytana", "daily": 380, "weekly": 1140, "couleur": ["#3f8fe0", "#9cc9ff"]}, {"id": "Inès", "daily": 380, "weekly": 1140, "couleur": ["#2fae9b", "#8fe3cf"]}, {"id": "Nanou", "daily": 380, "weekly": 1140, "role": "assistante", "couleur": ["#c2489b", "#f0a6d6"], "jours": [1, 2, 3, 4, 5]}], "rules": {"dentists": [{"code": "R", "name": "Rami", "days": {"1": "10:00-18:00", "2": "10:00-18:00", "3": "10:00-18:00", "4": "10:00-18:00"}, "assist": ["Laura", "Inès"], "exception": ["Soraya"], "need": true, "note": "1 vendredi par mois pour les implants, avec Soraya (heures sup.)", "extra": {"5": "implants avec Soraya"}}, {"code": "Z", "name": "Zied", "days": {"1": "09:30-17:30", "2": "09:30-17:30", "3": "09:30-17:30", "4": "09:30-17:30", "5": "10:00-14:00"}, "assist": ["Laura", "Aytana"], "need": true}, {"code": "MAJ", "name": "Majdi (orthodontiste)", "days": {"1": "10:00-18:00", "3": "10:00-18:00", "4": "10:00-18:00", "5": "10:00-18:00"}, "alt": ["1", "4"], "assist": ["Lora"], "strict": true, "need": true, "note": "Un lundi sur deux, un jeudi sur deux, jamais le mardi"}, {"code": "S", "name": "Salma", "days": {"2": ""}, "assist": ["Laura", "Nanou"], "strict": true, "need": true, "note": "2 mardis par mois, dates connues tard"}, {"code": "E", "name": "Emine", "days": {"1": "09:30-17:30", "2": "09:30-17:30", "3": "09:30-17:30", "4": "09:30-17:30", "5": "09:30-17:30", "6": "09:00-13:00"}, "assist": ["*"], "need": false, "note": "Assisté si quelqu'un est libre. Samedi : une seule assistante, en heures sup."}, {"code": "I", "name": "Ikram", "days": {"1": "", "4": ""}, "assist": [], "need": false}], "majRef": {"1": "2026-11-09", "4": "2026-11-05"}}, "months": [{"title": "Novembre 2026", "weeks": [{"label": "Semaine 1", "days": [{"date": "2026-11-02", "label": "Lundi 02/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "15:45", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E/Acc"}, "Inès": {"code": "/"}, "Nanou": {"start": "09:00", "end": "15:50", "pause": "13h", "dent": ""}}}, {"date": "2026-11-03", "label": "Mardi 03/11", "sat": false, "holiday": false, "dentists": "R-Z-E", "note": "", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "15:45", "pause": "13h", "dent": "Acc/Z"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}}}, {"date": "2026-11-04", "label": "Mercredi 04/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}}}, {"date": "2026-11-05", "label": "Jeudi 05/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Acc"}}}, {"date": "2026-11-06", "label": "Vendredi 06/11", "sat": false, "holiday": false, "dentists": "Z-MAJ-E", "note": "", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h", "dent": "Z/Acc"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"code": "/"}, "Inès": {"code": "/"}}}, {"date": "2026-11-07", "label": "Samedi 07/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}, "Lora": null, "Aytana": null, "Inès": null}}]}, {"label": "Semaine 2", "days": [{"date": "2026-11-09", "label": "Lundi 09/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "Soraya : Relais R 17h06-17h30\nInès : Relais R 13h30-14h00 ; R fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h00–13h30, MAJ 13h30–14h00", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E/R"}}}, {"date": "2026-11-10", "label": "Mardi 10/11", "sat": false, "holiday": false, "dentists": "R-Z-S-E", "note": "Soraya : Relais S 13h00-13h30 (pause de Laura)\nLora : R 10h00-11h10 + relais 13h30-14h00 ; Z le reste\nLaura : S 10h-16h ; Z 16h00-17h30\n⚠ Seul : Z 9h30–11h10, Z 13h00–14h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "S ★"}, "Lora": {"start": "09:30", "end": "17:00", "pause": "13h", "dent": "Acc"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}}}, {"date": "2026-11-11", "label": "Mercredi 11/11", "sat": false, "holiday": true, "dentists": "MAJ (férié, 10h–15h)", "note": "Cabinet ouvert pour Majdi seul (Lora, sans pause)Lora récupère le férié le ven 20", "cells": {"Soraya": {"code": "F"}, "Laura": {"code": "F"}, "Lora": {"start": "10:00", "end": "15:00", "pause": "sans", "dent": "Acc/ Maj"}, "Aytana": {"code": "F"}, "Inès": {"code": "/"}}}, {"date": "2026-11-12", "label": "Jeudi 12/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nInès : Relais Z 13h00-13h30 ; R 17h36-18h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "17:00", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "E"}}}, {"date": "2026-11-13", "label": "Vendredi 13/11", "sat": false, "holiday": false, "dentists": "Z-MAJ-E", "note": "Aytana : Relais MAJ 13h30-14h00⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h", "dent": "Acc + Z"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "Acc + Majdi"}, "Aytana": {"code": "/"}, "Inès": {"code": "/"}}}, {"date": "2026-11-14", "label": "Samedi 14/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}, "Aytana": null, "Inès": null}}]}, {"label": "Semaine 3", "days": [{"date": "2026-11-16", "label": "Lundi 16/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "16:06", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}, "Inès": {"code": "/"}}}, {"date": "2026-11-17", "label": "Mardi 17/11", "sat": false, "holiday": false, "dentists": "R-Z-E", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nSoraya : Relais R 17h06-17h30\nInès : Z puis R en fin de journée\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "16:06", "pause": "13h", "dent": "Z"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}}}, {"date": "2026-11-18", "label": "Mercredi 18/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "Inès : Relais R 13h30-14h00 ; R fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h00–13h30, MAJ 13h30–14h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"code": "/"}}}, {"date": "2026-11-19", "label": "Jeudi 19/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "Soraya : Relais R 13h30-14h00 et 17h06-17h30\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E/R"}}}, {"date": "2026-11-20", "label": "Vendredi 20/11", "sat": false, "holiday": false, "dentists": "Z-E", "note": "Inès : Relais Z 13h30-14h00", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Z"}, "Lora": {"code": "F"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Acc"}}}, {"date": "2026-11-21", "label": "Samedi 21/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": null, "Aytana": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}, "Inès": null}}]}, {"label": "Semaine 4", "days": [{"date": "2026-11-23", "label": "Lundi 23/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "Soraya : Relais R 13h30-14h00 et 17h06-17h30\nInès : Z puis R en fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Z"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "R"}}}, {"date": "2026-11-24", "label": "Mardi 24/11", "sat": false, "holiday": false, "dentists": "R-Z-S-E", "note": "Soraya : Relais S 13h00-13h30 (pause de Laura)Lora : R 10h00-11h10 + relais 13h30-14h00 ; Z le resteLaura : S 10h-16h ; Z 16h00-17h30⚠ Seul : Z 9h30–11h10, Z 13h00–14h00, Z 15h45–16h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "S ★"}, "Lora": {"start": "09:30", "end": "15:45", "pause": "13h", "dent": "Acc"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"code": "/"}}}, {"date": "2026-11-25", "label": "Mercredi 25/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "Soraya : Relais R 13h30-14h00 et 17h06-17h30\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"code": "/"}}}, {"date": "2026-11-26", "label": "Jeudi 26/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Soraya : Relais R 13h30-14h00\nLora : R 10h00-11h10 ; relais Z 13h00-13h30\n⚠ Seul : Z 9h30–11h10", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "Acc"}, "Laura": {"code": "C"}, "Lora": {"start": "09:00", "end": "15:15", "pause": "13h30", "dent": "Z"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "R"}}}, {"date": "2026-11-27", "label": "Vendredi 27/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "⚠ Seul : Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "14:30", "pause": "HS", "dent": "R ★"}, "Laura": {"code": "C"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "09:00", "end": "15:50", "pause": "13h30", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Acc"}}}, {"date": "2026-11-28", "label": "Samedi 28/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": null, "Aytana": null, "Inès": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}}}]}, {"label": "Semaine 5", "days": [{"date": "2026-11-30", "label": "Lundi 30/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "16:48", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}, "Inès": {"code": "/"}}}], "contracts": {"Soraya": 456, "Laura": 456, "Lora": 408, "Aytana": 380, "Inès": 0}, "remark": "Seul le lundi 30 est en novembre : le reste de la semaine se fait avec le planning de décembre (Aytana 2 jours, Inès 3 jours)."}]}, {"title": "Décembre 2026", "weeks": [{"label": "Semaine 1", "days": [{"date": "2026-12-01", "label": "Mardi 01/12", "sat": false, "holiday": false, "dentists": "R-Z-E", "note": "", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "Z", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "R", "auto": true}, "Lora": {"start": "09:30", "end": "16:48", "pause": "13h", "dent": "Acc", "auto": true}, "Aytana": {"code": "/", "auto": true}, "Inès": {"code": "/", "auto": true}, "Nanou": {"code": "C"}}}, {"date": "2026-12-02", "label": "Mercredi 02/12", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "", "cells": {"Soraya": {"code": "C"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "R", "auto": true}, "Lora": {"start": "10:00", "end": "17:18", "pause": "13h30", "dent": "MAJ ★", "auto": true}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z", "auto": true}, "Inès": {"start": "09:00", "end": "15:50", "pause": "13h", "dent": "Acc", "auto": true}, "Nanou": {"code": "C"}}}, {"date": "2026-12-03", "label": "Jeudi 03/12", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R", "auto": true}, "Lora": {"start": "10:00", "end": "17:18", "pause": "13h30", "dent": "MAJ ★", "auto": true}, "Aytana": {"code": "/", "auto": true}, "Inès": {"start": "09:30", "end": "16:20", "pause": "13h", "dent": "Z", "auto": true}, "Nanou": {"code": "C"}}}, {"date": "2026-12-04", "label": "Vendredi 04/12", "sat": false, "holiday": false, "dentists": "Z-MAJ-E", "note": "", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "Z/Acc", "auto": true}, "Lora": {"start": "10:00", "end": "17:18", "pause": "13h30", "dent": "MAJ ★", "auto": true}, "Aytana": {"start": "09:30", "end": "16:20", "pause": "13h", "dent": "Acc", "auto": true}, "Inès": {"code": "/", "auto": true}, "Nanou": {"code": "C"}}}, {"date": "2026-12-05", "label": "Samedi 05/12", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E", "auto": true}, "Lora": null, "Aytana": null, "Inès": null, "Nanou": null}}], "contracts": {"Soraya": 1368, "Laura": 1824, "Lora": 1632, "Aytana": 760, "Inès": 760, "Nanou": 1520}}, {"label": "Semaine 2", "days": [{"date": "2026-12-07", "label": "Lundi 07/12", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R", "auto": true}, "Lora": {"start": "10:00", "end": "17:18", "pause": "13h", "dent": "MAJ ★", "auto": true}, "Aytana": {"code": "/", "auto": true}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z", "auto": true}, "Nanou": {"code": "C"}}}, {"date": "2026-12-08", "label": "Mardi 08/12", "sat": false, "holiday": false, "dentists": "R-Z-S-E", "note": "", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "Acc", "auto": true}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "S ★", "auto": true}, "Lora": {"start": "09:30", "end": "16:48", "pause": "13h", "dent": "E", "auto": true}, "Aytana": {"start": "09:30", "end": "16:20", "pause": "13h", "dent": "Z", "auto": true}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "R", "auto": true}, "Nanou": {"code": "C"}}}, {"date": "2026-12-09", "label": "Mercredi 09/12", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "Acc", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "R", "auto": true}, "Lora": {"start": "10:00", "end": "17:18", "pause": "13h", "dent": "MAJ ★", "auto": true}, "Aytana": {"start": "09:30", "end": "16:20", "pause": "13h30", "dent": "Z", "auto": true}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E", "auto": true}, "Nanou": {"code": "C"}}}, {"date": "2026-12-10", "label": "Jeudi 10/12", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Z", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R", "auto": true}, "Lora": {"start": "09:00", "end": "16:18", "pause": "13h", "dent": "Acc", "auto": true}, "Aytana": {"code": "/", "auto": true}, "Inès": {"code": "/", "auto": true}, "Nanou": {"code": "C"}}}, {"date": "2026-12-11", "label": "Vendredi 11/12", "sat": false, "holiday": false, "dentists": "Z-MAJ-E", "note": "", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "Z/Acc", "auto": true}, "Lora": {"start": "10:00", "end": "17:18", "pause": "13h", "dent": "MAJ ★", "auto": true}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Acc", "auto": true}, "Inès": {"code": "/", "auto": true}, "Nanou": {"code": "C"}}}, {"date": "2026-12-12", "label": "Samedi 12/12", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E", "auto": true}, "Aytana": null, "Inès": null, "Nanou": null}}]}, {"label": "Semaine 3", "days": [{"date": "2026-12-14", "label": "Lundi 14/12", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "Acc", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R", "auto": true}, "Lora": {"start": "09:30", "end": "16:48", "pause": "13h30", "dent": "E", "auto": true}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z", "auto": true}, "Inès": {"code": "/", "auto": true}, "Nanou": {"code": "C"}}}, {"date": "2026-12-15", "label": "Mardi 15/12", "sat": false, "holiday": false, "dentists": "R-Z-S-E", "note": "", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "Z", "auto": true}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "S ★", "auto": true}, "Lora": {"start": "09:30", "end": "16:48", "pause": "13h", "dent": "E", "auto": true}, "Aytana": {"code": "/", "auto": true}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "R", "auto": true}, "Nanou": {"start": "10:00", "end": "16:50", "pause": "13h", "dent": "Acc", "auto": true}}}, {"date": "2026-12-16", "label": "Mercredi 16/12", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R", "auto": true}, "Lora": {"start": "10:00", "end": "17:18", "pause": "13h", "dent": "MAJ ★", "auto": true}, "Aytana": {"code": "/", "auto": true}, "Inès": {"start": "09:30", "end": "16:20", "pause": "13h", "dent": "Z", "auto": true}, "Nanou": {"start": "09:30", "end": "16:20", "pause": "13h30", "dent": "E", "auto": true}}}, {"date": "2026-12-17", "label": "Jeudi 17/12", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "R", "auto": true}, "Lora": {"start": "10:00", "end": "17:18", "pause": "13h", "dent": "MAJ ★", "auto": true}, "Aytana": {"start": "09:30", "end": "16:20", "pause": "13h30", "dent": "Z", "auto": true}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E", "auto": true}, "Nanou": {"start": "09:30", "end": "16:20", "pause": "13h30", "dent": "Acc", "auto": true}}}, {"date": "2026-12-18", "label": "Vendredi 18/12", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "Implants avec Rami", "cells": {"Soraya": {"start": "09:30", "end": "14:30", "pause": "HS", "dent": "R ★"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "Z/Acc", "auto": true}, "Lora": {"start": "10:00", "end": "17:18", "pause": "13h30", "dent": "MAJ ★", "auto": true}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "E", "auto": true}, "Inès": {"code": "/", "auto": true}, "Nanou": {"start": "10:00", "end": "16:50", "pause": "13h", "dent": "Acc", "auto": true}}}, {"date": "2026-12-19", "label": "Samedi 19/12", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": null, "Aytana": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E", "auto": true}, "Inès": null, "Nanou": null}}]}, {"label": "Semaine 4", "days": [{"date": "2026-12-21", "label": "Lundi 21/12", "sat": false, "holiday": false, "dentists": "Z-MAJ-E-I", "note": "Rami en congé", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "Acc", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R", "auto": true}, "Lora": {"start": "10:00", "end": "17:18", "pause": "13h", "dent": "MAJ ★", "auto": true}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z", "auto": true}, "Inès": {"start": "09:30", "end": "16:20", "pause": "13h30", "dent": "E", "auto": true}, "Nanou": {"start": "09:30", "end": "16:20", "pause": "13h", "dent": "Acc", "auto": true}}}, {"date": "2026-12-22", "label": "Mardi 22/12", "sat": false, "holiday": false, "dentists": "Z-E", "note": "Rami en congé", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h", "dent": "Acc", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "R", "auto": true}, "Lora": {"start": "09:30", "end": "16:48", "pause": "13h30", "dent": "E", "auto": true}, "Aytana": {"code": "/", "auto": true}, "Inès": {"start": "09:30", "end": "16:20", "pause": "13h30", "dent": "Z", "auto": true}, "Nanou": {"start": "10:00", "end": "16:50", "pause": "13h", "dent": "Acc", "auto": true}}}, {"date": "2026-12-23", "label": "Mercredi 23/12", "sat": false, "holiday": false, "dentists": "Z-MAJ-E", "note": "Rami en congé", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h", "dent": "Acc", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R", "auto": true}, "Lora": {"start": "10:00", "end": "17:18", "pause": "13h", "dent": "MAJ ★", "auto": true}, "Aytana": {"start": "09:30", "end": "16:20", "pause": "13h", "dent": "Z", "auto": true}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "E", "auto": true}, "Nanou": {"start": "10:00", "end": "16:50", "pause": "13h30", "dent": "Acc", "auto": true}}}, {"date": "2026-12-24", "label": "Jeudi 24/12", "sat": false, "holiday": false, "dentists": "E-I", "note": "Rami en congé\nZied en congé", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h", "dent": "Acc", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "R", "auto": true}, "Lora": {"start": "09:30", "end": "16:48", "pause": "13h30", "dent": "E", "auto": true}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z", "auto": true}, "Inès": {"code": "/", "auto": true}, "Nanou": {"start": "09:30", "end": "16:20", "pause": "13h30", "dent": "Acc", "auto": true}}}, {"date": "2026-12-25", "label": "Vendredi 25/12", "sat": false, "holiday": true, "dentists": "", "note": "", "cells": {"Soraya": {"code": "CP"}, "Laura": {"code": "F"}, "Lora": {"code": "F"}, "Aytana": {"code": "/", "auto": true}, "Inès": {"code": "/", "auto": true}, "Nanou": {"code": "F"}}}, {"date": "2026-12-26", "label": "Samedi 26/12", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": null, "Aytana": null, "Inès": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E", "auto": true}, "Nanou": null}}]}, {"label": "Semaine 5", "days": [{"date": "2026-12-28", "label": "Lundi 28/12", "sat": false, "holiday": false, "dentists": "E-I", "note": "Rami en congé\nZied en congé", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "Z", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R", "auto": true}, "Lora": {"start": "09:30", "end": "16:48", "pause": "13h", "dent": "E", "auto": true}, "Aytana": {"code": "/", "auto": true}, "Inès": {"code": "/", "auto": true}, "Nanou": {"start": "09:00", "end": "15:50", "pause": "13h", "dent": "Acc", "auto": true}}}, {"date": "2026-12-29", "label": "Mardi 29/12", "sat": false, "holiday": false, "dentists": "E", "note": "Rami en congé\nZied en congé", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Z", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "R", "auto": true}, "Lora": {"start": "09:00", "end": "16:18", "pause": "13h30", "dent": "Acc", "auto": true}, "Aytana": {"code": "/", "auto": true}, "Inès": {"code": "/", "auto": true}, "Nanou": {"start": "09:30", "end": "16:20", "pause": "13h30", "dent": "E", "auto": true}}}, {"date": "2026-12-30", "label": "Mercredi 30/12", "sat": false, "holiday": false, "dentists": "MAJ-E", "note": "Rami en congé\nZied en congé", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "Acc", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R", "auto": true}, "Lora": {"start": "10:00", "end": "17:18", "pause": "13h30", "dent": "MAJ ★", "auto": true}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z", "auto": true}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "E", "auto": true}, "Nanou": {"start": "09:00", "end": "15:50", "pause": "13h", "dent": "Acc", "auto": true}}}, {"date": "2026-12-31", "label": "Jeudi 31/12", "sat": false, "holiday": false, "dentists": "MAJ-E-I", "note": "Rami en congé\nZied en congé", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h", "dent": "Acc", "auto": true}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "R", "auto": true}, "Lora": {"start": "10:00", "end": "17:18", "pause": "13h30", "dent": "MAJ ★", "auto": true}, "Aytana": {"start": "09:30", "end": "16:20", "pause": "13h", "dent": "Z", "auto": true}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "E", "auto": true}, "Nanou": {"start": "10:00", "end": "16:50", "pause": "13h30", "dent": "Acc", "auto": true}}}], "contracts": {"Soraya": 1824, "Laura": 1824, "Lora": 1632, "Aytana": 760, "Inès": 760, "Nanou": 1520}}], "statut": "brouillon"}], "cur": 1, "savedAt": "2026-10-28T21:28:41.828Z", "dentConges": [{"code": "R", "du": "2026-12-21", "au": "2027-01-03", "at": 1793222884890}, {"code": "Z", "du": "2026-12-24", "au": "2027-01-03", "at": 1793222920038}]}</script>
@@ -1142,15 +1180,35 @@ details.fold > summary { cursor: pointer; }
     MGR_TABS.forEach(function (t) { if (out.indexOf(t) < 0) out.push(t); });
     return out.map(function (t) { return t[0] === "moi" ? ["moi", "Moi · " + (respId() || "responsable")] : t; });
   }
-  function moveTab(k, dir) {
-    var keys = mgrTabs().map(function (t) { return t[0]; }), i = keys.indexOf(k), j = i + dir;
-    if (j < 0 || j >= keys.length) return;
-    keys.splice(j, 0, keys.splice(i, 1)[0]);
-    S.ordre = Object.assign({}, S.ordre, { menu: keys }); render();
-    write(db.doc("config/ordre").set(Object.assign({}, S.ordre, { at: Date.now() })));
+  // Glisser-déposer du menu, à la souris comme au doigt : on attrape un onglet et on le pose où on veut.
+  function dragMenu(nav) {
+    nav.querySelectorAll(".navedit").forEach(function (n) {
+      n.addEventListener("pointerdown", function (e) {
+        e.preventDefault();
+        var y0 = e.clientY, top0 = n.getBoundingClientRect().top;
+        n.setPointerCapture(e.pointerId); n.classList.add("dragging"); nav.classList.add("dragging");
+        function move(ev) {
+          var y = ev.clientY;
+          n.style.transform = "";
+          var items = Array.prototype.filter.call(nav.children, function (x) { return x !== n; });
+          var before = items.filter(function (x) { var r = x.getBoundingClientRect(); return y < r.top + r.height / 2; })[0] || null;
+          if (before !== n.nextElementSibling) nav.insertBefore(n, before);
+          n.style.transform = "translateY(" + (y - y0 - (n.getBoundingClientRect().top - top0)) + "px)";
+        }
+        function up() {
+          n.removeEventListener("pointermove", move); n.removeEventListener("pointerup", up); n.removeEventListener("pointercancel", up);
+          n.style.transform = ""; n.classList.remove("dragging"); nav.classList.remove("dragging");
+          var keys = Array.prototype.map.call(nav.querySelectorAll(".navedit"), function (x) { return x.getAttribute("data-k"); });
+          if (keys.join() === mgrTabs().map(function (t) { return t[0]; }).join()) return;
+          S.ordre = Object.assign({}, S.ordre, { menu: keys }); render();
+          write(db.doc("config/ordre").set(Object.assign({}, S.ordre, { at: Date.now() })));
+        }
+        n.addEventListener("pointermove", move); n.addEventListener("pointerup", up); n.addEventListener("pointercancel", up);
+      });
+    });
   }
   function tabsNow() { return isMgr() ? mgrTabs() : owner ? [["accueil", "Accueil"]] : S.link ? girlTabs() : [["accueil", "Accueil"]]; }
-  function route() { var h = (location.hash || "").slice(1), t = tabsNow(); return t.some(function (x) { return x[0] === h; }) || (isMgr() && h === "suivi") ? h : "accueil"; }
+  function route() { var h = (location.hash || "").slice(1), t = tabsNow(); return t.some(function (x) { return x[0] === h; }) || (isMgr() && h === "suivi") ? h : (t[0] ? t[0][0] : "accueil"); }
 
   // « Voir son interface » : Soraya voit exactement l'écran d'une assistante, sans rien pouvoir enregistrer à sa place.
   var PKEYS = ["link", "mine", "myAuto", "myResp", "myVote", "myProps", "myValid", "myRecup", "myTasks", "mySujets", "myAcces", "myDemandes", "myConges", "myNotesDent", "myObjectifs"];
@@ -1184,13 +1242,13 @@ details.fold > summary { cursor: pointer; }
     var y = window.scrollY;
     app.textContent = "";
     idx = 0;
+    applySeason();
     var tab = route(), tabs = tabsNow();
     var pend = isMgr() ? pendingCount() : 0, me = S.link;
     var side = el("aside", { class: "side" }, [
       el("div", { class: "brand" }, [logo(), el("div", null, ["Lensdental", el("small", { text: isMgr() ? "Espace responsable" : "L'équipe" })])]),
       el("nav", { class: "nav" + (ui.editMenu ? " editing" : ""), "aria-label": "Sections" }, tabs.map(function (t) {
-        if (ui.editMenu && isMgr()) return el("div", { class: "navedit", draggable: "true", "data-k": t[0] }, [el("span", { class: "grip", "aria-hidden": "true", text: "⋮⋮" }), el("span", { text: t[1] }),
-          el("span", { class: "mv" }, [el("button", { type: "button", "aria-label": "Monter " + t[1], text: "↑", onclick: function () { moveTab(t[0], -1); } }), el("button", { type: "button", "aria-label": "Descendre " + t[1], text: "↓", onclick: function () { moveTab(t[0], 1); } })])]);
+        if (ui.editMenu && isMgr()) return el("div", { class: "navedit", "data-k": t[0] }, [el("span", { class: "grip", "aria-hidden": "true", text: "⋮⋮" }), el("span", { text: t[1] })]);
         var badge = null;
         if (isMgr() && t[0] === "accueil" && pend) badge = el("span", { class: "badge", text: String(pend) });
         if (!isMgr() && t[0] === "taches") { var n = openTasks().length; if (n) badge = el("span", { class: "badge", text: String(n) }); }
@@ -1205,15 +1263,7 @@ details.fold > summary { cursor: pointer; }
         isMgr() && !ui.viewAs ? el("button", { class: "linkbtn", type: "button", text: "Verrouiller", onclick: function () { setMgr(false); } }) : null
       ])
     ]);
-    if (ui.editMenu) {
-      var dragK = null;
-      side.querySelectorAll(".navedit").forEach(function (n) {
-        n.addEventListener("dragstart", function () { dragK = n.getAttribute("data-k"); n.classList.add("drag"); });
-        n.addEventListener("dragover", function (e) { e.preventDefault(); n.classList.add("over"); });
-        n.addEventListener("dragleave", function () { n.classList.remove("over"); });
-        n.addEventListener("drop", function (e) { e.preventDefault(); var to = n.getAttribute("data-k"); if (!dragK || dragK === to) return; var keys = mgrTabs().map(function (t) { return t[0]; }); keys.splice(keys.indexOf(to), 0, keys.splice(keys.indexOf(dragK), 1)[0]); S.ordre = Object.assign({}, S.ordre, { menu: keys }); render(); write(db.doc("config/ordre").set(Object.assign({}, S.ordre, { at: Date.now() }))); });
-      });
-    }
+    if (ui.editMenu) dragMenu(side.querySelector(".nav"));
     main = el("main", { class: "main" + (ui.enter ? " enter" : "") });
     ui.enter = false;
     var tabletOn = (isMgr() && ui.tablet && tab === "dentistes") || (S.ready && owner && !mgr && !ui.kiosk);
@@ -1352,7 +1402,7 @@ details.fold > summary { cursor: pointer; }
       smile, dentalDecor()
     ].concat(sparkles(9)));
     if (bday) { var k = "bday-" + today + name, seen = false; try { seen = sessionStorage.getItem(k) === "1"; sessionStorage.setItem(k, "1"); } catch (e) {} if (!seen) setTimeout(confetti, 400); }
-    return h;
+    return bday ? h : dressHero(h);
   }
   function birthdayNotice(skip) {
     var bd = state.assistants.map(function (a) { var b = birthdayOf(a.id); return b ? { a: a.id, n: daysUntil(b), b: b } : null; }).filter(function (x) { return x && x.n <= 14 && x.a !== skip; }).sort(function (x, y) { return x.n - y.n; });
@@ -1418,7 +1468,9 @@ details.fold > summary { cursor: pointer; }
     ])));
     var pots = card("Les pots d'heures", "Un pot plein = 10 h", el("div", { class: "card-body" }, [el("div", { class: "pots" }, state.assistants.map(function (a, i) { return potCard(a.id, "d" + i); }))]), null, "span-all");
     g.appendChild(pots);
+      if (main.classList.contains("enter")) countUp(main);
   }
+
   function taskProgress(t) {
     var st = taskStatus(t), done = st.filter(function (x) { return x.fait; }).length;
     return el("div", { class: "tprog" }, [el("div", { class: "tp-head" }, [el("b", { text: t.titre }), el("span", { class: "muted", text: done + "/" + st.length })]),
@@ -3665,6 +3717,211 @@ details.fold > summary { cursor: pointer; }
     dlg.appendChild(form); showDlg();
   }
 
+  /* ---------- ambiances de saison : Noël, Halloween, Pâques, l'été ---------- */
+  // La saison se choisit toute seule d'après la date ; la responsable peut la couper ou en forcer une (Accès & outils).
+  S.ambiance = {};
+  var SEASONS = {
+    noel: { nom: "Noël", salut: "Joyeuses fêtes", mot: "Les lumières de fin d'année sont là. Merci pour cette année ensemble." },
+    halloween: { nom: "Halloween", salut: "Happy Halloween", mot: "Une ambiance de saison, des sourires toute l'année." },
+    paques: { nom: "Pâques", salut: "Joyeuses Pâques", mot: "Le printemps est là : on respire, on fleurit." },
+    ete: { nom: "L'été", salut: "Vamos a la playa", mot: "Soleil, sel et bonne humeur : bel été à toute l'équipe." }
+  };
+  function seasonByDate(dt) {
+    var y = dt.getFullYear(), k = isoOf(dt), md = k.slice(5);
+    if (md >= "12-01" || md <= "01-06") return "noel";
+    if (md >= "10-20" && md <= "11-01") return "halloween";
+    var e = easter(y), a = isoOf(addDays(e, -10)), b = isoOf(addDays(e, 2));
+    if (k >= a && k <= b) return "paques";
+    if (md >= "07-01" && md <= "08-31") return "ete";
+    return null;
+  }
+  function currentSeason() {
+    var m = (S.ambiance && S.ambiance.mode) || "auto";
+    if (m === "off") return null;
+    if (SEASONS[m]) return m;
+    return seasonByDate(new Date());
+  }
+  var lastSeason;
+  function applySeason() {
+    var s = currentSeason();
+    if (s === lastSeason) return s;
+    lastSeason = s;
+    if (s) document.documentElement.setAttribute("data-season", s); else document.documentElement.removeAttribute("data-season");
+    ambient.set(s);
+    return s;
+  }
+
+  /* ---------- les scènes (en-tête de l'accueil) ---------- */
+  function g(id, stops, x2, y2) { return sv("linearGradient", { id: id, x1: "0", y1: "0", x2: x2 || "0", y2: y2 || "1" }, stops.map(function (s) { return sv("stop", { offset: s[0], "stop-color": s[1], "stop-opacity": s[2] == null ? "1" : s[2] }); })); }
+  function rg(id, stops) { return sv("radialGradient", { id: id }, stops.map(function (s) { return sv("stop", { offset: s[0], "stop-color": s[1], "stop-opacity": s[2] == null ? "1" : s[2] }); })); }
+  function blur(id, d) { return sv("filter", { id: id, x: "-50%", y: "-50%", width: "200%", height: "200%" }, [sv("feGaussianBlur", { stdDeviation: String(d) })]); }
+  function P(d, attrs) { var o = { d: d }; for (var k in attrs) o[k] = attrs[k]; return sv("path", o); }
+  // Sapin réaliste en couches (ombres et lumières), dessiné à partir d'étages irréguliers.
+  function pine(x, base, h, col, lite) {
+    var w = h * 0.42, out = [], tiers = 6;
+    for (var i = 0; i < tiers; i++) {
+      var t0 = base - h * (i / tiers) * 0.92, ww = w * (1 - i / tiers * 0.8), top = t0 - h * 0.28;
+      var j = (hashStr("p" + x + i) % 7) - 3;
+      out.push(P("M" + (x - ww) + " " + t0 + " Q" + (x - ww * 0.45) + " " + (t0 - h * 0.06 + j) + " " + x + " " + top + " Q" + (x + ww * 0.5) + " " + (t0 - h * 0.05 - j) + " " + (x + ww) + " " + t0 + " Q" + x + " " + (t0 + h * 0.04) + " " + (x - ww) + " " + t0 + "z", { fill: col }));
+      if (lite) out.push(P("M" + (x + ww * 0.15) + " " + (t0 - h * 0.02) + " Q" + (x + ww * 0.55) + " " + (t0 - h * 0.05) + " " + (x + ww * 0.95) + " " + (t0 - h * 0.005), { fill: "none", stroke: lite, "stroke-width": String(h * 0.011), "stroke-linecap": "round", opacity: ".38" }));
+    }
+    out.push(sv("rect", { x: String(x - h * 0.025), y: String(base - h * 0.02), width: String(h * 0.05), height: String(h * 0.08), fill: col }));
+    return sv("g", null, out);
+  }
+  function sceneNoel() {
+    var lights = [], i;
+    for (i = 0; i < 14; i++) { var s = hashStr("l" + i); lights.push(sv("circle", { class: "twk", cx: String(470 + (s % 330)), cy: String(150 + ((s >> 5) % 120)), r: String(1.6 + (s % 3) * 0.6), fill: ["#ffd98a", "#ffb35c", "#fff2c9"][s % 3], style: "animation-delay:" + ((s >> 3) % 30) / 10 + "s" })); }
+    var stars = []; for (i = 0; i < 40; i++) { var t = hashStr("s" + i); stars.push(sv("circle", { class: "twk slow", cx: String(t % 900), cy: String((t >> 7) % 140), r: String(0.5 + (t % 3) * 0.4), fill: "#fff", opacity: String(0.3 + (t % 5) / 10), style: "animation-delay:" + ((t >> 2) % 50) / 10 + "s" })); }
+    return sv("svg", { class: "scene", viewBox: "0 0 900 320", preserveAspectRatio: "xMaxYMid slice", "aria-hidden": "true" }, [
+      sv("defs", null, [g("ns-sky", [["0", "#0b1630"], [".55", "#1b2d55"], ["1", "#3b3f6b"]]), g("ns-snow", [["0", "#f4f8ff"], ["1", "#c9d6ec"]]), g("ns-snow2", [["0", "#dfe8f7"], ["1", "#9fb0cf"]]), rg("ns-moon", [["0", "#fffbe8"], [".25", "#fff4cc", ".9"], ["1", "#fff4cc", "0"]]), rg("ns-win", [["0", "#ffcf7a", ".95"], ["1", "#ff9a3c", "0"]]), blur("ns-b2", 2), blur("ns-b6", 6)]),
+      sv("rect", { width: "900", height: "320", fill: "url(#ns-sky)" }),
+      sv("g", null, stars),
+      sv("g", { "data-depth": "6" }, [sv("circle", { cx: "720", cy: "70", r: "90", fill: "url(#ns-moon)" }), sv("circle", { cx: "720", cy: "70", r: "24", fill: "#fffaf0" })]),
+      sv("g", { "data-depth": "10", filter: "url(#ns-b2)", opacity: ".55" }, [P("M0 230 Q160 180 320 215 T640 205 T900 210 V320 H0z", { fill: "#55628f" })].concat([60, 140, 260, 380, 560, 700, 830].map(function (x, k) { return pine(x, 222 - (k % 3) * 6, 70 + (k % 4) * 10, "#2c3b62"); }))),
+      sv("g", { "data-depth": "18" }, [P("M0 262 Q200 220 420 250 T900 238 V320 H0z", { fill: "url(#ns-snow2)" })].concat([30, 210, 330, 610, 760, 880].map(function (x, k) { return pine(x, 258 - (k % 2) * 8, 110 + (k % 3) * 22, "#173a35", "#e8f1ff"); }))),
+      sv("g", { "data-depth": "24" }, [sv("rect", { x: "455", y: "214", width: "62", height: "44", rx: "2", fill: "#2a2133" }), P("M447 216 L486 188 L525 216z", { fill: "#e9f0fb" }), sv("rect", { x: "468", y: "226", width: "14", height: "14", fill: "#ffc86b" }), sv("rect", { x: "492", y: "226", width: "14", height: "14", fill: "#ffc86b" }), sv("circle", { class: "glow", cx: "487", cy: "236", r: "60", fill: "url(#ns-win)" })]),
+      sv("g", null, lights),
+      sv("g", { "data-depth": "34" }, [P("M0 292 Q240 262 470 286 T900 276 V320 H0z", { fill: "url(#ns-snow)" }), pine(120, 300, 170, "#0f2e2a", "#ffffff"), pine(820, 304, 190, "#0f2e2a", "#ffffff")])
+    ]);
+  }
+  function bat(x, y, s, d) { return sv("g", { class: "bat", style: "--d:" + d + "s", transform: "translate(" + x + " " + y + ") scale(" + s + ")" }, [P("M0 0 C-6 -6 -14 -6 -22 -2 C-16 -2 -14 2 -12 6 C-9 2 -5 2 -3 4 L0 2 L3 4 C5 2 9 2 12 6 C14 2 16 -2 22 -2 C14 -6 6 -6 0 0z", { fill: "#1a0f22" })]); }
+  function sceneHalloween() {
+    return sv("svg", { class: "scene", viewBox: "0 0 900 320", preserveAspectRatio: "xMaxYMid slice", "aria-hidden": "true" }, [
+      sv("defs", null, [g("nh-sky", [["0", "#23103a"], [".5", "#6b2a4e"], [".82", "#d0603a"], ["1", "#f3a253"]]), rg("nh-moon", [["0", "#fff3d6"], [".3", "#ffe0a8", ".8"], ["1", "#ff9a52", "0"]]), g("nh-hill", [["0", "#2b1530"], ["1", "#120a18"]]), blur("nh-b8", 8), blur("nh-b3", 3)]),
+      sv("rect", { width: "900", height: "320", fill: "url(#nh-sky)" }),
+      sv("g", { "data-depth": "5" }, [sv("circle", { cx: "650", cy: "120", r: "150", fill: "url(#nh-moon)" }), sv("circle", { cx: "650", cy: "120", r: "52", fill: "#fff1d2" }), sv("circle", { cx: "632", cy: "106", r: "9", fill: "#f2dcb0", opacity: ".6" }), sv("circle", { cx: "668", cy: "132", r: "6", fill: "#f2dcb0", opacity: ".5" }), sv("circle", { cx: "646", cy: "146", r: "4", fill: "#f2dcb0", opacity: ".45" })]),
+      sv("g", { class: "fog", filter: "url(#nh-b8)", opacity: ".45" }, [sv("ellipse", { cx: "200", cy: "238", rx: "260", ry: "18", fill: "#f6d6e6" }), sv("ellipse", { cx: "700", cy: "250", rx: "300", ry: "16", fill: "#f6d6e6" })]),
+      sv("g", { "data-depth": "12", opacity: ".8" }, [P("M0 240 Q180 205 360 232 T720 222 T900 228 V320 H0z", { fill: "#3a1d3f" })]),
+      sv("g", { "data-depth": "20" }, [P("M0 268 Q220 236 470 262 T900 252 V320 H0z", { fill: "url(#nh-hill)" }),
+        P("M780 262 C778 220 790 190 776 150 M778 196 C800 184 818 170 840 168 M776 172 C756 160 746 140 724 134 M784 222 C810 214 826 204 850 206 M779 160 C790 140 800 126 812 112 M724 134 C716 126 712 118 700 116 M840 168 C852 160 860 150 874 150", { fill: "none", stroke: "#120a18", "stroke-width": "7", "stroke-linecap": "round" }),
+        sv("g", null, [sv("circle", { class: "glow", cx: "620", cy: "258", r: "46", fill: "url(#nh-moon)", opacity: ".5" }), sv("ellipse", { cx: "620", cy: "258", rx: "22", ry: "17", fill: "#e2661f" }), sv("ellipse", { cx: "608", cy: "258", rx: "9", ry: "16", fill: "#c9521a" }), sv("ellipse", { cx: "632", cy: "258", rx: "9", ry: "16", fill: "#f07a2c" }), sv("rect", { x: "617", y: "236", width: "5", height: "8", rx: "2", fill: "#3d5a1e" }), sv("ellipse", { cx: "660", cy: "266", rx: "13", ry: "10", fill: "#c9521a" }), sv("ellipse", { cx: "660", cy: "266", rx: "6", ry: "9.5", fill: "#e2661f" })])]),
+      sv("g", { class: "fog f2", filter: "url(#nh-b8)", opacity: ".35" }, [sv("ellipse", { cx: "450", cy: "292", rx: "520", ry: "20", fill: "#fbe1ee" })]),
+      bat(560, 80, 1.1, 9), bat(740, 60, 0.7, 12), bat(820, 110, 0.9, 10.5), bat(470, 130, 0.6, 14)
+    ]);
+  }
+  function blossom(x, y, s, c) { var petals = []; for (var i = 0; i < 5; i++) { var a = i * 72; petals.push(sv("ellipse", { cx: "0", cy: String(-5 * s), rx: String(3.4 * s), ry: String(5 * s), fill: c, transform: "rotate(" + a + ")" })); } petals.push(sv("circle", { r: String(1.8 * s), fill: "#f6c95c" })); return sv("g", { transform: "translate(" + x + " " + y + ")" }, petals); }
+  function scenePaques() {
+    var fl = []; for (var i = 0; i < 26; i++) { var h = hashStr("b" + i); fl.push(blossom(560 + (h % 320), 30 + ((h >> 6) % 150), 0.8 + (h % 5) / 6, ["#ffd6e3", "#ffc2d6", "#fff0f4"][h % 3])); }
+    return sv("svg", { class: "scene", viewBox: "0 0 900 320", preserveAspectRatio: "xMaxYMid slice", "aria-hidden": "true" }, [
+      sv("defs", null, [g("np-sky", [["0", "#bfe3f7"], [".6", "#f6e3ef"], ["1", "#fdf1e2"]]), rg("np-sun", [["0", "#fff9e6"], [".35", "#fff1c4", ".85"], ["1", "#fff1c4", "0"]]), g("np-hill", [["0", "#b9dba0"], ["1", "#86bb73"]]), g("np-hill2", [["0", "#d5ebbd"], ["1", "#a8d08f"]]), blur("np-b4", 4)]),
+      sv("rect", { width: "900", height: "320", fill: "url(#np-sky)" }),
+      sv("g", { class: "rays", "data-depth": "4" }, [sv("circle", { cx: "180", cy: "70", r: "160", fill: "url(#np-sun)" })]),
+      sv("g", { "data-depth": "10", filter: "url(#np-b4)", opacity: ".7" }, [P("M0 236 Q220 196 450 226 T900 214 V320 H0z", { fill: "url(#np-hill2)" })]),
+      sv("g", { "data-depth": "18" }, [P("M0 270 Q260 230 520 262 T900 248 V320 H0z", { fill: "url(#np-hill)" })]),
+      sv("g", { "data-depth": "26" }, [P("M900 20 C840 40 780 60 700 70 M820 44 C800 80 790 110 760 140 M760 62 C730 90 690 100 650 120 M700 70 C670 60 640 66 600 52", { fill: "none", stroke: "#6b4a3c", "stroke-width": "5", "stroke-linecap": "round" })].concat(fl)),
+      sv("g", { "data-depth": "32" }, [sv("ellipse", { cx: "650", cy: "270", rx: "16", ry: "21", fill: "#f4c9d9" }), P("M636 266 Q650 260 664 266", { stroke: "#ffffff", "stroke-width": "3", fill: "none" }), sv("ellipse", { cx: "690", cy: "276", rx: "13", ry: "17", fill: "#c9e0f4" }), P("M679 272 L684 278 L689 272 L694 278 L699 272", { stroke: "#ffffff", "stroke-width": "2", fill: "none" }), sv("ellipse", { cx: "722", cy: "278", rx: "12", ry: "15", fill: "#fbe6a6" }), P("M630 288 q10 -12 20 0 q8 -10 16 0 q9 -12 18 0 q8 -9 16 0 q10 -12 20 0 q8 -10 18 0", { fill: "none", stroke: "#7fb26e", "stroke-width": "3", "stroke-linecap": "round" })])
+    ]);
+  }
+  function sceneEte() {
+    var glints = []; for (var i = 0; i < 24; i++) { var h = hashStr("g" + i); glints.push(sv("rect", { class: "twk", x: String(380 + (h % 420)), y: String(200 + ((h >> 4) % 70)), width: String(6 + (h % 10)), height: "1.6", rx: ".8", fill: "#fff6d8", style: "animation-delay:" + ((h >> 2) % 30) / 10 + "s" })); }
+    return sv("svg", { class: "scene", viewBox: "0 0 900 320", preserveAspectRatio: "xMaxYMid slice", "aria-hidden": "true" }, [
+      sv("defs", null, [g("ne-sky", [["0", "#2b6fb3"], [".45", "#f4a77d"], [".72", "#ffcf8a"], ["1", "#ffe3a8"]]), rg("ne-sun", [["0", "#fff6da"], [".25", "#ffe0a0", ".95"], ["1", "#ff9e5a", "0"]]), g("ne-sea", [["0", "#1f7fa8"], ["1", "#0b4f78"]]), g("ne-sea2", [["0", "#3aa2bf"], ["1", "#1a6f98"]]), g("ne-sand", [["0", "#f6dcae"], ["1", "#e6c08a"]]), blur("ne-b3", 3)]),
+      sv("rect", { width: "900", height: "320", fill: "url(#ne-sky)" }),
+      sv("g", { "data-depth": "5" }, [sv("circle", { cx: "560", cy: "190", r: "170", fill: "url(#ne-sun)" }), sv("circle", { cx: "560", cy: "190", r: "44", fill: "#fff3cf" })]),
+      sv("g", { filter: "url(#ne-b3)", opacity: ".6", class: "clouds" }, [sv("ellipse", { cx: "200", cy: "70", rx: "90", ry: "12", fill: "#fff" }), sv("ellipse", { cx: "780", cy: "50", rx: "110", ry: "10", fill: "#fff" })]),
+      sv("g", { "data-depth": "10" }, [sv("rect", { x: "0", y: "196", width: "900", height: "130", fill: "url(#ne-sea)" }), sv("ellipse", { cx: "560", cy: "222", rx: "70", ry: "26", fill: "#ffd7a0", opacity: ".22" }), sv("rect", { x: "0", y: "194", width: "900", height: "4", fill: "#ffd9a8", opacity: ".35" })]),
+      sv("g", null, glints),
+      sv("g", { class: "wave w1", "data-depth": "16" }, [P("M-200 236 q50 -10 100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 t100 0 V320 H-200z", { fill: "url(#ne-sea2)", opacity: ".9" })]),
+      sv("g", { class: "wave w2", "data-depth": "22" }, [P("M-200 262 q60 -12 120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 V320 H-200z", { fill: "#e9f6f7", opacity: ".55" })]),
+      sv("g", { "data-depth": "30" }, [P("M0 286 Q300 266 600 284 T900 278 V320 H0z", { fill: "url(#ne-sand)" }),
+        P("M840 300 C834 250 842 196 816 146", { fill: "none", stroke: "#3b2a22", "stroke-width": "8", "stroke-linecap": "round" }),
+        sv("g", { class: "palm", transform: "translate(816 146)" }, [[-150, 70], [-120, 64], [-60, 76], [-20, 68], [20, 60], [-90, 58]].map(function (f) { return P("M0 0 Q" + (Math.cos(f[0] * Math.PI / 180) * f[1] * 0.6) + " " + (Math.sin(f[0] * Math.PI / 180) * f[1] * 0.6 - 18) + " " + (Math.cos(f[0] * Math.PI / 180) * f[1]) + " " + (Math.sin(f[0] * Math.PI / 180) * f[1] + 16), { fill: "none", stroke: "#1f3b2b", "stroke-width": "7", "stroke-linecap": "round" }); }))])
+    ]);
+  }
+  function seasonScene(s) { return s === "noel" ? sceneNoel() : s === "halloween" ? sceneHalloween() : s === "paques" ? scenePaques() : s === "ete" ? sceneEte() : null; }
+  // Habille l'en-tête : scène, particules au premier plan, léger relief au mouvement de la souris.
+  function dressHero(h) {
+    var s = applySeason(); if (!s) return h;
+    h.classList.add("season", "s-" + s);
+    var sc = seasonScene(s);
+    h.insertBefore(el("div", { class: "scene-wrap", "aria-hidden": "true" }, [sc]), h.firstChild);
+    var k = h.querySelector(".kicker"); if (k) k.textContent = SEASONS[s].salut + " · " + k.textContent;
+    var cv = el("canvas", { class: "hero-fx", "aria-hidden": "true" }); h.appendChild(cv);
+    setTimeout(function () { ambient.attach(cv, s, true); }, 0);
+    h.addEventListener("pointermove", function (e) {
+      var r = h.getBoundingClientRect(), dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+      sc.querySelectorAll("[data-depth]").forEach(function (n) { var d = +n.getAttribute("data-depth"); n.style.transform = "translate(" + (-dx * d) + "px," + (-dy * d * 0.4) + "px)"; });
+    });
+    h.addEventListener("pointerleave", function () { sc.querySelectorAll("[data-depth]").forEach(function (n) { n.style.transform = ""; }); });
+    return h;
+  }
+
+  /* ---------- particules (neige, feuilles, pétales, lumière d'été) ---------- */
+  // Profondeur : les particules lointaines sont petites, lentes et floues ; les proches sont grandes et nettes.
+  var ambient = (function () {
+    var layers = [], raf = null, season = null, bg = null;
+    var reduce = false; try { reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+    function mk(s, w, h, dense) {
+      var n = Math.round((dense ? 70 : 46) * Math.min(1.4, Math.max(0.5, w / 1200))), out = [];
+      for (var i = 0; i < n; i++) out.push(spawn(s, w, h, true));
+      return out;
+    }
+    function spawn(s, w, h, any) {
+      var z = Math.random();
+      return { x: Math.random() * w, y: any ? Math.random() * h : (s === "ete" ? h + 10 : -10), z: z, r: s === "noel" ? 0.8 + z * 3.2 : s === "ete" ? 0.8 + z * 2.6 : 3 + z * 6, vy: s === "ete" ? -(0.15 + z * 0.45) : 0.25 + z * (s === "noel" ? 1.1 : 0.9), vx: (Math.random() - 0.5) * 0.4, a: Math.random() * 6.28, va: (Math.random() - 0.5) * 0.04, ph: Math.random() * 6.28,
+        c: s === "halloween" ? ["#c4511c", "#e07b2a", "#8f3b1b", "#d99a3a"][Math.floor(Math.random() * 4)] : s === "paques" ? ["#ffd6e3", "#ffc2d6", "#fff3f6"][Math.floor(Math.random() * 3)] : null };
+    }
+    function draw(L, t) {
+      var cx = L.ctx, w = L.w, h = L.h; cx.clearRect(0, 0, w, h);
+      L.p.forEach(function (p, i) {
+        p.ph += 0.01; p.x += p.vx + Math.sin(p.ph + p.z * 3) * (season === "noel" ? 0.3 : 0.6) * (0.4 + p.z); p.y += p.vy; p.a += p.va * (1 + p.z);
+        if (p.y > h + 20 || p.y < -30 || p.x < -30 || p.x > w + 30) L.p[i] = spawn(season, w, h, false);
+        cx.save(); cx.globalAlpha = (L.hero ? 0.55 : 0.32) + p.z * 0.45; cx.translate(p.x, p.y);
+        if (season === "noel") { var gr = cx.createRadialGradient(0, 0, 0, 0, 0, p.r * 1.8); gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(0.45, "rgba(255,255,255,.75)"); gr.addColorStop(1, "rgba(255,255,255,0)"); cx.fillStyle = gr; cx.beginPath(); cx.arc(0, 0, p.r * 1.8, 0, 6.28); cx.fill(); }
+        else if (season === "ete") { var g2 = cx.createRadialGradient(0, 0, 0, 0, 0, p.r * 3); g2.addColorStop(0, "rgba(255,244,214,.95)"); g2.addColorStop(1, "rgba(255,200,120,0)"); cx.fillStyle = g2; cx.beginPath(); cx.arc(0, 0, p.r * 3, 0, 6.28); cx.fill(); }
+        else if (season === "halloween") { cx.rotate(p.a); cx.scale(1, 0.55 + 0.45 * Math.abs(Math.sin(p.ph * 2))); cx.fillStyle = p.c; cx.beginPath(); cx.moveTo(0, -p.r); cx.bezierCurveTo(p.r * 0.9, -p.r * 0.5, p.r * 0.8, p.r * 0.5, 0, p.r); cx.bezierCurveTo(-p.r * 0.8, p.r * 0.5, -p.r * 0.9, -p.r * 0.5, 0, -p.r); cx.fill(); cx.strokeStyle = "rgba(60,20,10,.35)"; cx.lineWidth = 0.8; cx.beginPath(); cx.moveTo(0, -p.r); cx.lineTo(0, p.r); cx.stroke(); }
+        else { cx.rotate(p.a); cx.scale(1, 0.45 + 0.55 * Math.abs(Math.sin(p.ph * 2))); cx.fillStyle = p.c; cx.beginPath(); cx.ellipse(0, 0, p.r * 0.7, p.r, 0, 0, 6.28); cx.fill(); }
+        cx.restore();
+      });
+    }
+    function loop(t) { layers = layers.filter(function (L) { return L.cv.isConnected; }); layers.forEach(function (L) { draw(L, t); }); raf = layers.length ? requestAnimationFrame(loop) : null; }
+    function attach(cv, s, hero) {
+      if (reduce || !s) return;
+      var dpr = Math.min(2, window.devicePixelRatio || 1), r = cv.getBoundingClientRect(), w = r.width || window.innerWidth, h = r.height || window.innerHeight;
+      cv.width = w * dpr; cv.height = h * dpr; var ctx = cv.getContext("2d"); if (!ctx) return; ctx.scale(dpr, dpr);
+      layers.push({ cv: cv, ctx: ctx, w: w, h: h, p: mk(s, w, h, hero), hero: hero });
+      if (!raf) raf = requestAnimationFrame(loop);
+    }
+    function set(s) {
+      season = s;
+      if (bg) { bg.remove(); bg = null; }
+      layers = [];
+      if (!s || reduce) return;
+      bg = el("canvas", { class: "season-fx", "aria-hidden": "true" }); document.body.appendChild(bg);
+      attach(bg, s, false);
+    }
+    window.addEventListener("resize", function () { if (bg && season) { var s = season; season = null; set(s); } });
+    return { set: set, attach: attach };
+  })();
+
+  /* ---------- chiffres qui s'animent ---------- */
+  function countUp(root) {
+    try { if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; } catch (e) {}
+    root.querySelectorAll(".stat b").forEach(function (b) {
+      var m = /^(\d+)(.*)$/.exec(b.textContent); if (!m || +m[1] < 2) return;
+      var to = +m[1], rest = m[2], t0 = performance.now();
+      (function f(t) { var k = Math.min(1, (t - t0) / 900), e = 1 - Math.pow(1 - k, 3); b.textContent = Math.round(to * e) + rest; if (k < 1) requestAnimationFrame(f); })(t0);
+    });
+  }
+
+  /* ---------- réglage (Accès & outils) ---------- */
+  function ambianceCard() {
+    var m = (S.ambiance && S.ambiance.mode) || "auto", auto = seasonByDate(new Date());
+    var opts = [["auto", "Automatique" + (auto ? " (" + SEASONS[auto].nom + " en ce moment)" : "")], ["off", "Désactivée"]].concat(Object.keys(SEASONS).map(function (k) { return [k, SEASONS[k].nom]; }));
+    return card("Ambiance de saison", "Noël, Halloween, Pâques et l'été s'installent tout seuls. Toute l'équipe la voit.", el("div", { class: "card-body" }, [el("div", { class: "dchoices" }, opts.map(function (o) {
+      var on = o[0] === m;
+      return el("button", { type: "button", class: "dchoice" + (on ? " on" : ""), "aria-pressed": String(on), text: o[1], onclick: function () { write(db.doc("config/ambiance").set({ mode: o[0], at: Date.now() })).then(function () { toast(o[0] === "auto" ? "L'ambiance suivra le calendrier." : o[0] === "off" ? "Ambiance coupée." : "Ambiance « " + o[1] + " » pour toute l'équipe. Remets « Automatique » après."); }); }
+      });
+    })), el("p", { class: "muted", text: "Noël : du 1er décembre au 6 janvier · Halloween : du 20 octobre au 1er novembre · Pâques : les 10 jours avant et 2 jours après · L'été : juillet et août." })]));
+  }
+
+  // Un reflet de lumière suit le curseur sur les cartes.
+  document.addEventListener("pointermove", function (e) {
+    var c = e.target && e.target.closest && e.target.closest(".card, .stat, .member, .avis, .shortcut");
+    if (!c) return;
+    var r = c.getBoundingClientRect(); c.style.setProperty("--mx", (e.clientX - r.left) + "px"); c.style.setProperty("--my", (e.clientY - r.top) + "px");
+  }, { passive: true });
+
   /* ---------- accès & outils (responsable) ---------- */
   function viewAcces() {
     pageHead("Accès & outils", "Qui entre, qui voit quoi, et les réglages de l'équipe.", null, helpBtn("Gérer les accès", [
@@ -3704,6 +3961,7 @@ details.fold > summary { cursor: pointer; }
     if (user && ids.length) user.profiles(ids).then(function (ps) { app.querySelectorAll("[data-uid]").forEach(function (n) { var p = ps[n.getAttribute("data-uid")]; n.textContent = (p && p.name) || "Compte sans nom"; }); });
     add(codesCard());
     add(backupCard());
+    add(ambianceCard());
     // l'équipe
     var team = el("div", { class: "card-body" }, state.assistants.map(function (a, i) {
       var full = isFull(a);
@@ -3860,6 +4118,7 @@ details.fold > summary { cursor: pointer; }
     sub("impact", db.collection("impact"), function (s) { S.impact = byId(s); });
     sub("photos", db.collection("photos"), function (s) { S.photos = byId(s); });
     sub("ordre", db.doc("config/ordre"), function (s) { S.ordre = s.exists ? s.data() : {}; });
+    sub("ambiance", db.doc("config/ambiance"), function (s) { S.ambiance = s.exists ? s.data() : {}; });
     sub("acces", db.collection("acces"), function (s) {
       S.acces = byId(s);
       if (owner) { S.link = respId(); Object.keys(S.acces).forEach(function (u) { watchAccount(u); syncCopies(u); }); }
