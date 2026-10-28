@@ -1,76 +1,122 @@
-<title>Planning des assistantes</title>
+<title>Lensdental Équipe</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style id="app-style">
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&display=swap");
-/* Layout : outil de cabinet à onglets — planning en grille (jours en colonnes), heures sup. en tableaux hebdo, news en fil, réunions en liste, espace responsable verrouillé */
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+/* Layout : application d'équipe Lensdental — barre latérale de navigation (en haut sur téléphone), accueil en tableau de bord, pots d'heures dessinés, grilles de planning, fiches de suivi */
 :root {
-  --bg: #f3f6f8; --surface: #ffffff; --ink: #14212b; --muted: #5b6b77; --line: #d3dde4;
-  --head: #183447; --head-ink: #f2f7fa; --band: #e3edf3; --accent: #0f7c8c; --accent-ink: #ffffff;
-  --conge: #dbe9f8; --ferie: #dff0e2; --off: #d4d9dd; --hs: #fbe3d2; --hs-ink: #8a3d0c;
-  --warn: #fde2e2; --warn-ink: #9b1c1c; --amber: #fdf0cf; --amber-ink: #7a4d00; --ok-ink: #1d6b3a; --star: #b3261e; --soft: #eef2f5;
-  --meet: #e6e3fa; --meet-ink: #3d3290;
-  --font-ui: "IBM Plex Sans Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
+  --bg: #eef3f1; --surface: #ffffff; --ink: #0d2a2c; --muted: #587072; --line: #d4e0dd;
+  --brand: #0b5753; --brand-ink: #f2fbf9; --mint: #c9eee5; --mint-ink: #0b5753;
+  --honey: #e7a21f; --honey-soft: #fbedcc; --honey-ink: #7a4b00; --rose: #d9536a; --rose-soft: #fbe1e6;
+  --head: #0d2a2c; --head-ink: #eef6f4; --band: #e3eeeb; --accent: #0b7a73; --accent-ink: #ffffff;
+  --conge: #dbe8f8; --ferie: #dff0e2; --off: #d6dcdc; --hs: #fbe6c8; --hs-ink: #7a4b00;
+  --warn: #fde2e2; --warn-ink: #9b1c1c; --amber: #fdf0cf; --amber-ink: #6e4600; --ok-ink: #17663a; --star: #b3261e; --soft: #f1f6f5;
+  --meet: #e6e3fa; --meet-ink: #3d3290; --glass: #ffffff;
+  --font-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-ui: "Instrument Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
   --font-num: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #0f171d; --surface: #16222b; --ink: #e4edf2; --muted: #93a5b2; --line: #2a3a46;
-  --head: #0b2433; --head-ink: #e4f0f6; --band: #1c2d38; --accent: #35b3c4; --accent-ink: #062027;
-  --conge: #1d3550; --ferie: #1d3a28; --off: #2c353c; --hs: #4a2a14; --hs-ink: #ffc59b;
-  --warn: #4a1d1d; --warn-ink: #ffb4b4; --amber: #3e3112; --amber-ink: #ffd88a; --ok-ink: #7fd8a0; --star: #ff8a80; --soft: #1b2933;
-  --meet: #2a2650; --meet-ink: #c9c2ff; color-scheme: dark } }
+  --bg: #0a1416; --surface: #112023; --ink: #e2eeec; --muted: #8fa6a6; --line: #24383a;
+  --brand: #5fd0c0; --brand-ink: #062322; --mint: #173a37; --mint-ink: #9ee6da;
+  --honey: #f0b43d; --honey-soft: #3a2c10; --honey-ink: #ffd88a; --rose: #f08497; --rose-soft: #3d1c24;
+  --head: #081a1c; --head-ink: #e2f0ee; --band: #16292b; --accent: #4cc3b4; --accent-ink: #062322;
+  --conge: #1d3550; --ferie: #1d3a28; --off: #2a3436; --hs: #3e2d12; --hs-ink: #ffd08a;
+  --warn: #4a1d1d; --warn-ink: #ffb4b4; --amber: #3e3112; --amber-ink: #ffd88a; --ok-ink: #7fd8a0; --star: #ff8a80; --soft: #15272a;
+  --meet: #2a2650; --meet-ink: #c9c2ff; --glass: #cfe9e4; color-scheme: dark } }
 :root[data-theme="dark"] {
-  --bg: #0f171d; --surface: #16222b; --ink: #e4edf2; --muted: #93a5b2; --line: #2a3a46;
-  --head: #0b2433; --head-ink: #e4f0f6; --band: #1c2d38; --accent: #35b3c4; --accent-ink: #062027;
-  --conge: #1d3550; --ferie: #1d3a28; --off: #2c353c; --hs: #4a2a14; --hs-ink: #ffc59b;
-  --warn: #4a1d1d; --warn-ink: #ffb4b4; --amber: #3e3112; --amber-ink: #ffd88a; --ok-ink: #7fd8a0; --star: #ff8a80; --soft: #1b2933;
-  --meet: #2a2650; --meet-ink: #c9c2ff; color-scheme: dark }
-body { background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 14px; }
-#app { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 16px 96px; max-width: 1280px; margin: 0 auto; display: grid; gap: 18px; }
-#app > * { min-width: 0; }
-h1 { font-size: 1.6rem; margin: 0; letter-spacing: .01em; text-wrap: balance; }
-h2 { font-size: 1.05rem; margin: 0; text-transform: uppercase; letter-spacing: .08em; }
+  --bg: #0a1416; --surface: #112023; --ink: #e2eeec; --muted: #8fa6a6; --line: #24383a;
+  --brand: #5fd0c0; --brand-ink: #062322; --mint: #173a37; --mint-ink: #9ee6da;
+  --honey: #f0b43d; --honey-soft: #3a2c10; --honey-ink: #ffd88a; --rose: #f08497; --rose-soft: #3d1c24;
+  --head: #081a1c; --head-ink: #e2f0ee; --band: #16292b; --accent: #4cc3b4; --accent-ink: #062322;
+  --conge: #1d3550; --ferie: #1d3a28; --off: #2a3436; --hs: #3e2d12; --hs-ink: #ffd08a;
+  --warn: #4a1d1d; --warn-ink: #ffb4b4; --amber: #3e3112; --amber-ink: #ffd88a; --ok-ink: #7fd8a0; --star: #ff8a80; --soft: #15272a;
+  --meet: #2a2650; --meet-ink: #c9c2ff; --glass: #cfe9e4; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 14.5px; }
+.shell { display: grid; grid-template-columns: 232px minmax(0, 1fr); min-height: 100vh; }
+.side { background: var(--head); color: var(--head-ink); padding: 22px 14px; position: sticky; top: 0; height: 100vh; box-sizing: border-box; display: flex; flex-direction: column; gap: 22px; }
+.brand { font-family: var(--font-display); font-weight: 800; font-size: 1.55rem; letter-spacing: -.02em; line-height: 1; display: flex; align-items: center; gap: 9px; padding: 0 8px; }
+.brand svg { flex: none; }
+.brand small { display: block; font-family: var(--font-ui); font-weight: 500; font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; opacity: .7; margin-top: 5px; }
+.nav { display: grid; gap: 3px; }
+.nav a { color: var(--head-ink); text-decoration: none; padding: 9px 12px; border-radius: 10px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 8px; opacity: .78; white-space: nowrap; }
+.nav a:hover { opacity: 1; background: rgba(255,255,255,.06); }
+.nav a[aria-current="page"] { opacity: 1; background: var(--brand); color: var(--brand-ink); }
+.nav a:focus-visible { outline: 2px solid var(--honey); outline-offset: 1px; }
+.side .foot { margin-top: auto; font-size: 12px; opacity: .7; padding: 0 8px; line-height: 1.45; }
+#app { min-width: 0; }
+.main { padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); padding-block: 22px 110px; max-width: 1240px; display: grid; gap: 18px; }
+.main > * { min-width: 0; }
+h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 800; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--font-display); font-size: 1.12rem; font-weight: 700; margin: 0; letter-spacing: -.005em; }
 h3 { margin: 0; font-size: 1rem; }
 .top { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: end; justify-content: space-between; }
-.sub { color: var(--muted); margin: 4px 0 0; max-width: 72ch; line-height: 1.45; }
-.whoami { font-size: 13px; color: var(--muted); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.sub { color: var(--muted); margin: 4px 0 0; max-width: 72ch; line-height: 1.5; }
+.whoami { font-size: 13px; color: var(--muted); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 6px; }
 .whoami b { color: var(--ink); }
 .linkbtn { font: inherit; background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; cursor: pointer; }
-.tabs { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 2px solid var(--line); }
-.tabs a { font-weight: 600; font-size: 14.5px; padding: 8px 14px; color: var(--muted); text-decoration: none; border-radius: 8px 8px 0 0; margin-bottom: -2px; border-bottom: 2px solid transparent; display: inline-flex; gap: 6px; align-items: center; }
-.tabs a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); background: var(--surface); }
-.tabs a:focus-visible { outline: 2px solid var(--accent); }
-.badge { background: var(--warn); color: var(--warn-ink); border-radius: 999px; font-size: 11.5px; padding: 0 7px; font-weight: 700; }
+.badge { background: var(--rose); color: #fff; border-radius: 999px; font-size: 11px; padding: 1px 7px; font-weight: 700; }
 .legend { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; }
-.chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
+.chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
 .chip.c { background: var(--conge); } .chip.f { background: var(--ferie); } .chip.o { background: var(--off); } .chip.h { background: var(--hs); color: var(--hs-ink); }
 .months, .people { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.tab { font: inherit; font-weight: 600; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
-.tab[aria-current="true"] { background: var(--head); color: var(--head-ink); border-color: var(--head); }
-.notice { padding: 10px 14px; border-radius: 10px; background: var(--amber); color: var(--amber-ink); line-height: 1.45; }
-.notice.info { background: var(--soft); color: var(--ink); }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-.card-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.tab { font: inherit; font-weight: 600; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.tab[aria-current="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.notice { padding: 11px 15px; border-radius: 12px; background: var(--amber); color: var(--amber-ink); line-height: 1.5; margin: 0; }
+.notice.info { background: var(--soft); color: var(--ink); border: 1px solid var(--line); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.card-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; padding: 13px 16px; border-bottom: 1px solid var(--line); }
 .card-head p { margin: 0; color: var(--muted); font-size: 12.5px; }
-.card-body { padding: 14px; display: grid; gap: 12px; }
+.card-body { padding: 16px; display: grid; gap: 12px; }
+.grid-dash { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; align-items: start; }
+.grid-dash > * { min-width: 0; }
+.hero { border-radius: 20px; padding: 24px; background: var(--brand); color: var(--brand-ink); display: grid; gap: 8px; position: relative; overflow: hidden; }
+.hero .kicker { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .8; font-weight: 600; }
+.hero .hello { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.7rem, 4vw, 2.6rem); letter-spacing: -.025em; line-height: 1.05; max-width: 22ch; }
+.hero .msg { font-size: 1.05rem; line-height: 1.5; max-width: 58ch; }
+.hero .smile { position: absolute; right: -30px; bottom: -40px; opacity: .14; pointer-events: none; }
+.hero.bday { background: var(--rose); color: #fff; }
+.mini { display: grid; gap: 8px; }
+.mini .line { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px dashed var(--line); }
+.mini .line:last-child { border-bottom: 0; }
+.todo { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.todo li { display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 12px; background: var(--soft); }
+.todo li .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--honey); flex: none; }
+.todo li.done .dot { background: var(--ok-ink); }
+.todo a { color: var(--accent); font-weight: 600; margin-left: auto; white-space: nowrap; }
+.pots { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px; }
+.pot { display: grid; justify-items: center; gap: 6px; text-align: center; padding: 10px 6px 12px; border-radius: 14px; background: var(--soft); }
+.pot svg { width: 86px; height: auto; max-width: 100%; }
+.main a { color: var(--accent); font-weight: 600; }
+.span-all { grid-column: 1 / -1; }
+.pot .name { font-weight: 700; }
+.pot .val { font-family: var(--font-num); font-weight: 600; font-size: 1.05rem; color: var(--honey-ink); }
+.pot .val.neg { color: var(--warn-ink); }
+.pot .det { font-size: 11.5px; color: var(--muted); line-height: 1.35; }
+.pot .liquid { transition: y .9s cubic-bezier(.2,.8,.2,1), height .9s cubic-bezier(.2,.8,.2,1); }
+.guide { border: 1px dashed var(--line); border-radius: 14px; background: var(--surface); }
+.guide > summary { padding: 11px 15px; font-weight: 700; display: flex; gap: 8px; align-items: center; color: var(--accent); }
+.guide > summary::before { content: "?"; display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--mint); color: var(--mint-ink); font-size: 12px; }
+.guide ol { margin: 0; padding: 0 18px 14px 38px; line-height: 1.6; max-width: 78ch; }
 .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
 th, td { border: 1px solid var(--line); padding: 0; vertical-align: top; }
-thead th { background: var(--head); color: var(--head-ink); font-weight: 600; font-size: 13px; padding: 7px 6px; white-space: nowrap; }
-th.rowh { background: var(--soft); text-align: left; padding: 8px 10px; font-weight: 600; min-width: 92px; position: sticky; left: 0; z-index: 1; }
+thead th { background: var(--head); color: var(--head-ink); font-weight: 600; font-size: 13px; padding: 8px 6px; white-space: nowrap; }
+th.rowh { background: var(--soft); text-align: left; padding: 8px 10px; font-weight: 700; min-width: 92px; position: sticky; left: 0; z-index: 1; }
 th.rowh small { display: block; font-weight: 400; color: var(--muted); font-size: 11.5px; }
 tr.band td, tr.band th.rowh { background: var(--band); }
 .daybtn { all: unset; cursor: pointer; display: block; width: 100%; text-align: center; box-sizing: border-box; }
 div.daybtn { cursor: default; }
 .daybtn:focus-visible, .cell:focus-visible, .btn:focus-visible, .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
-.dent { font-size: 12px; font-weight: 600; text-align: center; padding: 5px 6px; color: var(--ink); }
-.cell { all: unset; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px; justify-content: center; align-items: center; text-align: center; width: 100%; min-width: 112px; min-height: 62px; padding: 6px 4px; font-size: 12px; line-height: 1.25; }
+.dent { font-size: 12px; font-weight: 700; text-align: center; padding: 6px; color: var(--ink); }
+.cell { all: unset; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px; justify-content: center; align-items: center; text-align: center; width: 100%; min-width: 112px; min-height: 64px; padding: 6px 4px; font-size: 12px; line-height: 1.25; position: relative; }
 button.cell { cursor: pointer; }
 button.cell:hover { background: var(--soft); }
 .cell .t { font-family: var(--font-num); font-size: 12.5px; font-weight: 600; }
 .cell .p { color: var(--muted); font-size: 11.5px; }
-.cell .d { font-weight: 600; }
+.cell .d { font-weight: 700; }
 .cell .d.star { color: var(--star); }
 .cell .tag { font-weight: 700; letter-spacing: .04em; font-size: 12px; }
+.cell .auto { position: absolute; top: 4px; right: 5px; font-size: 9.5px; font-weight: 700; letter-spacing: .06em; color: var(--accent); text-transform: uppercase; }
 .cell.empty { color: var(--muted); }
 .cell.k-C { background: var(--conge); } .cell.k-F { background: var(--ferie); } .cell.k-OFF { background: var(--off); }
 .cell.k-HS { background: var(--hs); } .cell.k-HS .hsb { color: var(--hs-ink); font-weight: 700; }
@@ -89,67 +135,100 @@ td.chk li.m { background: var(--meet); color: var(--meet-ink); font-weight: 600;
 td.chk .okline { color: var(--ok-ink); font-weight: 600; }
 td.chk .staff { font-family: var(--font-num); color: var(--muted); margin-bottom: 4px; display: block; }
 td.chk .nt { color: var(--muted); white-space: pre-line; margin-top: 5px; border-top: 1px dashed var(--line); padding-top: 4px; }
-.sum th, .sum td, .hrs th, .hrs td { padding: 7px 10px; text-align: center; font-size: 13px; vertical-align: middle; }
+.sum th, .sum td, .hrs th, .hrs td { padding: 8px 10px; text-align: center; font-size: 13px; vertical-align: middle; }
 .sum td.n, .hrs td.n { font-family: var(--font-num); }
-.sum td.who, .hrs td.who, .hrs th.who { text-align: left; font-weight: 600; }
+.sum td.who, .hrs td.who, .hrs th.who { text-align: left; font-weight: 700; }
 .hrs tr.dayrow th { background: var(--band); text-align: left; font-size: 12.5px; }
 .hrs tr.total td, .hrs tr.total th { background: var(--soft); font-weight: 700; }
 .hrs tr.off td { color: var(--muted); }
-.hrs input[type=time] { font: inherit; font-family: var(--font-num); font-size: 13.5px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px; width: 7.2em; }
-.hrs input[type=checkbox] { width: 18px; height: 18px; }
+.hrs input[type=time] { font: inherit; font-family: var(--font-num); font-size: 13.5px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 5px 7px; width: 7.2em; }
+.hrs input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--accent); }
 .plus { font-family: var(--font-num); font-weight: 700; }
 .plus.pos { color: var(--hs-ink); } .plus.neg { color: var(--warn-ink); } .plus.zero { color: var(--muted); font-weight: 400; }
-.pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
-.pill.ok { background: var(--ferie); } .pill.bad { background: var(--warn); color: var(--warn-ink); } .pill.am { background: var(--amber); color: var(--amber-ink); } .pill.mu { background: var(--soft); color: var(--muted); } .pill.mt { background: var(--meet); color: var(--meet-ink); }
+.pill { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.pill.ok { background: var(--ferie); color: var(--ok-ink); } .pill.bad { background: var(--warn); color: var(--warn-ink); } .pill.am { background: var(--amber); color: var(--amber-ink); } .pill.mu { background: var(--soft); color: var(--muted); } .pill.mt { background: var(--meet); color: var(--meet-ink); }
+.pill.gold { background: var(--honey); color: #2b1a00; } .pill.silver { background: #d5dee0; color: #22302f; } .pill.bronze { background: #e8c1a0; color: #3d230e; }
 .feed { display: grid; gap: 10px; }
-.post { border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; background: var(--surface); display: grid; gap: 6px; }
+.post { border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; background: var(--surface); display: grid; gap: 6px; }
 .post .meta { font-size: 12px; color: var(--muted); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.post .txt { white-space: pre-wrap; line-height: 1.5; max-width: 75ch; overflow-wrap: anywhere; }
+.post .txt { white-space: pre-wrap; line-height: 1.55; max-width: 75ch; overflow-wrap: anywhere; }
 .post.pending { border-style: dashed; }
 .post.meeting { background: var(--meet); color: var(--meet-ink); border-color: transparent; }
-.row-acts { display: flex; gap: 6px; flex-wrap: wrap; }
+.row-acts { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.crit { display: grid; gap: 10px; }
+.crit .row { display: grid; grid-template-columns: minmax(130px, 1fr) auto; gap: 10px; align-items: center; }
+.crit .lbl b { display: block; } .crit .lbl small { color: var(--muted); font-size: 12px; }
+.stars { display: flex; gap: 4px; }
+.stars label { display: inline-flex; }
+.stars input { position: absolute; opacity: 0; pointer-events: none; }
+.stars span { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); font-weight: 700; font-size: 13px; cursor: pointer; background: var(--surface); }
+.stars input:checked + span, .stars span.on { background: var(--honey); border-color: var(--honey); color: #2b1a00; }
+.stars input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.stars.ro span { cursor: default; }
+.meter { height: 10px; border-radius: 999px; background: var(--soft); overflow: hidden; border: 1px solid var(--line); }
+.meter i { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+.meter.honey i { background: var(--honey); }
+.score { font-family: var(--font-display); font-weight: 800; font-size: 2.4rem; letter-spacing: -.03em; line-height: 1; }
+.prize { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.prize div { padding: 12px; border-radius: 12px; background: var(--honey-soft); color: var(--honey-ink); font-weight: 600; line-height: 1.35; }
+.prize div small { display: block; font-weight: 400; opacity: .85; margin-top: 3px; }
+.winner { border-radius: 18px; padding: 18px 20px; background: var(--honey-soft); color: var(--honey-ink); display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.winner .big { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; letter-spacing: -.02em; }
 .rules { display: grid; gap: 14px; padding: 14px; }
-.rules table th, .rules table td { padding: 6px 9px; font-size: 13px; text-align: left; vertical-align: top; }
+.rules table th, .rules table td { padding: 7px 9px; font-size: 13px; text-align: left; vertical-align: top; }
 .rules .muted { color: var(--muted); font-size: 12px; }
-.rules ul { margin: 0; padding-left: 18px; line-height: 1.5; max-width: 75ch; }
+.rules ul { margin: 0; padding-left: 18px; line-height: 1.55; max-width: 75ch; }
 details > summary { cursor: pointer; list-style: none; }
 details > summary::-webkit-details-marker { display: none; }
-details > summary h2::after { content: " ▸"; color: var(--muted); }
-details[open] > summary h2::after { content: " ▾"; }
-.btn { font: inherit; font-weight: 600; border-radius: 8px; padding: 8px 14px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
-.btn.sm { padding: 4px 10px; font-size: 12.5px; }
+details.card > summary h2::after { content: " ▸"; color: var(--muted); }
+details.card[open] > summary h2::after { content: " ▾"; }
+.btn { font: inherit; font-weight: 700; border-radius: 10px; padding: 9px 15px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.btn.sm { padding: 5px 11px; font-size: 12.5px; }
 .btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.gold { background: var(--honey); color: #2b1a00; border-color: var(--honey); }
 .btn.danger { color: var(--warn-ink); }
-.btn[disabled] { opacity: .55; cursor: default; }
+.btn[disabled] { opacity: .5; cursor: default; }
 .savebar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--head); color: var(--head-ink); padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: space-between; }
 .savebar .msg { font-size: 13.5px; }
 .savebar .acts { display: flex; gap: 8px; }
-dialog { border: 1px solid var(--line); border-radius: 12px; padding: 0; width: min(460px, calc(100vw - 32px)); max-height: calc(100vh - 40px); overflow: auto; background: var(--surface); color: var(--ink); }
-dialog::backdrop { background: rgba(10, 20, 28, .45); }
-dialog form { display: grid; gap: 14px; padding: 18px; }
+.savebar .btn:not(.primary) { background: transparent; color: var(--head-ink); border-color: rgba(255,255,255,.25); }
+dialog { border: 1px solid var(--line); border-radius: 16px; padding: 0; width: min(480px, calc(100vw - 32px)); max-height: calc(100vh - 40px); overflow: auto; background: var(--surface); color: var(--ink); }
+dialog::backdrop { background: rgba(6, 20, 22, .5); }
+dialog form { display: grid; gap: 14px; padding: 20px; }
 dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
 .seg { display: flex; flex-wrap: wrap; gap: 6px; }
 .seg label { display: inline-flex; }
 .seg input { position: absolute; opacity: 0; pointer-events: none; }
-.seg span { padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; font-size: 13px; }
+.seg span { padding: 6px 11px; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; font-size: 13px; }
 .seg input:checked + span { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 .seg input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.field { display: grid; gap: 4px; font-size: 12.5px; color: var(--muted); }
-.field input, .field select, .field textarea { font: inherit; font-size: 15px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-width: 0; }
-.field textarea { min-height: 90px; resize: vertical; font-size: 14px; }
-.checks { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 13.5px; color: var(--ink); }
+.field { display: grid; gap: 5px; font-size: 12.5px; color: var(--muted); font-weight: 600; }
+.field input, .field select, .field textarea { font: inherit; font-weight: 400; font-size: 15px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; min-width: 0; }
+.field textarea { min-height: 84px; resize: vertical; font-size: 14px; line-height: 1.5; }
+.checks { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 13.5px; color: var(--ink); font-weight: 400; }
 .checks label { display: inline-flex; gap: 5px; align-items: center; }
 .quick { display: flex; flex-wrap: wrap; gap: 6px; }
-.quick button { font: inherit; font-size: 12.5px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line); background: var(--soft); color: var(--ink); cursor: pointer; }
-.calc { font-size: 13px; padding: 8px 10px; background: var(--soft); border-radius: 8px; }
+.quick button { font: inherit; font-size: 12.5px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--soft); color: var(--ink); cursor: pointer; }
+.calc { font-size: 13px; padding: 8px 10px; background: var(--soft); border-radius: 10px; }
 .calc.warnbox { background: var(--amber); color: var(--amber-ink); }
 .dlg-acts { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
 .err { color: var(--warn-ink); font-weight: 600; font-size: 13px; margin: 0; }
-.lock { max-width: 360px; display: grid; gap: 10px; }
-.lock input { font: inherit; font-family: var(--font-num); font-size: 20px; letter-spacing: .3em; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
-@media (max-width: 520px) { h1 { font-size: 1.3rem; } .grid2 { grid-template-columns: 1fr; } .tabs a { padding: 8px 10px; } }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.lock { max-width: 380px; display: grid; gap: 10px; }
+.lock input { font: inherit; font-family: var(--font-num); font-size: 20px; letter-spacing: .3em; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+@media (max-width: 900px) {
+  .shell { grid-template-columns: minmax(0, 1fr); }
+  .side { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 15; height: auto; padding: 12px max(16px, env(safe-area-inset-left, 0px)) 10px; gap: 10px; }
+  .brand { font-size: 1.25rem; padding: 0; }
+  .brand small { display: none; }
+  .nav { display: flex; overflow-x: auto; gap: 4px; padding-bottom: 2px; scrollbar-width: none; }
+  .nav a { padding: 7px 12px; font-size: 13.5px; }
+  .side .foot { display: none; }
+  .main { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 16; background: var(--head); }
+}
+@media (max-width: 520px) { h1 { font-size: 1.5rem; } .grid2 { grid-template-columns: 1fr; } .crit .row { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 <div id="app"></div>
 <script type="application/json" id="plan-data">{"assistants": [{"id": "Soraya", "daily": 456, "weekly": 1824}, {"id": "Laura", "daily": 456, "weekly": 2280}, {"id": "Lora", "daily": 408, "weekly": 2040}, {"id": "Aytana", "daily": 380, "weekly": 1140}, {"id": "Inès", "daily": 380, "weekly": 1140}], "rules": {"dentists": [{"code": "R", "name": "Rami", "days": {"1": "10:00-18:00", "2": "10:00-18:00", "3": "10:00-18:00", "4": "10:00-18:00"}, "assist": ["Laura", "Inès"], "exception": ["Soraya"], "need": true, "note": "1 vendredi par mois pour les implants, avec Soraya (heures sup.)", "extra": {"5": "implants avec Soraya"}}, {"code": "Z", "name": "Ziyed", "days": {"1": "09:30-17:30", "2": "09:30-17:30", "3": "09:30-17:30", "4": "09:30-17:30", "5": "10:00-14:00"}, "assist": ["Laura", "Aytana"], "need": true}, {"code": "MAJ", "name": "Majdi (orthodontiste)", "days": {"1": "10:00-18:00", "3": "10:00-18:00", "4": "10:00-18:00", "5": "10:00-18:00"}, "alt": ["1", "4"], "assist": ["Lora"], "strict": true, "need": true, "note": "Un lundi sur deux, un jeudi sur deux, jamais le mardi"}, {"code": "S", "name": "Salma", "days": {"2": ""}, "assist": ["Laura"], "strict": true, "need": true, "note": "2 mardis par mois, dates connues tard"}, {"code": "E", "name": "Emine", "days": {"1": "09:30-17:30", "2": "09:30-17:30", "3": "09:30-17:30", "4": "09:30-17:30", "5": "09:30-17:30", "6": "09:00-13:00"}, "assist": ["*"], "need": false, "note": "Assisté si quelqu'un est libre. Samedi : une seule assistante, en heures sup."}, {"code": "I", "name": "Ikram (hygiéniste)", "days": {"1": "", "4": ""}, "assist": [], "need": false}], "majRef": {"1": "2026-11-09", "4": "2026-11-05"}}, "months": [{"title": "Novembre 2026", "weeks": [{"label": "Semaine 1", "days": [{"date": "2026-11-02", "label": "Lundi 02/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "15:45", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E/Acc"}, "Inès": {"code": "/"}}}, {"date": "2026-11-03", "label": "Mardi 03/11", "sat": false, "holiday": false, "dentists": "R-Z-E", "note": "", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "15:45", "pause": "13h", "dent": "Acc/Z"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}}}, {"date": "2026-11-04", "label": "Mercredi 04/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}}}, {"date": "2026-11-05", "label": "Jeudi 05/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Acc"}}}, {"date": "2026-11-06", "label": "Vendredi 06/11", "sat": false, "holiday": false, "dentists": "Z-MAJ-E", "note": "", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h", "dent": "Z/Acc"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"code": "/"}, "Inès": {"code": "/"}}}, {"date": "2026-11-07", "label": "Samedi 07/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}, "Lora": null, "Aytana": null, "Inès": null}}]}, {"label": "Semaine 2", "days": [{"date": "2026-11-09", "label": "Lundi 09/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "Soraya : Relais R 17h06-17h30\nInès : Relais R 13h30-14h00 ; R fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h00–13h30, MAJ 13h30–14h00", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E/R"}}}, {"date": "2026-11-10", "label": "Mardi 10/11", "sat": false, "holiday": false, "dentists": "R-Z-S-E", "note": "Soraya : Relais S 13h00-13h30 (pause de Laura)\nLora : R 10h00-11h10 + relais 13h30-14h00 ; Z le reste\nLaura : S 10h-16h ; Z 16h00-17h30\n⚠ Seul : Z 9h30–11h10, Z 13h00–14h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "S ★"}, "Lora": {"start": "09:30", "end": "17:00", "pause": "13h", "dent": "Acc"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}}}, {"date": "2026-11-11", "label": "Mercredi 11/11", "sat": false, "holiday": true, "dentists": "MAJ (férié, 10h–15h)", "note": "Cabinet ouvert pour Majdi seul (Lora, sans pause)\nLora récupère le férié le ven 20", "cells": {"Soraya": {"code": "F"}, "Laura": {"code": "F"}, "Lora": {"start": "10:00", "end": "15:00", "pause": "sans", "dent": "Acc/ Maj"}, "Aytana": {"code": "/"}, "Inès": {"code": "/"}}}, {"date": "2026-11-12", "label": "Jeudi 12/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nInès : Relais Z 13h00-13h30 ; R 17h36-18h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "17:00", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "E"}}}, {"date": "2026-11-13", "label": "Vendredi 13/11", "sat": false, "holiday": false, "dentists": "Z-MAJ-E", "note": "Aytana : Relais MAJ 13h30-14h00\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h", "dent": "Z"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"code": "F"}, "Inès": {"code": "/"}}}, {"date": "2026-11-14", "label": "Samedi 14/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}, "Aytana": null, "Inès": null}}]}, {"label": "Semaine 3", "days": [{"date": "2026-11-16", "label": "Lundi 16/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "16:06", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}, "Inès": {"code": "/"}}}, {"date": "2026-11-17", "label": "Mardi 17/11", "sat": false, "holiday": false, "dentists": "R-Z-E", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nSoraya : Relais R 17h06-17h30\nInès : Z puis R en fin de journée\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "16:06", "pause": "13h", "dent": "Z"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}}}, {"date": "2026-11-18", "label": "Mercredi 18/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "Inès : Relais R 13h30-14h00 ; R fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h00–13h30, MAJ 13h30–14h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"code": "/"}}}, {"date": "2026-11-19", "label": "Jeudi 19/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "Soraya : Relais R 13h30-14h00 et 17h06-17h30\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E/R"}}}, {"date": "2026-11-20", "label": "Vendredi 20/11", "sat": false, "holiday": false, "dentists": "Z-E", "note": "Inès : Relais Z 13h30-14h00", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Z"}, "Lora": {"code": "F"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Acc"}}}, {"date": "2026-11-21", "label": "Samedi 21/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": null, "Aytana": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}, "Inès": null}}]}, {"label": "Semaine 4", "days": [{"date": "2026-11-23", "label": "Lundi 23/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "Soraya : Relais R 13h30-14h00 et 17h06-17h30\nInès : Z puis R en fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Z"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "R"}}}, {"date": "2026-11-24", "label": "Mardi 24/11", "sat": false, "holiday": false, "dentists": "R-Z-S-E", "note": "Soraya : Relais S 13h00-13h30 (pause de Laura)\nLora : R 10h00-11h10 + relais 13h30-14h00 ; Z le reste\nLaura : S 10h-16h ; Z 16h00-17h30\n⚠ Seul : Z 9h30–11h10, Z 13h00–14h00, Z 15h45–16h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "S ★"}, "Lora": {"start": "09:30", "end": "15:45", "pause": "13h", "dent": "Acc"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "E"}, "Inès": {"code": "/"}}}, {"date": "2026-11-25", "label": "Mercredi 25/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "Soraya : Relais R 13h30-14h00 et 17h06-17h30\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"code": "/"}}}, {"date": "2026-11-26", "label": "Jeudi 26/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Soraya : Relais R 13h30-14h00\nLora : R 10h00-11h10 ; relais Z 13h00-13h30\n⚠ Seul : Z 9h30–11h10", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "Acc"}, "Laura": {"code": "C"}, "Lora": {"start": "09:00", "end": "15:15", "pause": "13h30", "dent": "Z"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "R"}}}, {"date": "2026-11-27", "label": "Vendredi 27/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "⚠ Seul : Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "14:30", "pause": "HS", "dent": "R ★"}, "Laura": {"code": "C"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "09:00", "end": "15:50", "pause": "13h30", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Acc"}}}, {"date": "2026-11-28", "label": "Samedi 28/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": null, "Aytana": null, "Inès": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}}}]}, {"label": "Semaine 5", "days": [{"date": "2026-11-30", "label": "Lundi 30/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "16:48", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}, "Inès": {"code": "/"}}}], "contracts": {"Soraya": 456, "Laura": 456, "Lora": 408, "Aytana": 380, "Inès": 0}, "remark": "Seul le lundi 30 est en novembre : le reste de la semaine se fait avec le planning de décembre (Aytana 2 jours, Inès 3 jours)."}]}], "cur": 0, "savedAt": "2026-10-28T16:37:00.000Z"}</script>
@@ -164,14 +243,57 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
   var changed = {};
   var app = document.getElementById("app");
   var JOURS = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
-  var TABS = [["planning", "Planning"], ["heures", "Heures sup."], ["news", "News"], ["reunions", "Réunions"], ["responsable", "Responsable"]];
+  var MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+  var TABS = [["accueil", "Accueil"], ["planning", "Planning"], ["heures", "Heures sup."], ["suivi", "Suivi"], ["recompenses", "Récompenses"], ["news", "News"], ["reunions", "Réunions"], ["responsable", "Responsable"]];
+  var CRITERES = [
+    ["comportement", "Comportement", "Respect, calme, discrétion"],
+    ["attitude", "Attitude", "Sourire, motivation, positif"],
+    ["efficacite", "Efficacité", "Rapidité, anticipation au fauteuil"],
+    ["sterilisation", "Stérilisation", "Faite, complète, tracée"],
+    ["ponctualite", "Ponctualité", "À l'heure, pauses respectées"],
+    ["equipe", "Esprit d'équipe", "Entraide, relais, communication"],
+    ["patients", "Relation patients", "Accueil, écoute, téléphone"]
+  ];
+  var PRIX = [
+    ["Chèque de 50 €", "Le classique, au choix"], ["Restaurant", "Repas pour deux"], ["Bon spa / massage", "Un moment pour soi"],
+    ["Demi-journée offerte", "Sans toucher à ses congés"], ["Choix des congés en priorité", "Pour la prochaine période"],
+    ["Formation de son choix", "Un atelier ou une certification"], ["Petit-déjeuner d'équipe", "Offert en son honneur"]
+  ];
+  var MOTS = [
+    "Merci pour tout ce que tu apportes au cabinet. Belle journée !",
+    "Aujourd'hui encore, ton sourire va rassurer des patients. Ça compte énormément.",
+    "Une journée à la fois, un patient à la fois. Tu gères.",
+    "Le cabinet tourne grâce à toi. Prends soin de toi aussi aujourd'hui.",
+    "Respire, bois de l'eau, et n'oublie pas ta pause. Belle journée !",
+    "Ton travail se voit, même quand personne ne le dit. Merci.",
+    "Nouveau jour, nouvelle énergie. On y va ensemble !",
+    "Un patient détendu, c'est souvent grâce à l'assistante. Bravo d'avance.",
+    "Fière de l'équipe que nous formons. Bonne journée à toi !",
+    "Petit rappel : tu fais un super boulot.",
+    "Aujourd'hui, choisis la bonne humeur, elle est contagieuse.",
+    "Merci pour ta rigueur, la stérilisation impeccable, c'est la base de tout.",
+    "Une équipe soudée, des patients heureux. Belle journée !",
+    "Tu as le droit d'être fière de toi. Vraiment.",
+    "Chaque petit geste compte : un mot gentil, un instrument prêt à temps. Merci.",
+    "Aujourd'hui, on prend le temps de bien faire. Bonne journée !",
+    "Ta bienveillance fait la différence au fauteuil comme à l'accueil.",
+    "On avance ensemble, et c'est ce qui rend le cabinet si agréable.",
+    "Belle journée ! N'hésite pas à demander de l'aide si besoin.",
+    "Ton énergie illumine la salle d'attente. Merci d'être là.",
+    "Un café, un sourire, et c'est parti pour une belle journée.",
+    "La qualité de ton travail rassure toute l'équipe. Merci.",
+    "Aujourd'hui, sois douce avec toi-même. Tu le mérites.",
+    "Bravo pour ton professionnalisme, il ne passe pas inaperçu.",
+    "Encore une journée où tu vas faire la différence. Courage et bonne humeur !"
+  ];
 
   /* données partagées (db) */
   var db = null, user = null, uid = null, owner = false;
-  var S = { ready: false, link: null, mine: {}, myProps: [], news: [], reunions: [], cfg: null, heures: {}, links: {}, pt: {}, props: {} };
+  var S = { ready: false, link: null, mine: {}, myProps: [], news: [], reunions: [], cfg: null, heures: {}, links: {}, pt: {}, props: {},
+    equipe: {}, recup: {}, mot: null, palmares: {}, evals: {}, myAuto: {}, myResp: {}, myVote: {}, auto: {}, votes: {} };
   var subs = {};
   var mgr = false;
-  var ui = { person: null, newsDraft: "", lockErr: "" };
+  var ui = { person: null, newsDraft: "", lockErr: "", period: null, seed: 0 };
   try { mgr = sessionStorage.getItem("resp-ok") === "1"; } catch (e) {}
 
   function el(tag, attrs, kids) {
@@ -186,21 +308,28 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
     (kids || []).forEach(function (c) { if (c != null) n.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
     return n;
   }
+  var SVGNS = "http://www.w3.org/2000/svg";
+  function sv(tag, attrs, kids) { var n = document.createElementNS(SVGNS, tag); for (var k in attrs || {}) n.setAttribute(k, attrs[k]); (kids || []).forEach(function (c) { if (c) n.appendChild(c); }); return n; }
   function toMin(s) { if (!s) return null; var m = /^(\d{1,2})[:h](\d{2})$/.exec(String(s).trim()); return m ? (+m[1]) * 60 + (+m[2]) : null; }
+  function hhmm(m) { return String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0"); }
   function dur(m) { var s = m < 0 ? "−" : ""; m = Math.abs(Math.round(m)); return s + Math.floor(m / 60) + "h" + String(m % 60).padStart(2, "0"); }
   function clock(s) { var m = toMin(s); return m == null ? "" : String(Math.floor(m / 60)).padStart(2, "0") + "h" + String(m % 60).padStart(2, "0"); }
+  function plusTxt(m) { var a = Math.abs(Math.round(m)); return (m > 0 ? "+" : m < 0 ? "−" : "") + (a < 60 ? a + " min" : dur(a)); }
   function plus(m) {
     if (m == null) return el("span", { class: "plus zero", text: "—" });
     if (Math.round(m) === 0) return el("span", { class: "plus zero", text: "0 min" });
-    var a = Math.abs(Math.round(m));
-    return el("span", { class: "plus " + (m > 0 ? "pos" : "neg"), text: (m > 0 ? "+" : "−") + (a < 60 ? a + " min" : dur(a)) });
+    return el("span", { class: "plus " + (m > 0 ? "pos" : "neg"), text: plusTxt(m) });
   }
   function slug(id) { return String(id).normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^A-Za-z0-9_-]/g, ""); }
   function asst(id) { return state.assistants.filter(function (a) { return a.id === id; })[0]; }
   function M() { if (state.cur == null || !state.months[state.cur]) state.cur = state.months.length - 1; return state.months[state.cur]; }
   function isMgr() { return owner && mgr; }
   function fdate(iso) { return new Date(iso + "T12:00:00").toLocaleDateString("fr-BE", { weekday: "long", day: "numeric", month: "long" }); }
-  function todayIso() { var d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function sdate(iso) { return new Date(iso + "T12:00:00").toLocaleDateString("fr-BE"); }
+  function isoOf(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function todayIso() { return isoOf(new Date()); }
+  function hashStr(s) { var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  function rng(seed) { var a = seed >>> 0; return function () { a = (a + 0x6D2B79F5) >>> 0; var t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
   function calc(c, a) {
     var r = { work: 0, cf: 0, hs: 0 };
     if (!c) return r;
@@ -211,26 +340,29 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
     else r.work = e - s - (c.pause === "13h" || c.pause === "13h30" ? 30 : 0);
     return r;
   }
+  function weekContract(w, a) { return (w.contracts && w.contracts[a.id] != null) ? w.contracts[a.id] : a.weekly; }
   function weekTotals(w, a) {
     var t = { work: 0, cf: 0, hs: 0 };
     w.days.forEach(function (d) { var r = calc(d.cells[a.id], a); t.work += r.work; t.cf += r.cf; t.hs += r.hs; });
     t.total = t.work + t.cf;
-    t.contract = (w.contracts && w.contracts[a.id] != null) ? w.contracts[a.id] : a.weekly;
+    t.contract = weekContract(w, a);
     t.gap = t.total - t.contract;
     return t;
   }
   function nChanges() { return Object.keys(changed).length; }
   function mark(k) { changed[state.cur + "|" + k] = true; }
   function saveDraft() { try { if (nChanges()) localStorage.setItem(DRAFT_KEY, JSON.stringify({ base: SAVED.savedAt, state: state, changed: changed })); else localStorage.removeItem(DRAFT_KEY); } catch (e) {} }
-  function dayByDate(date) {
-    for (var i = 0; i < state.months.length; i++) for (var j = 0; j < state.months[i].weeks.length; j++) {
-      var ds = state.months[i].weeks[j].days;
-      for (var k = 0; k < ds.length; k++) if (ds[k].date === date) return ds[k];
-    }
-    return null;
-  }
+  function allDays() { var out = []; state.months.forEach(function (m) { m.weeks.forEach(function (w) { w.days.forEach(function (d) { out.push(d); }); }); }); return out; }
+  function dayByDate(date) { var ds = allDays(); for (var i = 0; i < ds.length; i++) if (ds[i].date === date) return ds[i]; return null; }
   function planned(aid, date) { var d = dayByDate(date); return d ? d.cells[aid] : null; }
   function isWork(c) { return c && !c.code && c.start; }
+
+  /* périodes de deux mois (évaluations, votes, assistante du mois) */
+  function periodOf(iso) { var y = +iso.slice(0, 4), m = +iso.slice(5, 7); return y + "-P" + Math.ceil(m / 2); }
+  function periodLabel(p) { var y = p.slice(0, 4), k = +p.slice(6); var a = MOIS[(k - 1) * 2], b = MOIS[(k - 1) * 2 + 1]; return a.charAt(0).toUpperCase() + a.slice(1) + "–" + b + " " + y; }
+  function periodRange(p) { var y = +p.slice(0, 4), k = +p.slice(6); return [isoOf(new Date(y, (k - 1) * 2, 1, 12)), isoOf(new Date(y, k * 2, 0, 12))]; }
+  function prevPeriod(p) { var y = +p.slice(0, 4), k = +p.slice(6); return k > 1 ? y + "-P" + (k - 1) : (y - 1) + "-P6"; }
+  function curPeriod() { return ui.period || periodOf(todayIso()); }
 
   /* ---------- règles du cabinet ---------- */
   function dentist(code) { return state.rules.dentists.filter(function (x) { return x.code === code; })[0]; }
@@ -296,7 +428,8 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
     return null;
   }
   function extraOf(aid, date, e) {
-    if (!e || e.statut === "refusé") return e && e.statut === "refusé" ? 0 : null;
+    if (!e) return null;
+    if (e.statut === "refusé") return 0;
     var a = toMin(e.arr), dd = toMin(e.dep);
     if (a == null || dd == null || dd <= a) return null;
     var p = planned(aid, date);
@@ -318,21 +451,60 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
     m.weeks.forEach(function (w) { var r = weekExtra(aid, w); t += r.total; todo += r.todo; });
     return { total: t, todo: todo };
   }
+  // Le pot : tout ce qui a été presté en plus, moins les heures rendues.
+  function potOf(aid) {
+    var ok = 0, todo = 0;
+    allDays().forEach(function (d) { var e = entry(aid, d.date), x = extraOf(aid, d.date, e); if (x == null) return; if (e.statut === "à vérifier") todo += x; else ok += x; });
+    var rendu = 0; (S.recup[slug(aid)] || []).forEach(function (r) { rendu += r.minutes || 0; });
+    return { ok: ok - rendu, todo: todo, rendu: rendu };
+  }
+
+  /* ---------- points et récompenses ---------- */
+  function encodageScore(aid, p) {
+    var r = periodRange(p), today = todayIso(), due = 0, done = 0, onTime = 0;
+    allDays().forEach(function (d) {
+      if (d.date < r[0] || d.date > r[1] || d.date >= today || !isWork(d.cells[aid])) return;
+      due++;
+      var e = entry(aid, d.date);
+      if (!e || !e.arr || !e.dep) return;
+      done++;
+      var first = e.g ? (e.g.first || e.g.at) : null;
+      if (!first || first <= new Date(d.date + "T23:59:00").getTime() + 2 * 86400000) onTime++;
+    });
+    if (!due) return null;
+    return { due: due, done: done, onTime: onTime, pts: Math.round(40 * (0.7 * done / due + 0.3 * onTime / due)) };
+  }
+  function avgCrit(ev) { if (!ev || !ev.crit) return null; var v = CRITERES.map(function (c) { return ev.crit[c[0]]; }).filter(function (x) { return x; }); return v.length ? v.reduce(function (a, b) { return a + b; }, 0) / v.length : null; }
+  function evalFor(aid, p) { return (S.evals[slug(aid)] || {})[p] || (S.link === aid ? S.myResp[p] : null) || null; }
+  function evalScore(aid, p) { var a = avgCrit(evalFor(aid, p)); return a == null ? null : { avg: a, pts: Math.round(40 * (a - 1) / 4) }; }
+  function voteTally(p) {
+    var t = {}, voters = 0;
+    Object.keys(S.votes).forEach(function (u) { var v = (S.votes[u] || {})[p]; if (v && v.pour) { voters++; t[v.pour] = (t[v.pour] || 0) + 1; } });
+    return { t: t, voters: voters };
+  }
+  function scoreOf(aid, p) {
+    var enc = encodageScore(aid, p), ev = evalScore(aid, p), vt = owner ? voteTally(p) : null;
+    var votes = vt ? (vt.t[aid] || 0) : null;
+    var votePts = vt && vt.voters ? Math.round(20 * votes / Math.max(1, vt.voters - (Object.keys(S.links).some(function (u) { return S.links[u] === aid && (S.votes[u] || {})[p]; }) ? 1 : 0))) : 0;
+    var total = (enc ? enc.pts : 0) + (ev ? ev.pts : 0) + (vt ? Math.min(20, votePts) : 0);
+    return { enc: enc, ev: ev, votes: votes, votePts: Math.min(20, votePts), total: total };
+  }
+  function medal(total) { return total >= 85 ? ["gold", "Or"] : total >= 70 ? ["silver", "Argent"] : total >= 55 ? ["bronze", "Bronze"] : null; }
 
   /* ---------- écriture db ---------- */
-  function fail(e) {
-    var msg = e && e.code === "quota_exceeded" ? "L'espace de stockage est plein : supprimez d'anciennes news." :
-      e && e.code === "invalid_argument" ? "Enregistrement refusé : ce compte n'a pas le droit de modifier ceci." : "L'enregistrement n'a pas abouti. Réessayez dans un instant.";
-    toast(msg);
-  }
   var toastMsg = "";
   function toast(m) { toastMsg = m; render(); setTimeout(function () { if (toastMsg === m) { toastMsg = ""; render(); } }, 5000); }
+  function fail(e) {
+    toast(e && e.code === "quota_exceeded" ? "L'espace de stockage est plein : supprimez d'anciennes news." :
+      e && e.code === "invalid_argument" ? "Enregistrement refusé : ce compte n'a pas le droit de modifier ceci." : "L'enregistrement n'a pas abouti. Réessayez dans un instant.");
+  }
   function write(p) { return p.then(null, function (e) { fail(e); throw e; }); }
 
   function saveMine(aid, date, vals) {
     var ref = db.doc("pointages/" + uid + "/jours/" + date);
     if (!vals.arr && !vals.dep) return write(ref.delete());
-    return write(ref.set({ assistant: aid, arr: vals.arr || "", dep: vals.dep || "", demande: !!vals.demande, at: Date.now() }));
+    var prev = S.mine[date];
+    return write(ref.set({ assistant: aid, arr: vals.arr || "", dep: vals.dep || "", demande: !!vals.demande, at: Date.now(), first: (prev && (prev.first || prev.at)) || Date.now() }));
   }
   function saveResp(aid, date, vals) {
     var ref = db.doc("heures/" + slug(aid) + "/jours/" + date);
@@ -342,54 +514,192 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
 
   /* ---------- rendu ---------- */
   var LEG = { C: "CONGÉ", F: "FÉRIÉ", OFF: "OFF", CP: "Congé parental", "/": "—" };
-  var renderPending = false;
-  function busy() { var a = document.activeElement; return a && app.contains(a) && (a.tagName === "TEXTAREA" || (a.tagName === "INPUT" && a.type !== "checkbox")); }
+  var renderPending = false, main = null;
+  function busy() { var a = document.activeElement; return a && app.contains(a) && (a.tagName === "TEXTAREA" || (a.tagName === "INPUT" && a.type !== "checkbox" && a.type !== "radio")); }
   function soon() { if (busy()) { renderPending = true; return; } render(); }
   app.addEventListener("focusout", function () { if (renderPending) setTimeout(function () { if (!busy()) { renderPending = false; render(); } }, 0); });
+  function add(n) { if (n) main.appendChild(n); return n; }
+  function route() { var h = (location.hash || "").slice(1); return TABS.some(function (t) { return t[0] === h; }) ? h : "accueil"; }
+  function guideOpen(k) { try { return localStorage.getItem("guide-" + k) !== "0"; } catch (e) { return true; } }
+  function guide(k, title, steps) {
+    var d = el("details", { class: "guide" }, [el("summary", { text: title }), el("ol", null, steps.map(function (s) { return el("li", { text: s }); }))]);
+    d.open = guideOpen(k);
+    d.addEventListener("toggle", function () { try { localStorage.setItem("guide-" + k, d.open ? "1" : "0"); } catch (e) {} });
+    return add(d);
+  }
+  function card(title, sub, body, extra) {
+    return el("section", { class: "card" }, [el("div", { class: "card-head" }, [el("h2", { text: title }), sub ? (typeof sub === "string" ? el("p", { text: sub }) : sub) : null, extra || null]), body]);
+  }
 
-  function route() { var h = (location.hash || "").slice(1); return TABS.some(function (t) { return t[0] === h; }) ? h : "planning"; }
+  function logo() {
+    return sv("svg", { width: "30", height: "30", viewBox: "0 0 32 32", "aria-hidden": "true" }, [
+      sv("path", { d: "M9 4c-3.5 0-6 2.8-6 6.7 0 3.4 1.4 5.5 2.4 8.3.9 2.6 1.1 9 3.7 9 2.3 0 2.2-6.5 4.2-6.5h1.4c2 0 1.9 6.5 4.2 6.5 2.6 0 2.8-6.4 3.7-9 1-2.8 2.4-4.9 2.4-8.3C25 6.8 22.5 4 19 4c-2.2 0-3.4 1.3-5 1.3S11.2 4 9 4z", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linejoin": "round" }),
+      sv("circle", { cx: "25.5", cy: "8", r: "3", fill: "var(--honey)" })
+    ]);
+  }
 
   function render() {
     var y = window.scrollY;
     app.textContent = "";
     var tab = route();
     var pend = isMgr() ? pendingCount() : 0;
-    app.appendChild(el("div", { class: "top" }, [
-      el("div", null, [
-        el("h1", { text: "Cabinet · " + M().title }),
-        whoami()
-      ]),
-      el("nav", { class: "months", "aria-label": "Mois" }, state.months.map(function (mm, i) {
-        return el("button", { class: "tab", type: "button", "aria-current": String(i === state.cur), text: mm.title, onclick: function () { state.cur = i; saveDraft(); render(); } });
-      }))
-    ]));
-    app.appendChild(el("nav", { class: "tabs", "aria-label": "Sections" }, TABS.map(function (t) {
-      return el("a", { href: "#" + t[0], "aria-current": t[0] === tab ? "page" : null }, [t[1], t[0] === "responsable" && pend ? el("span", { class: "badge", text: String(pend) }) : null, t[0] === "responsable" ? (isMgr() ? " (ouvert)" : " 🔒") : null]);
-    })));
-    if (toastMsg) app.appendChild(el("div", { class: "notice", role: "status", text: toastMsg }));
-    if (tab === "planning") viewPlanning();
+    var side = el("aside", { class: "side" }, [
+      el("div", { class: "brand" }, [logo(), el("div", null, ["Lensdental", el("small", { text: "L'équipe" })])]),
+      el("nav", { class: "nav", "aria-label": "Sections" }, TABS.map(function (t) {
+        var badge = t[0] === "responsable" ? (isMgr() ? (pend ? el("span", { class: "badge", text: String(pend) }) : null) : el("span", { text: "🔒", "aria-label": "verrouillé" })) : null;
+        return el("a", { href: "#" + t[0], "aria-current": t[0] === tab ? "page" : null }, [t[1], badge]);
+      })),
+      el("div", { class: "foot", text: S.link ? "Connectée : " + S.link : owner ? "Connectée : responsable" : "Lensdental · outil interne" })
+    ]);
+    main = el("main", { class: "main" });
+    app.appendChild(el("div", { class: "shell" }, [side, main]));
+    if (toastMsg) add(el("p", { class: "notice", role: "status", text: toastMsg }));
+    if (tab === "accueil") viewAccueil();
+    else if (tab === "planning") viewPlanning();
     else if (tab === "heures") viewHeures();
+    else if (tab === "suivi") viewSuivi();
+    else if (tab === "recompenses") viewRecompenses();
     else if (tab === "news") viewNews();
     else if (tab === "reunions") viewReunions();
     else viewResp();
-    if (isMgr() || nChanges()) app.appendChild(saveBar());
+    if ((isMgr() && tab === "planning") || nChanges()) app.appendChild(saveBar());
     window.scrollTo(0, y);
   }
 
-  function whoami() {
-    if (!S.ready) return el("p", { class: "sub", text: "Connexion aux données du cabinet…" });
-    if (!db) return el("p", { class: "sub", text: "Consultation seule : connectez-vous avec le compte invité pour encoder vos heures, lire les news et voir les réunions." });
-    var kids = [];
-    if (owner) kids.push(el("span", null, ["Connectée comme ", el("b", { text: "responsable" })]));
-    if (S.link) kids.push(el("span", null, [owner ? " · assistante : " : "Vous êtes ", el("b", { text: S.link }), " ", el("button", { class: "linkbtn", type: "button", text: "ce n'est pas moi", onclick: function () { write(db.doc("pointages/" + uid).delete()); } })]));
-    if (!owner && !S.link) kids.push(el("span", { text: "Choisissez votre prénom dans l'onglet Heures sup." }));
-    return el("div", { class: "whoami" }, kids);
+  function pageHead(title, sub, right) {
+    return add(el("div", { class: "top" }, [el("div", null, [el("h1", { text: title }), sub ? el("p", { class: "sub", text: sub }) : null]), right || null]));
+  }
+  function monthNav() {
+    return el("nav", { class: "months", "aria-label": "Mois" }, state.months.map(function (mm, i) {
+      return el("button", { class: "tab", type: "button", "aria-current": String(i === state.cur), text: mm.title, onclick: function () { state.cur = i; saveDraft(); render(); } });
+    }));
+  }
+  function needDb() {
+    if (!S.ready) { add(el("p", { class: "notice info", text: "Connexion aux données du cabinet…" })); return true; }
+    if (!db) { add(el("p", { class: "notice", text: "Cette partie demande d'être connectée avec le compte invité par la responsable. Ouvrez le lien depuis l'e-mail d'invitation et connectez-vous." })); return true; }
+    return false;
+  }
+  function pickName() {
+    add(card("Qui êtes-vous ?", "Une seule fois : votre compte sera lié à votre prénom.", el("div", { class: "card-body" }, [el("div", { class: "people" }, state.assistants.map(function (a) {
+      return el("button", { class: "tab", type: "button", text: a.id, onclick: function () { write(db.doc("pointages/" + uid).set({ assistant: a.id, at: Date.now() })); } });
+    }))])));
   }
 
-  function needDb() {
-    if (!S.ready) { app.appendChild(el("p", { class: "notice info", text: "Chargement…" })); return true; }
-    if (!db) { app.appendChild(el("p", { class: "notice", text: "Cette partie demande d'être connectée avec le compte que la responsable a invité. Ouvrez le lien depuis l'e-mail d'invitation et connectez-vous." })); return true; }
-    return false;
+  /* ----- Pots d'heures ----- */
+  function potSvg(min, pendingMin, key) {
+    var CAP = 600; // 10 h remplissent le pot
+    var lvl = Math.max(0, Math.min(1, min / CAP)), lvl2 = Math.max(0, Math.min(1, (min + Math.max(0, pendingMin)) / CAP));
+    var top = 30, bottom = 128, h = bottom - top;
+    var id = "jar" + key;
+    var jarPath = "M30 22h60v8c0 4 6 6 6 14v72c0 10-8 16-18 16H42c-10 0-18-6-18-16V44c0-8 6-10 6-14z";
+    return sv("svg", { viewBox: "0 0 120 140", role: "img", "aria-label": "Pot d'heures : " + dur(min) }, [
+      sv("defs", null, [sv("clipPath", { id: id }, [sv("path", { d: jarPath })])]),
+      sv("rect", { x: "18", y: "10", width: "84", height: "12", rx: "4", fill: "var(--brand)" }),
+      sv("g", { "clip-path": "url(#" + id + ")" }, [
+        sv("rect", { x: "0", y: "0", width: "120", height: "140", fill: "var(--surface)" }),
+        sv("rect", { class: "liquid", x: "0", y: String(bottom - h * lvl2), width: "120", height: String(h * lvl2 + 20), fill: "var(--honey)", opacity: ".35" }),
+        sv("rect", { class: "liquid", x: "0", y: String(bottom - h * lvl), width: "120", height: String(h * lvl + 20), fill: "var(--honey)" }),
+        sv("path", { d: "M36 50v52", stroke: "#fff", "stroke-width": "5", "stroke-linecap": "round", opacity: ".45" })
+      ]),
+      sv("path", { d: jarPath, fill: "none", stroke: "var(--ink)", "stroke-width": "3" }),
+      sv("path", { d: "M90 60h-8M90 80h-8M90 100h-8", stroke: "var(--muted)", "stroke-width": "2" })
+    ]);
+  }
+  function potCard(aid, i) {
+    var p = potOf(aid);
+    return el("div", { class: "pot" }, [potSvg(p.ok, p.todo, i), el("div", { class: "name", text: aid }),
+      el("div", { class: "val" + (p.ok < 0 ? " neg" : ""), text: plusTxt(p.ok) }),
+      el("div", { class: "det", text: (p.todo ? plusTxt(p.todo) + " à vérifier" : "tout est vérifié") + (p.rendu ? " · " + dur(p.rendu) + " rendues" : "") })]);
+  }
+
+  /* ----- Accueil ----- */
+  function birthdayOf(aid) { var e = S.equipe[slug(aid)]; return e && e.anniv ? e.anniv : null; }
+  function daysUntil(mmdd) {
+    var now = new Date(), y = now.getFullYear(), t = new Date(y, +mmdd.slice(0, 2) - 1, +mmdd.slice(3, 5), 12);
+    var base = new Date(y, now.getMonth(), now.getDate(), 12);
+    if (t < base) t = new Date(y + 1, +mmdd.slice(0, 2) - 1, +mmdd.slice(3, 5), 12);
+    return Math.round((t - base) / 86400000);
+  }
+  function motDuMatin(name) { var t = todayIso(); return MOTS[hashStr(t + "|" + (name || "équipe")) % MOTS.length]; }
+
+  function viewAccueil() {
+    var me = S.link, today = todayIso(), now = new Date();
+    var hour = now.getHours(), hi = hour < 12 ? "Bonjour" : hour < 18 ? "Bon après-midi" : "Bonsoir";
+    var bday = me && birthdayOf(me) && daysUntil(birthdayOf(me)) === 0;
+    var smile = sv("svg", { class: "smile", width: "220", height: "220", viewBox: "0 0 32 32", "aria-hidden": "true" }, [sv("path", { d: "M9 4c-3.5 0-6 2.8-6 6.7 0 3.4 1.4 5.5 2.4 8.3.9 2.6 1.1 9 3.7 9 2.3 0 2.2-6.5 4.2-6.5h1.4c2 0 1.9 6.5 4.2 6.5 2.6 0 2.8-6.4 3.7-9 1-2.8 2.4-4.9 2.4-8.3C25 6.8 22.5 4 19 4c-2.2 0-3.4 1.3-5 1.3S11.2 4 9 4z", fill: "currentColor" })]);
+    add(el("section", { class: "hero" + (bday ? " bday" : "") }, [
+      el("div", { class: "kicker", text: fdate(today) }),
+      el("div", { class: "hello", text: bday ? "Joyeux anniversaire " + me + " !" : hi + (me ? " " + me + "," : " !") }),
+      el("div", { class: "msg", text: bday ? "Toute l'équipe Lensdental te souhaite une merveilleuse journée. Profite, tu le mérites !" : motDuMatin(me || (owner ? "responsable" : "")) }),
+      S.mot && S.mot.date === today && S.mot.texte ? el("div", { class: "msg", style: "font-weight:600", text: "Le mot de la responsable : " + S.mot.texte }) : null,
+      smile
+    ]));
+    if (S.ready && db && !owner && !me) { pickName(); return; }
+    if (needDb()) return;
+    // anniversaires
+    var bd = state.assistants.map(function (a) { var b = birthdayOf(a.id); return b ? { a: a.id, n: daysUntil(b), b: b } : null; }).filter(function (x) { return x && x.n <= 14 && x.a !== (bday ? me : null); }).sort(function (x, y) { return x.n - y.n; });
+    if (bd.length) add(el("p", { class: "notice", style: "background:var(--rose-soft);color:var(--ink)", text: bd.map(function (x) { return x.n === 0 ? "Aujourd'hui, c'est l'anniversaire de " + x.a + " ! Pensez à lui souhaiter." : "Anniversaire de " + x.a + " dans " + x.n + " jour" + (x.n > 1 ? "s" : "") + " (" + +x.b.slice(3) + " " + MOIS[+x.b.slice(0, 2) - 1] + ")."; }).join(" ") }));
+    // gagnante de la dernière période
+    var lastWin = Object.keys(S.palmares).sort().pop();
+    if (lastWin && S.palmares[lastWin].gagnante && lastWin >= prevPeriod(periodOf(today))) {
+      var w = S.palmares[lastWin];
+      add(el("div", { class: "winner" }, [el("span", { class: "pill gold", text: "Assistante du mois" }), el("span", { class: "big", text: w.gagnante }), el("span", { text: periodLabel(lastWin) + (w.recompense ? " · gagne : " + w.recompense : "") })]));
+    }
+    var grid = add(el("div", { class: "grid-dash" }));
+    // à faire
+    var todo = todoList();
+    grid.appendChild(card("À faire", todo.length ? todo.filter(function (t) { return !t.done; }).length + " action" + (todo.filter(function (t) { return !t.done; }).length > 1 ? "s" : "") : "Rien en attente", el("div", { class: "card-body" }, [
+      el("ul", { class: "todo" }, todo.length ? todo.map(function (t) { return el("li", { class: t.done ? "done" : "" }, [el("span", { class: "dot" }), el("span", { text: t.txt }), t.href ? el("a", { href: t.href, text: t.go || "Ouvrir" }) : null]); }) : [el("li", { class: "done" }, [el("span", { class: "dot" }), el("span", { text: "Tout est à jour. Bravo !" })])])
+    ])));
+    // aujourd'hui
+    var d = dayByDate(today);
+    var todayBody = el("div", { class: "card-body mini" });
+    if (!d) todayBody.appendChild(el("p", { class: "sub", style: "margin:0", text: "Aujourd'hui n'est pas dans le planning publié." }));
+    else {
+      todayBody.appendChild(el("div", { class: "line" }, [el("span", { text: "Dentistes" }), el("b", { text: d.dentists || (d.holiday ? "Férié" : "—") })]));
+      (me && !isMgr() ? [asst(me)] : state.assistants).forEach(function (a) {
+        var c = d.cells[a.id];
+        todayBody.appendChild(el("div", { class: "line" }, [el("span", { text: a.id }), el("b", { text: isWork(c) ? clock(c.start) + "–" + clock(c.end) + (c.dent ? " · " + c.dent : "") + (c.pause && c.pause !== "HS" && c.pause !== "sans" ? " · pause " + c.pause : "") : c && c.code ? (LEG[c.code] || c.code) : "—" })]));
+      });
+      meetingsOn(today).filter(visibleMeeting).forEach(function (m) { todayBody.appendChild(el("div", { class: "line" }, [el("span", { class: "pill mt", text: "Réunion" }), el("b", { text: meetLabel(m) })])); });
+    }
+    grid.appendChild(card("Aujourd'hui", d ? d.label : "", todayBody));
+    // pots
+    var who = isMgr() || (owner && !me) ? state.assistants.map(function (a) { return a.id; }) : me ? [me] : [];
+    if (who.length) { var pc = card(who.length > 1 ? "Les pots d'heures" : "Mon pot d'heures", "1 pot plein = 10 h", el("div", { class: "card-body" }, [el("div", { class: "pots" }, who.map(potCard)), el("a", { href: "#heures", text: "Voir le détail des heures" })])); if (who.length > 1) pc.classList.add("span-all"); grid.appendChild(pc); }
+    // prochaine réunion + news
+    var next = S.reunions.filter(function (r) { return r.date >= today && visibleMeeting(r); }).sort(function (a, b) { return (a.date + a.debut) < (b.date + b.debut) ? -1 : 1; })[0];
+    var news = S.news.slice().sort(function (a, b) { return (b.at || 0) - (a.at || 0); }).slice(0, 2);
+    grid.appendChild(card("Infos", null, el("div", { class: "card-body" }, [
+      next ? el("div", { class: "post meeting" }, [el("div", { class: "meta", text: "Prochaine réunion" }), el("div", { class: "txt", text: meetLabel(next) + " · " + fdate(next.date) })]) : el("p", { class: "sub", style: "margin:0", text: "Pas de réunion prévue." }),
+      news.length ? el("div", { class: "feed" }, news.map(function (n) { return post(n, "pub"); })) : null,
+      el("a", { href: "#news", text: "Toutes les news" })
+    ])));
+  }
+
+  function todoList() {
+    var out = [], today = todayIso(), p = periodOf(today), r = periodRange(p);
+    var endSoon = (new Date(r[1] + "T12:00:00") - new Date()) / 86400000 <= 21;
+    if (isMgr() || owner) {
+      var ph = pendingHours(), pn = pendingNews().length;
+      if (!mgr) out.push({ txt: "Ouvrez l'espace responsable avec votre code.", href: "#responsable" });
+      if (ph) out.push({ txt: ph + " pointage" + (ph > 1 ? "s" : "") + " à vérifier", href: "#responsable", go: "Vérifier" });
+      if (pn) out.push({ txt: pn + " news à valider", href: "#news", go: "Valider" });
+      var missing = state.assistants.filter(function (a) { return !evalFor(a.id, p); }).map(function (a) { return a.id; });
+      if (endSoon && missing.length) out.push({ txt: "Évaluations de la période à faire : " + missing.join(", "), href: "#suivi" });
+      if (endSoon && !(S.palmares[p] && S.palmares[p].gagnante)) out.push({ txt: "Désigner l'assistante du mois (" + periodLabel(p) + ")", href: "#recompenses" });
+      var st = M() ? oneOnOneStatus(M()).filter(function (s) { return s.dueNow; }) : [];
+      if (st.length) out.push({ txt: "Tête-à-tête à planifier : " + st.map(function (s) { return s.a.id; }).join(", "), href: "#reunions" });
+      return out;
+    }
+    var me = S.link; if (!me) return out;
+    var miss = [];
+    allDays().forEach(function (d) { if (d.date < today && d.date >= addMonths(today, -1) && isWork(d.cells[me]) && !entry(me, d.date)) miss.push(d); });
+    if (miss.length) out.push({ txt: miss.length === 1 ? "Encoder vos heures du " + miss[0].label.toLowerCase() : "Encoder vos heures : " + miss.length + " jours en retard", href: "#heures", go: "Encoder" });
+    else out.push({ txt: "Heures à jour", done: true });
+    if (endSoon && !S.myAuto[p]) out.push({ txt: "Remplir votre auto-évaluation (" + periodLabel(p) + ")", href: "#suivi" });
+    if (endSoon && !S.myVote[p]) out.push({ txt: "Voter pour l'assistante du mois", href: "#recompenses", go: "Voter" });
+    return out;
   }
 
   /* ----- Planning ----- */
@@ -409,24 +719,34 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
       if (c.dent) kids.push(el("span", { class: "d" + (c.dent.indexOf("★") >= 0 ? " star" : ""), text: "→ " + c.dent }));
       if (c.pause === "HS") { var r = calc(c, a); kids.push(el("span", { class: "hsb", text: "+" + dur(r.hs) + " sup." })); }
     }
+    if (c && c.auto && can) kids.push(el("span", { class: "auto", text: "auto" }));
     if (changed[state.cur + "|" + key]) cls += " changed";
     if (!can) return el("div", { class: cls }, kids);
     return el("button", { class: cls, type: "button", "aria-label": a.id + ", " + d.label, onclick: function () { openCell(wi, di, a.id); } }, kids);
   }
 
   function viewPlanning() {
-    app.appendChild(el("div", { class: "top" }, [
-      el("p", { class: "sub", text: isMgr() ? "Mode responsable : touchez une case pour changer un horaire, un statut ou le dentiste assisté ; touchez un jour pour les dentistes et la note. « Enregistrer » publie le planning pour toute l'équipe." : "Planning du mois. Seule la responsable peut le modifier." }),
-      el("div", { class: "legend" }, [
-        el("span", { class: "chip c", text: "Congé" }), el("span", { class: "chip f", text: "Férié" }),
-        el("span", { class: "chip o", text: "OFF" }), el("span", { class: "chip h", text: "Heures sup." }),
-        el("span", { class: "chip", text: state.rules.dentists.map(function (x) { return x.code + " " + x.name.split(" ")[0]; }).join(" · ") + " · Acc accueil · ★ obligatoire" })
-      ])
+    pageHead("Planning", isMgr() ? "Mode responsable : tout est modifiable." : "Seule la responsable peut modifier le planning.", monthNav());
+    guide("planning", "Comment lire et remplir le planning", [
+      "La bande « Dentistes » donne les initiales des praticiens présents. Il faut une assistante par dentiste + une à l'accueil.",
+      "La ligne « Contrôle » vérifie tout seul : rouge = bloquant (dentiste sans assistante, pas d'accueil), orange = à vérifier (binôme inhabituel).",
+      "Responsable : « Remplir les cases vides » complète le mois en respectant contrats, binômes, accueil et pauses. « Nouvelle proposition complète » refait tout le mois (congés, fériés et congé parental gardés) : chaque proposition est différente.",
+      "Touchez n'importe quelle case pour la changer. Les cases marquées « auto » viennent d'une proposition ; une case que vous modifiez devient la vôtre et « Remplir les cases vides » n'y touche plus.",
+      "« Enregistrer le planning » publie pour toute l'équipe. Tant que ce n'est pas fait, « Annuler » revient en arrière."
+    ]);
+    add(el("div", { class: "legend" }, [
+      el("span", { class: "chip c", text: "Congé" }), el("span", { class: "chip f", text: "Férié" }),
+      el("span", { class: "chip o", text: "OFF" }), el("span", { class: "chip h", text: "Heures sup." }),
+      el("span", { class: "chip", text: state.rules.dentists.map(function (x) { return x.code + " " + x.name.split(" ")[0]; }).join(" · ") + " · Acc accueil · ★ obligatoire" })
     ]));
-    if (isMgr()) app.appendChild(el("div", { class: "months" }, [el("button", { class: "btn primary", type: "button", text: "+ Préparer un nouveau mois", onclick: openNewMonth })]));
-    app.appendChild(summary());
-    M().weeks.forEach(function (w, wi) { app.appendChild(weekCard(w, wi)); });
-    app.appendChild(rulesCard());
+    if (isMgr()) add(el("div", { class: "row-acts" }, [
+      el("button", { class: "btn primary", type: "button", text: "Remplir les cases vides", onclick: function () { runAuto(false); } }),
+      el("button", { class: "btn", type: "button", text: "Nouvelle proposition complète", onclick: function () { runAuto(true); } }),
+      el("button", { class: "btn", type: "button", text: "+ Préparer un nouveau mois", onclick: openNewMonth })
+    ]));
+    add(summary());
+    M().weeks.forEach(function (w, wi) { add(weekCard(w, wi)); });
+    add(rulesCard());
   }
 
   function summary() {
@@ -444,16 +764,12 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
         el("td", { class: "n", text: t.hs ? "+" + dur(t.hs) : "—" })
       ]);
     });
-    return el("section", { class: "card" }, [
-      el("div", { class: "card-head" }, [el("h2", { text: "Le mois en bref" }),
-        el("p", null, [el("span", { class: "pill " + (alerts ? "bad" : "ok"), text: alerts ? alerts + " point" + (alerts > 1 ? "s" : "") + " bloquant" + (alerts > 1 ? "s" : "") : "✔ aucun point bloquant" }),
-          state.savedAt ? " · planning enregistré le " + new Date(state.savedAt).toLocaleString("fr-BE", { dateStyle: "short", timeStyle: "short" }) : ""]),
-        isMgr() ? el("button", { class: "btn", type: "button", text: "Modifier les contrats", onclick: openContracts }) : null]),
+    return card("Le mois en bref", el("p", null, [el("span", { class: "pill " + (alerts ? "bad" : "ok"), text: alerts ? alerts + " point" + (alerts > 1 ? "s" : "") + " bloquant" + (alerts > 1 ? "s" : "") : "✔ aucun point bloquant" }),
+      state.savedAt ? " · enregistré le " + new Date(state.savedAt).toLocaleString("fr-BE", { dateStyle: "short", timeStyle: "short" }) : ""]),
       el("div", { class: "scroll" }, [el("table", { class: "sum" }, [
         el("thead", null, [el("tr", null, ["Assistante", "Presté", "Congé / férié", "Total", "Contrat", "Écart", "Samedis (h. sup.)"].map(function (h) { return el("th", { text: h }); }))]),
-        el("tbody", null, rows)
-      ])])
-    ]);
+        el("tbody", null, rows)])]),
+      isMgr() ? el("button", { class: "btn sm", type: "button", text: "Modifier les contrats", onclick: openContracts }) : null);
   }
 
   function meetingsOn(date) { return S.reunions.filter(function (r) { return r.date === date; }); }
@@ -515,7 +831,7 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
       return el("tr", null, [el("th", { text: a.id }), el("td", { text: dur(a.weekly) + " / semaine" }), el("td", { text: dur(a.daily) + " / jour" }), el("td", { text: days })]);
     });
     var det = el("details", { class: "card", id: "rules" }, [
-      el("summary", { class: "card-head" }, [el("h2", { text: "Règles du cabinet" }), el("p", { text: "Ce que la ligne « Contrôle » vérifie" })]),
+      el("summary", { class: "card-head" }, [el("h2", { text: "Règles du cabinet" }), el("p", { text: "Ce que le contrôle et les propositions respectent" })]),
       el("div", { class: "rules" }, [
         el("div", { class: "scroll" }, [el("table", null, [
           el("thead", null, [el("tr", null, ["", "Praticien", "Présence", "Assisté par"].map(function (h) { return el("th", { text: h }); }))]),
@@ -524,57 +840,60 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
           el("thead", null, [el("tr", null, ["Assistante", "Contrat", "Journée type", "Jours"].map(function (h) { return el("th", { text: h }); }))]),
           el("tbody", null, aRows)])]),
         el("ul", null, [
-          el("li", { text: "Méthode : on note d'abord les initiales des dentistes présents chaque jour. Il faut une assistante par dentiste à assister, plus une à l'accueil (4 dentistes = 5 assistantes)." }),
+          el("li", { text: "Il faut une assistante par dentiste à assister, plus une à l'accueil (4 dentistes = 5 assistantes)." }),
           el("li", { text: "Pauses : assistantes 30 minutes, de 13h00 à 13h30 ou de 13h30 à 14h00. Dentistes : 13h00 à 14h00." }),
           el("li", { text: "Samedi : Emine de 9h à 13h, une seule assistante, en heures sup. (hors temps plein)." }),
-          el("li", { text: "Heures sup. : on compte depuis l'heure prévue au planning. Arriver plus tôt ne compte pas, sauf à la demande du dentiste. Rester plus tard compte à la minute." }),
-          el("li", { text: "Réunions : une réunion d'équipe en fin de mois, un jour où toutes les assistantes sont là ; un tête-à-tête avec chaque assistante tous les deux mois." })
+          el("li", { text: "Heures sup. : on compte depuis l'heure prévue. Arriver plus tôt ne compte pas, sauf à la demande du dentiste. Rester plus tard compte à la minute." })
         ])
       ])
     ]);
-    det.open = true;
+    det.open = false;
     return det;
   }
 
   /* ----- Heures sup. ----- */
   function viewHeures() {
+    pageHead("Heures sup.", null, monthNav());
+    guide("heures", "Comment encoder ses heures", [
+      "Chaque jour, notez votre heure d'arrivée et de sortie réelles.",
+      "On compte à partir de l'heure prévue au planning : arriver plus tôt ne compte pas, sauf si le dentiste vous l'a demandé (cochez la case).",
+      "Si vous partez plus tard, les minutes en plus sont calculées toutes seules. Le samedi compte en entier.",
+      "Vos minutes remplissent votre pot. La responsable vérifie, et peut vous rendre des heures en récupération.",
+      "Encoder chaque jour (au plus tard 2 jours après) rapporte des points pour l'assistante du mois."
+    ]);
     if (needDb()) return;
     var mg = isMgr();
-    if (!mg && owner) app.appendChild(el("p", { class: "notice info", text: "Pour voir et corriger les heures de toutes les assistantes, ouvrez l'onglet Responsable avec votre code." }));
-    if (!mg && !S.link) {
-      app.appendChild(el("section", { class: "card" }, [
-        el("div", { class: "card-head" }, [el("h2", { text: "Qui êtes-vous ?" }), el("p", { text: "Une seule fois : vos heures seront liées à votre compte." })]),
-        el("div", { class: "card-body" }, [el("div", { class: "people" }, state.assistants.map(function (a) {
-          return el("button", { class: "tab", type: "button", text: a.id, onclick: function () { write(db.doc("pointages/" + uid).set({ assistant: a.id, at: Date.now() })); } });
-        }))])
-      ]));
-      return;
-    }
+    if (!mg && owner && !S.link) add(el("p", { class: "notice info", text: "Pour voir et corriger les heures de toutes les assistantes, ouvrez l'onglet Responsable avec votre code." }));
+    if (!mg && !S.link) { pickName(); return; }
     var people = mg ? ["Toutes"].concat(state.assistants.map(function (a) { return a.id; })) : [S.link];
     if (!ui.person || people.indexOf(ui.person) < 0) ui.person = mg ? "Toutes" : S.link;
-    if (people.length > 1) app.appendChild(el("nav", { class: "people", "aria-label": "Assistante" }, people.map(function (p) {
+    if (people.length > 1) add(el("nav", { class: "people", "aria-label": "Assistante" }, people.map(function (p) {
       return el("button", { class: "tab", type: "button", "aria-current": String(p === ui.person), text: p, onclick: function () { ui.person = p; render(); } });
     })));
-    app.appendChild(el("p", { class: "sub", text: "On compte depuis l'heure prévue au planning. Arrivée plus tôt : ne compte que si c'est à la demande du dentiste (cochez la case). Départ plus tard : compte à la minute. Le samedi compte en entier." + (mg ? " En mode responsable, ce que vous encodez remplace la version de l'assistante et vaut validation." : " La responsable vérifie et peut corriger.") }));
     if (ui.person === "Toutes") { viewAllHours(); return; }
     viewPersonHours(ui.person);
   }
 
   function viewPersonHours(aid) {
-    var mg = isMgr(), m = M(), mt = monthExtra(aid, m);
-    app.appendChild(el("section", { class: "card" }, [el("div", { class: "card-head" }, [
-      el("h2", { text: aid + " · " + m.title }),
-      el("p", null, ["Total du mois : ", plus(mt.total), mt.todo ? el("span", null, [" · ", el("span", { class: "pill am", text: mt.todo + " jour" + (mt.todo > 1 ? "s" : "") + " à vérifier" })]) : null])
-    ])]));
+    var mg = isMgr(), m = M(), mt = monthExtra(aid, m), pot = potOf(aid);
+    add(el("div", { class: "grid-dash" }, [
+      card("Pot de " + aid, "1 pot plein = 10 h", el("div", { class: "card-body" }, [el("div", { class: "pots" }, [potCard(aid, "p" + slug(aid))]),
+        mg ? el("button", { class: "btn sm", type: "button", text: "Rendre des heures (récupération)", onclick: function () { openRecup(aid); } }) : null])),
+      card(m.title, null, el("div", { class: "card-body mini" }, [
+        el("div", { class: "line" }, [el("span", { text: "En plus ce mois-ci" }), plus(mt.total)]),
+        el("div", { class: "line" }, [el("span", { text: "Jours à vérifier" }), el("b", { text: String(mt.todo) })]),
+        el("div", { class: "line" }, [el("span", { text: "Heures déjà rendues" }), el("b", { text: pot.rendu ? dur(pot.rendu) : "—" })])
+      ]))
+    ]));
     m.weeks.forEach(function (w) {
       var body = [];
       w.days.forEach(function (d) {
         var p = d.cells[aid], e = entry(aid, d.date), x = extraOf(aid, d.date, e);
         var work = isWork(p);
         var prev = work ? clock(p.start) + "–" + clock(p.end) + (p.pause === "HS" ? " (h. sup.)" : "") : p && p.code ? (LEG[p.code] || p.code) : "—";
-        var fA = el("input", { type: "time", id: "a-" + aid + d.date, value: e ? e.arr : "", "aria-label": "Arrivée " + d.label });
-        var fD = el("input", { type: "time", id: "d-" + aid + d.date, value: e ? e.dep : "", "aria-label": "Sortie " + d.label });
-        var fQ = el("input", { type: "checkbox", id: "q-" + aid + d.date, "aria-label": "Arrivée plus tôt à la demande du dentiste" }); fQ.checked = !!(e && e.demande);
+        var fA = el("input", { type: "time", id: "a-" + slug(aid) + d.date, value: e ? e.arr : "", "aria-label": "Arrivée " + d.label });
+        var fD = el("input", { type: "time", id: "d-" + slug(aid) + d.date, value: e ? e.dep : "", "aria-label": "Sortie " + d.label });
+        var fQ = el("input", { type: "checkbox", id: "q-" + slug(aid) + d.date, "aria-label": "Arrivée plus tôt à la demande du dentiste" }); fQ.checked = !!(e && e.demande);
         function saveRow() {
           var vals = { arr: fA.value, dep: fD.value, demande: fQ.checked };
           if (mg) saveResp(aid, d.date, (vals.arr || vals.dep) ? vals : null);
@@ -582,20 +901,20 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
         }
         [fA, fD, fQ].forEach(function (f) { f.addEventListener("change", saveRow); });
         var st = !e ? null : e.statut === "à vérifier" ? el("span", { class: "pill am", text: "à vérifier" }) : e.statut === "refusé" ? el("span", { class: "pill bad", text: "refusé" }) : el("span", { class: "pill ok", text: "validé" });
-        var actions = null;
-        if (mg && e && e.statut === "à vérifier") actions = el("div", { class: "row-acts" }, [
+        var acts = null;
+        if (mg && e && e.statut === "à vérifier") acts = el("div", { class: "row-acts" }, [
           el("button", { class: "btn sm primary", type: "button", text: "Valider", onclick: function () { saveResp(aid, d.date, { arr: e.arr, dep: e.dep, demande: e.demande, statut: "validé" }); } }),
           el("button", { class: "btn sm danger", type: "button", text: "Refuser", onclick: function () { saveResp(aid, d.date, { arr: e.arr, dep: e.dep, demande: e.demande, statut: "refusé" }); } })]);
-        else if (mg && e && e.src === "resp" && e.g) actions = el("button", { class: "btn sm", type: "button", text: "Reprendre sa version", onclick: function () { saveResp(aid, d.date, null); } });
+        else if (mg && e && e.src === "resp" && e.g) acts = el("button", { class: "btn sm", type: "button", text: "Reprendre sa version", onclick: function () { saveResp(aid, d.date, null); } });
         body.push(el("tr", { class: work || e ? "" : "off" }, [
           el("td", { class: "who", text: d.label }), el("td", { class: "n", text: prev }),
           el("td", null, [fA]), el("td", null, [fD]), el("td", null, [fQ]),
-          el("td", null, [plus(x)]), el("td", null, [st, actions])
+          el("td", null, [plus(x)]), el("td", null, [st, acts])
         ]));
       });
       var wt = weekExtra(aid, w);
       body.push(el("tr", { class: "total" }, [el("td", { class: "who", colspan: "5", text: "Total " + w.label.toLowerCase() }), el("td", null, [plus(wt.total)]), el("td", { text: wt.todo ? wt.todo + " à vérifier" : "" })]));
-      app.appendChild(el("section", { class: "card" }, [el("div", { class: "scroll" }, [el("table", { class: "hrs" }, [
+      add(el("section", { class: "card" }, [el("div", { class: "scroll" }, [el("table", { class: "hrs" }, [
         el("thead", null, [el("tr", null, [w.label, "Prévu", "Arrivée", "Sortie", "Plus tôt à la demande du dentiste", "En plus", "Statut"].map(function (h) { return el("th", { text: h }); }))]),
         el("tbody", null, body)])])]));
     });
@@ -603,15 +922,7 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
 
   function viewAllHours() {
     var m = M();
-    app.appendChild(el("section", { class: "card" }, [
-      el("div", { class: "card-head" }, [el("h2", { text: "Pot d'heures sup. · " + m.title }), el("p", { text: "Retards de départ et samedis, d'après les heures encodées" })]),
-      el("div", { class: "scroll" }, [el("table", { class: "sum" }, [
-        el("thead", null, [el("tr", null, ["Assistante", "Total du mois", "À vérifier"].map(function (h) { return el("th", { text: h }); }))]),
-        el("tbody", null, state.assistants.map(function (a) {
-          var t = monthExtra(a.id, m);
-          return el("tr", null, [el("td", { class: "who", text: a.id }), el("td", null, [plus(t.total)]), el("td", null, [t.todo ? el("span", { class: "pill am", text: String(t.todo) }) : el("span", { class: "pill ok", text: "0" })])]);
-        }))])])
-    ]));
+    add(card("Les pots de l'équipe", "1 pot plein = 10 h · la partie claire est encore à vérifier", el("div", { class: "card-body" }, [el("div", { class: "pots" }, state.assistants.map(function (a, i) { return potCard(a.id, "t" + i); }))])));
     m.weeks.forEach(function (w) {
       var body = [];
       w.days.forEach(function (d) {
@@ -630,62 +941,247 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
       });
       body.push(el("tr", { class: "dayrow" }, [el("th", { colspan: "4", text: "Total " + w.label.toLowerCase() })]));
       state.assistants.forEach(function (a) { body.push(el("tr", { class: "total" }, [el("td", { class: "who", text: a.id }), el("td"), el("td"), el("td", null, [plus(weekExtra(a.id, w).total)])])); });
-      app.appendChild(el("section", { class: "card" }, [el("div", { class: "scroll" }, [el("table", { class: "hrs" }, [
+      add(el("section", { class: "card" }, [el("div", { class: "scroll" }, [el("table", { class: "hrs" }, [
         el("thead", null, [el("tr", null, [w.label, "Arrivée", "Sortie", "Minutes en plus"].map(function (h) { return el("th", { text: h }); }))]),
         el("tbody", null, body)])])]));
     });
   }
 
+  function openRecup(aid) {
+    dlg.textContent = "";
+    var fDate = el("input", { type: "date", id: "r-date", value: todayIso() });
+    var fH = el("input", { type: "text", id: "r-h", placeholder: "ex. 2h30", inputmode: "numeric" });
+    var fN = el("input", { type: "text", id: "r-n", placeholder: "ex. part à 15h" });
+    var err = el("p", { class: "err" });
+    var form = el("form", { method: "dialog" }, [el("h3", { text: "Rendre des heures à " + aid }), el("p", { class: "ctx", text: "Ces heures sortent de son pot (récupération ou paiement)." }),
+      el("label", { class: "field" }, ["Date", fDate]), el("label", { class: "field" }, ["Durée", fH]), el("label", { class: "field" }, ["Note", fN]), err, acts("Retirer du pot")]);
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var m = /^(\d{1,2})\s*[h:]\s*(\d{1,2})?$/i.exec(fH.value.trim()) || /^(\d{1,3})\s*min$/i.exec(fH.value.trim());
+      var min = !m ? null : m[0].toLowerCase().indexOf("min") > 0 ? +m[1] : (+m[1]) * 60 + (+(m[2] || 0));
+      if (!min) { err.textContent = "Écrivez la durée comme 2h30 ou 45 min."; return; }
+      write(db.collection("recup/" + slug(aid) + "/items").add({ date: fDate.value, minutes: min, note: fN.value.trim(), at: Date.now() })).then(function () { toast(dur(min) + " rendues à " + aid + "."); });
+      closeDlg();
+    });
+    dlg.appendChild(form); showDlg();
+  }
+
+  /* ----- Suivi ----- */
+  function starsInput(name, val, ro) {
+    return el("div", { class: "stars" + (ro ? " ro" : ""), role: ro ? null : "radiogroup" }, [1, 2, 3, 4, 5].map(function (n) {
+      if (ro) return el("span", { class: val >= n ? "on" : "", text: String(n) });
+      var i = el("input", { type: "radio", name: name, value: String(n), id: name + "-" + n, "aria-label": n + " sur 5" }); if (val === n) i.checked = true;
+      return el("label", null, [i, el("span", { text: String(n) })]);
+    }));
+  }
+  function critForm(prefix, data, ro) {
+    return el("div", { class: "crit" }, CRITERES.map(function (c) {
+      return el("div", { class: "row" }, [el("div", { class: "lbl" }, [el("b", { text: c[1] }), el("small", { text: c[2] })]), starsInput(prefix + c[0], data && data.crit ? data.crit[c[0]] : 0, ro)]);
+    }));
+  }
+  function readCrit(form, prefix) { var o = {}; CRITERES.forEach(function (c) { var x = form.querySelector("input[name='" + prefix + c[0] + "']:checked"); if (x) o[c[0]] = +x.value; }); return o; }
+  function periodNav() {
+    var p = periodOf(todayIso()), opts = [p, prevPeriod(p), prevPeriod(prevPeriod(p))];
+    if (!ui.period) ui.period = p;
+    return el("nav", { class: "months", "aria-label": "Période" }, opts.map(function (x) { return el("button", { class: "tab", type: "button", "aria-current": String(x === ui.period), text: periodLabel(x), onclick: function () { ui.period = x; render(); } }); }));
+  }
+  function textBlock(label, txt) { return txt ? el("div", null, [el("b", { text: label }), el("p", { class: "sub", style: "margin:2px 0 0;white-space:pre-wrap;color:var(--ink)", text: txt })]) : null; }
+
+  function viewSuivi() {
+    pageHead("Suivi", "Évaluation tous les deux mois, en même temps que le tête-à-tête.", periodNav());
+    guide("suivi", "Comment fonctionne le suivi", [
+      "Tous les deux mois, chaque assistante remplit son auto-évaluation : 7 critères notés de 1 à 5, ce qui s'est bien passé et ce qu'elle veut améliorer.",
+      "La responsable remplit la sienne de son côté. Chacune ne voit que sa propre fiche.",
+      "On compare les deux pendant le tête-à-tête : c'est la base de la discussion.",
+      "L'évaluation de la responsable compte pour 40 points sur 100 dans l'assistante du mois."
+    ]);
+    if (needDb()) return;
+    var p = curPeriod();
+    if (isMgr()) return suiviMgr(p);
+    if (!S.link) { if (owner) add(el("p", { class: "notice info", text: "Ouvrez l'onglet Responsable avec votre code pour évaluer l'équipe." })); else pickName(); return; }
+    var mine = S.myAuto[p], resp = S.myResp[p];
+    var fB = el("textarea", { id: "s-bien", placeholder: "Une réussite, un patient content, un nouveau geste maîtrisé…" }); fB.value = mine ? mine.bien || "" : "";
+    var fA = el("textarea", { id: "s-amel", placeholder: "Ce que je veux améliorer dans les deux prochains mois" }); fA.value = mine ? mine.ameliorer || "" : "";
+    var fN = el("textarea", { id: "s-besoin", placeholder: "Formation, matériel, organisation…" }); fN.value = mine ? mine.besoin || "" : "";
+    var form = el("form", { class: "card-body" }, [critForm("me-", mine, false),
+      el("label", { class: "field" }, ["Ce qui s'est bien passé", fB]), el("label", { class: "field" }, ["Ce que je veux améliorer", fA]), el("label", { class: "field" }, ["Ce dont j'ai besoin", fN]),
+      el("div", { class: "row-acts" }, [el("button", { class: "btn primary", type: "submit", text: mine ? "Mettre à jour" : "Envoyer mon auto-évaluation" }), mine ? el("span", { class: "pill ok", text: "envoyée le " + new Date(mine.at).toLocaleDateString("fr-BE") }) : null])]);
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      write(db.doc("suivi/" + uid + "/auto/" + p).set({ assistant: S.link, crit: readCrit(form, "me-"), bien: fB.value.trim(), ameliorer: fA.value.trim(), besoin: fN.value.trim(), at: Date.now() })).then(function () { toast("Auto-évaluation enregistrée. Merci !"); });
+    });
+    var g = add(el("div", { class: "grid-dash" }));
+    g.appendChild(card("Mon auto-évaluation", periodLabel(p), form));
+    g.appendChild(card("L'avis de la responsable", periodLabel(p), el("div", { class: "card-body" }, resp ? [critForm("rv-", resp, true), textBlock("Points forts", resp.forts), textBlock("À améliorer", resp.ameliorer)] :
+      [el("p", { class: "sub", style: "margin:0", text: "Pas encore rempli pour cette période. Il apparaîtra ici avant votre tête-à-tête." })])));
+  }
+
+  function suiviMgr(p) {
+    var rows = state.assistants.map(function (a) {
+      var auto = autoFor(a.id, p), ev = evalFor(a.id, p);
+      return el("tr", null, [el("td", { class: "who", text: a.id }), el("td", null, [auto ? el("span", { class: "pill ok", text: "faite" }) : el("span", { class: "pill mu", text: "pas encore" })]),
+        el("td", null, [ev ? el("span", { class: "pill ok", text: "faite · " + avgCrit(ev).toFixed(1) + "/5" }) : el("span", { class: "pill am", text: "à faire" })]),
+        el("td", null, [el("button", { class: "btn sm" + (ev ? "" : " primary"), type: "button", text: ev ? "Revoir" : "Évaluer", onclick: function () { ui.person = a.id; render(); } })])]);
+    });
+    add(card("L'équipe · " + periodLabel(p), null, el("div", { class: "scroll" }, [el("table", { class: "sum" }, [el("thead", null, [el("tr", null, ["Assistante", "Auto-évaluation", "Votre évaluation", ""].map(function (h) { return el("th", { text: h }); }))]), el("tbody", null, rows)])])));
+    var aid = ui.person && asst(ui.person) ? ui.person : state.assistants[0].id;
+    ui.person = aid;
+    add(el("nav", { class: "people" }, state.assistants.map(function (a) { return el("button", { class: "tab", type: "button", "aria-current": String(a.id === aid), text: a.id, onclick: function () { ui.person = a.id; render(); } }); })));
+    var ev = evalFor(aid, p), auto = autoFor(aid, p);
+    var fF = el("textarea", { id: "e-forts" }); fF.value = ev ? ev.forts || "" : "";
+    var fA = el("textarea", { id: "e-amel" }); fA.value = ev ? ev.ameliorer || "" : "";
+    var form = el("form", { class: "card-body" }, [critForm("ev-", ev, false), el("label", { class: "field" }, ["Points forts", fF]), el("label", { class: "field" }, ["À améliorer", fA]),
+      el("div", { class: "row-acts" }, [el("button", { class: "btn primary", type: "submit", text: "Enregistrer l'évaluation" })])]);
+    form.addEventListener("submit", function (ev2) {
+      ev2.preventDefault();
+      var doc = { assistant: aid, crit: readCrit(form, "ev-"), forts: fF.value.trim(), ameliorer: fA.value.trim(), at: Date.now() };
+      write(db.doc("evals/" + slug(aid) + "/periodes/" + p).set(doc)).then(function () {
+        Object.keys(S.links).forEach(function (u) { if (S.links[u] === aid) db.doc("suivi/" + u + "/resp/" + p).set(doc).catch(function () {}); });
+        toast("Évaluation de " + aid + " enregistrée.");
+      });
+    });
+    var g = add(el("div", { class: "grid-dash" }));
+    g.appendChild(card("Votre évaluation de " + aid, periodLabel(p), form));
+    g.appendChild(card("Son auto-évaluation", auto ? "envoyée le " + new Date(auto.at).toLocaleDateString("fr-BE") : "pas encore envoyée", el("div", { class: "card-body" }, auto ?
+      [critForm("au-", auto, true), textBlock("Ce qui s'est bien passé", auto.bien), textBlock("Ce qu'elle veut améliorer", auto.ameliorer), textBlock("Ce dont elle a besoin", auto.besoin)] :
+      [el("p", { class: "sub", style: "margin:0", text: Object.keys(S.links).some(function (u) { return S.links[u] === aid; }) ? "Elle ne l'a pas encore remplie." : aid + " n'a pas encore lié son compte : elle pourra remplir son auto-évaluation dès sa première connexion." })])));
+  }
+  function autoFor(aid, p) { var f = null; Object.keys(S.links).forEach(function (u) { if (S.links[u] === aid && S.auto[u] && S.auto[u][p]) f = S.auto[u][p]; }); return f || (S.link === aid ? S.myAuto[p] : null); }
+
+  /* ----- Récompenses ----- */
+  function viewRecompenses() {
+    pageHead("Récompenses", "Tous les deux mois, l'assistante du mois gagne une récompense.", periodNav());
+    guide("recompenses", "Comment on gagne", [
+      "Encodage des heures : 40 points. Toutes ses heures encodées, et à temps (au plus tard 2 jours après), c'est le maximum.",
+      "Évaluation de la responsable : 40 points (comportement, attitude, efficacité, stérilisation, ponctualité, esprit d'équipe, relation patients).",
+      "Vote des collègues : 20 points. Chacune vote pour une collègue (pas pour elle-même). Les votes restent secrets.",
+      "Médailles : Or dès 85 points, Argent dès 70, Bronze dès 55. La responsable désigne la gagnante et choisit la récompense."
+    ]);
+    add(card("À gagner", "La responsable choisit parmi ces récompenses", el("div", { class: "card-body" }, [el("div", { class: "prize" }, PRIX.map(function (x) { return el("div", null, [x[0], el("small", { text: x[1] })]); }))])));
+    if (needDb()) return;
+    var p = curPeriod(), win = S.palmares[p];
+    if (win && win.gagnante) add(el("div", { class: "winner" }, [el("span", { class: "pill gold", text: "Assistante du mois" }), el("span", { class: "big", text: win.gagnante }), el("span", { text: periodLabel(p) + (win.recompense ? " · " + win.recompense : "") + (win.message ? " — " + win.message : "") })]));
+    if (isMgr()) recoMgr(p);
+    else if (S.link) recoGirl(p);
+    else if (!owner) { pickName(); return; }
+    var past = Object.keys(S.palmares).filter(function (k) { return S.palmares[k].gagnante && k !== p; }).sort().reverse();
+    if (past.length) add(card("Palmarès", null, el("div", { class: "card-body mini" }, past.map(function (k) { return el("div", { class: "line" }, [el("span", { text: periodLabel(k) }), el("b", { text: S.palmares[k].gagnante + (S.palmares[k].recompense ? " · " + S.palmares[k].recompense : "") })]); }))));
+  }
+  function scoreCard(aid, p, sc) {
+    var md = medal(sc.total);
+    return card(aid === S.link ? "Mes points" : aid, periodLabel(p), el("div", { class: "card-body" }, [
+      el("div", { class: "row-acts" }, [el("span", { class: "score", text: String(sc.total) }), el("span", { class: "sub", style: "margin:0", text: "/ 100" }), md ? el("span", { class: "pill " + md[0], text: md[1] }) : null]),
+      meterLine("Encodage des heures", sc.enc ? sc.enc.pts : 0, 40, sc.enc ? sc.enc.done + "/" + sc.enc.due + " jours encodés, " + sc.enc.onTime + " à temps" : "rien à encoder pour l'instant"),
+      meterLine("Évaluation", sc.ev ? sc.ev.pts : 0, 40, sc.ev ? "moyenne " + sc.ev.avg.toFixed(1) + " / 5" : "pas encore évaluée"),
+      sc.votes == null ? meterLine("Votes des collègues", 0, 20, "révélés à la fin de la période") : meterLine("Votes des collègues", sc.votePts, 20, sc.votes + " vote" + (sc.votes > 1 ? "s" : ""))
+    ]));
+  }
+  function meterLine(label, v, max, det) {
+    return el("div", { style: "display:grid;gap:4px" }, [el("div", { class: "row-acts", style: "justify-content:space-between" }, [el("b", { text: label }), el("span", { class: "sub", style: "margin:0", text: v + " / " + max + " · " + det })]),
+      el("div", { class: "meter honey" }, [el("i", { style: "width:" + Math.round(100 * v / max) + "%" })])]);
+  }
+  function recoGirl(p) {
+    var g = add(el("div", { class: "grid-dash" }));
+    g.appendChild(scoreCard(S.link, p, scoreOf(S.link, p)));
+    var mv = S.myVote[p];
+    var opts = state.assistants.filter(function (a) { return a.id !== S.link; });
+    var seg = el("div", { class: "seg", role: "radiogroup", "aria-label": "Collègue" }, opts.map(function (a) {
+      var i = el("input", { type: "radio", name: "vote", value: a.id, id: "v-" + slug(a.id) }); if (mv && mv.pour === a.id) i.checked = true;
+      return el("label", null, [i, el("span", { text: a.id })]);
+    }));
+    var fW = el("textarea", { id: "v-why", placeholder: "Pourquoi elle ? (facultatif, seule la responsable le lit)" }); fW.value = mv ? mv.pourquoi || "" : "";
+    var form = el("form", { class: "card-body" }, [el("p", { class: "sub", style: "margin:0", text: "Votre vote est secret. Vous pouvez le changer jusqu'à la fin de la période." }), seg, el("label", { class: "field" }, ["Pourquoi", fW]),
+      el("div", { class: "row-acts" }, [el("button", { class: "btn gold", type: "submit", text: mv ? "Changer mon vote" : "Voter" }), mv ? el("span", { class: "pill ok", text: "vote : " + mv.pour }) : null])]);
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var x = form.querySelector("input[name=vote]:checked"); if (!x) { toast("Choisissez une collègue."); return; }
+      write(db.doc("votes/" + uid + "/periodes/" + p).set({ votant: S.link, pour: x.value, pourquoi: fW.value.trim(), at: Date.now() })).then(function () { toast("Vote enregistré. Merci !"); });
+    });
+    g.appendChild(card("Mon vote", "Assistante du mois · " + periodLabel(p), form));
+  }
+  function recoMgr(p) {
+    var vt = voteTally(p);
+    var ranked = state.assistants.map(function (a) { return { a: a.id, sc: scoreOf(a.id, p) }; }).sort(function (x, y) { return y.sc.total - x.sc.total; });
+    add(card("Classement · " + periodLabel(p), vt.voters + " vote" + (vt.voters > 1 ? "s" : "") + " reçu" + (vt.voters > 1 ? "s" : ""), el("div", { class: "scroll" }, [el("table", { class: "sum" }, [
+      el("thead", null, [el("tr", null, ["", "Assistante", "Encodage /40", "Évaluation /40", "Votes /20", "Total", ""].map(function (h) { return el("th", { text: h }); }))]),
+      el("tbody", null, ranked.map(function (r, i) {
+        var md = medal(r.sc.total);
+        return el("tr", null, [el("td", { class: "n", text: String(i + 1) }), el("td", { class: "who", text: r.a }),
+          el("td", { class: "n", text: r.sc.enc ? String(r.sc.enc.pts) : "—" }), el("td", { class: "n", text: r.sc.ev ? String(r.sc.ev.pts) : "—" }),
+          el("td", { class: "n", text: r.sc.votePts + " (" + (r.sc.votes || 0) + ")" }), el("td", null, [el("b", { text: String(r.sc.total) }), md ? el("span", null, [" ", el("span", { class: "pill " + md[0], text: md[1] })]) : null]),
+          el("td", null, [el("button", { class: "btn sm" + (i === 0 ? " gold" : ""), type: "button", text: "Désigner", onclick: function () { openWinner(p, r.a); } })])]);
+      }))])])));
+    var why = [];
+    Object.keys(S.votes).forEach(function (u) { var v = (S.votes[u] || {})[p]; if (v && v.pourquoi) why.push(el("div", { class: "post" }, [el("div", { class: "meta", text: (v.votant || "?") + " vote pour " + v.pour }), el("div", { class: "txt", text: v.pourquoi })])); });
+    if (why.length) add(card("Ce que disent les votes", "Visible par vous seule", el("div", { class: "card-body feed" }, why)));
+  }
+  function openWinner(p, aid) {
+    dlg.textContent = "";
+    var fR = el("select", { id: "w-prix" }, PRIX.map(function (x) { return el("option", { value: x[0], text: x[0] }); }).concat([el("option", { value: "", text: "Autre (à préciser dans le message)" })]));
+    var fM = el("textarea", { id: "w-msg", placeholder: "Un mot pour l'équipe (affiché sur l'accueil)" });
+    var form = el("form", { method: "dialog" }, [el("h3", { text: aid + ", assistante du mois" }), el("p", { class: "ctx", text: periodLabel(p) + " · annoncé sur l'accueil de toute l'équipe" }),
+      el("label", { class: "field" }, ["Récompense", fR]), el("label", { class: "field" }, ["Message", fM]), acts("Annoncer")]);
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var doc = { gagnante: aid, recompense: fR.value, message: fM.value.trim(), at: Date.now() };
+      write(db.doc("palmares/" + p).set(doc)).then(function () { return write(db.collection("news").add({ texte: "Bravo à " + aid + ", assistante du mois (" + periodLabel(p) + ") !" + (fR.value ? " Elle gagne : " + fR.value + "." : "") + (fM.value.trim() ? "\n" + fM.value.trim() : ""), auteur: "Responsable", date: new Date().toISOString(), at: Date.now() })); }).then(function () { toast("Annoncé à toute l'équipe."); });
+      closeDlg();
+    });
+    dlg.appendChild(form); showDlg();
+  }
+
   /* ----- News ----- */
   function viewNews() {
+    pageHead("News", "Les infos du cabinet.");
+    guide("news", "Comment publier une news", [
+      "Tout le monde peut écrire une news.",
+      "Celles des assistantes passent d'abord par la responsable, qui les publie ou les refuse.",
+      "Les réunions, les anniversaires et l'assistante du mois s'annoncent aussi ici."
+    ]);
     if (needDb()) return;
     var mg = isMgr();
     var next = S.reunions.filter(function (r) { return r.date >= todayIso() && visibleMeeting(r); }).sort(function (a, b) { return (a.date + a.debut) < (b.date + b.debut) ? -1 : 1; })[0];
-    if (next) app.appendChild(el("div", { class: "post meeting" }, [el("div", { class: "meta", text: "Prochaine réunion" }), el("div", { class: "txt", text: meetLabel(next) + " · " + fdate(next.date) + (next.note ? "\n" + next.note : "") })]));
+    if (next) add(el("div", { class: "post meeting" }, [el("div", { class: "meta", text: "Prochaine réunion" }), el("div", { class: "txt", text: meetLabel(next) + " · " + fdate(next.date) + (next.note ? "\n" + next.note : "") })]));
     var fT = el("textarea", { id: "news-text", maxlength: "1500", placeholder: mg ? "Une info pour toute l'équipe…" : "Une info à partager ? La responsable la valide avant publication." });
     fT.value = ui.newsDraft;
     fT.addEventListener("input", function () { ui.newsDraft = fT.value; });
-    var canPost = mg || (S.link || owner);
-    app.appendChild(el("section", { class: "card" }, [el("div", { class: "card-body" }, [
+    var canPost = mg || S.link || owner;
+    add(el("section", { class: "card" }, [el("div", { class: "card-body" }, [
       el("label", { class: "field" }, [mg ? "Publier une news" : "Proposer une news", fT]),
       el("div", { class: "row-acts" }, [el("button", { class: "btn primary", type: "button", text: mg ? "Publier" : "Envoyer à la responsable", disabled: canPost ? null : "disabled", onclick: function () {
         var t = fT.value.trim(); if (!t) return;
         var doc = { texte: t, auteur: mg ? "Responsable" : (S.link || "Responsable"), date: new Date().toISOString(), at: Date.now() };
-        var p = mg ? db.collection("news").add(doc) : db.collection("propositions/" + uid + "/items").add(doc);
-        write(p).then(function () { ui.newsDraft = ""; toast(mg ? "News publiée." : "Envoyée : elle apparaîtra une fois validée."); });
-      } }), canPost ? null : el("span", { class: "sub", text: "Choisissez d'abord votre prénom dans l'onglet Heures sup." })])
+        var pr = mg ? db.collection("news").add(doc) : db.collection("propositions/" + uid + "/items").add(doc);
+        write(pr).then(function () { ui.newsDraft = ""; toast(mg ? "News publiée." : "Envoyée : elle apparaîtra une fois validée."); });
+      } }), canPost ? null : el("span", { class: "sub", text: "Choisissez d'abord votre prénom sur l'accueil." })])
     ])]));
     var feed = [];
     if (!mg) S.myProps.forEach(function (p) { feed.push(post(p, "pending")); });
     if (mg) pendingNews().forEach(function (x) { feed.push(post(x.p, "review", x.u)); });
     S.news.slice().sort(function (a, b) { return (b.at || 0) - (a.at || 0); }).forEach(function (n) { feed.push(post(n, "pub")); });
     if (!feed.length) feed.push(el("p", { class: "notice info", text: "Aucune news pour l'instant. La première publiée apparaîtra ici." }));
-    app.appendChild(el("div", { class: "feed" }, feed));
+    add(el("div", { class: "feed" }, feed));
   }
   function post(n, kind, u) {
     var meta = [el("b", { text: n.auteur || "—" }), new Date(n.date || n.at).toLocaleString("fr-BE", { dateStyle: "medium", timeStyle: "short" })];
     if (kind === "pending") meta.push(el("span", { class: "pill am", text: "en attente de validation" }));
     if (kind === "review") meta.push(el("span", { class: "pill am", text: "à valider" }));
-    var acts = null;
-    if (kind === "review") acts = el("div", { class: "row-acts" }, [
+    var a = null;
+    if (kind === "review") a = el("div", { class: "row-acts" }, [
       el("button", { class: "btn sm primary", type: "button", text: "Publier", onclick: function () {
         write(db.collection("news").add({ texte: n.texte, auteur: n.auteur, date: n.date, at: Date.now() })).then(function () { return write(db.doc("propositions/" + u + "/items/" + n._id).delete()); });
       } }),
       el("button", { class: "btn sm danger", type: "button", text: "Refuser", onclick: function () { write(db.doc("propositions/" + u + "/items/" + n._id).delete()); } })]);
-    else if (kind === "pub" && isMgr()) acts = el("div", { class: "row-acts" }, [el("button", { class: "btn sm danger", type: "button", text: "Supprimer", onclick: function () { write(db.doc("news/" + n._id).delete()); } })]);
-    else if (kind === "pending") acts = el("div", { class: "row-acts" }, [el("button", { class: "btn sm", type: "button", text: "Retirer", onclick: function () { write(db.doc("propositions/" + uid + "/items/" + n._id).delete()); } })]);
-    return el("article", { class: "post" + (kind !== "pub" ? " pending" : "") }, [el("div", { class: "meta" }, meta), el("div", { class: "txt", text: n.texte }), acts]);
+    else if (kind === "pub" && isMgr()) a = el("div", { class: "row-acts" }, [el("button", { class: "btn sm danger", type: "button", text: "Supprimer", onclick: function () { write(db.doc("news/" + n._id).delete()); } })]);
+    else if (kind === "pending") a = el("div", { class: "row-acts" }, [el("button", { class: "btn sm", type: "button", text: "Retirer", onclick: function () { write(db.doc("propositions/" + uid + "/items/" + n._id).delete()); } })]);
+    return el("article", { class: "post" + (kind !== "pub" ? " pending" : "") }, [el("div", { class: "meta" }, meta), el("div", { class: "txt", text: n.texte }), a]);
   }
   function pendingNews() { var out = []; Object.keys(S.props).forEach(function (u) { (S.props[u] || []).forEach(function (p) { out.push({ u: u, p: p }); }); }); return out; }
-  function pendingHours() {
-    var n = 0;
-    state.months.forEach(function (m) { m.weeks.forEach(function (w) { w.days.forEach(function (d) { state.assistants.forEach(function (a) { var e = entry(a.id, d.date); if (e && e.statut === "à vérifier") n++; }); }); }); });
-    return n;
-  }
+  function pendingHours() { var n = 0; allDays().forEach(function (d) { state.assistants.forEach(function (a) { var e = entry(a.id, d.date); if (e && e.statut === "à vérifier") n++; }); }); return n; }
   function pendingCount() { return pendingNews().length + pendingHours(); }
 
   /* ----- Réunions ----- */
-  function addMonths(iso, n) { var d = new Date(iso + "T12:00:00"); d.setMonth(d.getMonth() + n); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function addMonths(iso, n) { var d = new Date(iso + "T12:00:00"); d.setMonth(d.getMonth() + n); return isoOf(d); }
   function monthRange(m) { var ds = []; m.weeks.forEach(function (w) { w.days.forEach(function (d) { ds.push(d.date); }); }); return [ds[0], ds[ds.length - 1]]; }
   function teamCandidates(m) {
     var out = [];
@@ -696,66 +1192,60 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
       var from = Math.max.apply(null, cs.map(function (c) { return toMin(c.start); })), to = Math.min.apply(null, cs.map(function (c) { return toMin(c.end); }));
       if (to - from < 30) return;
       var inPause = from <= 780 && to >= 840;
-      out.push({ date: d.date, label: d.label, debut: inPause ? "13:00" : clock(from).replace("h", ":"), fin: inPause ? "14:00" : clock(Math.min(to, from + 60)).replace("h", ":"), window: clock(from) + "–" + clock(to), dentists: presentCodes(d).length });
+      out.push({ date: d.date, label: d.label, debut: inPause ? "13:00" : hhmm(from), fin: inPause ? "14:00" : hhmm(Math.min(to, from + 60)), window: clock(hhmm(from)) + "–" + clock(hhmm(to)) });
     }); });
     return out.reverse().slice(0, 3);
   }
   function oneOnOneStatus(m) {
-    var rng = monthRange(m), today = todayIso();
+    var rng0 = monthRange(m), today = todayIso();
     return state.assistants.map(function (a, i) {
       var mine = S.reunions.filter(function (r) { return r.type === "individuelle" && r.assistant === a.id; }).sort(function (x, y) { return x.date < y.date ? -1 : 1; });
       var future = mine.filter(function (r) { return r.date >= today; })[0];
       var past = mine.filter(function (r) { return r.date < today; }).pop();
-      var due = past ? addMonths(past.date, 2) : addMonths(rng[0].slice(0, 8) + "01", i % 2);
+      var due = past ? addMonths(past.date, 2) : addMonths(rng0[0].slice(0, 8) + "01", i % 2);
       var quiet = null;
       m.weeks.forEach(function (w) { w.days.forEach(function (d) { if (!d.sat && isWork(d.cells[a.id]) && d.date >= today && (!quiet || presentCodes(d).length < presentCodes(quiet).length)) quiet = d; }); });
-      return { a: a, future: future, past: past, due: due, dueNow: !future && due <= rng[1], quiet: quiet };
+      return { a: a, future: future, past: past, due: due, dueNow: !future && due <= rng0[1], quiet: quiet };
     });
   }
   function viewReunions() {
+    pageHead("Réunions", "Une réunion d'équipe par mois, un tête-à-tête tous les deux mois.", isMgr() ? monthNav() : null);
+    guide("reunions", "Comment les réunions sont organisées", [
+      "Réunion d'équipe en fin de mois : l'outil cherche les jours où les 5 assistantes travaillent et propose la pause des dentistes (13h–14h).",
+      "Tête-à-tête avec chaque assistante tous les deux mois : l'outil vous dit qui est à planifier et propose le jour le plus calme.",
+      "Chaque réunion apparaît dans le planning, sur l'accueil et dans les news. Un tête-à-tête n'est visible que par l'assistante concernée."
+    ]);
     if (needDb()) return;
     var mg = isMgr(), m = M(), today = todayIso();
     if (mg) {
-      var rng = monthRange(m);
-      var teamThis = S.reunions.filter(function (r) { return r.type === "equipe" && r.date >= rng[0] && r.date <= rng[1]; })[0];
+      var rg = monthRange(m);
+      var teamThis = S.reunions.filter(function (r) { return r.type === "equipe" && r.date >= rg[0] && r.date <= rg[1]; })[0];
       var cands = teamCandidates(m);
-      app.appendChild(el("section", { class: "card" }, [
-        el("div", { class: "card-head" }, [el("h2", { text: "Réunion d'équipe · " + m.title }), el("p", { text: "En fin de mois, un jour où toutes les assistantes sont là" })]),
-        el("div", { class: "card-body" }, teamThis ? [el("p", { class: "notice info", text: "Prévue : " + meetLabel(teamThis) + ", " + fdate(teamThis.date) + "." })] :
-          cands.length ? [el("p", { class: "sub", text: "Jours où les 5 assistantes travaillent (les plus tard dans le mois d'abord). Pendant la pause des dentistes, les assistantes décalent leur pause." })].concat(cands.map(function (c) {
-            return el("div", { class: "row-acts", style: "align-items:center" }, [el("b", { text: c.label }), el("span", { class: "sub", style: "margin:0", text: "toutes là " + c.window + " · proposé " + clock(c.debut) + "–" + clock(c.fin) }),
-              el("button", { class: "btn sm primary", type: "button", text: "Choisir ce jour", onclick: function () { openMeeting({ type: "equipe", date: c.date, debut: c.debut, fin: c.fin }); } })]);
-          })) : [el("p", { class: "notice", text: "Aucun jour du mois où les 5 assistantes travaillent ensemble. Ajustez le planning ou fixez la date vous-même." }),
-            el("div", { class: "row-acts" }, [el("button", { class: "btn", type: "button", text: "Fixer une date", onclick: function () { openMeeting({ type: "equipe", date: rng[1], debut: "13:00", fin: "14:00" }); } })])])
-      ]));
+      add(card("Réunion d'équipe · " + m.title, "En fin de mois, un jour où toutes les assistantes sont là", el("div", { class: "card-body" }, teamThis ? [el("p", { class: "notice info", text: "Prévue : " + meetLabel(teamThis) + ", " + fdate(teamThis.date) + "." })] :
+        cands.length ? [el("p", { class: "sub", style: "margin:0", text: "Jours où les 5 assistantes travaillent, les plus tard dans le mois d'abord. Ce jour-là, elles décalent leur propre pause." })].concat(cands.map(function (c) {
+          return el("div", { class: "row-acts" }, [el("b", { text: c.label }), el("span", { class: "sub", style: "margin:0", text: "toutes là " + c.window + " · proposé " + clock(c.debut) + "–" + clock(c.fin) }),
+            el("button", { class: "btn sm primary", type: "button", text: "Choisir ce jour", onclick: function () { openMeeting({ type: "equipe", date: c.date, debut: c.debut, fin: c.fin }); } })]);
+        })) : [el("p", { class: "notice", text: "Aucun jour du mois où les 5 assistantes travaillent ensemble. Ajustez le planning ou fixez la date vous-même." }),
+          el("div", { class: "row-acts" }, [el("button", { class: "btn", type: "button", text: "Fixer une date", onclick: function () { openMeeting({ type: "equipe", date: rg[1], debut: "13:00", fin: "14:00" }); } })])])));
       var st = oneOnOneStatus(m);
-      app.appendChild(el("section", { class: "card" }, [
-        el("div", { class: "card-head" }, [el("h2", { text: "Tête-à-tête" }), el("p", { text: "Avec chaque assistante, tous les deux mois" })]),
-        el("div", { class: "scroll" }, [el("table", { class: "sum" }, [
-          el("thead", null, [el("tr", null, ["Assistante", "Dernier", "Prochain", "Statut", ""].map(function (h) { return el("th", { text: h }); }))]),
-          el("tbody", null, st.map(function (s) {
-            var pill = s.future ? el("span", { class: "pill mt", text: "prévu le " + new Date(s.future.date + "T12:00:00").toLocaleDateString("fr-BE") }) :
-              s.dueNow ? el("span", { class: "pill am", text: "à planifier ce mois-ci" }) : el("span", { class: "pill mu", text: "pas ce mois-ci" });
-            return el("tr", null, [el("td", { class: "who", text: s.a.id }),
-              el("td", { class: "n", text: s.past ? new Date(s.past.date + "T12:00:00").toLocaleDateString("fr-BE") : "—" }),
-              el("td", { class: "n", text: s.future ? new Date(s.future.date + "T12:00:00").toLocaleDateString("fr-BE") : "avant le " + new Date(s.due + "T12:00:00").toLocaleDateString("fr-BE") }),
-              el("td", null, [pill]),
-              el("td", null, [s.future ? null : el("button", { class: "btn sm" + (s.dueNow ? " primary" : ""), type: "button", text: "Planifier", onclick: function () { openMeeting({ type: "individuelle", assistant: s.a.id, date: s.quiet ? s.quiet.date : s.due, debut: "13:00", fin: "13:30" }); } })])]);
-          }))])])
-      ]));
+      add(card("Tête-à-tête", "Avec chaque assistante, tous les deux mois", el("div", { class: "scroll" }, [el("table", { class: "sum" }, [
+        el("thead", null, [el("tr", null, ["Assistante", "Dernier", "Prochain", "Statut", ""].map(function (h) { return el("th", { text: h }); }))]),
+        el("tbody", null, st.map(function (s) {
+          var pill = s.future ? el("span", { class: "pill mt", text: "prévu le " + sdate(s.future.date) }) : s.dueNow ? el("span", { class: "pill am", text: "à planifier ce mois-ci" }) : el("span", { class: "pill mu", text: "pas ce mois-ci" });
+          return el("tr", null, [el("td", { class: "who", text: s.a.id }), el("td", { class: "n", text: s.past ? sdate(s.past.date) : "—" }),
+            el("td", { class: "n", text: s.future ? sdate(s.future.date) : "avant le " + sdate(s.due) }), el("td", null, [pill]),
+            el("td", null, [s.future ? null : el("button", { class: "btn sm" + (s.dueNow ? " primary" : ""), type: "button", text: "Planifier", onclick: function () { openMeeting({ type: "individuelle", assistant: s.a.id, date: s.quiet ? s.quiet.date : s.due, debut: "13:00", fin: "13:30" }); } })])]);
+        }))])])));
     }
     var mine = S.reunions.filter(visibleMeeting).sort(function (a, b) { return (a.date + a.debut) < (b.date + b.debut) ? -1 : 1; });
     var up = mine.filter(function (r) { return r.date >= today; }), past = mine.filter(function (r) { return r.date < today; }).reverse().slice(0, 6);
     function item(r) {
-      return el("article", { class: "post" + (r.date >= today ? " meeting" : "") }, [
-        el("div", { class: "meta", text: fdate(r.date) }),
-        el("div", { class: "txt", text: meetLabel(r) + (r.note ? "\n" + r.note : "") }),
-        mg ? el("div", { class: "row-acts" }, [el("button", { class: "btn sm", type: "button", text: "Modifier", onclick: function () { openMeeting(r); } }), el("button", { class: "btn sm danger", type: "button", text: "Supprimer", onclick: function () { write(db.doc("reunions/" + r._id).delete()); } })]) : null
-      ]);
+      return el("article", { class: "post" + (r.date >= today ? " meeting" : "") }, [el("div", { class: "meta", text: fdate(r.date) }), el("div", { class: "txt", text: meetLabel(r) + (r.note ? "\n" + r.note : "") }),
+        mg ? el("div", { class: "row-acts" }, [el("button", { class: "btn sm", type: "button", text: "Modifier", onclick: function () { openMeeting(r); } }), el("button", { class: "btn sm danger", type: "button", text: "Supprimer", onclick: function () { write(db.doc("reunions/" + r._id).delete()); } })]) : null]);
     }
-    app.appendChild(el("h2", { text: "À venir" }));
-    app.appendChild(el("div", { class: "feed" }, up.length ? up.map(item) : [el("p", { class: "notice info", text: "Aucune réunion prévue. La responsable les fixe depuis cet onglet." })]));
-    if (past.length) { app.appendChild(el("h2", { text: "Passées" })); app.appendChild(el("div", { class: "feed" }, past.map(item))); }
+    add(el("h2", { text: "À venir" }));
+    add(el("div", { class: "feed" }, up.length ? up.map(item) : [el("p", { class: "notice info", text: "Aucune réunion prévue. La responsable les fixe depuis cet onglet." })]));
+    if (past.length) { add(el("h2", { text: "Passées" })); add(el("div", { class: "feed" }, past.map(item))); }
   }
 
   function openMeeting(r) {
@@ -791,21 +1281,21 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
   function hash(code) {
     var s = "cabinet:" + code;
     if (window.crypto && crypto.subtle && window.TextEncoder) return crypto.subtle.digest("SHA-256", new TextEncoder().encode(s)).then(function (b) { return Array.prototype.map.call(new Uint8Array(b), function (x) { return x.toString(16).padStart(2, "0"); }).join(""); });
-    var h = 2166136261; for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
-    return Promise.resolve("f" + (h >>> 0).toString(16));
+    return Promise.resolve("f" + hashStr(s).toString(16));
   }
   function setMgr(v) { mgr = v; try { if (v) sessionStorage.setItem("resp-ok", "1"); else sessionStorage.removeItem("resp-ok"); } catch (e) {} render(); }
 
   function viewResp() {
+    pageHead("Espace responsable", "Validation, équipe, anniversaires et réglages.");
     if (needDb()) return;
-    if (!owner) { app.appendChild(el("p", { class: "notice info", text: "Cet espace est réservé à la responsable, sur son compte." })); return; }
+    if (!owner) { add(el("p", { class: "notice info", text: "Cet espace est réservé à la responsable, sur son compte." })); return; }
     if (!mgr) {
       var fC = el("input", { type: "password", id: "code", inputmode: "numeric", autocomplete: "off", "aria-label": "Code" });
       var first = !S.cfg || !S.cfg.hash;
       var fC2 = first ? el("input", { type: "password", id: "code2", inputmode: "numeric", autocomplete: "off", "aria-label": "Confirmer le code" }) : null;
       var form = el("form", { class: "lock card card-body" }, [
         el("h2", { text: first ? "Choisissez votre code" : "Code responsable" }),
-        el("p", { class: "sub", text: first ? "4 chiffres ou plus. Il vous sera demandé pour ouvrir cet espace." : "Entrez votre code pour modifier le planning, les heures, les news et les réunions." }),
+        el("p", { class: "sub", text: first ? "4 chiffres ou plus. Il vous sera demandé pour ouvrir cet espace." : "Entrez votre code pour tout modifier : planning, heures, suivi, récompenses, news, réunions." }),
         fC, first ? el("label", { class: "field" }, ["Confirmer", fC2]) : null,
         ui.lockErr ? el("p", { class: "err", text: ui.lockErr }) : null,
         el("button", { class: "btn primary", type: "submit", text: first ? "Enregistrer le code" : "Ouvrir" })
@@ -819,47 +1309,57 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
           hash(c).then(function (h) { return write(db.doc("config/responsable").set({ hash: h, at: Date.now() })); }).then(function () { ui.lockErr = ""; setMgr(true); });
         } else hash(c).then(function (h) { if (h === S.cfg.hash) { ui.lockErr = ""; setMgr(true); } else { ui.lockErr = "Code incorrect."; render(); } });
       });
-      app.appendChild(form);
+      add(form);
       return;
     }
-    app.appendChild(el("div", { class: "row-acts" }, [el("span", { class: "pill ok", text: "Mode responsable ouvert" }), el("button", { class: "btn sm", type: "button", text: "Verrouiller", onclick: function () { setMgr(false); } })]));
-    // À valider
+    add(el("div", { class: "row-acts" }, [el("span", { class: "pill ok", text: "Mode responsable ouvert" }), el("button", { class: "btn sm", type: "button", text: "Verrouiller", onclick: function () { setMgr(false); } })]));
+    // heures à vérifier
     var todoH = [];
-    state.months.forEach(function (m) { m.weeks.forEach(function (w) { w.days.forEach(function (d) { state.assistants.forEach(function (a) {
-      var e = entry(a.id, d.date); if (e && e.statut === "à vérifier") todoH.push({ a: a.id, d: d, e: e });
-    }); }); }); });
-    app.appendChild(el("section", { class: "card" }, [
-      el("div", { class: "card-head" }, [el("h2", { text: "Heures à vérifier" }), el("p", { text: todoH.length ? todoH.length + " pointage" + (todoH.length > 1 ? "s" : "") : "Tout est vérifié" })]),
-      todoH.length ? el("div", { class: "scroll" }, [el("table", { class: "hrs" }, [
-        el("thead", null, [el("tr", null, ["Assistante", "Jour", "Prévu", "Arrivée", "Sortie", "En plus", ""].map(function (h) { return el("th", { text: h }); }))]),
-        el("tbody", null, todoH.map(function (x) {
-          var p = x.d.cells[x.a];
-          return el("tr", null, [el("td", { class: "who", text: x.a }), el("td", { text: x.d.label }),
-            el("td", { class: "n", text: isWork(p) ? clock(p.start) + "–" + clock(p.end) : "hors planning" }),
-            el("td", { class: "n", text: clock(x.e.arr) + (x.e.demande ? " (dentiste)" : "") }), el("td", { class: "n", text: clock(x.e.dep) }),
-            el("td", null, [plus(extraOf(x.a, x.d.date, x.e))]),
-            el("td", null, [el("div", { class: "row-acts" }, [
-              el("button", { class: "btn sm primary", type: "button", text: "Valider", onclick: function () { saveResp(x.a, x.d.date, { arr: x.e.arr, dep: x.e.dep, demande: x.e.demande, statut: "validé" }); } }),
-              el("button", { class: "btn sm", type: "button", text: "Corriger", onclick: function () { ui.person = x.a; location.hash = "#heures"; } }),
-              el("button", { class: "btn sm danger", type: "button", text: "Refuser", onclick: function () { saveResp(x.a, x.d.date, { arr: x.e.arr, dep: x.e.dep, demande: x.e.demande, statut: "refusé" }); } })])])]);
-        }))])]) : null
-    ]));
+    allDays().forEach(function (d) { state.assistants.forEach(function (a) { var e = entry(a.id, d.date); if (e && e.statut === "à vérifier") todoH.push({ a: a.id, d: d, e: e }); }); });
+    add(card("Heures à vérifier", todoH.length ? todoH.length + " pointage" + (todoH.length > 1 ? "s" : "") : "Tout est vérifié", todoH.length ? el("div", { class: "scroll" }, [el("table", { class: "hrs" }, [
+      el("thead", null, [el("tr", null, ["Assistante", "Jour", "Prévu", "Arrivée", "Sortie", "En plus", ""].map(function (h) { return el("th", { text: h }); }))]),
+      el("tbody", null, todoH.map(function (x) {
+        var p = x.d.cells[x.a];
+        return el("tr", null, [el("td", { class: "who", text: x.a }), el("td", { text: x.d.label }),
+          el("td", { class: "n", text: isWork(p) ? clock(p.start) + "–" + clock(p.end) : "hors planning" }),
+          el("td", { class: "n", text: clock(x.e.arr) + (x.e.demande ? " (dentiste)" : "") }), el("td", { class: "n", text: clock(x.e.dep) }),
+          el("td", null, [plus(extraOf(x.a, x.d.date, x.e))]),
+          el("td", null, [el("div", { class: "row-acts" }, [
+            el("button", { class: "btn sm primary", type: "button", text: "Valider", onclick: function () { saveResp(x.a, x.d.date, { arr: x.e.arr, dep: x.e.dep, demande: x.e.demande, statut: "validé" }); } }),
+            el("button", { class: "btn sm", type: "button", text: "Corriger", onclick: function () { ui.person = x.a; location.hash = "#heures"; } }),
+            el("button", { class: "btn sm danger", type: "button", text: "Refuser", onclick: function () { saveResp(x.a, x.d.date, { arr: x.e.arr, dep: x.e.dep, demande: x.e.demande, statut: "refusé" }); } })])])]);
+      }))])]) : null));
     var pn = pendingNews().length;
-    app.appendChild(el("section", { class: "card" }, [el("div", { class: "card-head" }, [el("h2", { text: "News proposées" }), el("p", null, [pn ? pn + " à valider · " : "Rien à valider · ", el("a", { href: "#news", text: "ouvrir les news" })])])]));
-    // Comptes liés
+    add(card("News proposées", el("p", null, [pn ? pn + " à valider · " : "Rien à valider · ", el("a", { href: "#news", text: "ouvrir les news" })]), null));
+    // mot du jour
+    var fM = el("textarea", { id: "mot", placeholder: "Un mot pour toute l'équipe aujourd'hui (s'ajoute au mot du matin automatique)" });
+    fM.value = S.mot && S.mot.date === todayIso() ? S.mot.texte || "" : "";
+    var mf = el("form", { class: "card-body" }, [el("label", { class: "field" }, ["Mot du jour", fM]), el("div", { class: "row-acts" }, [el("button", { class: "btn", type: "submit", text: "Publier pour aujourd'hui" })])]);
+    mf.addEventListener("submit", function (ev) { ev.preventDefault(); write(db.doc("config/motdujour").set({ date: todayIso(), texte: fM.value.trim(), at: Date.now() })).then(function () { toast("Mot du jour publié."); }); });
+    add(card("Mot du matin", "Chaque fille reçoit un mot gentil différent chaque jour, automatiquement. Vous pouvez en ajouter un.", mf));
+    // anniversaires
+    var bForm = el("form", { class: "card-body" }, state.assistants.map(function (a) {
+      var b = birthdayOf(a.id);
+      return el("label", { class: "field" }, [a.id, el("input", { type: "date", id: "bd-" + slug(a.id), value: b ? "2000-" + b : "" })]);
+    }).concat([el("p", { class: "sub", style: "margin:0", text: "Seuls le jour et le mois sont gardés. L'année n'a pas d'importance." }), el("div", { class: "row-acts" }, [el("button", { class: "btn", type: "submit", text: "Enregistrer les anniversaires" })])]));
+    bForm.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var chain = Promise.resolve();
+      state.assistants.forEach(function (a) { var v = bForm.querySelector("#bd-" + slug(a.id)).value; chain = chain.then(function () { return write(db.doc("equipe/" + slug(a.id)).set({ anniv: v ? v.slice(5) : "", at: Date.now() })); }); });
+      chain.then(function () { toast("Anniversaires enregistrés."); });
+    });
+    add(card("Anniversaires", "Le jour J, la fille voit un message de fête, et l'équipe est prévenue 2 semaines avant.", bForm));
+    // comptes
     var uids = Object.keys(S.links);
     var accRows = uids.map(function (u) { return el("tr", null, [el("td", { class: "who", "data-uid": u, text: "…" }), el("td", { text: S.links[u] }), el("td", null, [el("button", { class: "btn sm danger", type: "button", text: "Délier", onclick: function () { write(db.doc("pointages/" + u).delete()); } })])]); });
-    app.appendChild(el("section", { class: "card" }, [
-      el("div", { class: "card-head" }, [el("h2", { text: "Comptes des assistantes" }), el("p", { text: "Qui s'est présentée comme qui. Déliez un compte en cas d'erreur." })]),
-      uids.length ? el("div", { class: "scroll" }, [el("table", { class: "sum" }, [el("thead", null, [el("tr", null, ["Compte", "Assistante", ""].map(function (h) { return el("th", { text: h }); }))]), el("tbody", null, accRows)])]) :
-        el("div", { class: "card-body" }, [el("p", { class: "sub", style: "margin:0", text: "Aucune assistante connectée pour l'instant. Invitez-les par e-mail (bouton Partager, niveau Éditeur) : à la première visite, chacune choisit son prénom." })])
-    ]));
+    add(card("Comptes des assistantes", "Qui s'est présentée comme qui. Déliez un compte en cas d'erreur.", uids.length ? el("div", { class: "scroll" }, [el("table", { class: "sum" }, [el("thead", null, [el("tr", null, ["Compte", "Assistante", ""].map(function (h) { return el("th", { text: h }); }))]), el("tbody", null, accRows)])]) :
+      el("div", { class: "card-body" }, [el("p", { class: "sub", style: "margin:0", text: "Aucune assistante connectée pour l'instant. Invitez-les par e-mail (bouton Partager, niveau Éditeur) : à la première visite, chacune choisit son prénom." })])));
     if (user && uids.length) user.profiles(uids).then(function (ps) { app.querySelectorAll("[data-uid]").forEach(function (n) { var p = ps[n.getAttribute("data-uid")]; n.textContent = (p && p.name) || "Compte sans nom"; }); });
-    // Code
+    // code
     var fN = el("input", { type: "password", id: "newcode", inputmode: "numeric", autocomplete: "off" });
     var cf = el("form", { class: "card-body" }, [el("label", { class: "field" }, ["Nouveau code (4 caractères ou plus)", fN]), el("div", { class: "row-acts" }, [el("button", { class: "btn", type: "submit", text: "Changer le code" })])]);
     cf.addEventListener("submit", function (ev) { ev.preventDefault(); var c = fN.value.trim(); if (c.length < 4) { toast("Le code doit faire au moins 4 caractères."); return; } hash(c).then(function (h) { return write(db.doc("config/responsable").set({ hash: h, at: Date.now() })); }).then(function () { toast("Code changé."); }); });
-    app.appendChild(el("section", { class: "card" }, [el("div", { class: "card-head" }, [el("h2", { text: "Code" }), el("p", { text: "Le code ferme l'espace sur un appareil partagé. La vraie protection, c'est votre compte : les autres ne peuvent rien modifier ici." })]), cf]));
+    add(card("Code", "Il ferme l'espace sur un appareil partagé. Ce qui protège vraiment, c'est votre compte : les autres ne peuvent rien modifier ici.", cf));
   }
 
   function saveBar() {
@@ -884,7 +1384,7 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
     var d = M().weeks[wi].days[di], a = asst(aid);
     var c = d.cells[aid] ? JSON.parse(JSON.stringify(d.cells[aid])) : null;
     var mode = !c ? (d.sat ? "/" : "W") : (c.code ? c.code : "W");
-    var work = c && !c.code ? c : { start: "09:00", end: d.sat ? "13:00" : "17:00", pause: d.sat ? "HS" : "13h", dent: "" };
+    var work = c && !c.code ? c : { start: "09:00", end: d.sat ? "13:00" : hhmm(540 + a.daily + 30), pause: d.sat ? "HS" : "13h", dent: "" };
     dlg.textContent = "";
     var opts = d.sat ? [["W", "Travaille"], ["/", "Ne travaille pas"]] :
       [["W", "Travaille"], ["C", "Congé"], ["F", "Férié"], ["OFF", "OFF"], ["CP", "Congé parental"], ["/", "Ne travaille pas"]];
@@ -898,10 +1398,11 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
     var fDent = el("input", { type: "text", id: "f-dent", value: work.dent || "", placeholder: "ex. R, Z, MAJ, Acc", autocomplete: "off" });
     var sugg = state.rules.dentists.filter(function (r) { return r.assist[0] === "*" || r.assist.indexOf(aid) >= 0 || (r.exception || []).indexOf(aid) >= 0; }).map(function (r) { return r.code + (r.strict ? " ★" : ""); });
     var quick = el("div", { class: "quick" }, ["Acc"].concat(sugg).map(function (q) { return el("button", { type: "button", text: q, onclick: function () { fDent.value = q; upd(); } }); }));
+    var shift = el("div", { class: "quick" }, ["09:00", "09:30", "10:00", "11:10"].map(function (s) { return el("button", { type: "button", text: "début " + clock(s), onclick: function () { fStart.value = s; fEnd.value = hhmm(toMin(s) + a.daily + (fPause.value === "13h" || fPause.value === "13h30" ? 30 : 0)); upd(); } }); }));
     var calcBox = el("div", { class: "calc", "aria-live": "polite" });
     var hint = el("div", { class: "calc warnbox", "aria-live": "polite" });
     var workBox = el("div", { style: "display:grid;gap:12px" }, [
-      el("div", { class: "grid2" }, [el("label", { class: "field" }, ["Début", fStart]), el("label", { class: "field" }, ["Fin", fEnd])]),
+      el("div", { class: "grid2" }, [el("label", { class: "field" }, ["Début", fStart]), el("label", { class: "field" }, ["Fin", fEnd])]), shift,
       el("label", { class: "field" }, ["Pause", fPause]),
       el("label", { class: "field" }, ["Dentiste assisté (raccourcis : ceux que " + aid + " peut assister)", fDent]), quick, calcBox, hint
     ]);
@@ -970,7 +1471,7 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
     });
     var err = el("p", { class: "err", text: "" });
     var form = el("form", { method: "dialog" }, [
-      el("h3", { text: "Contrats" }), el("p", { class: "ctx", text: "Format 7h36 ou 7:36. L'heure par jour sert pour les congés et fériés." })
+      el("h3", { text: "Contrats" }), el("p", { class: "ctx", text: "Format 7h36 ou 7:36. L'heure par jour sert pour les congés, les fériés et les propositions d'horaires." })
     ].concat(inputs.map(function (x) {
       return el("div", { class: "grid2" }, [el("label", { class: "field" }, [x.a.id + " · par jour", x.d]), el("label", { class: "field" }, [x.a.id + " · par semaine", x.w])]);
     })).concat([err, acts()]));
@@ -985,8 +1486,122 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
     dlg.appendChild(form); showDlg();
   }
 
+  /* ---------- proposition automatique des horaires ---------- */
+  // Respecte : contrats, binômes, accueil, une seule assistante le samedi, pauses alternées.
+  // Ne touche jamais une case modifiée à la main ni un congé ; varie à chaque mois et à chaque nouvelle proposition.
+  var FULL = { Laura: [1, 2, 3, 4, 5], Lora: [1, 2, 3, 4, 5], Soraya: [1, 2, 3, 4] };
+  var DSTART = { R: "10:00", Z: "09:30", MAJ: "10:00", S: "10:00", E: "09:30" };
+  function autoFill(m, seed) {
+    var R = rng(seed), satTurn = Math.floor(R() * state.assistants.length);
+    function pick(arr) { return arr[Math.floor(R() * arr.length)]; }
+    m.weeks.forEach(function (w) {
+      var wk = w.days.filter(function (d) { return !d.sat; });
+      // besoins par jour
+      var need = {}, gap = {};
+      wk.forEach(function (d) {
+        var pc = presentCodes(d);
+        need[d.date] = d.holiday && !pc.length ? 0 : 1 + pc.filter(function (c) { var r = dentist(c); return r && (r.need || r.code === "E"); }).length;
+        var full = 0;
+        state.assistants.forEach(function (a) {
+          var c = d.cells[a.id];
+          if (FULL[a.id]) { if (isWork(c) || ((!c || c.auto) && FULL[a.id].indexOf(wd(d)) >= 0 && !d.holiday)) full++; }
+          else if (isWork(c) && !c.auto) full++;
+        });
+        gap[d.date] = need[d.date] - full;
+      });
+      // temps partiels : choisir leurs jours
+      var parts = state.assistants.filter(function (a) { return !FULL[a.id]; });
+      if (R() < 0.5) parts.reverse();
+      parts.forEach(function (a) {
+        var manual = wk.filter(function (d) { var c = d.cells[a.id]; return isWork(c) && !c.auto; }).length;
+        var want = Math.max(0, Math.round(weekContract(w, a) / a.daily) - manual);
+        var cand = wk.filter(function (d) { var c = d.cells[a.id]; return (!c || c.auto) && !d.holiday; });
+        cand.forEach(function (d) { var pc = presentCodes(d); d._s = gap[d.date] + (a.id === "Inès" && pc.indexOf("R") >= 0 ? .4 : 0) + (a.id === "Aytana" && pc.indexOf("Z") >= 0 ? .4 : 0) + R() * .6 - (wd(d) === 5 ? .5 : 0); });
+        cand.sort(function (x, y) { return y._s - x._s; });
+        cand.forEach(function (d, i) {
+          if (i < want) { d.cells[a.id] = { start: "", end: "", pause: "13h", dent: "", auto: true }; gap[d.date]--; }
+          else d.cells[a.id] = { code: "/", auto: true };
+          delete d._s;
+        });
+        w.days.filter(function (d) { return !d.sat && d.holiday; }).forEach(function (d) { var c = d.cells[a.id]; if (!c || c.auto) d.cells[a.id] = { code: "/", auto: true }; });
+      });
+      // temps pleins : présents leurs jours, férié sinon
+      wk.forEach(function (d) {
+        state.assistants.forEach(function (a) {
+          if (!FULL[a.id]) return;
+          var c = d.cells[a.id];
+          if (c && !c.auto) return;
+          var on = FULL[a.id].indexOf(wd(d)) >= 0;
+          if (d.holiday) d.cells[a.id] = on ? { code: "F", auto: true } : { code: "CP", auto: true };
+          else if (!on) d.cells[a.id] = { code: a.id === "Soraya" ? "CP" : "/", auto: true };
+          else d.cells[a.id] = { start: "", end: "", pause: "13h", dent: "", auto: true };
+        });
+      });
+      // rôles et horaires du jour
+      wk.forEach(function (d) {
+        if (d.holiday) return;
+        var pc = presentCodes(d), dow = wd(d);
+        var autoW = state.assistants.filter(function (a) { var c = d.cells[a.id]; return c && c.auto && !c.code; }).map(function (a) { return a.id; });
+        var covered = {};
+        state.assistants.forEach(function (a) { var c = d.cells[a.id]; if (isWork(c) && !c.auto) assignedCodes(c).forEach(function (k) { covered[k] = true; }); });
+        var free = autoW.slice(), role = {};
+        function take(task, prefs) {
+          if (covered[task]) return;
+          var who = prefs.filter(function (p) { return free.indexOf(p) >= 0; })[0];
+          if (!who) return;
+          role[who] = task; covered[task] = true; free.splice(free.indexOf(who), 1);
+        }
+        if (pc.indexOf("S") >= 0) take("S", ["Laura"]);
+        if (pc.indexOf("MAJ") >= 0) take("MAJ", ["Lora"]);
+        if (pc.indexOf("R") >= 0) take("R", dow === 5 ? ["Soraya", "Inès", "Laura"] : ["Laura", "Inès", "Soraya"]);
+        if (pc.indexOf("Z") >= 0) take("Z", ["Aytana", "Laura", "Lora", "Inès"]);
+        take("ACC", R() < .5 ? ["Soraya", "Lora", "Inès", "Aytana", "Laura"] : ["Soraya", "Inès", "Aytana", "Lora", "Laura"]);
+        if (pc.indexOf("E") >= 0) take("E", free.slice());
+        free.forEach(function (who) { role[who] = covered.E || pc.indexOf("E") < 0 ? "ACC" : "E"; });
+        var order = Object.keys(role); order.sort(function () { return R() - .5; });
+        order.forEach(function (who, i) {
+          var a = asst(who), task = role[who], part = !FULL[who];
+          var st = task === "ACC" ? pick(["09:00", "09:30", "10:00"]) : (task === "Z" && dow === 5 ? "09:30" : DSTART[task] || "09:30");
+          if (part && R() < .5) st = "11:10";
+          var pz = i % 2 ? "13h30" : "13h";
+          var startM = toMin(st), endM = startM + a.daily + 30;
+          if (endM > 18 * 60 + 30) { startM -= endM - (18 * 60 + 30); endM = 18 * 60 + 30; }
+          var lbl = task === "ACC" ? "Acc" : task;
+          if (task === "Z" && dow === 5) lbl = "Z/Acc";
+          if (task === "S") lbl = "S ★";
+          if (who === "Soraya" && dow === 5 && task === "R") { d.cells[who] = { start: "09:30", end: "14:30", pause: "HS", dent: "R ★", auto: true }; return; }
+          d.cells[who] = { start: hhmm(startM), end: hhmm(endM), pause: pz, dent: lbl, auto: true };
+        });
+        state.assistants.forEach(function (a) { var c = d.cells[a.id]; if (c && c.auto && !c.code && !c.start) d.cells[a.id] = { code: "/", auto: true }; });
+      });
+      // samedi : une seule assistante, à tour de rôle
+      w.days.filter(function (d) { return d.sat; }).forEach(function (d) {
+        var any = state.assistants.some(function (a) { var c = d.cells[a.id]; return c && !c.auto; });
+        if (any || presentCodes(d).indexOf("E") < 0) return;
+        state.assistants.forEach(function (a) { d.cells[a.id] = null; });
+        var a = state.assistants[satTurn++ % state.assistants.length];
+        d.cells[a.id] = { start: "09:00", end: "13:00", pause: "HS", dent: "E", auto: true };
+      });
+    });
+  }
+  function runAuto(other) {
+    var m = M();
+    if (other) ui.seed++;
+    var seed = hashStr(m.title) + ui.seed * 7919 + (other ? Date.now() % 1000 : 0);
+    var before = JSON.stringify(m.weeks);
+    m.weeks.forEach(function (w) { w.days.forEach(function (d) { state.assistants.forEach(function (a) {
+      var c = d.cells[a.id];
+      if (c && c.auto) d.cells[a.id] = null;
+      else if (other && c && (!c.code || c.code === "/")) d.cells[a.id] = null;
+    }); }); });
+    autoFill(m, seed);
+    var after = JSON.stringify(m.weeks);
+    if (before === after) { toast("Toutes les cases sont déjà remplies. « Nouvelle proposition complète » refait le mois en gardant congés et fériés."); return; }
+    changed["auto|" + state.cur] = true; saveDraft(); render();
+    toast("Proposition appliquée. Vérifiez la ligne Contrôle ; « Annuler » revient en arrière.");
+  }
   /* ---------- nouveau mois ---------- */
-  function iso(dt) { return dt.getFullYear() + "-" + String(dt.getMonth() + 1).padStart(2, "0") + "-" + String(dt.getDate()).padStart(2, "0"); }
+  function iso(dt) { return isoOf(dt); }
   function addDays(dt, n) { var x = new Date(dt); x.setDate(x.getDate() + n); return x; }
   function easter(y) {
     var a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3),
@@ -1040,9 +1655,10 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
         state.assistants.forEach(function (a) {
           var span = a.id === "Soraya" ? 4 : 5;
           var cnt = a.id === "Soraya" ? days.filter(function (d) { var w = wd(d); return w >= 1 && w <= 4; }).length : nWork;
-          wk.contracts[a.id] = Math.round(a.weekly * Math.min(cnt, span) / span);
+          var perWeek = Math.round(a.weekly / a.daily);
+          wk.contracts[a.id] = a.daily * (perWeek >= span ? Math.min(cnt, span) : Math.round(perWeek * nWork / 5));
         });
-        wk.remark = "Semaine incomplète : contrat calculé au prorata des jours du mois (" + nWork + " jour" + (nWork > 1 ? "s" : "") + "). À ajuster si besoin.";
+        wk.remark = "Semaine incomplète : contrat au prorata des jours du mois (" + nWork + " jour" + (nWork > 1 ? "s" : "") + "). À ajuster si besoin.";
       }
       weeks.push(wk);
     }
@@ -1074,12 +1690,14 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
       info.textContent = state.months.some(function (m) { return m.title === title; }) ? title + " existe déjà : il sera remplacé par une version vierge." : "";
     }
     fMonth.addEventListener("change", fill);
+    var fAuto = el("input", { type: "checkbox", id: "f-auto" }); fAuto.checked = true;
     var form = el("form", { method: "dialog" }, [
       el("h3", { text: "Préparer un nouveau mois" }),
       el("p", { class: "ctx", text: "Les dentistes sont placés selon les règles du cabinet, fériés belges compris. Les cases des assistantes restent à remplir ; le contrôle vous montre ce qui manque." }),
       el("label", { class: "field" }, ["Mois", fMonth]),
       el("div", { class: "field" }, ["Majdi : lundis et jeudis où il vient (un sur deux, pré-coché dans la suite du mois précédent)", majBox]),
       el("div", { class: "field" }, ["Salma : cochez ses mardis si vous les connaissez déjà", salBox]),
+      el("label", { class: "checks" }, [fAuto, "Proposer aussi les horaires des assistantes (modifiables ensuite)"]),
       info, acts("Créer le mois")
     ]);
     form.addEventListener("submit", function (ev) {
@@ -1087,6 +1705,7 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
       var p = /^(\d{4})-(\d{2})$/.exec(fMonth.value); if (!p) return;
       var picks = function (box) { return Array.prototype.map.call(box.querySelectorAll("input:checked"), function (x) { return x.value; }); };
       var nm = buildMonth(+p[1], +p[2] - 1, picks(majBox), picks(salBox));
+      if (fAuto.checked) autoFill(nm, hashStr(nm.title) + Date.now() % 997);
       var at = -1; state.months.forEach(function (m, i) { if (m.title === nm.title) at = i; });
       if (at >= 0) state.months[at] = nm; else state.months.push(nm);
       state.months.sort(function (a, b) { return (a.weeks[0].days[0] || {}).date < (b.weeks[0].days[0] || {}).date ? -1 : 1; });
@@ -1144,26 +1763,40 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
     sub("news", db.collection("news"), function (s) { S.news = docs(s); });
     sub("reunions", db.collection("reunions"), function (s) { S.reunions = docs(s); });
     sub("cfg", db.doc("config/responsable"), function (s) { S.cfg = s.exists ? s.data() : null; });
-    state.assistants.forEach(function (a) { var k = slug(a.id); sub("h-" + k, db.collection("heures/" + k + "/jours"), function (s) { S.heures[k] = byId(s); }); });
+    sub("mot", db.doc("config/motdujour"), function (s) { S.mot = s.exists ? s.data() : null; });
+    sub("equipe", db.collection("equipe"), function (s) { S.equipe = byId(s); });
+    sub("palmares", db.collection("palmares"), function (s) { S.palmares = byId(s); });
+    state.assistants.forEach(function (a) {
+      var k = slug(a.id);
+      sub("h-" + k, db.collection("heures/" + k + "/jours"), function (s) { S.heures[k] = byId(s); });
+      sub("r-" + k, db.collection("recup/" + k + "/items"), function (s) { S.recup[k] = docs(s); });
+    });
     if (uid) {
       sub("me", db.doc("pointages/" + uid), function (s) { S.link = s.exists ? (s.data().assistant || null) : null; });
       sub("mine", db.collection("pointages/" + uid + "/jours"), function (s) { S.mine = byId(s); });
       sub("myprops", db.collection("propositions/" + uid + "/items"), function (s) { S.myProps = docs(s); });
+      sub("myauto", db.collection("suivi/" + uid + "/auto"), function (s) { S.myAuto = byId(s); });
+      sub("myresp", db.collection("suivi/" + uid + "/resp"), function (s) { S.myResp = byId(s); });
+      sub("myvote", db.collection("votes/" + uid + "/periodes"), function (s) { S.myVote = byId(s); });
     }
-    if (owner) sub("links", db.collection("pointages"), function (s) {
-      S.links = {};
-      s.docs.forEach(function (d) { var v = d.data(); if (v && v.assistant) S.links[d.id] = v.assistant; });
-      Object.keys(S.links).forEach(function (u) {
-        sub("pt-" + u, db.collection("pointages/" + u + "/jours"), function (x) { S.pt[u] = byId(x); });
-        sub("pr-" + u, db.collection("propositions/" + u + "/items"), function (x) { S.props[u] = docs(x); });
+    if (owner) {
+      state.assistants.forEach(function (a) { var k = slug(a.id); sub("e-" + k, db.collection("evals/" + k + "/periodes"), function (s) { S.evals[k] = byId(s); }); });
+      sub("links", db.collection("pointages"), function (s) {
+        S.links = {};
+        s.docs.forEach(function (d) { var v = d.data(); if (v && v.assistant) S.links[d.id] = v.assistant; });
+        Object.keys(S.links).forEach(function (u) {
+          sub("pt-" + u, db.collection("pointages/" + u + "/jours"), function (x) { S.pt[u] = byId(x); });
+          sub("pr-" + u, db.collection("propositions/" + u + "/items"), function (x) { S.props[u] = docs(x); });
+          sub("au-" + u, db.collection("suivi/" + u + "/auto"), function (x) { S.auto[u] = byId(x); });
+          sub("vo-" + u, db.collection("votes/" + u + "/periodes"), function (x) { S.votes[u] = byId(x); });
+        });
       });
-    });
+    }
   }
 
   window.addEventListener("hashchange", function () { window.scrollTo(0, 0); render(); });
   render();
-  var use = window.claude && window.claude.use;
-  if (use) {
+  if (window.claude && window.claude.use) {
     window.claude.use("artifact").then(function (api) { artifactApi = api; render(); }, function () {});
     Promise.all([window.claude.use("user").catch(function () { return null; }), window.claude.use("db").catch(function () { return null; })]).then(function (r) {
       user = r[0]; db = r[1];
