@@ -3329,9 +3329,10 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
     window.claude.use("downloads").then(function (d) { downloadsApi = d; }, function () {});
     Promise.all([window.claude.use("user").catch(function () { return null; }), window.claude.use("db").catch(function () { return null; })]).then(function (r) {
       user = r[0]; db = r[1] ? guardDb(r[1]) : null;
-      return Promise.all([user ? user.id() : null, user ? user.isOwner() : false]);
+      // la propriétaire et les comptes invités en « Éditeur » ont l'espace responsable
+      return Promise.all([user ? user.id() : null, user ? user.isOwner() : false, user && user.canEdit ? user.canEdit().catch(function () { return false; }) : false]);
     }).then(function (r) {
-      uid = r[0]; owner = !!r[1];
+      uid = r[0]; owner = !!r[1] || !!r[2];
       if (!uid && !owner) db = null;
       if (!owner) mgr = false; else S.link = respId();
       S.ready = true;
