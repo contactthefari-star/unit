@@ -1,234 +1,314 @@
 <title>Lensdental Équipe</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style id="app-style">
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
-/* Layout : application d'équipe Lensdental — barre latérale de navigation (en haut sur téléphone), accueil en tableau de bord, pots d'heures dessinés, grilles de planning, fiches de suivi */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap");
+/* Layout : studio d'équipe Lensdental — barre latérale en verre dépoli, fond de taches de couleur qui flottent, cartes douces qui montent à l'arrivée, pots d'heures animés ; quatre palettes au choix */
 :root {
-  --bg: #eef3f1; --surface: #ffffff; --ink: #0d2a2c; --muted: #587072; --line: #d4e0dd;
-  --brand: #0b5753; --brand-ink: #f2fbf9; --mint: #c9eee5; --mint-ink: #0b5753;
-  --honey: #e7a21f; --honey-soft: #fbedcc; --honey-ink: #7a4b00; --rose: #d9536a; --rose-soft: #fbe1e6;
-  --head: #0d2a2c; --head-ink: #eef6f4; --band: #e3eeeb; --accent: #0b7a73; --accent-ink: #ffffff;
-  --conge: #dbe8f8; --ferie: #dff0e2; --off: #d6dcdc; --hs: #fbe6c8; --hs-ink: #7a4b00;
-  --warn: #fde2e2; --warn-ink: #9b1c1c; --amber: #fdf0cf; --amber-ink: #6e4600; --ok-ink: #17663a; --star: #b3261e; --soft: #f1f6f5;
-  --meet: #e6e3fa; --meet-ink: #3d3290; --glass: #ffffff;
-  --font-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
-  --font-ui: "Instrument Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
-  --font-num: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --pri: #e0559a; --sec: #a879f0; --ter: #ffb48c;
+  --bg: #fcf6fa; --surface: #ffffff; --ink: #2d1633; --muted: #7d6884; --line: #f1e1ee;
+  --glass: #fff4f9; --pri-ui: var(--pri); --pri-ink: #ffffff;
+  --soft: color-mix(in oklab, var(--pri) 7%, var(--surface));
+  --tint: color-mix(in oklab, var(--pri) 13%, var(--surface));
+  --band: color-mix(in oklab, var(--sec) 10%, var(--surface));
+  --shadow: 0 18px 40px -24px color-mix(in oklab, var(--pri) 55%, transparent);
+  --conge: #e6eeff; --ferie: #e2f6eb; --off: #efeaf1; --hs: #fff0df; --hs-ink: #964512;
+  --warn: #ffe2e9; --warn-ink: #a3173f; --amber: #fff3d4; --amber-ink: #7a5200; --ok-ink: #1d7a4c; --star: #c2185b;
+  --meet: color-mix(in oklab, var(--sec) 16%, var(--surface)); --meet-ink: color-mix(in oklab, var(--sec) 62%, #1a0b22);
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-ui: "Plus Jakarta Sans", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-num: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
+:root[data-palette="lavande"] { --pri: #8a63e6; --sec: #e57fb4; --ter: #ffc8a8; }
+:root[data-palette="peche"] { --pri: #ee7350; --sec: #ef8fb5; --ter: #ffd27a; }
+:root[data-palette="menthe"] { --pri: #23998b; --sec: #9a7ff0; --ter: #ffb3c7; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #0a1416; --surface: #112023; --ink: #e2eeec; --muted: #8fa6a6; --line: #24383a;
-  --brand: #5fd0c0; --brand-ink: #062322; --mint: #173a37; --mint-ink: #9ee6da;
-  --honey: #f0b43d; --honey-soft: #3a2c10; --honey-ink: #ffd88a; --rose: #f08497; --rose-soft: #3d1c24;
-  --head: #081a1c; --head-ink: #e2f0ee; --band: #16292b; --accent: #4cc3b4; --accent-ink: #062322;
-  --conge: #1d3550; --ferie: #1d3a28; --off: #2a3436; --hs: #3e2d12; --hs-ink: #ffd08a;
-  --warn: #4a1d1d; --warn-ink: #ffb4b4; --amber: #3e3112; --amber-ink: #ffd88a; --ok-ink: #7fd8a0; --star: #ff8a80; --soft: #15272a;
-  --meet: #2a2650; --meet-ink: #c9c2ff; --glass: #cfe9e4; color-scheme: dark } }
+  --bg: #150d19; --surface: #20152a; --ink: #f7ebf6; --muted: #bba5c2; --line: #3a2944; --glass: #2b1e36;
+  --pri-ui: color-mix(in oklab, var(--pri) 78%, white); --pri-ink: #1b0b1f;
+  --conge: #1e2b4a; --ferie: #173829; --off: #2c2433; --hs: #3e2a14; --hs-ink: #ffcf96;
+  --warn: #4a1828; --warn-ink: #ffb3c6; --amber: #3d3014; --amber-ink: #ffd88a; --ok-ink: #84e0ad; --star: #ff8ab4;
+  --meet-ink: color-mix(in oklab, var(--sec) 55%, white); color-scheme: dark } }
 :root[data-theme="dark"] {
-  --bg: #0a1416; --surface: #112023; --ink: #e2eeec; --muted: #8fa6a6; --line: #24383a;
-  --brand: #5fd0c0; --brand-ink: #062322; --mint: #173a37; --mint-ink: #9ee6da;
-  --honey: #f0b43d; --honey-soft: #3a2c10; --honey-ink: #ffd88a; --rose: #f08497; --rose-soft: #3d1c24;
-  --head: #081a1c; --head-ink: #e2f0ee; --band: #16292b; --accent: #4cc3b4; --accent-ink: #062322;
-  --conge: #1d3550; --ferie: #1d3a28; --off: #2a3436; --hs: #3e2d12; --hs-ink: #ffd08a;
-  --warn: #4a1d1d; --warn-ink: #ffb4b4; --amber: #3e3112; --amber-ink: #ffd88a; --ok-ink: #7fd8a0; --star: #ff8a80; --soft: #15272a;
-  --meet: #2a2650; --meet-ink: #c9c2ff; --glass: #cfe9e4; color-scheme: dark }
+  --bg: #150d19; --surface: #20152a; --ink: #f7ebf6; --muted: #bba5c2; --line: #3a2944; --glass: #2b1e36;
+  --pri-ui: color-mix(in oklab, var(--pri) 78%, white); --pri-ink: #1b0b1f;
+  --conge: #1e2b4a; --ferie: #173829; --off: #2c2433; --hs: #3e2a14; --hs-ink: #ffcf96;
+  --warn: #4a1828; --warn-ink: #ffb3c6; --amber: #3d3014; --amber-ink: #ffd88a; --ok-ink: #84e0ad; --star: #ff8ab4;
+  --meet-ink: color-mix(in oklab, var(--sec) 55%, white); color-scheme: dark }
 body { background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 14.5px; }
-.shell { display: grid; grid-template-columns: 232px minmax(0, 1fr); min-height: 100vh; }
-.side { background: var(--head); color: var(--head-ink); padding: 22px 14px; position: sticky; top: 0; height: 100vh; box-sizing: border-box; display: flex; flex-direction: column; gap: 22px; }
-.brand { font-family: var(--font-display); font-weight: 800; font-size: 1.55rem; letter-spacing: -.02em; line-height: 1; display: flex; align-items: center; gap: 9px; padding: 0 8px; }
-.brand svg { flex: none; }
-.brand small { display: block; font-family: var(--font-ui); font-weight: 500; font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; opacity: .7; margin-top: 5px; }
-.nav { display: grid; gap: 3px; }
-.nav a { color: var(--head-ink); text-decoration: none; padding: 9px 12px; border-radius: 10px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 8px; opacity: .78; white-space: nowrap; }
-.nav a:hover { opacity: 1; background: rgba(255,255,255,.06); }
-.nav a[aria-current="page"] { opacity: 1; background: var(--brand); color: var(--brand-ink); }
-.nav a:focus-visible { outline: 2px solid var(--honey); outline-offset: 1px; }
-.side .foot { margin-top: auto; font-size: 12px; opacity: .7; padding: 0 8px; line-height: 1.45; }
 #app { min-width: 0; }
-.main { padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); padding-block: 22px 110px; max-width: 1240px; display: grid; gap: 18px; }
+.shell { display: grid; grid-template-columns: 248px minmax(0, 1fr); min-height: 100vh; position: relative; isolation: isolate; }
+.shell::before { content: ""; position: fixed; inset: -20vmax; z-index: -1; pointer-events: none;
+  background: radial-gradient(38vmax 30vmax at 12% 18%, color-mix(in oklab, var(--pri) 22%, transparent), transparent 70%),
+    radial-gradient(34vmax 30vmax at 88% 12%, color-mix(in oklab, var(--sec) 22%, transparent), transparent 70%),
+    radial-gradient(40vmax 30vmax at 70% 92%, color-mix(in oklab, var(--ter) 26%, transparent), transparent 70%);
+  animation: drift 26s ease-in-out infinite alternate; }
+@keyframes drift { to { transform: translate3d(3vmax, -2vmax, 0) rotate(4deg) scale(1.05); } }
+
+/* barre latérale */
+.side { position: sticky; top: 0; height: 100vh; box-sizing: border-box; padding: 24px 16px 18px; display: flex; flex-direction: column; gap: 24px;
+  background: color-mix(in oklab, var(--surface) 72%, transparent); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-right: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 11px; padding: 0 6px; font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; letter-spacing: -.01em; line-height: 1; }
+.brand svg { flex: none; color: #fff; width: 40px; height: 40px; padding: 7px; box-sizing: border-box; border-radius: 13px; background: linear-gradient(135deg, var(--pri), var(--sec)); box-shadow: var(--shadow); }
+.brand .spark { transform-origin: 26px 6.5px; animation: spin 6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.brand small { display: block; font-family: var(--font-ui); font-style: normal; font-weight: 600; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+.nav { display: grid; gap: 4px; }
+.nav a { color: var(--ink); text-decoration: none; padding: 10px 14px; border-radius: 14px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 8px; white-space: nowrap; position: relative;
+  transition: background .25s, color .25s, transform .2s, box-shadow .25s; }
+.nav a:hover { background: var(--tint); transform: translateX(3px); }
+.nav a[aria-current="page"] { background: linear-gradient(120deg, var(--pri), var(--sec)); color: #fff; box-shadow: 0 10px 22px -12px var(--pri); }
+.nav a:focus-visible { outline: 2px solid var(--pri-ui); outline-offset: 2px; }
+.nav .lock { color: var(--muted); }
+.side .foot { margin-top: auto; display: grid; gap: 14px; padding: 0 6px; }
+.side .who { display: flex; gap: 10px; align-items: center; }
+.side .who b { display: block; font-size: 13.5px; } .side .who small { color: var(--muted); font-size: 12px; }
+.palettes { display: flex; gap: 8px; }
+.sw { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--surface); background: linear-gradient(135deg, var(--a), var(--b)); cursor: pointer; box-shadow: 0 0 0 1px var(--line); transition: transform .2s; padding: 0; }
+.sw:hover { transform: scale(1.12); }
+.sw[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--ink); }
+.sw:focus-visible { outline: 2px solid var(--pri-ui); outline-offset: 2px; }
+.av { --s: 26px; width: var(--s); height: var(--s); flex: none; border-radius: 50%; display: inline-grid; place-items: center; background: linear-gradient(135deg, var(--c1), var(--c2)); color: #fff; font-weight: 800; font-size: calc(var(--s) * .45); box-shadow: 0 4px 10px -4px var(--c1); vertical-align: middle; }
+
+/* contenu */
+.main { padding-left: max(28px, env(safe-area-inset-left, 0px)); padding-right: max(28px, env(safe-area-inset-right, 0px)); padding-block: 28px 120px; max-width: 1220px; display: grid; gap: 20px; }
 .main > * { min-width: 0; }
-h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 800; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
-h2 { font-family: var(--font-display); font-size: 1.12rem; font-weight: 700; margin: 0; letter-spacing: -.005em; }
-h3 { margin: 0; font-size: 1rem; }
+.main.enter > * { animation: rise .6s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i, 0) * 60ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+.main a { color: var(--pri-ui); font-weight: 700; }
+h1 { font-family: var(--font-display); font-weight: 600; font-size: 2.3rem; letter-spacing: -.02em; margin: 0; text-wrap: balance; line-height: 1.05; }
+h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.2rem; margin: 0; letter-spacing: -.005em; }
+h3 { margin: 0; font-size: 1.05rem; font-family: var(--font-display); font-weight: 600; }
 .top { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: end; justify-content: space-between; }
-.sub { color: var(--muted); margin: 4px 0 0; max-width: 72ch; line-height: 1.5; }
-.whoami { font-size: 13px; color: var(--muted); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 6px; }
-.whoami b { color: var(--ink); }
-.linkbtn { font: inherit; background: none; border: 0; padding: 0; color: var(--accent); text-decoration: underline; cursor: pointer; }
-.badge { background: var(--rose); color: #fff; border-radius: 999px; font-size: 11px; padding: 1px 7px; font-weight: 700; }
+.sub { color: var(--muted); margin: 6px 0 0; max-width: 72ch; line-height: 1.55; }
+.linkbtn { font: inherit; background: none; border: 0; padding: 0; color: var(--pri-ui); text-decoration: underline; cursor: pointer; }
+.badge { background: var(--pri); color: #fff; border-radius: 999px; font-size: 11px; padding: 1px 8px; font-weight: 800; animation: pulse 2s ease-in-out infinite; }
+.nav a[aria-current="page"] .badge { background: #fff; color: var(--pri); }
+@keyframes pulse { 50% { transform: scale(1.12); } }
 .legend { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; }
-.chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
+.chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
 .chip.c { background: var(--conge); } .chip.f { background: var(--ferie); } .chip.o { background: var(--off); } .chip.h { background: var(--hs); color: var(--hs-ink); }
 .months, .people { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.tab { font: inherit; font-weight: 600; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
-.tab[aria-current="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.notice { padding: 11px 15px; border-radius: 12px; background: var(--amber); color: var(--amber-ink); line-height: 1.5; margin: 0; }
-.notice.info { background: var(--soft); color: var(--ink); border: 1px solid var(--line); }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
-.card-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; padding: 13px 16px; border-bottom: 1px solid var(--line); }
+.tab { font: inherit; font-weight: 700; padding: 8px 15px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; display: inline-flex; gap: 6px; align-items: center; transition: transform .2s, box-shadow .2s, background .2s; }
+.tab:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.tab[aria-current="true"] { background: linear-gradient(120deg, var(--pri), var(--sec)); color: #fff; border-color: transparent; }
+.notice { padding: 12px 16px; border-radius: 16px; background: var(--amber); color: var(--amber-ink); line-height: 1.55; margin: 0; }
+.notice.info { background: var(--surface); color: var(--ink); border: 1px dashed var(--line); }
+.notice.bday { background: linear-gradient(120deg, color-mix(in oklab, var(--pri) 16%, var(--surface)), color-mix(in oklab, var(--ter) 22%, var(--surface))); color: var(--ink); }
+.card { background: color-mix(in oklab, var(--surface) 92%, transparent); border: 1px solid var(--line); border-radius: 24px; overflow: hidden; box-shadow: var(--shadow); backdrop-filter: blur(6px); }
+.card-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; padding: 16px 20px 12px; }
 .card-head p { margin: 0; color: var(--muted); font-size: 12.5px; }
-.card-body { padding: 16px; display: grid; gap: 12px; }
-.grid-dash { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; align-items: start; }
+.card-body { padding: 4px 20px 20px; display: grid; gap: 12px; }
+.grid-dash { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; align-items: start; }
 .grid-dash > * { min-width: 0; }
-.hero { border-radius: 20px; padding: 24px; background: var(--brand); color: var(--brand-ink); display: grid; gap: 8px; position: relative; overflow: hidden; }
-.hero .kicker { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .8; font-weight: 600; }
-.hero .hello { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.7rem, 4vw, 2.6rem); letter-spacing: -.025em; line-height: 1.05; max-width: 22ch; }
-.hero .msg { font-size: 1.05rem; line-height: 1.5; max-width: 58ch; }
-.hero .smile { position: absolute; right: -30px; bottom: -40px; opacity: .14; pointer-events: none; }
-.hero.bday { background: var(--rose); color: #fff; }
-.mini { display: grid; gap: 8px; }
-.mini .line { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: 1px dashed var(--line); }
-.mini .line:last-child { border-bottom: 0; }
-.todo { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.todo li { display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 12px; background: var(--soft); }
-.todo li .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--honey); flex: none; }
-.todo li.done .dot { background: var(--ok-ink); }
-.todo a { color: var(--accent); font-weight: 600; margin-left: auto; white-space: nowrap; }
-.pots { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px; }
-.pot { display: grid; justify-items: center; gap: 6px; text-align: center; padding: 10px 6px 12px; border-radius: 14px; background: var(--soft); }
-.pot svg { width: 86px; height: auto; max-width: 100%; }
-.main a { color: var(--accent); font-weight: 600; }
 .span-all { grid-column: 1 / -1; }
-.pot .name { font-weight: 700; }
-.pot .val { font-family: var(--font-num); font-weight: 600; font-size: 1.05rem; color: var(--honey-ink); }
+.preview { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 12; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; padding: 12px 16px; border-radius: 16px; background: var(--meet); color: var(--meet-ink); box-shadow: var(--shadow); }
+
+/* accueil */
+.hero { border-radius: 30px; padding: 30px 32px; background: linear-gradient(125deg, var(--pri), var(--sec) 75%, var(--ter)); background-size: 160% 160%; animation: sheen 12s ease-in-out infinite alternate; color: #fff; display: grid; gap: 10px; position: relative; overflow: hidden; box-shadow: 0 30px 60px -30px var(--pri); }
+@keyframes sheen { to { background-position: 100% 100%; } }
+.hero::before, .hero::after { content: ""; position: absolute; border-radius: 50%; background: rgba(255,255,255,.18); pointer-events: none; }
+.hero::before { width: 260px; height: 260px; right: -60px; top: -90px; animation: float 9s ease-in-out infinite alternate; }
+.hero::after { width: 140px; height: 140px; right: 180px; bottom: -70px; animation: float 7s ease-in-out infinite alternate-reverse; }
+@keyframes float { to { transform: translate(-24px, 18px) scale(1.08); } }
+.hero > * { position: relative; z-index: 1; }
+.hero .kicker { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; opacity: .9; font-weight: 700; }
+.hero .hello { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: clamp(2rem, 5vw, 3.3rem); letter-spacing: -.02em; line-height: 1.02; max-width: 20ch; }
+.hero .msg { font-size: 1.08rem; line-height: 1.55; max-width: 56ch; font-weight: 500; }
+.hero .smile { position: absolute; right: 18px; bottom: -36px; opacity: .2; pointer-events: none; z-index: 0; animation: float 8s ease-in-out infinite alternate; }
+.twinkle { position: absolute; width: 12px; height: 12px; z-index: 0; background: #fff; clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); animation: twinkle 3.2s ease-in-out infinite; opacity: 0; }
+@keyframes twinkle { 50% { opacity: .9; transform: scale(1.3) rotate(45deg); } }
+.mini { display: grid; gap: 4px; }
+.mini .line { display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 9px 0; border-bottom: 1px dashed var(--line); }
+.mini .line:last-child { border-bottom: 0; }
+.mini .line > span:first-child { display: inline-flex; gap: 8px; align-items: center; }
+.todo { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.todo li { display: flex; gap: 10px; align-items: center; padding: 12px 14px; border-radius: 16px; background: var(--soft); transition: transform .2s; }
+.todo li:hover { transform: translateX(4px); }
+.todo li .dot { width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(135deg, var(--pri), var(--sec)); flex: none; animation: pulse 2.4s ease-in-out infinite; }
+.todo li.done .dot { background: var(--ok-ink); animation: none; }
+.todo a { margin-left: auto; white-space: nowrap; }
+
+/* pots */
+.pots { display: grid; grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 14px; }
+.pot { display: grid; justify-items: center; gap: 6px; text-align: center; padding: 14px 8px; border-radius: 20px; background: var(--soft); transition: transform .25s; }
+.pot:hover { transform: translateY(-4px) rotate(-1deg); }
+.pot svg { width: 92px; height: auto; max-width: 100%; overflow: visible; }
+.pot .name { font-weight: 800; display: inline-flex; gap: 6px; align-items: center; }
+.pot .val { font-family: var(--font-num); font-weight: 500; font-size: 1.1rem; color: var(--pri-ui); }
 .pot .val.neg { color: var(--warn-ink); }
 .pot .det { font-size: 11.5px; color: var(--muted); line-height: 1.35; }
-.pot .liquid { transition: y .9s cubic-bezier(.2,.8,.2,1), height .9s cubic-bezier(.2,.8,.2,1); }
-.guide { border: 1px dashed var(--line); border-radius: 14px; background: var(--surface); }
-.guide > summary { padding: 11px 15px; font-weight: 700; display: flex; gap: 8px; align-items: center; color: var(--accent); }
-.guide > summary::before { content: "?"; display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--mint); color: var(--mint-ink); font-size: 12px; }
-.guide ol { margin: 0; padding: 0 18px 14px 38px; line-height: 1.6; max-width: 78ch; }
+.wave { animation: wave 3.4s linear infinite; }
+.wave.slow { animation-duration: 5.5s; }
+@keyframes wave { to { transform: translateX(60px); } }
+.bub { animation: bub 3s ease-in infinite; }
+.bub.b1 { animation-delay: 1s; } .bub.b2 { animation-delay: 2s; }
+@keyframes bub { from { transform: translateY(0); opacity: .8; } to { transform: translateY(-70px); opacity: 0; } }
+
+.guide { border: 1px dashed color-mix(in oklab, var(--pri) 35%, var(--line)); border-radius: 18px; background: color-mix(in oklab, var(--surface) 80%, transparent); }
+.guide > summary { padding: 12px 16px; font-weight: 800; display: flex; gap: 10px; align-items: center; color: var(--pri-ui); }
+.guide > summary::before { content: "?"; display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, var(--pri), var(--sec)); color: #fff; font-size: 12px; }
+.guide ol { margin: 0; padding: 0 20px 16px 44px; line-height: 1.7; max-width: 80ch; }
+
+/* tableaux */
 .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
 th, td { border: 1px solid var(--line); padding: 0; vertical-align: top; }
-thead th { background: var(--head); color: var(--head-ink); font-weight: 600; font-size: 13px; padding: 8px 6px; white-space: nowrap; }
-th.rowh { background: var(--soft); text-align: left; padding: 8px 10px; font-weight: 700; min-width: 92px; position: sticky; left: 0; z-index: 1; }
-th.rowh small { display: block; font-weight: 400; color: var(--muted); font-size: 11.5px; }
+thead th { background: var(--tint); color: var(--ink); font-weight: 800; font-size: 12.5px; padding: 10px 8px; white-space: nowrap; letter-spacing: .01em; }
+th.rowh { background: var(--surface); text-align: left; padding: 8px 12px; font-weight: 800; min-width: 104px; position: sticky; left: 0; z-index: 1; }
+th.rowh .rh { display: inline-flex; gap: 8px; align-items: center; }
+th.rowh small { display: block; font-weight: 500; color: var(--muted); font-size: 11.5px; margin-top: 2px; }
 tr.band td, tr.band th.rowh { background: var(--band); }
 .daybtn { all: unset; cursor: pointer; display: block; width: 100%; text-align: center; box-sizing: border-box; }
 div.daybtn { cursor: default; }
-.daybtn:focus-visible, .cell:focus-visible, .btn:focus-visible, .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
-.dent { font-size: 12px; font-weight: 700; text-align: center; padding: 6px; color: var(--ink); }
-.cell { all: unset; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px; justify-content: center; align-items: center; text-align: center; width: 100%; min-width: 112px; min-height: 64px; padding: 6px 4px; font-size: 12px; line-height: 1.25; position: relative; }
+.daybtn:focus-visible, .cell:focus-visible, .btn:focus-visible, .tab:focus-visible { outline: 2px solid var(--pri-ui); outline-offset: -2px; }
+.dent { font-size: 12px; font-weight: 800; text-align: center; padding: 7px; color: var(--ink); letter-spacing: .03em; }
+.cell { all: unset; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px; justify-content: center; align-items: center; text-align: center; width: 100%; min-width: 114px; min-height: 66px; padding: 7px 4px; font-size: 12px; line-height: 1.25; position: relative; transition: background .2s, transform .2s; }
 button.cell { cursor: pointer; }
-button.cell:hover { background: var(--soft); }
-.cell .t { font-family: var(--font-num); font-size: 12.5px; font-weight: 600; }
+button.cell:hover { background: var(--tint); }
+.cell .t { font-family: var(--font-num); font-size: 12.5px; font-weight: 500; }
 .cell .p { color: var(--muted); font-size: 11.5px; }
-.cell .d { font-weight: 700; }
+.cell .d { font-weight: 800; color: var(--pri-ui); }
 .cell .d.star { color: var(--star); }
-.cell .tag { font-weight: 700; letter-spacing: .04em; font-size: 12px; }
-.cell .auto { position: absolute; top: 4px; right: 5px; font-size: 9.5px; font-weight: 700; letter-spacing: .06em; color: var(--accent); text-transform: uppercase; }
+.cell .tag { font-weight: 800; letter-spacing: .05em; font-size: 11.5px; }
+.cell .auto { position: absolute; top: 4px; right: 6px; font-size: 9px; font-weight: 800; letter-spacing: .08em; color: var(--sec); text-transform: uppercase; }
 .cell.empty { color: var(--muted); }
 .cell.k-C { background: var(--conge); } .cell.k-F { background: var(--ferie); } .cell.k-OFF { background: var(--off); }
-.cell.k-HS { background: var(--hs); } .cell.k-HS .hsb { color: var(--hs-ink); font-weight: 700; }
+.cell.k-HS { background: var(--hs); } .cell.k-HS .hsb { color: var(--hs-ink); font-weight: 800; }
 .cell.k-none, .cell.k-CP { background: var(--soft); color: var(--muted); }
-.cell.changed { box-shadow: inset 3px 0 0 var(--accent); }
-td.tot { background: var(--soft); min-width: 104px; padding: 6px 8px; font-size: 12px; text-align: center; }
-td.tot .big { font-family: var(--font-num); font-weight: 600; font-size: 12.5px; }
-.ok { color: var(--ok-ink); font-weight: 600; } .bad { color: var(--warn-ink); font-weight: 700; }
-tr.check th.rowh { background: var(--soft); }
-td.chk { font-size: 11.5px; padding: 6px 7px; line-height: 1.35; min-width: 112px; }
+.cell.changed { box-shadow: inset 3px 0 0 var(--pri); }
+td.tot { background: var(--soft); min-width: 108px; padding: 7px 8px; font-size: 12px; text-align: center; }
+td.tot .big { font-family: var(--font-num); font-weight: 500; font-size: 12.5px; }
+.ok { color: var(--ok-ink); font-weight: 700; } .bad { color: var(--warn-ink); font-weight: 800; }
+tr.check th.rowh { background: var(--surface); }
+td.chk { font-size: 11.5px; padding: 7px; line-height: 1.35; min-width: 114px; }
 td.chk ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
-td.chk li { padding: 2px 6px; border-radius: 5px; }
-td.chk li.r { background: var(--warn); color: var(--warn-ink); font-weight: 600; }
+td.chk li { padding: 3px 7px; border-radius: 8px; }
+td.chk li.r { background: var(--warn); color: var(--warn-ink); font-weight: 700; }
 td.chk li.a { background: var(--amber); color: var(--amber-ink); }
-td.chk li.m { background: var(--meet); color: var(--meet-ink); font-weight: 600; }
-td.chk .okline { color: var(--ok-ink); font-weight: 600; }
+td.chk li.m { background: var(--meet); color: var(--meet-ink); font-weight: 700; }
+td.chk .okline { color: var(--ok-ink); font-weight: 700; }
 td.chk .staff { font-family: var(--font-num); color: var(--muted); margin-bottom: 4px; display: block; }
 td.chk .nt { color: var(--muted); white-space: pre-line; margin-top: 5px; border-top: 1px dashed var(--line); padding-top: 4px; }
-.sum th, .sum td, .hrs th, .hrs td { padding: 8px 10px; text-align: center; font-size: 13px; vertical-align: middle; }
+.sum th, .sum td, .hrs th, .hrs td { padding: 9px 11px; text-align: center; font-size: 13px; vertical-align: middle; }
 .sum td.n, .hrs td.n { font-family: var(--font-num); }
-.sum td.who, .hrs td.who, .hrs th.who { text-align: left; font-weight: 700; }
+.sum td.who, .hrs td.who, .hrs th.who { text-align: left; font-weight: 800; }
 .hrs tr.dayrow th { background: var(--band); text-align: left; font-size: 12.5px; }
-.hrs tr.total td, .hrs tr.total th { background: var(--soft); font-weight: 700; }
+.hrs tr.total td, .hrs tr.total th { background: var(--soft); font-weight: 800; }
 .hrs tr.off td { color: var(--muted); }
-.hrs input[type=time] { font: inherit; font-family: var(--font-num); font-size: 13.5px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 5px 7px; width: 7.2em; }
-.hrs input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--accent); }
-.plus { font-family: var(--font-num); font-weight: 700; }
-.plus.pos { color: var(--hs-ink); } .plus.neg { color: var(--warn-ink); } .plus.zero { color: var(--muted); font-weight: 400; }
-.pill { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.hrs tbody tr { transition: background .2s; }
+.hrs tbody tr:hover { background: var(--soft); }
+.hrs input[type=time] { font: inherit; font-family: var(--font-num); font-size: 13.5px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 6px 8px; width: 7.4em; transition: border-color .2s, box-shadow .2s; }
+.hrs input[type=time]:focus { border-color: var(--pri); box-shadow: 0 0 0 3px color-mix(in oklab, var(--pri) 22%, transparent); outline: none; }
+.hrs input[type=checkbox], .checks input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--pri); }
+.plus { font-family: var(--font-num); font-weight: 500; }
+.plus.pos { color: var(--pri-ui); } .plus.neg { color: var(--warn-ink); } .plus.zero { color: var(--muted); }
+.pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; white-space: nowrap; }
 .pill.ok { background: var(--ferie); color: var(--ok-ink); } .pill.bad { background: var(--warn); color: var(--warn-ink); } .pill.am { background: var(--amber); color: var(--amber-ink); } .pill.mu { background: var(--soft); color: var(--muted); } .pill.mt { background: var(--meet); color: var(--meet-ink); }
-.pill.gold { background: var(--honey); color: #2b1a00; } .pill.silver { background: #d5dee0; color: #22302f; } .pill.bronze { background: #e8c1a0; color: #3d230e; }
-.feed { display: grid; gap: 10px; }
-.post { border: 1px solid var(--line); border-radius: 14px; padding: 12px 16px; background: var(--surface); display: grid; gap: 6px; }
+.pill.gold { background: linear-gradient(120deg, #ffd36e, #f5a524); color: #3a2200; } .pill.silver { background: linear-gradient(120deg, #eef0f5, #c3c9d6); color: #262a33; } .pill.bronze { background: linear-gradient(120deg, #f6c9a4, #d98b55); color: #3d1f08; }
+.feed { display: grid; gap: 12px; }
+.post { border: 1px solid var(--line); border-radius: 20px; padding: 14px 18px; background: var(--surface); display: grid; gap: 8px; transition: transform .2s, box-shadow .2s; }
+.post:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
 .post .meta { font-size: 12px; color: var(--muted); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.post .txt { white-space: pre-wrap; line-height: 1.55; max-width: 75ch; overflow-wrap: anywhere; }
+.post .txt { white-space: pre-wrap; line-height: 1.6; max-width: 75ch; overflow-wrap: anywhere; }
 .post.pending { border-style: dashed; }
-.post.meeting { background: var(--meet); color: var(--meet-ink); border-color: transparent; }
-.row-acts { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-.crit { display: grid; gap: 10px; }
+.post.fresh { border-color: color-mix(in oklab, var(--pri) 40%, var(--line)); }
+.post.meeting { background: linear-gradient(120deg, var(--meet), color-mix(in oklab, var(--pri) 10%, var(--surface))); color: var(--meet-ink); border-color: transparent; }
+.row-acts { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.crit { display: grid; gap: 12px; }
 .crit .row { display: grid; grid-template-columns: minmax(130px, 1fr) auto; gap: 10px; align-items: center; }
 .crit .lbl b { display: block; } .crit .lbl small { color: var(--muted); font-size: 12px; }
-.stars { display: flex; gap: 4px; }
+.stars { display: flex; gap: 5px; }
 .stars label { display: inline-flex; }
 .stars input { position: absolute; opacity: 0; pointer-events: none; }
-.stars span { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); font-weight: 700; font-size: 13px; cursor: pointer; background: var(--surface); }
-.stars input:checked + span, .stars span.on { background: var(--honey); border-color: var(--honey); color: #2b1a00; }
-.stars input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
-.stars.ro span { cursor: default; }
-.meter { height: 10px; border-radius: 999px; background: var(--soft); overflow: hidden; border: 1px solid var(--line); }
-.meter i { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
-.meter.honey i { background: var(--honey); }
-.score { font-family: var(--font-display); font-weight: 800; font-size: 2.4rem; letter-spacing: -.03em; line-height: 1; }
-.prize { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
-.prize div { padding: 12px; border-radius: 12px; background: var(--honey-soft); color: var(--honey-ink); font-weight: 600; line-height: 1.35; }
-.prize div small { display: block; font-weight: 400; opacity: .85; margin-top: 3px; }
-.winner { border-radius: 18px; padding: 18px 20px; background: var(--honey-soft); color: var(--honey-ink); display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-.winner .big { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; letter-spacing: -.02em; }
-.rules { display: grid; gap: 14px; padding: 14px; }
-.rules table th, .rules table td { padding: 7px 9px; font-size: 13px; text-align: left; vertical-align: top; }
+.stars span { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); font-weight: 800; font-size: 13px; cursor: pointer; background: var(--surface); transition: transform .15s, background .2s; }
+.stars span:hover { transform: scale(1.12); }
+.stars input:checked + span, .stars span.on { background: linear-gradient(135deg, var(--pri), var(--sec)); border-color: transparent; color: #fff; }
+.stars input:focus-visible + span { outline: 2px solid var(--pri-ui); outline-offset: 2px; }
+.stars.ro span { cursor: default; } .stars.ro span:hover { transform: none; }
+.meter { height: 12px; border-radius: 999px; background: var(--soft); overflow: hidden; }
+.meter i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--pri), var(--sec), var(--pri)); background-size: 200% 100%; animation: shimmer 3s linear infinite; }
+@keyframes shimmer { to { background-position: -200% 0; } }
+.score { font-family: var(--font-display); font-weight: 600; font-size: 3rem; letter-spacing: -.03em; line-height: 1; background: linear-gradient(120deg, var(--pri), var(--sec)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.prize { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+.prize div { padding: 14px; border-radius: 18px; background: linear-gradient(140deg, color-mix(in oklab, var(--ter) 30%, var(--surface)), color-mix(in oklab, var(--pri) 14%, var(--surface))); font-weight: 800; line-height: 1.35; transition: transform .25s; }
+.prize div:hover { transform: translateY(-4px) rotate(-1deg); }
+.prize div small { display: block; font-weight: 500; color: var(--muted); margin-top: 4px; }
+.winner { border-radius: 24px; padding: 20px 24px; background: linear-gradient(120deg, #ffe7a6, color-mix(in oklab, var(--pri) 30%, #fff3d0)); color: #3a2200; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; position: relative; overflow: hidden; }
+.winner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.55) 50%, transparent 70%); transform: translateX(-100%); animation: shine 3.5s ease-in-out infinite; pointer-events: none; }
+@keyframes shine { 60%, 100% { transform: translateX(100%); } }
+.winner .big { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 1.7rem; }
+.rules { display: grid; gap: 14px; padding: 4px 20px 20px; }
+.rules table th, .rules table td { padding: 8px 10px; font-size: 13px; text-align: left; vertical-align: top; }
 .rules .muted { color: var(--muted); font-size: 12px; }
-.rules ul { margin: 0; padding-left: 18px; line-height: 1.55; max-width: 75ch; }
+.rules ul { margin: 0; padding-left: 18px; line-height: 1.6; max-width: 75ch; }
 details > summary { cursor: pointer; list-style: none; }
 details > summary::-webkit-details-marker { display: none; }
-details.card > summary h2::after { content: " ▸"; color: var(--muted); }
-details.card[open] > summary h2::after { content: " ▾"; }
-.btn { font: inherit; font-weight: 700; border-radius: 10px; padding: 9px 15px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
-.btn.sm { padding: 5px 11px; font-size: 12.5px; }
-.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-.btn.gold { background: var(--honey); color: #2b1a00; border-color: var(--honey); }
+details.card > summary h2::after { content: " +"; color: var(--muted); }
+details.card[open] > summary h2::after { content: " −"; }
+
+/* boutons et formulaires */
+.btn { font: inherit; font-weight: 800; border-radius: 14px; padding: 10px 17px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; transition: transform .15s, box-shadow .2s, filter .2s; }
+.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.btn:active { transform: scale(.97); }
+.btn.sm { padding: 6px 12px; font-size: 12.5px; border-radius: 11px; }
+.btn.primary { background: linear-gradient(120deg, var(--pri), var(--sec)); color: #fff; border-color: transparent; }
+.btn.gold { background: linear-gradient(120deg, #ffd36e, #f5a524); color: #3a2200; border-color: transparent; }
 .btn.danger { color: var(--warn-ink); }
-.btn[disabled] { opacity: .5; cursor: default; }
-.savebar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--head); color: var(--head-ink); padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: space-between; }
-.savebar .msg { font-size: 13.5px; }
+.btn[disabled] { opacity: .45; cursor: default; transform: none; box-shadow: none; }
+.savebar { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 20; width: min(760px, calc(100% - 28px)); box-sizing: border-box; background: var(--ink); color: var(--bg); padding: 10px 12px 10px 18px; border-radius: 20px; display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: space-between; box-shadow: 0 20px 40px -20px rgba(0,0,0,.5); animation: rise .5s cubic-bezier(.2,.8,.2,1); }
+.savebar .msg { font-size: 13.5px; font-weight: 600; }
 .savebar .acts { display: flex; gap: 8px; }
-.savebar .btn:not(.primary) { background: transparent; color: var(--head-ink); border-color: rgba(255,255,255,.25); }
-dialog { border: 1px solid var(--line); border-radius: 16px; padding: 0; width: min(480px, calc(100vw - 32px)); max-height: calc(100vh - 40px); overflow: auto; background: var(--surface); color: var(--ink); }
-dialog::backdrop { background: rgba(6, 20, 22, .5); }
-dialog form { display: grid; gap: 14px; padding: 20px; }
+.savebar .btn:not(.primary) { background: transparent; color: var(--bg); border-color: color-mix(in oklab, var(--bg) 30%, transparent); }
+.toast { position: fixed; right: max(18px, env(safe-area-inset-right, 0px)); bottom: calc(86px + env(safe-area-inset-bottom, 0px)); z-index: 30; max-width: min(420px, calc(100vw - 36px)); padding: 13px 18px; border-radius: 18px; background: linear-gradient(120deg, var(--pri), var(--sec)); color: #fff; font-weight: 700; box-shadow: 0 18px 40px -18px var(--pri); animation: toast .45s cubic-bezier(.2,.8,.2,1); }
+@keyframes toast { from { opacity: 0; transform: translateY(20px) scale(.96); } }
+.confetti { position: fixed; inset: 0; pointer-events: none; z-index: 60; }
+dialog { border: 1px solid var(--line); border-radius: 26px; padding: 0; width: min(480px, calc(100vw - 32px)); max-height: calc(100vh - 40px); overflow: auto; background: var(--surface); color: var(--ink); box-shadow: 0 40px 80px -30px rgba(40,10,40,.5); }
+dialog[open] { animation: pop .35s cubic-bezier(.2,.8,.2,1); }
+@keyframes pop { from { opacity: 0; transform: translateY(14px) scale(.97); } }
+dialog::backdrop { background: color-mix(in oklab, var(--ink) 40%, transparent); backdrop-filter: blur(4px); }
+dialog form { display: grid; gap: 14px; padding: 22px; }
 dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
 .seg { display: flex; flex-wrap: wrap; gap: 6px; }
 .seg label { display: inline-flex; }
 .seg input { position: absolute; opacity: 0; pointer-events: none; }
-.seg span { padding: 6px 11px; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; font-size: 13px; }
-.seg input:checked + span { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-.seg input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.seg span { padding: 7px 13px; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: 600; transition: background .2s, transform .15s; background: var(--surface); }
+.seg span:hover { transform: translateY(-1px); }
+.seg input:checked + span { background: linear-gradient(120deg, var(--pri), var(--sec)); color: #fff; border-color: transparent; }
+.seg input:focus-visible + span { outline: 2px solid var(--pri-ui); outline-offset: 2px; }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.field { display: grid; gap: 5px; font-size: 12.5px; color: var(--muted); font-weight: 600; }
-.field input, .field select, .field textarea { font: inherit; font-weight: 400; font-size: 15px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 9px 11px; min-width: 0; }
-.field textarea { min-height: 84px; resize: vertical; font-size: 14px; line-height: 1.5; }
-.checks { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 13.5px; color: var(--ink); font-weight: 400; }
-.checks label { display: inline-flex; gap: 5px; align-items: center; }
+.field { display: grid; gap: 6px; font-size: 12.5px; color: var(--muted); font-weight: 700; }
+.field input, .field select, .field textarea { font: inherit; font-weight: 500; font-size: 15px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; min-width: 0; transition: border-color .2s, box-shadow .2s; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--pri); box-shadow: 0 0 0 4px color-mix(in oklab, var(--pri) 18%, transparent); outline: none; }
+.field textarea { min-height: 96px; resize: vertical; line-height: 1.55; }
+.checks { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13.5px; color: var(--ink); font-weight: 500; }
+.checks label, label.checks { display: inline-flex; gap: 7px; align-items: center; }
 .quick { display: flex; flex-wrap: wrap; gap: 6px; }
-.quick button { font: inherit; font-size: 12.5px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--soft); color: var(--ink); cursor: pointer; }
-.calc { font-size: 13px; padding: 8px 10px; background: var(--soft); border-radius: 10px; }
+.quick button { font: inherit; font-size: 12.5px; font-weight: 600; padding: 4px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--soft); color: var(--ink); cursor: pointer; }
+.calc { font-size: 13px; padding: 9px 12px; background: var(--soft); border-radius: 12px; }
 .calc.warnbox { background: var(--amber); color: var(--amber-ink); }
 .dlg-acts { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
-.err { color: var(--warn-ink); font-weight: 600; font-size: 13px; margin: 0; }
-.lock { max-width: 380px; display: grid; gap: 10px; }
-.lock input { font: inherit; font-family: var(--font-num); font-size: 20px; letter-spacing: .3em; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+.err { color: var(--warn-ink); font-weight: 700; font-size: 13px; margin: 0; }
+.lock { max-width: 400px; display: grid; gap: 12px; padding: 22px; }
+.lock input { font: inherit; font-family: var(--font-num); font-size: 22px; letter-spacing: .4em; padding: 10px 14px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+
 @media (max-width: 900px) {
   .shell { grid-template-columns: minmax(0, 1fr); }
-  .side { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 15; height: auto; padding: 12px max(16px, env(safe-area-inset-left, 0px)) 10px; gap: 10px; }
-  .brand { font-size: 1.25rem; padding: 0; }
+  .side { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 15; height: auto; padding: 12px max(16px, env(safe-area-inset-right, 0px)) 10px max(16px, env(safe-area-inset-left, 0px)); gap: 10px; border-right: 0; border-bottom: 1px solid var(--line); flex-direction: row; flex-wrap: wrap; align-items: center; }
+  .brand { font-size: 1.2rem; padding: 0; }
+  .brand svg { width: 32px; height: 32px; padding: 5px; border-radius: 10px; }
   .brand small { display: none; }
-  .nav { display: flex; overflow-x: auto; gap: 4px; padding-bottom: 2px; scrollbar-width: none; }
-  .nav a { padding: 7px 12px; font-size: 13.5px; }
-  .side .foot { display: none; }
-  .main { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 16; background: var(--head); }
+  .nav { order: 3; flex-basis: 100%; display: flex; overflow-x: auto; gap: 4px; padding-bottom: 2px; scrollbar-width: none; }
+  .nav a { padding: 8px 13px; font-size: 13.5px; }
+  .nav a:hover { transform: none; }
+  .side .foot { margin: 0 0 0 auto; display: flex; gap: 10px; align-items: center; padding: 0; }
+  .side .who span:last-child { display: none; }
+  .palettes { gap: 6px; } .sw { width: 22px; height: 22px; }
+  .main { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-top: 20px; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 16; background: var(--surface); }
+  .hero { padding: 24px 22px; border-radius: 24px; }
+  h1 { font-size: 1.9rem; }
 }
-@media (max-width: 520px) { h1 { font-size: 1.5rem; } .grid2 { grid-template-columns: 1fr; } .crit .row { grid-template-columns: 1fr; } }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+@media (max-width: 520px) { .grid2 { grid-template-columns: 1fr; } .crit .row { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 </style>
 <div id="app"></div>
 <script type="application/json" id="plan-data">{"assistants": [{"id": "Soraya", "daily": 456, "weekly": 1824}, {"id": "Laura", "daily": 456, "weekly": 2280}, {"id": "Lora", "daily": 408, "weekly": 2040}, {"id": "Aytana", "daily": 380, "weekly": 1140}, {"id": "Inès", "daily": 380, "weekly": 1140}], "rules": {"dentists": [{"code": "R", "name": "Rami", "days": {"1": "10:00-18:00", "2": "10:00-18:00", "3": "10:00-18:00", "4": "10:00-18:00"}, "assist": ["Laura", "Inès"], "exception": ["Soraya"], "need": true, "note": "1 vendredi par mois pour les implants, avec Soraya (heures sup.)", "extra": {"5": "implants avec Soraya"}}, {"code": "Z", "name": "Ziyed", "days": {"1": "09:30-17:30", "2": "09:30-17:30", "3": "09:30-17:30", "4": "09:30-17:30", "5": "10:00-14:00"}, "assist": ["Laura", "Aytana"], "need": true}, {"code": "MAJ", "name": "Majdi (orthodontiste)", "days": {"1": "10:00-18:00", "3": "10:00-18:00", "4": "10:00-18:00", "5": "10:00-18:00"}, "alt": ["1", "4"], "assist": ["Lora"], "strict": true, "need": true, "note": "Un lundi sur deux, un jeudi sur deux, jamais le mardi"}, {"code": "S", "name": "Salma", "days": {"2": ""}, "assist": ["Laura"], "strict": true, "need": true, "note": "2 mardis par mois, dates connues tard"}, {"code": "E", "name": "Emine", "days": {"1": "09:30-17:30", "2": "09:30-17:30", "3": "09:30-17:30", "4": "09:30-17:30", "5": "09:30-17:30", "6": "09:00-13:00"}, "assist": ["*"], "need": false, "note": "Assisté si quelqu'un est libre. Samedi : une seule assistante, en heures sup."}, {"code": "I", "name": "Ikram (hygiéniste)", "days": {"1": "", "4": ""}, "assist": [], "need": false}], "majRef": {"1": "2026-11-09", "4": "2026-11-05"}}, "months": [{"title": "Novembre 2026", "weeks": [{"label": "Semaine 1", "days": [{"date": "2026-11-02", "label": "Lundi 02/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "15:45", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E/Acc"}, "Inès": {"code": "/"}}}, {"date": "2026-11-03", "label": "Mardi 03/11", "sat": false, "holiday": false, "dentists": "R-Z-E", "note": "", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "15:45", "pause": "13h", "dent": "Acc/Z"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}}}, {"date": "2026-11-04", "label": "Mercredi 04/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}}}, {"date": "2026-11-05", "label": "Jeudi 05/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Acc"}}}, {"date": "2026-11-06", "label": "Vendredi 06/11", "sat": false, "holiday": false, "dentists": "Z-MAJ-E", "note": "", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h", "dent": "Z/Acc"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"code": "/"}, "Inès": {"code": "/"}}}, {"date": "2026-11-07", "label": "Samedi 07/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}, "Lora": null, "Aytana": null, "Inès": null}}]}, {"label": "Semaine 2", "days": [{"date": "2026-11-09", "label": "Lundi 09/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "Soraya : Relais R 17h06-17h30\nInès : Relais R 13h30-14h00 ; R fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h00–13h30, MAJ 13h30–14h00", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E/R"}}}, {"date": "2026-11-10", "label": "Mardi 10/11", "sat": false, "holiday": false, "dentists": "R-Z-S-E", "note": "Soraya : Relais S 13h00-13h30 (pause de Laura)\nLora : R 10h00-11h10 + relais 13h30-14h00 ; Z le reste\nLaura : S 10h-16h ; Z 16h00-17h30\n⚠ Seul : Z 9h30–11h10, Z 13h00–14h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "S ★"}, "Lora": {"start": "09:30", "end": "17:00", "pause": "13h", "dent": "Acc"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}}}, {"date": "2026-11-11", "label": "Mercredi 11/11", "sat": false, "holiday": true, "dentists": "MAJ (férié, 10h–15h)", "note": "Cabinet ouvert pour Majdi seul (Lora, sans pause)\nLora récupère le férié le ven 20", "cells": {"Soraya": {"code": "F"}, "Laura": {"code": "F"}, "Lora": {"start": "10:00", "end": "15:00", "pause": "sans", "dent": "Acc/ Maj"}, "Aytana": {"code": "/"}, "Inès": {"code": "/"}}}, {"date": "2026-11-12", "label": "Jeudi 12/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nInès : Relais Z 13h00-13h30 ; R 17h36-18h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "17:00", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "E"}}}, {"date": "2026-11-13", "label": "Vendredi 13/11", "sat": false, "holiday": false, "dentists": "Z-MAJ-E", "note": "Aytana : Relais MAJ 13h30-14h00\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h", "dent": "Z"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"code": "F"}, "Inès": {"code": "/"}}}, {"date": "2026-11-14", "label": "Samedi 14/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}, "Aytana": null, "Inès": null}}]}, {"label": "Semaine 3", "days": [{"date": "2026-11-16", "label": "Lundi 16/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "16:06", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}, "Inès": {"code": "/"}}}, {"date": "2026-11-17", "label": "Mardi 17/11", "sat": false, "holiday": false, "dentists": "R-Z-E", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nSoraya : Relais R 17h06-17h30\nInès : Z puis R en fin de journée\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "16:06", "pause": "13h", "dent": "Z"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}}}, {"date": "2026-11-18", "label": "Mercredi 18/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "Inès : Relais R 13h30-14h00 ; R fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h00–13h30, MAJ 13h30–14h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"code": "/"}}}, {"date": "2026-11-19", "label": "Jeudi 19/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "Soraya : Relais R 13h30-14h00 et 17h06-17h30\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E/R"}}}, {"date": "2026-11-20", "label": "Vendredi 20/11", "sat": false, "holiday": false, "dentists": "Z-E", "note": "Inès : Relais Z 13h30-14h00", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Z"}, "Lora": {"code": "F"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Acc"}}}, {"date": "2026-11-21", "label": "Samedi 21/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": null, "Aytana": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}, "Inès": null}}]}, {"label": "Semaine 4", "days": [{"date": "2026-11-23", "label": "Lundi 23/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "Soraya : Relais R 13h30-14h00 et 17h06-17h30\nInès : Z puis R en fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Z"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "R"}}}, {"date": "2026-11-24", "label": "Mardi 24/11", "sat": false, "holiday": false, "dentists": "R-Z-S-E", "note": "Soraya : Relais S 13h00-13h30 (pause de Laura)\nLora : R 10h00-11h10 + relais 13h30-14h00 ; Z le reste\nLaura : S 10h-16h ; Z 16h00-17h30\n⚠ Seul : Z 9h30–11h10, Z 13h00–14h00, Z 15h45–16h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "S ★"}, "Lora": {"start": "09:30", "end": "15:45", "pause": "13h", "dent": "Acc"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "E"}, "Inès": {"code": "/"}}}, {"date": "2026-11-25", "label": "Mercredi 25/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "Soraya : Relais R 13h30-14h00 et 17h06-17h30\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"code": "/"}}}, {"date": "2026-11-26", "label": "Jeudi 26/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Soraya : Relais R 13h30-14h00\nLora : R 10h00-11h10 ; relais Z 13h00-13h30\n⚠ Seul : Z 9h30–11h10", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "Acc"}, "Laura": {"code": "C"}, "Lora": {"start": "09:00", "end": "15:15", "pause": "13h30", "dent": "Z"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "R"}}}, {"date": "2026-11-27", "label": "Vendredi 27/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "⚠ Seul : Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "14:30", "pause": "HS", "dent": "R ★"}, "Laura": {"code": "C"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "09:00", "end": "15:50", "pause": "13h30", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Acc"}}}, {"date": "2026-11-28", "label": "Samedi 28/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": null, "Aytana": null, "Inès": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}}}]}, {"label": "Semaine 5", "days": [{"date": "2026-11-30", "label": "Lundi 30/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "16:48", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}, "Inès": {"code": "/"}}}], "contracts": {"Soraya": 456, "Laura": 456, "Lora": 408, "Aytana": 380, "Inès": 0}, "remark": "Seul le lundi 30 est en novembre : le reste de la semaine se fait avec le planning de décembre (Aytana 2 jours, Inès 3 jours)."}]}], "cur": 0, "savedAt": "2026-10-28T16:37:00.000Z"}</script>
@@ -244,7 +324,10 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
   var app = document.getElementById("app");
   var JOURS = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
   var MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
-  var TABS = [["accueil", "Accueil"], ["planning", "Planning"], ["heures", "Heures sup."], ["suivi", "Suivi"], ["recompenses", "Récompenses"], ["news", "News"], ["reunions", "Réunions"], ["responsable", "Responsable"]];
+  var TABS = [["accueil", "Accueil"], ["planning", "Planning"], ["heures", "Heures sup."], ["suivi", "Suivi"], ["recompenses", "Récompenses"], ["boite", "Boîte à idées"], ["news", "News"], ["reunions", "Réunions"], ["responsable", "Responsable"]];
+  var COLORS = { Soraya: ["#e0559a", "#f59ac0"], Laura: ["#8a63e6", "#c4a8ff"], Lora: ["#f07a5a", "#ffc09a"], Aytana: ["#2fae9b", "#8fe3cf"], "Inès": ["#d99a1e", "#f7d27a"] };
+  var PALETTES = [["rose", "Rose poudré", "#e0559a", "#a879f0"], ["lavande", "Lavande", "#8a63e6", "#e57fb4"], ["peche", "Pêche", "#ee7350", "#f2a8c0"], ["menthe", "Menthe lilas", "#2a9d8f", "#9b7ff0"]];
+  var CATS = [["idee", "Une idée"], ["probleme", "Un souci"], ["ressenti", "Un ressenti"], ["merci", "Un merci"]];
   var CRITERES = [
     ["comportement", "Comportement", "Respect, calme, discrétion"],
     ["attitude", "Attitude", "Sourire, motivation, positif"],
@@ -289,11 +372,11 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
 
   /* données partagées (db) */
   var db = null, user = null, uid = null, owner = false;
-  var S = { ready: false, link: null, mine: {}, myProps: [], news: [], reunions: [], cfg: null, heures: {}, links: {}, pt: {}, props: {},
+  var S = { ready: false, link: null, mine: {}, myProps: [], myValid: {}, myRecup: [], boite: [], news: [], reunions: [], cfg: null, heures: {}, links: {}, pt: {}, props: {},
     equipe: {}, recup: {}, mot: null, palmares: {}, evals: {}, myAuto: {}, myResp: {}, myVote: {}, auto: {}, votes: {} };
   var subs = {};
   var mgr = false;
-  var ui = { person: null, newsDraft: "", lockErr: "", period: null, seed: 0 };
+  var ui = { person: null, newsDraft: "", lockErr: "", period: null, seed: 0, viewAs: null, enter: true, boiteDraft: "" };
   try { mgr = sessionStorage.getItem("resp-ok") === "1"; } catch (e) {}
 
   function el(tag, attrs, kids) {
@@ -421,8 +504,12 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
     Object.keys(S.links).forEach(function (u) { if (S.links[u] === aid && S.pt[u] && S.pt[u][date]) found = S.pt[u][date]; });
     return found;
   }
+  // La responsable lit l'original ; chaque assistante ne reçoit que sa propre copie.
+  function validMap(aid) { return owner ? (S.heures[slug(aid)] || {}) : (S.link === aid ? S.myValid : {}); }
+  function recupList(aid) { return owner ? (S.recup[slug(aid)] || []) : (S.link === aid ? S.myRecup : []); }
+  function uidsOf(aid) { return Object.keys(S.links).filter(function (u) { return S.links[u] === aid; }); }
   function entry(aid, date) {
-    var v = (S.heures[slug(aid)] || {})[date], g = girlEntry(aid, date);
+    var v = validMap(aid)[date], g = girlEntry(aid, date);
     if (v && (!g || (g.at || 0) <= (v.at || 0))) return { arr: v.arr, dep: v.dep, demande: !!v.demande, statut: v.statut || "validé", src: "resp", g: g, v: v };
     if (g) return { arr: g.arr, dep: g.dep, demande: !!g.demande, statut: "à vérifier", src: "elle", g: g, v: v };
     return null;
@@ -455,7 +542,7 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
   function potOf(aid) {
     var ok = 0, todo = 0;
     allDays().forEach(function (d) { var e = entry(aid, d.date), x = extraOf(aid, d.date, e); if (x == null) return; if (e.statut === "à vérifier") todo += x; else ok += x; });
-    var rendu = 0; (S.recup[slug(aid)] || []).forEach(function (r) { rendu += r.minutes || 0; });
+    var rendu = 0; recupList(aid).forEach(function (r) { rendu += r.minutes || 0; });
     return { ok: ok - rendu, todo: todo, rendu: rendu };
   }
 
@@ -495,10 +582,23 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
   var toastMsg = "";
   function toast(m) { toastMsg = m; render(); setTimeout(function () { if (toastMsg === m) { toastMsg = ""; render(); } }, 5000); }
   function fail(e) {
+    if (e && e.code === "preview") { toast("Aperçu : rien n'est enregistré depuis l'interface d'une assistante."); return; }
     toast(e && e.code === "quota_exceeded" ? "L'espace de stockage est plein : supprimez d'anciennes news." :
       e && e.code === "invalid_argument" ? "Enregistrement refusé : ce compte n'a pas le droit de modifier ceci." : "L'enregistrement n'a pas abouti. Réessayez dans un instant.");
   }
-  function write(p) { return p.then(null, function (e) { fail(e); throw e; }); }
+  // En aperçu (« voir comme »), aucune écriture ne part.
+  function blocked() { return ui.viewAs ? Promise.reject({ code: "preview" }) : null; }
+  function guardRef(r) {
+    return { id: r.id, path: r.path, get: function () { return r.get(); }, onSnapshot: function (a, b) { return r.onSnapshot(a, b); }, collection: function (p) { return guardColl(r.collection(p)); },
+      set: function (d) { return blocked() || r.set(d); }, update: function (d) { return blocked() || r.update(d); }, delete: function () { return blocked() || r.delete(); } };
+  }
+  function guardColl(c) {
+    return { path: c.path, doc: function (id) { return guardRef(id ? c.doc(id) : c.doc()); }, add: function (d) { return blocked() || c.add(d); },
+      onSnapshot: function (a, b) { return c.onSnapshot(a, b); }, get: function () { return c.get(); } };
+  }
+  function guardDb(d) { return { doc: function (p) { return guardRef(d.doc(p)); }, collection: function (p) { return guardColl(d.collection(p)); } }; }
+  // Une écriture refusée affiche le message et ne déclenche pas la suite (pas de faux « enregistré »).
+  function write(p) { return p.then(null, function (e) { fail(e); return new Promise(function () {}); }); }
 
   function saveMine(aid, date, vals) {
     var ref = db.doc("pointages/" + uid + "/jours/" + date);
@@ -508,8 +608,10 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
   }
   function saveResp(aid, date, vals) {
     var ref = db.doc("heures/" + slug(aid) + "/jours/" + date);
-    if (vals === null) return write(ref.delete());
-    return write(ref.set({ arr: vals.arr || "", dep: vals.dep || "", demande: !!vals.demande, statut: vals.statut || "validé", at: Date.now() }));
+    var copies = uidsOf(aid).map(function (u) { return db.doc("pointages/" + u + "/valid/" + date); });
+    if (vals === null) return write(ref.delete()).then(function () { copies.forEach(function (c) { c.delete().catch(function () {}); }); });
+    var doc = { arr: vals.arr || "", dep: vals.dep || "", demande: !!vals.demande, statut: vals.statut || "validé", at: Date.now() };
+    return write(ref.set(doc)).then(function () { copies.forEach(function (c) { c.set(doc).catch(function () {}); }); });
   }
 
   /* ---------- rendu ---------- */
@@ -518,7 +620,8 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
   function busy() { var a = document.activeElement; return a && app.contains(a) && (a.tagName === "TEXTAREA" || (a.tagName === "INPUT" && a.type !== "checkbox" && a.type !== "radio")); }
   function soon() { if (busy()) { renderPending = true; return; } render(); }
   app.addEventListener("focusout", function () { if (renderPending) setTimeout(function () { if (!busy()) { renderPending = false; render(); } }, 0); });
-  function add(n) { if (n) main.appendChild(n); return n; }
+  var idx = 0;
+  function add(n) { if (n) { n.style.setProperty("--i", String(Math.min(idx++, 12))); main.appendChild(n); } return n; }
   function route() { var h = (location.hash || "").slice(1); return TABS.some(function (t) { return t[0] === h; }) ? h : "accueil"; }
   function guideOpen(k) { try { return localStorage.getItem("guide-" + k) !== "0"; } catch (e) { return true; } }
   function guide(k, title, steps) {
@@ -534,35 +637,82 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
   function logo() {
     return sv("svg", { width: "30", height: "30", viewBox: "0 0 32 32", "aria-hidden": "true" }, [
       sv("path", { d: "M9 4c-3.5 0-6 2.8-6 6.7 0 3.4 1.4 5.5 2.4 8.3.9 2.6 1.1 9 3.7 9 2.3 0 2.2-6.5 4.2-6.5h1.4c2 0 1.9 6.5 4.2 6.5 2.6 0 2.8-6.4 3.7-9 1-2.8 2.4-4.9 2.4-8.3C25 6.8 22.5 4 19 4c-2.2 0-3.4 1.3-5 1.3S11.2 4 9 4z", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linejoin": "round" }),
-      sv("circle", { cx: "25.5", cy: "8", r: "3", fill: "var(--honey)" })
+      sv("path", { class: "spark", d: "M26 2l1.2 3.3L30.5 6.5l-3.3 1.2L26 11l-1.2-3.3L21.5 6.5l3.3-1.2z", fill: "var(--sec)" })
     ]);
   }
 
+  /* palette de couleurs (préférence de chaque personne, sur son appareil) */
+  var palette = "rose";
+  try { palette = localStorage.getItem("palette") || "rose"; } catch (e) {}
+  document.documentElement.setAttribute("data-palette", palette);
+  function setPalette(p) { palette = p; document.documentElement.setAttribute("data-palette", p); try { localStorage.setItem("palette", p); } catch (e) {} render(); }
+
+  function avatar(aid, size) {
+    var c = COLORS[aid] || ["#999", "#ccc"];
+    return el("span", { class: "av", style: "--c1:" + c[0] + ";--c2:" + c[1] + (size ? ";--s:" + size + "px" : ""), "aria-hidden": "true", text: String(aid || "?").charAt(0) });
+  }
+
+  // « Voir comme » : la responsable affiche exactement l'interface d'une assistante, sans rien pouvoir enregistrer.
+  function persona(aid) {
+    var u = uidsOf(aid)[0] || null, k = slug(aid);
+    return { link: aid, uid: u || "apercu", owner: false, mgr: false,
+      mine: (u && S.pt[u]) || {}, myAuto: (u && S.auto[u]) || {}, myResp: S.evals[k] || {}, myVote: (u && S.votes[u]) || {},
+      myProps: (u && S.props[u]) || [], myValid: S.heures[k] || {}, myRecup: S.recup[k] || [] };
+  }
   function render() {
+    if (ui.viewAs && owner) {
+      var keep = { link: S.link, mine: S.mine, myAuto: S.myAuto, myResp: S.myResp, myVote: S.myVote, myProps: S.myProps, myValid: S.myValid, myRecup: S.myRecup, uid: uid, owner: owner, mgr: mgr };
+      var p = persona(ui.viewAs);
+      ["link", "mine", "myAuto", "myResp", "myVote", "myProps", "myValid", "myRecup"].forEach(function (k) { S[k] = p[k]; });
+      uid = p.uid; owner = false; mgr = false;
+      try { renderInner(); } finally {
+        ["link", "mine", "myAuto", "myResp", "myVote", "myProps", "myValid", "myRecup"].forEach(function (k) { S[k] = keep[k]; });
+        uid = keep.uid; owner = keep.owner; mgr = keep.mgr;
+      }
+      return;
+    }
+    if (!owner) ui.viewAs = null;
+    renderInner();
+  }
+  function renderInner() {
     var y = window.scrollY;
     app.textContent = "";
+    idx = 0;
     var tab = route();
     var pend = isMgr() ? pendingCount() : 0;
+    var tabs = TABS.filter(function (t) { return t[0] !== "responsable" || owner || (!S.link && !ui.viewAs); });
+    if (ui.viewAs && tab === "responsable") tab = "accueil";
+    var me = S.link;
     var side = el("aside", { class: "side" }, [
       el("div", { class: "brand" }, [logo(), el("div", null, ["Lensdental", el("small", { text: "L'équipe" })])]),
-      el("nav", { class: "nav", "aria-label": "Sections" }, TABS.map(function (t) {
-        var badge = t[0] === "responsable" ? (isMgr() ? (pend ? el("span", { class: "badge", text: String(pend) }) : null) : el("span", { text: "🔒", "aria-label": "verrouillé" })) : null;
-        return el("a", { href: "#" + t[0], "aria-current": t[0] === tab ? "page" : null }, [t[1], badge]);
+      el("nav", { class: "nav", "aria-label": "Sections" }, tabs.map(function (t) {
+        var badge = t[0] === "responsable" ? (isMgr() ? (pend ? el("span", { class: "badge", text: String(pend) }) : null) : el("span", { class: "lock", "aria-label": "verrouillé", text: "•" })) : null;
+        return el("a", { href: "#" + t[0], "aria-current": t[0] === tab ? "page" : null }, [el("span", { text: t[1] }), badge]);
       })),
-      el("div", { class: "foot", text: S.link ? "Connectée : " + S.link : owner ? "Connectée : responsable" : "Lensdental · outil interne" })
+      el("div", { class: "foot" }, [
+        el("div", { class: "who" }, me ? [avatar(me, 30), el("span", null, [el("b", { text: me }), el("small", { text: ui.viewAs ? "aperçu" : "assistante" })])] :
+          owner ? [el("span", { class: "av", style: "--c1:var(--pri);--c2:var(--sec)", text: "R" }), el("span", null, [el("b", { text: "Responsable" }), el("small", { text: mgr ? "espace ouvert" : "espace fermé" })])] : []),
+        el("div", { class: "palettes", role: "group", "aria-label": "Couleurs" }, PALETTES.map(function (p) {
+          return el("button", { type: "button", class: "sw", title: p[1], "aria-label": "Couleurs " + p[1], "aria-pressed": String(p[0] === palette), style: "--a:" + p[2] + ";--b:" + p[3], onclick: function () { setPalette(p[0]); } });
+        }))
+      ])
     ]);
-    main = el("main", { class: "main" });
+    main = el("main", { class: "main" + (ui.enter ? " enter" : "") });
+    ui.enter = false;
     app.appendChild(el("div", { class: "shell" }, [side, main]));
-    if (toastMsg) add(el("p", { class: "notice", role: "status", text: toastMsg }));
+    if (ui.viewAs) add(el("div", { class: "preview" }, [el("span", null, ["Vous voyez l'interface de ", el("b", { text: ui.viewAs }), " exactement comme elle la voit. Rien n'est enregistré ici."]),
+      el("button", { class: "btn sm", type: "button", text: "Revenir à mon espace", onclick: function () { ui.viewAs = null; ui.enter = true; location.hash = "#responsable"; render(); } })]));
     if (tab === "accueil") viewAccueil();
     else if (tab === "planning") viewPlanning();
     else if (tab === "heures") viewHeures();
     else if (tab === "suivi") viewSuivi();
     else if (tab === "recompenses") viewRecompenses();
+    else if (tab === "boite") viewBoite();
     else if (tab === "news") viewNews();
     else if (tab === "reunions") viewReunions();
     else viewResp();
-    if ((isMgr() && tab === "planning") || nChanges()) app.appendChild(saveBar());
+    if (!ui.viewAs && ((isMgr() && tab === "planning") || nChanges())) app.appendChild(saveBar());
+    if (toastMsg) app.appendChild(el("div", { class: "toast", role: "status", text: toastMsg }));
     window.scrollTo(0, y);
   }
 
@@ -589,25 +739,32 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
   function potSvg(min, pendingMin, key) {
     var CAP = 600; // 10 h remplissent le pot
     var lvl = Math.max(0, Math.min(1, min / CAP)), lvl2 = Math.max(0, Math.min(1, (min + Math.max(0, pendingMin)) / CAP));
-    var top = 30, bottom = 128, h = bottom - top;
-    var id = "jar" + key;
-    var jarPath = "M30 22h60v8c0 4 6 6 6 14v72c0 10-8 16-18 16H42c-10 0-18-6-18-16V44c0-8 6-10 6-14z";
-    return sv("svg", { viewBox: "0 0 120 140", role: "img", "aria-label": "Pot d'heures : " + dur(min) }, [
-      sv("defs", null, [sv("clipPath", { id: id }, [sv("path", { d: jarPath })])]),
-      sv("rect", { x: "18", y: "10", width: "84", height: "12", rx: "4", fill: "var(--brand)" }),
+    var top = 34, bottom = 130, h = bottom - top;
+    var id = "jar" + key, gid = "liq" + key;
+    var jarPath = "M32 24h56v8c0 4 7 7 7 15v70c0 10-8 16-18 16H43c-10 0-18-6-18-16V47c0-8 7-11 7-15z";
+    function wave(y, cls, op) {
+      var d = "M-120 " + y + " q15 -7 30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 V160 H-120z";
+      return sv("path", { class: cls, d: d, fill: "url(#" + gid + ")", opacity: op });
+    }
+    var yL = bottom - h * lvl, yP = bottom - h * lvl2;
+    var bubbles = lvl > .05 ? [0, 1, 2].map(function (i) { return sv("circle", { class: "bub b" + i, cx: String(46 + i * 14), cy: String(bottom - 4), r: String(2 + i % 2), fill: "#fff", opacity: ".7" }); }) : [];
+    return sv("svg", { viewBox: "0 0 120 144", role: "img", "aria-label": "Pot d'heures : " + dur(min) }, [
+      sv("defs", null, [sv("clipPath", { id: id }, [sv("path", { d: jarPath })]),
+        sv("linearGradient", { id: gid, x1: "0", y1: "0", x2: "0", y2: "1" }, [sv("stop", { offset: "0", "stop-color": "var(--sec)" }), sv("stop", { offset: "1", "stop-color": "var(--pri)" })])]),
+      sv("rect", { x: "24", y: "10", width: "72", height: "14", rx: "6", fill: "var(--pri)" }),
+      sv("rect", { x: "30", y: "13", width: "60", height: "3", rx: "1.5", fill: "#fff", opacity: ".45" }),
       sv("g", { "clip-path": "url(#" + id + ")" }, [
-        sv("rect", { x: "0", y: "0", width: "120", height: "140", fill: "var(--surface)" }),
-        sv("rect", { class: "liquid", x: "0", y: String(bottom - h * lvl2), width: "120", height: String(h * lvl2 + 20), fill: "var(--honey)", opacity: ".35" }),
-        sv("rect", { class: "liquid", x: "0", y: String(bottom - h * lvl), width: "120", height: String(h * lvl + 20), fill: "var(--honey)" }),
-        sv("path", { d: "M36 50v52", stroke: "#fff", "stroke-width": "5", "stroke-linecap": "round", opacity: ".45" })
-      ]),
-      sv("path", { d: jarPath, fill: "none", stroke: "var(--ink)", "stroke-width": "3" }),
-      sv("path", { d: "M90 60h-8M90 80h-8M90 100h-8", stroke: "var(--muted)", "stroke-width": "2" })
+        sv("rect", { x: "0", y: "0", width: "120", height: "144", fill: "var(--glass)" }),
+        lvl2 > lvl ? wave(yP, "wave slow", ".3") : null,
+        lvl > 0 ? wave(yL, "wave", "1") : null
+      ].concat(bubbles).concat([sv("path", { d: "M38 52v56", stroke: "#fff", "stroke-width": "6", "stroke-linecap": "round", opacity: ".5" })])),
+      sv("path", { d: jarPath, fill: "none", stroke: "var(--ink)", "stroke-width": "2.5", opacity: ".8" }),
+      sv("path", { d: "M93 62h-7M93 82h-7M93 102h-7", stroke: "var(--muted)", "stroke-width": "2", "stroke-linecap": "round" })
     ]);
   }
   function potCard(aid, i) {
     var p = potOf(aid);
-    return el("div", { class: "pot" }, [potSvg(p.ok, p.todo, i), el("div", { class: "name", text: aid }),
+    return el("div", { class: "pot" }, [potSvg(p.ok, p.todo, i), el("div", { class: "name" }, [avatar(aid, 22), aid]),
       el("div", { class: "val" + (p.ok < 0 ? " neg" : ""), text: plusTxt(p.ok) }),
       el("div", { class: "det", text: (p.todo ? plusTxt(p.todo) + " à vérifier" : "tout est vérifié") + (p.rendu ? " · " + dur(p.rendu) + " rendues" : "") })]);
   }
@@ -619,6 +776,26 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
     var base = new Date(y, now.getMonth(), now.getDate(), 12);
     if (t < base) t = new Date(y + 1, +mmdd.slice(0, 2) - 1, +mmdd.slice(3, 5), 12);
     return Math.round((t - base) / 86400000);
+  }
+  // Pluie de confettis aux couleurs de la palette (anniversaire, assistante du mois, vote…).
+  function confetti() {
+    try { if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; } catch (e) {}
+    var cv = el("canvas", { class: "confetti", "aria-hidden": "true" });
+    document.body.appendChild(cv);
+    var W = cv.width = window.innerWidth, H = cv.height = window.innerHeight, cx = cv.getContext("2d");
+    var cs = getComputedStyle(document.documentElement);
+    var cols = [cs.getPropertyValue("--pri").trim() || "#e0559a", cs.getPropertyValue("--sec").trim() || "#a879f0", "#ffd36e", "#ffffff", "#7fd8c4"];
+    var ps = []; for (var i = 0; i < 140; i++) ps.push({ x: W / 2 + (Math.random() - .5) * 120, y: H * .35, vx: (Math.random() - .5) * 14, vy: -Math.random() * 13 - 4, r: Math.random() * 6 + 4, a: Math.random() * 6, va: (Math.random() - .5) * .3, c: cols[i % cols.length], s: Math.random() < .5 });
+    var t0 = performance.now();
+    (function frame(t) {
+      cx.clearRect(0, 0, W, H);
+      ps.forEach(function (p) { p.vy += .32; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.a += p.va; cx.save(); cx.translate(p.x, p.y); cx.rotate(p.a); cx.fillStyle = p.c; if (p.s) cx.fillRect(-p.r / 2, -p.r / 4, p.r, p.r / 2); else { cx.beginPath(); cx.arc(0, 0, p.r / 2.4, 0, 6.3); cx.fill(); } cx.restore(); });
+      if (t - t0 < 2600) requestAnimationFrame(frame); else cv.remove();
+    })(t0);
+  }
+  function sparkles(n) {
+    var out = []; for (var i = 0; i < n; i++) { var s = hashStr("s" + i); out.push(el("span", { class: "twinkle", style: "left:" + (8 + s % 84) + "%;top:" + (10 + (s >> 8) % 75) + "%;animation-delay:" + ((s >> 4) % 30) / 10 + "s" })); }
+    return out;
   }
   function motDuMatin(name) { var t = todayIso(); return MOTS[hashStr(t + "|" + (name || "équipe")) % MOTS.length]; }
 
@@ -633,12 +810,13 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
       el("div", { class: "msg", text: bday ? "Toute l'équipe Lensdental te souhaite une merveilleuse journée. Profite, tu le mérites !" : motDuMatin(me || (owner ? "responsable" : "")) }),
       S.mot && S.mot.date === today && S.mot.texte ? el("div", { class: "msg", style: "font-weight:600", text: "Le mot de la responsable : " + S.mot.texte }) : null,
       smile
-    ]));
+    ].concat(sparkles(9))));
+    if (bday) { var key = "bday-" + today + me; var seen = false; try { seen = sessionStorage.getItem(key) === "1"; sessionStorage.setItem(key, "1"); } catch (e) {} if (!seen) setTimeout(confetti, 400); }
     if (S.ready && db && !owner && !me) { pickName(); return; }
     if (needDb()) return;
     // anniversaires
     var bd = state.assistants.map(function (a) { var b = birthdayOf(a.id); return b ? { a: a.id, n: daysUntil(b), b: b } : null; }).filter(function (x) { return x && x.n <= 14 && x.a !== (bday ? me : null); }).sort(function (x, y) { return x.n - y.n; });
-    if (bd.length) add(el("p", { class: "notice", style: "background:var(--rose-soft);color:var(--ink)", text: bd.map(function (x) { return x.n === 0 ? "Aujourd'hui, c'est l'anniversaire de " + x.a + " ! Pensez à lui souhaiter." : "Anniversaire de " + x.a + " dans " + x.n + " jour" + (x.n > 1 ? "s" : "") + " (" + +x.b.slice(3) + " " + MOIS[+x.b.slice(0, 2) - 1] + ")."; }).join(" ") }));
+    if (bd.length) add(el("p", { class: "notice bday", text: bd.map(function (x) { return x.n === 0 ? "Aujourd'hui, c'est l'anniversaire de " + x.a + " ! Pensez à lui souhaiter." : "Anniversaire de " + x.a + " dans " + x.n + " jour" + (x.n > 1 ? "s" : "") + " (" + +x.b.slice(3) + " " + MOIS[+x.b.slice(0, 2) - 1] + ")."; }).join(" ") }));
     // gagnante de la dernière période
     var lastWin = Object.keys(S.palmares).sort().pop();
     if (lastWin && S.palmares[lastWin].gagnante && lastWin >= prevPeriod(periodOf(today))) {
@@ -726,6 +904,16 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
   }
 
   function viewPlanning() {
+    if (S.link && !owner) {
+      pageHead("Mon planning", "Vos horaires, le dentiste que vous assistez et vos réunions.", monthNav());
+      guide("planning-a", "Comment lire mon planning", [
+        "Chaque case donne vos heures, votre pause et le dentiste que vous assistez (Acc = accueil).",
+        "La bande « Dentistes » montre qui est au cabinet ce jour-là.",
+        "Seule la responsable peut modifier le planning : parlez-lui si quelque chose ne va pas."
+      ]);
+      M().weeks.forEach(function (w, wi) { add(weekCard(w, wi)); });
+      return;
+    }
     pageHead("Planning", isMgr() ? "Mode responsable : tout est modifiable." : "Seule la responsable peut modifier le planning.", monthNav());
     guide("planning", "Comment lire et remplir le planning", [
       "La bande « Dentistes » donne les initiales des praticiens présents. Il faut une assistante par dentiste + une à l'accueil.",
@@ -785,9 +973,10 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
       var txt = d.dentists || (d.holiday ? "Férié" : "—");
       return el("td", null, [can ? el("button", { class: "daybtn dent", type: "button", text: txt, onclick: function () { openDay(wi, di); } }) : el("div", { class: "daybtn dent", text: txt })]);
     })).concat([el("td", { class: "dent", text: "presté + congé/férié" })]));
-    var rows = state.assistants.map(function (a) {
+    var team = isMgr() || owner || !S.link;
+    var rows = state.assistants.filter(function (a) { return team || a.id === S.link; }).map(function (a) {
       var t = weekTotals(w, a), ok = Math.abs(t.gap) < 1;
-      return el("tr", null, [el("th", { class: "rowh" }, [a.id, el("small", { text: dur(a.daily) + " / jour" })])].concat(w.days.map(function (d, di) {
+      return el("tr", null, [el("th", { class: "rowh" }, [el("span", { class: "rh" }, [avatar(a.id, 24), a.id]), el("small", { text: dur(a.daily) + " / jour" })])].concat(w.days.map(function (d, di) {
         return el("td", null, [cellView(d, a, wi, di)]);
       })).concat([el("td", { class: "tot" }, [
         el("div", { class: "big", text: dur(t.total) + " / " + dur(t.contract) }),
@@ -808,10 +997,16 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
     })).concat([el("td", { class: "tot" })]));
     return el("section", { class: "card" }, [
       w.remark ? el("div", { class: "card-head" }, [el("h2", { text: w.label }), el("p", { text: w.remark })]) : null,
-      el("div", { class: "scroll" }, [el("table", null, [thead, el("tbody", null, [band].concat(rows).concat([check]))])])
+      el("div", { class: "scroll" }, [el("table", null, [thead, el("tbody", null, [band].concat(rows).concat(team ? [check] : [meetRow(w)]))])])
     ]);
   }
 
+  function meetRow(w) {
+    return el("tr", { class: "check" }, [el("th", { class: "rowh", text: "Réunions" })].concat(w.days.map(function (d) {
+      var ms = meetingsOn(d.date).filter(visibleMeeting);
+      return el("td", { class: "chk" }, ms.length ? [el("ul", null, ms.map(function (m) { return el("li", { class: "m", text: meetLabel(m) }); }))] : []);
+    })).concat([el("td", { class: "tot" })]));
+  }
   function hoursText(r) {
     var byH = {};
     Object.keys(r.days).forEach(function (k) { var h = r.days[k] || "horaire à confirmer"; (byH[h] = byH[h] || []).push(+k); });
@@ -960,7 +1155,11 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
       var m = /^(\d{1,2})\s*[h:]\s*(\d{1,2})?$/i.exec(fH.value.trim()) || /^(\d{1,3})\s*min$/i.exec(fH.value.trim());
       var min = !m ? null : m[0].toLowerCase().indexOf("min") > 0 ? +m[1] : (+m[1]) * 60 + (+(m[2] || 0));
       if (!min) { err.textContent = "Écrivez la durée comme 2h30 ou 45 min."; return; }
-      write(db.collection("recup/" + slug(aid) + "/items").add({ date: fDate.value, minutes: min, note: fN.value.trim(), at: Date.now() })).then(function () { toast(dur(min) + " rendues à " + aid + "."); });
+      var ref = db.collection("recup/" + slug(aid) + "/items").doc(), doc = { date: fDate.value, minutes: min, note: fN.value.trim(), at: Date.now() };
+      write(ref.set(doc)).then(function () {
+        uidsOf(aid).forEach(function (u) { db.doc("pointages/" + u + "/recup/" + ref.id).set(doc).catch(function () {}); });
+        toast(dur(min) + " rendues à " + aid + ".");
+      });
       closeDlg();
     });
     dlg.appendChild(form); showDlg();
@@ -1008,7 +1207,7 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
       el("div", { class: "row-acts" }, [el("button", { class: "btn primary", type: "submit", text: mine ? "Mettre à jour" : "Envoyer mon auto-évaluation" }), mine ? el("span", { class: "pill ok", text: "envoyée le " + new Date(mine.at).toLocaleDateString("fr-BE") }) : null])]);
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
-      write(db.doc("suivi/" + uid + "/auto/" + p).set({ assistant: S.link, crit: readCrit(form, "me-"), bien: fB.value.trim(), ameliorer: fA.value.trim(), besoin: fN.value.trim(), at: Date.now() })).then(function () { toast("Auto-évaluation enregistrée. Merci !"); });
+      write(db.doc("suivi/" + uid + "/auto/" + p).set({ assistant: S.link, crit: readCrit(form, "me-"), bien: fB.value.trim(), ameliorer: fA.value.trim(), besoin: fN.value.trim(), at: Date.now() })).then(function () { confetti(); toast("Auto-évaluation enregistrée. Merci !"); });
     });
     var g = add(el("div", { class: "grid-dash" }));
     g.appendChild(card("Mon auto-évaluation", periodLabel(p), form));
@@ -1095,7 +1294,7 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
       var x = form.querySelector("input[name=vote]:checked"); if (!x) { toast("Choisissez une collègue."); return; }
-      write(db.doc("votes/" + uid + "/periodes/" + p).set({ votant: S.link, pour: x.value, pourquoi: fW.value.trim(), at: Date.now() })).then(function () { toast("Vote enregistré. Merci !"); });
+      write(db.doc("votes/" + uid + "/periodes/" + p).set({ votant: S.link, pour: x.value, pourquoi: fW.value.trim(), at: Date.now() })).then(function () { confetti(); toast("Vote enregistré. Merci !"); });
     });
     g.appendChild(card("Mon vote", "Assistante du mois · " + periodLabel(p), form));
   }
@@ -1124,10 +1323,62 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
       var doc = { gagnante: aid, recompense: fR.value, message: fM.value.trim(), at: Date.now() };
-      write(db.doc("palmares/" + p).set(doc)).then(function () { return write(db.collection("news").add({ texte: "Bravo à " + aid + ", assistante du mois (" + periodLabel(p) + ") !" + (fR.value ? " Elle gagne : " + fR.value + "." : "") + (fM.value.trim() ? "\n" + fM.value.trim() : ""), auteur: "Responsable", date: new Date().toISOString(), at: Date.now() })); }).then(function () { toast("Annoncé à toute l'équipe."); });
+      write(db.doc("palmares/" + p).set(doc)).then(function () { return write(db.collection("news").add({ texte: "Bravo à " + aid + ", assistante du mois (" + periodLabel(p) + ") !" + (fR.value ? " Elle gagne : " + fR.value + "." : "") + (fM.value.trim() ? "\n" + fM.value.trim() : ""), auteur: "Responsable", date: new Date().toISOString(), at: Date.now() })); }).then(function () { confetti(); toast("Annoncé à toute l'équipe."); });
       closeDlg();
     });
     dlg.appendChild(form); showDlg();
+  }
+
+  /* ----- Boîte à idées (anonyme) ----- */
+  // Le message est écrit sans aucun identifiant : ni compte ni prénom ne sont enregistrés, sauf si elle choisit de signer.
+  function viewBoite() {
+    if (owner) return boiteMgr();
+    pageHead("Boîte à idées", "Dites ce que vous avez sur le cœur, sans donner votre nom.");
+    guide("boite", "Comment ça marche", [
+      "Écrivez une idée, un souci, un ressenti ou un merci.",
+      "Votre message est anonyme : votre nom et votre compte ne sont pas enregistrés avec lui. La responsable lit le texte, pas l'auteure.",
+      "Si vous voulez une réponse personnelle, cochez « Signer mon message »."
+    ]);
+    if (needDb()) return;
+    var cat = el("div", { class: "seg", role: "radiogroup", "aria-label": "Sujet" }, CATS.map(function (c, i) {
+      var r = el("input", { type: "radio", name: "cat", value: c[0], id: "cat-" + c[0] }); if (i === 0) r.checked = true;
+      return el("label", null, [r, el("span", { text: c[1] })]);
+    }));
+    var fT = el("textarea", { id: "boite-text", maxlength: "2000", placeholder: "Écrivez librement…" }); fT.value = ui.boiteDraft;
+    fT.addEventListener("input", function () { ui.boiteDraft = fT.value; });
+    var fS = el("input", { type: "checkbox", id: "boite-sign" });
+    var form = el("form", { class: "card-body" }, [cat, el("label", { class: "field" }, ["Votre message", fT]),
+      el("label", { class: "checks" }, [fS, "Signer mon message (" + (S.link || "mon prénom") + ")"]),
+      el("div", { class: "row-acts" }, [el("button", { class: "btn primary", type: "submit", text: "Déposer dans la boîte" })])]);
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var t = fT.value.trim(); if (!t) return;
+      var c = (form.querySelector("input[name=cat]:checked") || {}).value || "idee";
+      var doc = { texte: t, cat: c, jour: todayIso(), statut: "nouveau" };
+      if (fS.checked && S.link) doc.signe = S.link;
+      write(db.collection("boite").add(doc)).then(function () { ui.boiteDraft = ""; confetti(); toast("Message déposé. Merci de votre confiance."); });
+    });
+    add(card("Déposer un message", "Anonyme par défaut", form));
+  }
+  function boiteMgr() {
+    pageHead("Boîte à idées", "Les messages de l'équipe.");
+    guide("boite-r", "Ce que vous voyez", [
+      "Les assistantes écrivent ici sans donner leur nom. L'outil n'enregistre ni leur compte ni leur prénom avec le message.",
+      "Une assistante peut choisir de signer : son prénom apparaît alors.",
+      "Marquez un message « traité » quand vous y avez répondu (en réunion ou en tête-à-tête)."
+    ]);
+    if (needDb()) return;
+    if (!isMgr()) { add(el("p", { class: "notice info", text: "Ouvrez l'espace Responsable avec votre code pour lire les messages." })); return; }
+    var list = S.boite.slice().sort(function (a, b) { return a.statut === b.statut ? (b.jour || "").localeCompare(a.jour || "") : a.statut === "nouveau" ? -1 : 1; });
+    var labels = {}; CATS.forEach(function (c) { labels[c[0]] = c[1]; });
+    add(el("div", { class: "feed" }, list.length ? list.map(function (m) {
+      return el("article", { class: "post" + (m.statut === "nouveau" ? " fresh" : "") }, [
+        el("div", { class: "meta" }, [el("span", { class: "pill mt", text: labels[m.cat] || "Message" }), m.jour ? sdate(m.jour) : "", m.signe ? el("b", { text: "signé : " + m.signe }) : el("span", { text: "anonyme" }), m.statut === "traité" ? el("span", { class: "pill ok", text: "traité" }) : el("span", { class: "pill am", text: "nouveau" })]),
+        el("div", { class: "txt", text: m.texte }),
+        el("div", { class: "row-acts" }, [m.statut !== "traité" ? el("button", { class: "btn sm primary", type: "button", text: "Marquer traité", onclick: function () { write(db.doc("boite/" + m._id).set({ texte: m.texte, cat: m.cat, jour: m.jour, signe: m.signe || null, statut: "traité" })); } }) : null,
+          el("button", { class: "btn sm danger", type: "button", text: "Supprimer", onclick: function () { write(db.doc("boite/" + m._id).delete()); } })])
+      ]);
+    }) : [el("p", { class: "notice info", text: "La boîte est vide pour l'instant." })]));
   }
 
   /* ----- News ----- */
@@ -1313,6 +1564,10 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
       return;
     }
     add(el("div", { class: "row-acts" }, [el("span", { class: "pill ok", text: "Mode responsable ouvert" }), el("button", { class: "btn sm", type: "button", text: "Verrouiller", onclick: function () { setMgr(false); } })]));
+    // voir l'interface d'une assistante
+    add(card("Voir l'interface d'une assistante", "Exactement ce qu'elle voit, sans pouvoir rien changer pour elle", el("div", { class: "card-body" }, [el("div", { class: "people" }, state.assistants.map(function (a) {
+      return el("button", { class: "tab", type: "button", onclick: function () { ui.viewAs = a.id; ui.enter = true; location.hash = "#accueil"; render(); } }, [avatar(a.id, 22), " " + a.id]);
+    }))])));
     // heures à vérifier
     var todoH = [];
     allDays().forEach(function (d) { state.assistants.forEach(function (a) { var e = entry(a.id, d.date); if (e && e.statut === "à vérifier") todoH.push({ a: a.id, d: d, e: e }); }); });
@@ -1759,6 +2014,20 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
   function byId(snap) { var o = {}; snap.docs.forEach(function (d) { o[d.id] = d.data(); }); return o; }
   function sub(key, ref, fn) { if (subs[key]) return; subs[key] = ref.onSnapshot(function (s) { fn(s); soon(); }, function () { delete subs[key]; }); }
 
+  // Une fois par compte et par visite : recopie dans l'espace de l'assistante ses heures validées et ses heures rendues.
+  var synced = {};
+  function syncCopies(u) {
+    if (synced[u]) return; synced[u] = true;
+    var aid = S.links[u], k = slug(aid);
+    setTimeout(function () {
+      Promise.all([db.collection("heures/" + k + "/jours").get(), db.collection("pointages/" + u + "/valid").get(), db.collection("recup/" + k + "/items").get(), db.collection("pointages/" + u + "/recup").get()]).then(function (r) {
+        var have = byId(r[1]), haveR = byId(r[3]), chain = Promise.resolve();
+        r[0].docs.forEach(function (d) { var v = d.data(), h = have[d.id]; if (!h || h.at !== v.at) chain = chain.then(function () { return db.doc("pointages/" + u + "/valid/" + d.id).set(v); }); });
+        r[2].docs.forEach(function (d) { if (!haveR[d.id]) chain = chain.then(function () { return db.doc("pointages/" + u + "/recup/" + d.id).set(d.data()); }); });
+        return chain;
+      }).catch(function () {});
+    }, 1500);
+  }
   function connect() {
     sub("news", db.collection("news"), function (s) { S.news = docs(s); });
     sub("reunions", db.collection("reunions"), function (s) { S.reunions = docs(s); });
@@ -1778,8 +2047,11 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
       sub("myauto", db.collection("suivi/" + uid + "/auto"), function (s) { S.myAuto = byId(s); });
       sub("myresp", db.collection("suivi/" + uid + "/resp"), function (s) { S.myResp = byId(s); });
       sub("myvote", db.collection("votes/" + uid + "/periodes"), function (s) { S.myVote = byId(s); });
+      sub("myvalid", db.collection("pointages/" + uid + "/valid"), function (s) { S.myValid = byId(s); });
+      sub("myrecup", db.collection("pointages/" + uid + "/recup"), function (s) { S.myRecup = docs(s); });
     }
     if (owner) {
+      sub("boite", db.collection("boite"), function (s) { S.boite = docs(s); });
       state.assistants.forEach(function (a) { var k = slug(a.id); sub("e-" + k, db.collection("evals/" + k + "/periodes"), function (s) { S.evals[k] = byId(s); }); });
       sub("links", db.collection("pointages"), function (s) {
         S.links = {};
@@ -1789,17 +2061,18 @@ dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
           sub("pr-" + u, db.collection("propositions/" + u + "/items"), function (x) { S.props[u] = docs(x); });
           sub("au-" + u, db.collection("suivi/" + u + "/auto"), function (x) { S.auto[u] = byId(x); });
           sub("vo-" + u, db.collection("votes/" + u + "/periodes"), function (x) { S.votes[u] = byId(x); });
+          syncCopies(u);
         });
       });
     }
   }
 
-  window.addEventListener("hashchange", function () { window.scrollTo(0, 0); render(); });
+  window.addEventListener("hashchange", function () { window.scrollTo(0, 0); ui.enter = true; render(); });
   render();
   if (window.claude && window.claude.use) {
     window.claude.use("artifact").then(function (api) { artifactApi = api; render(); }, function () {});
     Promise.all([window.claude.use("user").catch(function () { return null; }), window.claude.use("db").catch(function () { return null; })]).then(function (r) {
-      user = r[0]; db = r[1];
+      user = r[0]; db = r[1] ? guardDb(r[1]) : null;
       return Promise.all([user ? user.id() : null, user ? user.isOwner() : false]);
     }).then(function (r) {
       uid = r[0]; owner = !!r[1];
