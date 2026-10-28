@@ -1,0 +1,659 @@
+<title>Planning des assistantes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style id="app-style">
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&display=swap");
+/* Layout : grille de cabinet — jours en colonnes, assistantes en lignes, une carte par semaine, contrôle automatique sous chaque semaine, règles du cabinet en pied */
+:root {
+  --bg: #f3f6f8; --surface: #ffffff; --ink: #14212b; --muted: #5b6b77; --line: #d3dde4;
+  --head: #183447; --head-ink: #f2f7fa; --band: #e3edf3; --accent: #0f7c8c; --accent-ink: #ffffff;
+  --conge: #dbe9f8; --ferie: #dff0e2; --off: #d4d9dd; --hs: #fbe3d2; --hs-ink: #8a3d0c;
+  --warn: #fde2e2; --warn-ink: #9b1c1c; --amber: #fdf0cf; --amber-ink: #7a4d00; --ok-ink: #1d6b3a; --star: #b3261e; --soft: #eef2f5;
+  --font-ui: "IBM Plex Sans Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
+  --font-num: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f171d; --surface: #16222b; --ink: #e4edf2; --muted: #93a5b2; --line: #2a3a46;
+  --head: #0b2433; --head-ink: #e4f0f6; --band: #1c2d38; --accent: #35b3c4; --accent-ink: #062027;
+  --conge: #1d3550; --ferie: #1d3a28; --off: #2c353c; --hs: #4a2a14; --hs-ink: #ffc59b;
+  --warn: #4a1d1d; --warn-ink: #ffb4b4; --amber: #3e3112; --amber-ink: #ffd88a; --ok-ink: #7fd8a0; --star: #ff8a80; --soft: #1b2933; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f171d; --surface: #16222b; --ink: #e4edf2; --muted: #93a5b2; --line: #2a3a46;
+  --head: #0b2433; --head-ink: #e4f0f6; --band: #1c2d38; --accent: #35b3c4; --accent-ink: #062027;
+  --conge: #1d3550; --ferie: #1d3a28; --off: #2c353c; --hs: #4a2a14; --hs-ink: #ffc59b;
+  --warn: #4a1d1d; --warn-ink: #ffb4b4; --amber: #3e3112; --amber-ink: #ffd88a; --ok-ink: #7fd8a0; --star: #ff8a80; --soft: #1b2933; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 14px; }
+#app { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 16px 96px; max-width: 1280px; margin: 0 auto; display: grid; gap: 20px; }
+#app > * { min-width: 0; }
+h1 { font-size: 1.6rem; margin: 0; letter-spacing: .01em; text-wrap: balance; }
+h2 { font-size: 1.05rem; margin: 0; text-transform: uppercase; letter-spacing: .08em; }
+.top { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: end; justify-content: space-between; }
+.sub { color: var(--muted); margin: 4px 0 0; max-width: 70ch; line-height: 1.45; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; }
+.chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
+.chip.c { background: var(--conge); } .chip.f { background: var(--ferie); } .chip.o { background: var(--off); } .chip.h { background: var(--hs); color: var(--hs-ink); }
+.months { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.months .tab { font: inherit; font-weight: 600; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.months .tab[aria-current="true"] { background: var(--head); color: var(--head-ink); border-color: var(--head); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.card-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.card-head p { margin: 0; color: var(--muted); font-size: 12.5px; }
+.scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { border: 1px solid var(--line); padding: 0; vertical-align: top; }
+thead th { background: var(--head); color: var(--head-ink); font-weight: 600; font-size: 13px; padding: 7px 6px; white-space: nowrap; }
+th.rowh { background: var(--soft); text-align: left; padding: 8px 10px; font-weight: 600; min-width: 92px; position: sticky; left: 0; z-index: 1; }
+th.rowh small { display: block; font-weight: 400; color: var(--muted); font-size: 11.5px; }
+tr.band td, tr.band th.rowh { background: var(--band); }
+.daybtn { all: unset; cursor: pointer; display: block; width: 100%; text-align: center; box-sizing: border-box; }
+.daybtn:focus-visible, .cell:focus-visible, .btn:focus-visible, .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.dent { font-size: 12px; font-weight: 600; text-align: center; padding: 5px 6px; color: var(--ink); }
+.cell { all: unset; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: column; gap: 2px; justify-content: center; align-items: center; text-align: center; width: 100%; min-width: 112px; min-height: 62px; padding: 6px 4px; font-size: 12px; line-height: 1.25; }
+.cell:hover { background: var(--soft); }
+.cell .t { font-family: var(--font-num); font-size: 12.5px; font-weight: 600; }
+.cell .p { color: var(--muted); font-size: 11.5px; }
+.cell .d { font-weight: 600; }
+.cell .d.star { color: var(--star); }
+.cell .tag { font-weight: 700; letter-spacing: .04em; font-size: 12px; }
+.cell.empty { color: var(--muted); }
+.cell.k-C { background: var(--conge); } .cell.k-F { background: var(--ferie); } .cell.k-OFF { background: var(--off); }
+.cell.k-HS { background: var(--hs); } .cell.k-HS .hsb { color: var(--hs-ink); font-weight: 700; }
+.cell.k-none, .cell.k-CP { background: var(--soft); color: var(--muted); }
+.cell.changed { box-shadow: inset 3px 0 0 var(--accent); }
+td.tot { background: var(--soft); min-width: 104px; padding: 6px 8px; font-size: 12px; text-align: center; }
+td.tot .big { font-family: var(--font-num); font-weight: 600; font-size: 12.5px; }
+.ok { color: var(--ok-ink); font-weight: 600; } .bad { color: var(--warn-ink); font-weight: 700; }
+tr.check th.rowh { background: var(--soft); }
+td.chk { font-size: 11.5px; padding: 6px 7px; line-height: 1.35; min-width: 112px; }
+td.chk ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
+td.chk li { padding: 2px 6px; border-radius: 5px; }
+td.chk li.r { background: var(--warn); color: var(--warn-ink); font-weight: 600; }
+td.chk li.a { background: var(--amber); color: var(--amber-ink); }
+td.chk .okline { color: var(--ok-ink); font-weight: 600; }
+td.chk .staff { font-family: var(--font-num); color: var(--muted); margin-bottom: 4px; display: block; }
+td.chk .nt { color: var(--muted); white-space: pre-line; margin-top: 5px; border-top: 1px dashed var(--line); padding-top: 4px; }
+.sum th, .sum td { padding: 7px 10px; text-align: center; font-size: 13px; }
+.sum td.n { font-family: var(--font-num); }
+.sum td.who { text-align: left; font-weight: 600; }
+.pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.pill.ok { background: var(--ferie); } .pill.bad { background: var(--warn); } .pill.am { background: var(--amber); color: var(--amber-ink); }
+.rules { display: grid; gap: 14px; padding: 14px; }
+.rules table th, .rules table td { padding: 6px 9px; font-size: 13px; text-align: left; vertical-align: top; }
+.rules table thead th { font-size: 12.5px; }
+.rules .muted { color: var(--muted); font-size: 12px; }
+.rules ul { margin: 0; padding-left: 18px; line-height: 1.5; max-width: 75ch; }
+details > summary { cursor: pointer; list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+details > summary h2::after { content: " ▸"; color: var(--muted); }
+details[open] > summary h2::after { content: " ▾"; }
+.btn { font: inherit; font-weight: 600; border-radius: 8px; padding: 8px 14px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn[disabled] { opacity: .55; cursor: default; }
+.savebar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--head); color: var(--head-ink); padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: space-between; }
+.savebar .msg { font-size: 13.5px; }
+.savebar .acts { display: flex; gap: 8px; }
+dialog { border: 1px solid var(--line); border-radius: 12px; padding: 0; width: min(460px, calc(100vw - 32px)); max-height: calc(100vh - 40px); overflow: auto; background: var(--surface); color: var(--ink); }
+dialog::backdrop { background: rgba(10, 20, 28, .45); }
+dialog form { display: grid; gap: 14px; padding: 18px; }
+dialog h3 { margin: 0; font-size: 1.1rem; }
+dialog .ctx { margin: -8px 0 0; color: var(--muted); font-size: 13px; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg label { display: inline-flex; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg span { padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; font-size: 13px; }
+.seg input:checked + span { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.seg input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.field { display: grid; gap: 4px; font-size: 12.5px; color: var(--muted); }
+.field input, .field select, .field textarea { font: inherit; font-size: 15px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-width: 0; }
+.field textarea { min-height: 90px; resize: vertical; font-size: 13.5px; }
+.checks { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 13.5px; color: var(--ink); }
+.checks label { display: inline-flex; gap: 5px; align-items: center; }
+.quick { display: flex; flex-wrap: wrap; gap: 6px; }
+.quick button { font: inherit; font-size: 12.5px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line); background: var(--soft); color: var(--ink); cursor: pointer; }
+.calc { font-size: 13px; padding: 8px 10px; background: var(--soft); border-radius: 8px; }
+.calc.warnbox { background: var(--amber); color: var(--amber-ink); }
+.dlg-acts { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+@media (max-width: 520px) { h1 { font-size: 1.3rem; } .grid2 { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<div id="app"></div>
+<script type="application/json" id="plan-data">{"assistants": [{"id": "Soraya", "daily": 456, "weekly": 1824}, {"id": "Laura", "daily": 456, "weekly": 2280}, {"id": "Lora", "daily": 408, "weekly": 2040}, {"id": "Aytana", "daily": 380, "weekly": 1140}, {"id": "Inès", "daily": 380, "weekly": 1140}], "rules": {"dentists": [{"code": "R", "name": "Rami", "days": {"1": "10:00-18:00", "2": "10:00-18:00", "3": "10:00-18:00", "4": "10:00-18:00"}, "assist": ["Laura", "Inès"], "exception": ["Soraya"], "need": true, "note": "1 vendredi par mois pour les implants, avec Soraya (heures sup.)", "extra": {"5": "implants avec Soraya"}}, {"code": "Z", "name": "Ziyed", "days": {"1": "09:30-17:30", "2": "09:30-17:30", "3": "09:30-17:30", "4": "09:30-17:30", "5": "10:00-14:00"}, "assist": ["Laura", "Aytana"], "need": true}, {"code": "MAJ", "name": "Majdi (orthodontiste)", "days": {"1": "10:00-18:00", "3": "10:00-18:00", "4": "10:00-18:00", "5": "10:00-18:00"}, "alt": ["1", "4"], "assist": ["Lora"], "strict": true, "need": true, "note": "Un lundi sur deux, un jeudi sur deux, jamais le mardi"}, {"code": "S", "name": "Salma", "days": {"2": ""}, "assist": ["Laura"], "strict": true, "need": true, "note": "2 mardis par mois, dates connues tard"}, {"code": "E", "name": "Emine", "days": {"1": "09:30-17:30", "2": "09:30-17:30", "3": "09:30-17:30", "4": "09:30-17:30", "5": "09:30-17:30", "6": "09:00-13:00"}, "assist": ["*"], "need": false, "note": "Assisté si quelqu'un est libre. Samedi : une seule assistante, en heures sup."}, {"code": "I", "name": "Ikram (hygiéniste)", "days": {"1": "", "4": ""}, "assist": [], "need": false}], "majRef": {"1": "2026-11-09", "4": "2026-11-05"}}, "months": [{"title": "Novembre 2026", "weeks": [{"label": "Semaine 1", "days": [{"date": "2026-11-02", "label": "Lundi 02/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "15:45", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E/Acc"}, "Inès": {"code": "/"}}}, {"date": "2026-11-03", "label": "Mardi 03/11", "sat": false, "holiday": false, "dentists": "R-Z-E", "note": "", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "15:45", "pause": "13h", "dent": "Acc/Z"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}}}, {"date": "2026-11-04", "label": "Mercredi 04/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}}}, {"date": "2026-11-05", "label": "Jeudi 05/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Acc"}}}, {"date": "2026-11-06", "label": "Vendredi 06/11", "sat": false, "holiday": false, "dentists": "Z-MAJ-E", "note": "", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h", "dent": "Z/Acc"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"code": "/"}, "Inès": {"code": "/"}}}, {"date": "2026-11-07", "label": "Samedi 07/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}, "Lora": null, "Aytana": null, "Inès": null}}]}, {"label": "Semaine 2", "days": [{"date": "2026-11-09", "label": "Lundi 09/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "Soraya : Relais R 17h06-17h30\nInès : Relais R 13h30-14h00 ; R fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h00–13h30, MAJ 13h30–14h00", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E/R"}}}, {"date": "2026-11-10", "label": "Mardi 10/11", "sat": false, "holiday": false, "dentists": "R-Z-S-E", "note": "Soraya : Relais S 13h00-13h30 (pause de Laura)\nLora : R 10h00-11h10 + relais 13h30-14h00 ; Z le reste\nLaura : S 10h-16h ; Z 16h00-17h30\n⚠ Seul : Z 9h30–11h10, Z 13h00–14h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "S ★"}, "Lora": {"start": "09:30", "end": "17:00", "pause": "13h", "dent": "Acc"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}}}, {"date": "2026-11-11", "label": "Mercredi 11/11", "sat": false, "holiday": true, "dentists": "MAJ (férié, 10h–15h)", "note": "Cabinet ouvert pour Majdi seul (Lora, sans pause)\nLora récupère le férié le ven 20", "cells": {"Soraya": {"code": "F"}, "Laura": {"code": "F"}, "Lora": {"start": "10:00", "end": "15:00", "pause": "sans", "dent": "Acc/ Maj"}, "Aytana": {"code": "/"}, "Inès": {"code": "/"}}}, {"date": "2026-11-12", "label": "Jeudi 12/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nInès : Relais Z 13h00-13h30 ; R 17h36-18h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "17:00", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "E"}}}, {"date": "2026-11-13", "label": "Vendredi 13/11", "sat": false, "holiday": false, "dentists": "Z-MAJ-E", "note": "Aytana : Relais MAJ 13h30-14h00\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h", "dent": "Z"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"code": "F"}, "Inès": {"code": "/"}}}, {"date": "2026-11-14", "label": "Samedi 14/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}, "Aytana": null, "Inès": null}}]}, {"label": "Semaine 3", "days": [{"date": "2026-11-16", "label": "Lundi 16/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "16:06", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}, "Inès": {"code": "/"}}}, {"date": "2026-11-17", "label": "Mardi 17/11", "sat": false, "holiday": false, "dentists": "R-Z-E", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nSoraya : Relais R 17h06-17h30\nInès : Z puis R en fin de journée\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "16:06", "pause": "13h", "dent": "Z"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}}}, {"date": "2026-11-18", "label": "Mercredi 18/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "Inès : Relais R 13h30-14h00 ; R fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h00–13h30, MAJ 13h30–14h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"code": "/"}}}, {"date": "2026-11-19", "label": "Jeudi 19/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "Soraya : Relais R 13h30-14h00 et 17h06-17h30\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E/R"}}}, {"date": "2026-11-20", "label": "Vendredi 20/11", "sat": false, "holiday": false, "dentists": "Z-E", "note": "Inès : Relais Z 13h30-14h00", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Z"}, "Lora": {"code": "F"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Acc"}}}, {"date": "2026-11-21", "label": "Samedi 21/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": null, "Aytana": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}, "Inès": null}}]}, {"label": "Semaine 4", "days": [{"date": "2026-11-23", "label": "Lundi 23/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "Soraya : Relais R 13h30-14h00 et 17h06-17h30\nInès : Z puis R en fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Z"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "R"}}}, {"date": "2026-11-24", "label": "Mardi 24/11", "sat": false, "holiday": false, "dentists": "R-Z-S-E", "note": "Soraya : Relais S 13h00-13h30 (pause de Laura)\nLora : R 10h00-11h10 + relais 13h30-14h00 ; Z le reste\nLaura : S 10h-16h ; Z 16h00-17h30\n⚠ Seul : Z 9h30–11h10, Z 13h00–14h00, Z 15h45–16h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "S ★"}, "Lora": {"start": "09:30", "end": "15:45", "pause": "13h", "dent": "Acc"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "E"}, "Inès": {"code": "/"}}}, {"date": "2026-11-25", "label": "Mercredi 25/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "Soraya : Relais R 13h30-14h00 et 17h06-17h30\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"code": "/"}}}, {"date": "2026-11-26", "label": "Jeudi 26/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Soraya : Relais R 13h30-14h00\nLora : R 10h00-11h10 ; relais Z 13h00-13h30\n⚠ Seul : Z 9h30–11h10", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "Acc"}, "Laura": {"code": "C"}, "Lora": {"start": "09:00", "end": "15:15", "pause": "13h30", "dent": "Z"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "R"}}}, {"date": "2026-11-27", "label": "Vendredi 27/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "⚠ Seul : Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "14:30", "pause": "HS", "dent": "R ★"}, "Laura": {"code": "C"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "09:00", "end": "15:50", "pause": "13h30", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Acc"}}}, {"date": "2026-11-28", "label": "Samedi 28/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": null, "Aytana": null, "Inès": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}}}]}, {"label": "Semaine 5", "days": [{"date": "2026-11-30", "label": "Lundi 30/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "16:48", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}, "Inès": {"code": "/"}}}], "contracts": {"Soraya": 456, "Laura": 456, "Lora": 408, "Aytana": 380, "Inès": 0}, "remark": "Seul le lundi 30 est en novembre : le reste de la semaine se fait avec le planning de décembre (Aytana 2 jours, Inès 3 jours)."}]}], "cur": 0, "savedAt": "2026-10-28T16:37:00.000Z"}</script>
+<script id="app-script">
+(function () {
+  "use strict";
+  var SAVED = JSON.parse(document.getElementById("plan-data").textContent);
+  if (SAVED.weeks && !SAVED.months) { SAVED.months = [{ title: SAVED.title, weeks: SAVED.weeks }]; SAVED.cur = 0; delete SAVED.weeks; delete SAVED.title; }
+  var state = JSON.parse(JSON.stringify(SAVED));
+  var DRAFT_KEY = "planning-assistantes-draft-v2";
+  var artifactApi = null, canSave = null, saving = false;
+  var changed = {};
+  var app = document.getElementById("app");
+  var JOURS = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+
+  function el(tag, attrs, kids) {
+    var n = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === "class") n.className = attrs[k];
+      else if (k === "text") n.textContent = attrs[k];
+      else if (k.slice(0, 2) === "on") n.addEventListener(k.slice(2), attrs[k]);
+      else n.setAttribute(k, attrs[k]);
+    }
+    (kids || []).forEach(function (c) { if (c != null) n.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+    return n;
+  }
+  function toMin(s) { if (!s) return null; var m = /^(\d{1,2})[:h](\d{2})$/.exec(String(s).trim()); return m ? (+m[1]) * 60 + (+m[2]) : null; }
+  function dur(m) { var s = m < 0 ? "−" : ""; m = Math.abs(Math.round(m)); return s + Math.floor(m / 60) + "h" + String(m % 60).padStart(2, "0"); }
+  function clock(s) { var m = toMin(s); return m == null ? "" : String(Math.floor(m / 60)).padStart(2, "0") + "h" + String(m % 60).padStart(2, "0"); }
+  function asst(id) { return state.assistants.filter(function (a) { return a.id === id; })[0]; }
+  function M() { if (state.cur == null || !state.months[state.cur]) state.cur = state.months.length - 1; return state.months[state.cur]; }
+  function calc(c, a) {
+    var r = { work: 0, cf: 0, hs: 0 };
+    if (!c) return r;
+    if (c.code) { if (c.code === "C" || c.code === "F") r.cf = a.daily; return r; }
+    var s = toMin(c.start), e = toMin(c.end);
+    if (s == null || e == null || e <= s) return r;
+    if (c.pause === "HS") r.hs = e - s;
+    else r.work = e - s - (c.pause === "13h" || c.pause === "13h30" ? 30 : 0);
+    return r;
+  }
+  function weekTotals(w, a) {
+    var t = { work: 0, cf: 0, hs: 0 };
+    w.days.forEach(function (d) { var r = calc(d.cells[a.id], a); t.work += r.work; t.cf += r.cf; t.hs += r.hs; });
+    t.total = t.work + t.cf;
+    t.contract = (w.contracts && w.contracts[a.id] != null) ? w.contracts[a.id] : a.weekly;
+    t.gap = t.total - t.contract;
+    return t;
+  }
+  function nChanges() { return Object.keys(changed).length; }
+  function mark(k) { changed[state.cur + "|" + k] = true; }
+  function saveDraft() { try { if (nChanges()) localStorage.setItem(DRAFT_KEY, JSON.stringify({ base: SAVED.savedAt, state: state, changed: changed })); else localStorage.removeItem(DRAFT_KEY); } catch (e) {} }
+
+  /* ---------- règles du cabinet ---------- */
+  function dentist(code) { return state.rules.dentists.filter(function (x) { return x.code === code; })[0]; }
+  function normCode(t) {
+    t = String(t).replace(/★/g, "").trim().toUpperCase();
+    if (!t) return null;
+    if (t === "MAJ" || t === "MAJDI" || t === "M") return "MAJ";
+    if (t === "ACC" || t === "ACCUEIL") return "ACC";
+    return t;
+  }
+  function presentCodes(d) {
+    return String(d.dentists || "").replace(/\([^)]*\)/g, " ").split(/[-,+\/\s]+/).map(normCode).filter(Boolean);
+  }
+  function assignedCodes(c) {
+    if (!c || c.code || !c.dent) return [];
+    return c.dent.split(/[\/,+\s]+/).map(normCode).filter(Boolean);
+  }
+  function list(ids) { return ids.length > 1 ? ids.slice(0, -1).join(", ") + " ou " + ids[ids.length - 1] : ids[0]; }
+  function wd(d) { return new Date(d.date + "T12:00:00").getDay(); }
+
+  function checkDay(d) {
+    var out = [], dow = wd(d);
+    var workers = state.assistants.filter(function (a) { var c = d.cells[a.id]; return c && !c.code && c.start; });
+    var present = presentCodes(d);
+    var by = {};
+    workers.forEach(function (a) { assignedCodes(d.cells[a.id]).forEach(function (k) { (by[k] = by[k] || []).push(a.id); }); });
+    if (d.sat) {
+      if (present.length && workers.length === 0) out.push(["r", "Emine sans assistante"]);
+      if (workers.length > 1) out.push(["r", "Samedi : une seule assistante (" + workers.length + " prévues)"]);
+      workers.forEach(function (a) { var c = d.cells[a.id]; if (c.start !== "09:00" || c.end !== "13:00") out.push(["a", a.id + " : le samedi c'est 9h–13h"]); if (c.pause !== "HS") out.push(["a", a.id + " : samedi = heures sup."]); });
+      return { items: out, staff: workers.length, need: present.length ? 1 : 0 };
+    }
+    if (d.holiday && !present.length) return { items: [], staff: workers.length, need: 0 };
+    var need = 1;
+    present.forEach(function (code) {
+      var r = dentist(code);
+      if (!r) return;
+      var extra = r.extra && r.extra[String(dow)];
+      if (r.days && !(String(dow) in r.days) && !extra) out.push(["a", r.name.split(" ")[0] + " n'est normalement pas là le " + JOURS[dow].toLowerCase()]);
+      var who = by[code] || [];
+      if (r.code === "E") { need++; return; }
+      if (!r.need) return;
+      need++;
+      if (!who.length) { out.push(["r", r.name.split(" ")[0] + " sans assistante"]); return; }
+      var okIds = r.assist.concat(r.exception || []);
+      var good = who.filter(function (id) { return okIds.indexOf(id) >= 0; });
+      if (!good.length) out.push([r.strict ? "r" : "a", r.name.split(" ")[0] + " avec " + who.join(", ") + " — prévu : " + list(r.assist)]);
+      else if (!extra && !who.some(function (id) { return r.assist.indexOf(id) >= 0; })) out.push(["a", r.name.split(" ")[0] + " avec " + who.join(", ") + " (exception)"]);
+    });
+    if (!(by.ACC || []).length) out.push(["r", "Personne à l'accueil"]);
+    Object.keys(by).forEach(function (k) { if (k !== "ACC" && dentist(k) && present.indexOf(k) < 0) out.push(["a", k + " assisté mais absent de la liste du jour"]); });
+    workers.forEach(function (a) { var c = d.cells[a.id]; if (c.pause !== "13h" && c.pause !== "13h30" && c.pause !== "HS" && toMin(c.end) - toMin(c.start) > 360) out.push(["a", a.id + " : pas de pause (13h ou 13h30)"]); });
+    return { items: out, staff: workers.length, need: need };
+  }
+
+  var LEG = { C: "CONGÉ", F: "FÉRIÉ", OFF: "OFF", CP: "Congé parental", "/": "—" };
+
+  function cellView(d, a, wi, di) {
+    var c = d.cells[a.id];
+    var key = wi + "|" + di + "|" + a.id;
+    var kids = [], cls = "cell";
+    if (!c) { cls += " empty"; kids.push(el("span", { class: "p", text: d.sat ? "+ ajouter" : "à remplir" })); }
+    else if (c.code) {
+      cls += " k-" + (c.code === "/" ? "none" : c.code);
+      kids.push(el("span", { class: "tag", text: LEG[c.code] || c.code }));
+      if (c.code === "C" || c.code === "F") kids.push(el("span", { class: "p", text: dur(a.daily) }));
+    } else {
+      if (c.pause === "HS") cls += " k-HS";
+      kids.push(el("span", { class: "t", text: clock(c.start) + "–" + clock(c.end) }));
+      kids.push(el("span", { class: "p", text: c.pause === "HS" || c.pause === "sans" ? "sans pause" : "pause " + c.pause }));
+      if (c.dent) kids.push(el("span", { class: "d" + (c.dent.indexOf("★") >= 0 ? " star" : ""), text: "→ " + c.dent }));
+      if (c.pause === "HS") { var r = calc(c, a); kids.push(el("span", { class: "hsb", text: "+" + dur(r.hs) + " sup." })); }
+    }
+    if (changed[state.cur + "|" + key]) cls += " changed";
+    return el("button", { class: cls, type: "button", "aria-label": a.id + ", " + d.label, onclick: function () { openCell(wi, di, a.id); } }, kids);
+  }
+
+  function render() {
+    app.textContent = "";
+    var m = M();
+    app.appendChild(el("div", { class: "top" }, [
+      el("div", null, [
+        el("h1", { text: "Planning des assistantes · " + m.title }),
+        el("p", { class: "sub", text: "Touchez une case pour changer un horaire, un statut ou le dentiste assisté. Touchez un jour pour modifier les dentistes présents et la note. La ligne « Contrôle » vérifie les binômes, l'accueil et le samedi d'après les règles du cabinet (en bas de page). « Enregistrer » garde les changements pour tout le monde." })
+      ]),
+      el("div", { class: "legend" }, [
+        el("span", { class: "chip c", text: "Congé" }), el("span", { class: "chip f", text: "Férié" }),
+        el("span", { class: "chip o", text: "OFF" }), el("span", { class: "chip h", text: "Heures sup." }),
+        el("span", { class: "chip", text: state.rules.dentists.map(function (x) { return x.code + " " + x.name.split(" ")[0]; }).join(" · ") + " · Acc accueil · ★ obligatoire" })
+      ])
+    ]));
+    app.appendChild(el("nav", { class: "months", "aria-label": "Mois" }, state.months.map(function (mm, i) {
+      return el("button", { class: "tab", type: "button", "aria-current": String(i === state.cur), text: mm.title, onclick: function () { state.cur = i; saveDraft(); render(); } });
+    }).concat([el("button", { class: "btn primary", type: "button", text: "+ Préparer un nouveau mois", onclick: openNewMonth })])));
+    app.appendChild(summary());
+    m.weeks.forEach(function (w, wi) { app.appendChild(weekCard(w, wi)); });
+    app.appendChild(rulesCard());
+    app.appendChild(saveBar());
+  }
+
+  function summary() {
+    var m = M();
+    var alerts = 0;
+    m.weeks.forEach(function (w) { w.days.forEach(function (d) { checkDay(d).items.forEach(function (x) { if (x[0] === "r") alerts++; }); }); });
+    var rows = state.assistants.map(function (a) {
+      var t = { work: 0, cf: 0, hs: 0, contract: 0 };
+      m.weeks.forEach(function (w) { var x = weekTotals(w, a); t.work += x.work; t.cf += x.cf; t.hs += x.hs; t.contract += x.contract; });
+      var gap = t.work + t.cf - t.contract;
+      return el("tr", null, [
+        el("td", { class: "who" }, [a.id, el("div", { style: "font-weight:400;color:var(--muted);font-size:11.5px", text: dur(a.daily) + " / jour · " + dur(a.weekly) + " / sem." })]),
+        el("td", { class: "n", text: dur(t.work) }), el("td", { class: "n", text: dur(t.cf) }),
+        el("td", { class: "n", text: dur(t.work + t.cf) }), el("td", { class: "n", text: dur(t.contract) }),
+        el("td", null, [el("span", { class: "pill " + (Math.abs(gap) < 1 ? "ok" : "bad"), text: Math.abs(gap) < 1 ? "✔ juste" : (gap > 0 ? "+" : "") + dur(gap) })]),
+        el("td", { class: "n", text: t.hs ? "+" + dur(t.hs) : "—" })
+      ]);
+    });
+    var team = 0; state.assistants.forEach(function (a) { m.weeks.forEach(function (w) { team += weekTotals(w, a).hs; }); });
+    return el("section", { class: "card" }, [
+      el("div", { class: "card-head" }, [el("h2", { text: "Le mois en bref" }),
+        el("p", null, [el("span", { class: "pill " + (alerts ? "bad" : "ok"), text: alerts ? alerts + " point" + (alerts > 1 ? "s" : "") + " bloquant" + (alerts > 1 ? "s" : "") : "✔ aucun point bloquant" }),
+          " · Heures sup. de l'équipe : +" + dur(team) + (state.savedAt ? " · enregistré le " + new Date(state.savedAt).toLocaleString("fr-BE", { dateStyle: "short", timeStyle: "short" }) : "")]),
+        el("button", { class: "btn", type: "button", text: "Modifier les contrats", onclick: openContracts })]),
+      el("div", { class: "scroll" }, [el("table", { class: "sum" }, [
+        el("thead", null, [el("tr", null, ["Assistante", "Presté", "Congé / férié", "Total", "Contrat", "Écart", "Pot heures sup."].map(function (h) { return el("th", { text: h }); }))]),
+        el("tbody", null, rows)
+      ])])
+    ]);
+  }
+
+  function weekCard(w, wi) {
+    var thead = el("thead", null, [el("tr", null, [el("th", { text: w.label })].concat(w.days.map(function (d, di) {
+      return el("th", null, [el("button", { class: "daybtn", type: "button", text: d.label, onclick: function () { openDay(wi, di); } })]);
+    })).concat([el("th", { text: "Total semaine" })]))]);
+    var band = el("tr", { class: "band" }, [el("th", { class: "rowh", text: "Dentistes" })].concat(w.days.map(function (d, di) {
+      return el("td", null, [el("button", { class: "daybtn dent", type: "button", text: d.dentists || (d.holiday ? "Férié" : "—"), onclick: function () { openDay(wi, di); } })]);
+    })).concat([el("td", { class: "dent", text: "presté + congé/férié" })]));
+    var rows = state.assistants.map(function (a) {
+      var t = weekTotals(w, a);
+      var ok = Math.abs(t.gap) < 1;
+      return el("tr", null, [el("th", { class: "rowh" }, [a.id, el("small", { text: dur(a.daily) + " / jour" })])].concat(w.days.map(function (d, di) {
+        return el("td", null, [cellView(d, a, wi, di)]);
+      })).concat([el("td", { class: "tot" }, [
+        el("div", { class: "big", text: dur(t.total) + " / " + dur(t.contract) }),
+        el("div", { class: ok ? "ok" : "bad", text: ok ? "✔ juste" : "écart " + (t.gap > 0 ? "+" : "") + dur(t.gap) }),
+        t.cf ? el("div", { style: "color:var(--muted)", text: "dont congé/férié " + dur(t.cf) }) : null,
+        t.hs ? el("div", { style: "color:var(--hs-ink);font-weight:700", text: "+ " + dur(t.hs) + " sup." }) : null
+      ])]));
+    });
+    var check = el("tr", { class: "check" }, [el("th", { class: "rowh" }, ["Contrôle", el("small", { text: "équipe / idéal" })])].concat(w.days.map(function (d) {
+      var r = checkDay(d);
+      var kids = [];
+      if (r.need) kids.push(el("span", { class: "staff", text: r.staff + " / " + r.need + " assistante" + (r.need > 1 ? "s" : "") }));
+      if (r.items.length) kids.push(el("ul", null, r.items.map(function (x) { return el("li", { class: x[0], text: (x[0] === "r" ? "⚠ " : "") + x[1] }); })));
+      else if (r.need) kids.push(el("span", { class: "okline", text: "✔ OK" }));
+      if (d.note) kids.push(el("div", { class: "nt", text: d.note }));
+      return el("td", { class: "chk" }, kids);
+    })).concat([el("td", { class: "tot" })]));
+    return el("section", { class: "card" }, [
+      w.remark ? el("div", { class: "card-head" }, [el("h2", { text: w.label }), el("p", { text: w.remark })]) : null,
+      el("div", { class: "scroll" }, [el("table", null, [thead, el("tbody", null, [band].concat(rows).concat([check]))])])
+    ]);
+  }
+
+  function hoursText(r) {
+    var byH = {};
+    Object.keys(r.days).forEach(function (k) { var h = r.days[k] || "horaire à confirmer"; (byH[h] = byH[h] || []).push(JOURS[+k].toLowerCase()); });
+    return Object.keys(byH).map(function (h) {
+      var days = byH[h].map(function (j) { return (r.alt && r.alt.indexOf(String(JOURS.map(function (x) { return x.toLowerCase(); }).indexOf(j))) >= 0) ? j + " (1 sur 2)" : j; });
+      return days.join(", ") + " : " + h.replace(/:/g, "h").replace("-", "–");
+    }).join(" · ");
+  }
+
+  function rulesCard() {
+    var R = state.rules;
+    var dRows = R.dentists.map(function (r) {
+      var who = r.assist[0] === "*" ? "Toute assistante libre (sinon pas assisté)" : r.assist.length ? list(r.assist) + (r.strict ? " — obligatoire" : "") + (r.exception ? " · exception : " + r.exception.join(", ") : "") : "Pas d'assistante";
+      return el("tr", null, [el("th", { text: r.code }), el("td", { text: r.name }), el("td", null, [hoursText(r), r.note ? el("div", { class: "muted", text: r.note }) : null]), el("td", { text: who })]);
+    });
+    var aRows = state.assistants.map(function (a) {
+      var days = a.id === "Soraya" ? "Lundi au jeudi (vendredi : congé parental)" : a.weekly <= 1200 ? "3 jours par semaine, jours variables" : "Lundi au vendredi";
+      return el("tr", null, [el("th", { text: a.id }), el("td", { text: dur(a.weekly) + " / semaine" }), el("td", { text: dur(a.daily) + " / jour" }), el("td", { text: days })]);
+    });
+    var det = el("details", { class: "card", id: "rules" }, [
+      el("summary", { class: "card-head" }, [el("h2", { text: "Règles du cabinet" }), el("p", { text: "Ce que la ligne « Contrôle » vérifie" })]),
+      el("div", { class: "rules" }, [
+        el("div", { class: "scroll" }, [el("table", null, [
+          el("thead", null, [el("tr", null, ["", "Praticien", "Présence", "Assisté par"].map(function (h) { return el("th", { text: h }); }))]),
+          el("tbody", null, dRows)])]),
+        el("div", { class: "scroll" }, [el("table", null, [
+          el("thead", null, [el("tr", null, ["Assistante", "Contrat", "Journée type", "Jours"].map(function (h) { return el("th", { text: h }); }))]),
+          el("tbody", null, aRows)])]),
+        el("ul", null, [
+          el("li", { text: "Méthode : on note d'abord les initiales des dentistes présents chaque jour. Il faut une assistante par dentiste à assister, plus une à l'accueil (4 dentistes = 5 assistantes)." }),
+          el("li", { text: "Pauses : assistantes 30 minutes, de 13h00 à 13h30 ou de 13h30 à 14h00. Dentistes : 13h00 à 14h00." }),
+          el("li", { text: "Samedi : Emine de 9h à 13h, une seule assistante, en heures sup. (hors temps plein)." }),
+          el("li", { text: "Soraya travaille un vendredi par mois avec Rami pour les implants, en heures sup." }),
+          el("li", { text: "Salma : deux mardis par mois, dates connues tard. Cochez-les dans « Préparer un nouveau mois » ou ajoutez S au jour concerné." })
+        ])
+      ])
+    ]);
+    det.open = true;
+    return det;
+  }
+
+  function saveBar() {
+    var n = nChanges();
+    var msg;
+    if (saving) msg = "Enregistrement…";
+    else if (n) msg = n + (n > 1 ? " modifications non enregistrées" : " modification non enregistrée");
+    else msg = state.savedAt ? "Tout est enregistré." : "Aucune modification.";
+    if (canSave === false && n) msg += " — enregistrement impossible depuis cet accès (lecture seule).";
+    var b1 = el("button", { class: "btn", type: "button", text: "Annuler les modifications", onclick: discard });
+    var b2 = el("button", { class: "btn primary", type: "button", text: "Enregistrer", onclick: save });
+    b1.disabled = !n || saving; b2.disabled = !n || saving || canSave === false;
+    return el("div", { class: "savebar", role: "status" }, [el("span", { class: "msg", text: msg }), el("div", { class: "acts" }, [b1, b2])]);
+  }
+
+  /* ---------- dialogues ---------- */
+  var dlg = el("dialog", { id: "editor" });
+  document.body.appendChild(dlg);
+  function closeDlg() { try { dlg.close(); } catch (e) { dlg.removeAttribute("open"); } }
+  function showDlg() { try { dlg.showModal(); } catch (e) { dlg.setAttribute("open", ""); } }
+  function acts(okText) { return el("div", { class: "dlg-acts" }, [el("button", { class: "btn", type: "button", text: "Fermer", onclick: closeDlg }), el("button", { class: "btn primary", type: "submit", text: okText || "Appliquer" })]); }
+
+  function openCell(wi, di, aid) {
+    var d = M().weeks[wi].days[di], a = asst(aid);
+    var c = d.cells[aid] ? JSON.parse(JSON.stringify(d.cells[aid])) : null;
+    var mode = !c ? (d.sat ? "/" : "W") : (c.code ? c.code : "W");
+    var work = c && !c.code ? c : { start: d.sat ? "09:00" : "09:00", end: d.sat ? "13:00" : "17:00", pause: d.sat ? "HS" : "13h", dent: "" };
+    dlg.textContent = "";
+    var opts = d.sat ? [["W", "Travaille"], ["/", "Ne travaille pas"]] :
+      [["W", "Travaille"], ["C", "Congé"], ["F", "Férié"], ["OFF", "OFF"], ["CP", "Congé parental"], ["/", "Ne travaille pas"]];
+    var seg = el("div", { class: "seg", role: "radiogroup", "aria-label": "Statut" }, opts.map(function (o) {
+      return el("label", null, [el("input", { type: "radio", name: "mode", value: o[0], id: "mode-" + o[0] }), el("span", { text: o[1] })]);
+    }));
+    var fStart = el("input", { type: "time", id: "f-start", step: "60", value: work.start });
+    var fEnd = el("input", { type: "time", id: "f-end", step: "60", value: work.end });
+    var fPause = el("select", { id: "f-pause" }, [["13h", "13h00–13h30"], ["13h30", "13h30–14h00"], ["sans", "Sans pause"], ["HS", "Heures sup. (sans pause)"]].map(function (p) { return el("option", { value: p[0], text: p[1] }); }));
+    fPause.value = work.pause || "13h";
+    var fDent = el("input", { type: "text", id: "f-dent", value: work.dent || "", placeholder: "ex. R, Z, MAJ, Acc", autocomplete: "off" });
+    var sugg = state.rules.dentists.filter(function (r) { return r.assist[0] === "*" || r.assist.indexOf(aid) >= 0 || (r.exception || []).indexOf(aid) >= 0; }).map(function (r) { return r.code + (r.strict ? " ★" : ""); });
+    var quick = el("div", { class: "quick" }, ["Acc"].concat(sugg).map(function (q) { return el("button", { type: "button", text: q, onclick: function () { fDent.value = q; upd(); } }); }));
+    var calcBox = el("div", { class: "calc", "aria-live": "polite" });
+    var hint = el("div", { class: "calc warnbox", "aria-live": "polite" });
+    var workBox = el("div", { style: "display:grid;gap:12px" }, [
+      el("div", { class: "grid2" }, [el("label", { class: "field" }, ["Début", fStart]), el("label", { class: "field" }, ["Fin", fEnd])]),
+      el("label", { class: "field" }, ["Pause", fPause]),
+      el("label", { class: "field" }, ["Dentiste assisté (raccourcis : ceux que " + aid + " peut assister)", fDent]), quick, calcBox, hint
+    ]);
+    function current() {
+      var m = (dlg.querySelector("input[name=mode]:checked") || {}).value || "W";
+      if (m === "W") return { start: fStart.value, end: fEnd.value, pause: fPause.value, dent: fDent.value.trim() };
+      if (m === "/" && d.sat) return null;
+      return { code: m };
+    }
+    function upd() {
+      var m = (dlg.querySelector("input[name=mode]:checked") || {}).value;
+      workBox.hidden = m !== "W";
+      var cur = current(), r = calc(cur, a);
+      var bad = m === "W" && (toMin(fStart.value) == null || toMin(fEnd.value) == null || toMin(fEnd.value) <= toMin(fStart.value));
+      calcBox.textContent = bad ? "Vérifiez les heures : la fin doit être après le début." :
+        (m === "W" ? (r.hs ? "Heures sup. : +" + dur(r.hs) : "Travail effectif : " + dur(r.work) + " (journée type " + dur(a.daily) + ")") : "");
+      var warn = [];
+      if (m === "W") assignedCodes(cur).forEach(function (k) {
+        var rr = dentist(k);
+        if (rr && rr.assist[0] !== "*" && rr.assist.indexOf(aid) < 0 && (rr.exception || []).indexOf(aid) < 0) warn.push(rr.name.split(" ")[0] + " est assisté par " + list(rr.assist) + ".");
+      });
+      hint.textContent = warn.join(" "); hint.hidden = !warn.length;
+      applyBtn.disabled = bad;
+    }
+    var applyBtn = el("button", { class: "btn primary", type: "submit", text: "Appliquer" });
+    var form = el("form", { method: "dialog" }, [
+      el("h3", { text: a.id }), el("p", { class: "ctx", text: d.label + (d.dentists ? " · dentistes : " + d.dentists : "") }),
+      seg, workBox,
+      el("div", { class: "dlg-acts" }, [el("button", { class: "btn", type: "button", text: "Fermer", onclick: closeDlg }), applyBtn])
+    ]);
+    form.addEventListener("input", upd); form.addEventListener("change", upd);
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      d.cells[aid] = current();
+      mark(wi + "|" + di + "|" + aid);
+      saveDraft(); closeDlg(); render();
+    });
+    dlg.appendChild(form);
+    (dlg.querySelector("#mode-" + mode) || dlg.querySelector("#mode-W")).checked = true;
+    upd(); showDlg();
+  }
+
+  function openDay(wi, di) {
+    var d = M().weeks[wi].days[di];
+    dlg.textContent = "";
+    var fD = el("input", { type: "text", id: "f-dentists", value: d.dentists || "", autocomplete: "off", placeholder: "ex. R-Z-MAJ-E-I" });
+    var fN = el("textarea", { id: "f-note" }); fN.value = d.note || "";
+    var form = el("form", { method: "dialog" }, [
+      el("h3", { text: d.label }),
+      el("label", { class: "field" }, ["Dentistes présents (initiales séparées par des tirets)", fD]),
+      el("label", { class: "field" }, ["Note du jour (relais, remarques)", fN]),
+      acts()
+    ]);
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      d.dentists = fD.value.trim(); d.note = fN.value.trim();
+      mark("day|" + wi + "|" + di); saveDraft(); closeDlg(); render();
+    });
+    dlg.appendChild(form); showDlg();
+  }
+
+  function openContracts() {
+    dlg.textContent = "";
+    var inputs = state.assistants.map(function (a) {
+      return { a: a, d: el("input", { type: "text", id: "c-d-" + a.id, value: dur(a.daily), inputmode: "numeric" }), w: el("input", { type: "text", id: "c-w-" + a.id, value: dur(a.weekly), inputmode: "numeric" }) };
+    });
+    var err = el("p", { class: "ctx bad", text: "" });
+    var form = el("form", { method: "dialog" }, [
+      el("h3", { text: "Contrats" }), el("p", { class: "ctx", text: "Format 7h36 ou 7:36. L'heure par jour sert pour les congés et fériés." })
+    ].concat(inputs.map(function (x) {
+      return el("div", { class: "grid2" }, [el("label", { class: "field" }, [x.a.id + " · par jour", x.d]), el("label", { class: "field" }, [x.a.id + " · par semaine", x.w])]);
+    })).concat([err, acts()]));
+    function parse(v) { var m = /^(\d{1,3})\s*[h:]\s*(\d{1,2})?$/i.exec(v.trim()); return m ? (+m[1]) * 60 + (+(m[2] || 0)) : null; }
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var vals = inputs.map(function (x) { return [x, parse(x.d.value), parse(x.w.value)]; });
+      if (vals.some(function (v) { return v[1] == null || v[2] == null; })) { err.textContent = "Une valeur n'est pas lisible : écrivez par exemple 7h36 ou 38h00."; return; }
+      vals.forEach(function (v) { v[0].a.daily = v[1]; v[0].a.weekly = v[2]; });
+      changed["contracts"] = true; saveDraft(); closeDlg(); render();
+    });
+    dlg.appendChild(form); showDlg();
+  }
+
+  /* ---------- nouveau mois ---------- */
+  function iso(dt) { return dt.getFullYear() + "-" + String(dt.getMonth() + 1).padStart(2, "0") + "-" + String(dt.getDate()).padStart(2, "0"); }
+  function addDays(dt, n) { var x = new Date(dt); x.setDate(x.getDate() + n); return x; }
+  function easter(y) {
+    var a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3),
+      h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+    return new Date(y, Math.floor((h + l - 7 * m + 114) / 31) - 1, ((h + l - 7 * m + 114) % 31) + 1, 12);
+  }
+  function feries(y) {
+    var e = easter(y), out = {};
+    [[0, 1], [4, 1], [6, 21], [7, 15], [10, 1], [10, 11], [11, 25]].forEach(function (x) { out[iso(new Date(y, x[0], x[1], 12))] = 1; });
+    [1, 39, 50].forEach(function (n) { out[iso(addDays(e, n))] = 1; });
+    return out;
+  }
+  function majOn(dt) {
+    var dow = String(dt.getDay()), ref = state.rules.majRef && state.rules.majRef[dow];
+    if (!ref) return true;
+    var diff = Math.round((dt - new Date(ref + "T12:00:00")) / 86400000);
+    return ((diff / 7) % 2 + 2) % 2 === 0;
+  }
+  function dayLabel(dt) { return JOURS[dt.getDay()] + " " + String(dt.getDate()).padStart(2, "0") + "/" + String(dt.getMonth() + 1).padStart(2, "0"); }
+  function monthTitle(y, mo) { var s = new Date(y, mo, 1, 12).toLocaleDateString("fr-BE", { month: "long", year: "numeric" }); return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  function buildMonth(y, mo, majDates, salmaDates) {
+    var fer = feries(y), weeks = [], first = new Date(y, mo, 1, 12), last = new Date(y, mo + 1, 0, 12);
+    var start = addDays(first, -((first.getDay() + 6) % 7));
+    for (var ws = start, n = 1; ws <= last; ws = addDays(ws, 7), n++) {
+      var days = [];
+      for (var i = 0; i < 6; i++) {
+        var dt = addDays(ws, i);
+        if (dt.getMonth() !== mo) continue;
+        var dow = dt.getDay(), key = iso(dt), hol = !!fer[key], sat = dow === 6;
+        var codes = [];
+        if (!hol) state.rules.dentists.forEach(function (r) {
+          if (!(String(dow) in r.days)) return;
+          if (r.code === "MAJ" && r.alt.indexOf(String(dow)) >= 0 && majDates.indexOf(key) < 0) return;
+          if (r.code === "S" && salmaDates.indexOf(key) < 0) return;
+          codes.push(r.code);
+        });
+        var cells = {};
+        state.assistants.forEach(function (a) {
+          if (sat) cells[a.id] = null;
+          else if (a.id === "Soraya" && dow === 5) cells[a.id] = { code: "CP" };
+          else if (hol && a.weekly > 1200) cells[a.id] = { code: "F" };
+          else cells[a.id] = null;
+        });
+        days.push({ date: key, label: dayLabel(dt), sat: sat, holiday: hol, dentists: hol ? "" : codes.join("-"), note: hol ? "Jour férié" : "", cells: cells });
+      }
+      var wk = { label: "Semaine " + n, days: days };
+      var nWork = days.filter(function (d) { return !d.sat; }).length;
+      if (nWork < 5) {
+        wk.contracts = {};
+        state.assistants.forEach(function (a) {
+          var span = a.id === "Soraya" ? 4 : 5;
+          var cnt = a.id === "Soraya" ? days.filter(function (d) { var w = wd(d); return w >= 1 && w <= 4; }).length : nWork;
+          wk.contracts[a.id] = Math.round(a.weekly * Math.min(cnt, span) / span);
+        });
+        wk.remark = "Semaine incomplète : contrat calculé au prorata des jours du mois (" + nWork + " jour" + (nWork > 1 ? "s" : "") + "). À ajuster si besoin.";
+      }
+      weeks.push(wk);
+    }
+    return { title: monthTitle(y, mo), weeks: weeks };
+  }
+
+  function openNewMonth() {
+    dlg.textContent = "";
+    var lastM = state.months[state.months.length - 1], lastDay = null;
+    lastM.weeks.forEach(function (w) { w.days.forEach(function (d) { lastDay = d.date; }); });
+    var nx = lastDay ? new Date(lastDay + "T12:00:00") : new Date();
+    nx = new Date(nx.getFullYear(), nx.getMonth() + 1, 1, 12);
+    var fMonth = el("input", { type: "month", id: "f-month", value: nx.getFullYear() + "-" + String(nx.getMonth() + 1).padStart(2, "0") });
+    var majBox = el("div", { class: "checks" }), salBox = el("div", { class: "checks" });
+    var info = el("p", { class: "ctx", text: "" });
+    function fill() {
+      majBox.textContent = ""; salBox.textContent = "";
+      var p = /^(\d{4})-(\d{2})$/.exec(fMonth.value); if (!p) return;
+      var y = +p[1], mo = +p[2] - 1, fer = feries(y);
+      for (var dt = new Date(y, mo, 1, 12); dt.getMonth() === mo; dt = addDays(dt, 1)) {
+        var k = iso(dt), dow = dt.getDay(), hol = fer[k] ? " (férié)" : "";
+        if (dow === 1 || dow === 4) {
+          var cb = el("input", { type: "checkbox", value: k, id: "maj-" + k }); cb.checked = majOn(dt) && !hol;
+          majBox.appendChild(el("label", null, [cb, dayLabel(dt) + hol]));
+        }
+        if (dow === 2) salBox.appendChild(el("label", null, [el("input", { type: "checkbox", value: k, id: "sal-" + k }), dayLabel(dt) + hol]));
+      }
+      var title = monthTitle(y, mo);
+      info.textContent = state.months.some(function (m) { return m.title === title; }) ? title + " existe déjà : il sera remplacé par une version vierge." : "";
+    }
+    fMonth.addEventListener("change", fill);
+    var form = el("form", { method: "dialog" }, [
+      el("h3", { text: "Préparer un nouveau mois" }),
+      el("p", { class: "ctx", text: "Les dentistes sont placés selon les règles du cabinet, fériés belges compris. Les cases des assistantes restent à remplir ; le contrôle vous montre ce qui manque." }),
+      el("label", { class: "field" }, ["Mois", fMonth]),
+      el("div", { class: "field" }, ["Majdi : lundis et jeudis où il vient (un sur deux, pré-coché dans la suite du mois précédent)", majBox]),
+      el("div", { class: "field" }, ["Salma : cochez ses mardis si vous les connaissez déjà", salBox]),
+      info, acts("Créer le mois")
+    ]);
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var p = /^(\d{4})-(\d{2})$/.exec(fMonth.value); if (!p) return;
+      var picks = function (box) { return Array.prototype.filter.call(box.querySelectorAll("input:checked"), function () { return true; }).map(function (x) { return x.value; }); };
+      var nm = buildMonth(+p[1], +p[2] - 1, picks(majBox), picks(salBox));
+      var at = -1; state.months.forEach(function (m, i) { if (m.title === nm.title) at = i; });
+      if (at >= 0) state.months[at] = nm; else state.months.push(nm);
+      state.months.sort(function (a, b) { return (a.weeks[0].days[0] || {}).date < (b.weeks[0].days[0] || {}).date ? -1 : 1; });
+      state.cur = state.months.indexOf(nm);
+      changed["month|" + nm.title] = true; saveDraft(); closeDlg(); render();
+    });
+    dlg.appendChild(form); fill(); showDlg();
+  }
+
+  /* ---------- enregistrement ---------- */
+  function buildDoc() {
+    var reset = (document.head.querySelector("style") || {}).textContent || "";
+    var json = JSON.stringify(state).replace(/</g, "\\u003c");
+    var parts = [
+      document.querySelector("title").outerHTML,
+      '<meta name="claude:viewport-fit-sides" content="cover">',
+      document.getElementById("app-style").outerHTML,
+      '<div id="app"></div>',
+      '<script type="application/json" id="plan-data">' + json + "<\/script>",
+      document.getElementById("app-script").outerHTML
+    ];
+    return '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>' + reset + "</style></head><body>" + parts.join("\n") + "</body></html>";
+  }
+  function save() {
+    if (!artifactApi || saving || !nChanges()) return;
+    saving = true; render();
+    state.savedAt = new Date().toISOString();
+    artifactApi.publish(buildDoc()).then(function () {
+      try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+    }, function (e) {
+      saving = false; state.savedAt = SAVED.savedAt;
+      var code = e && e.code;
+      if (code === "not_granted" || code === "not_writer") canSave = false;
+      render();
+      var bar = document.querySelector(".savebar .msg");
+      if (bar) bar.textContent = code === "conflict" ? "Quelqu'un a enregistré en même temps : la page va se recharger avec sa version." :
+        (canSave === false ? "Vous n'avez pas le droit de modifier cette page : demandez un accès en modification." : "L'enregistrement n'a pas abouti. Réessayez dans un instant.");
+    });
+  }
+  function discard() {
+    state = JSON.parse(JSON.stringify(SAVED)); changed = {};
+    try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+    render();
+  }
+
+  try {
+    var dr = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null");
+    if (dr && dr.base === SAVED.savedAt && dr.state && dr.state.months) { state = dr.state; changed = dr.changed || {}; }
+    else if (dr) localStorage.removeItem(DRAFT_KEY);
+  } catch (e) {}
+
+  render();
+  if (window.claude && window.claude.use) {
+    window.claude.use("artifact").then(function (api) {
+      artifactApi = api; canSave = api ? null : false; render();
+    }, function () { canSave = false; render(); });
+  } else { canSave = false; }
+})();
+</script>
