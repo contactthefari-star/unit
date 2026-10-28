@@ -587,6 +587,27 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
   .choices { grid-template-columns: 1fr; }
   .acc-head { grid-template-columns: auto minmax(0, 1fr); } .acc-head select { grid-column: 1 / -1; }
 }
+.shortcuts { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.shortcut { display: grid; grid-template-columns: auto 1fr auto; grid-template-rows: auto auto; column-gap: 14px; row-gap: 2px; align-items: center; padding: 18px 20px; border-radius: 24px; text-decoration: none; color: #2d1633 !important; font-weight: 500 !important; box-shadow: var(--shadow); transition: transform .25s, box-shadow .25s; }
+.shortcut:hover { transform: translateY(-4px) rotate(-.5deg); }
+.shortcut .sc-ico { grid-row: 1 / 3; width: 52px; height: 52px; border-radius: 18px; display: grid; place-items: center; background: rgba(255,255,255,.7); color: #2d1633; }
+.shortcut b { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; }
+.shortcut > span:nth-of-type(2) { grid-column: 2; font-size: 13px; opacity: .75; }
+.shortcut .pill { grid-column: 3; grid-row: 1 / 3; }
+.sc-eval { background: linear-gradient(135deg, #ffe0ec, #ead9ff); }
+.sc-boite { background: linear-gradient(135deg, #fff1b8, #ffd9e6); }
+.shortcut .sc-ico svg { animation: float 4s ease-in-out infinite alternate; }
+.sc-talk { background: linear-gradient(135deg, #dff3ff, #e6e3fa); }
+.avis-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.avis { display: grid; gap: 12px; padding: 18px; border-radius: 22px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.avis.done { border-color: color-mix(in oklab, var(--ok-ink) 40%, var(--line)); }
+.avis .who > div { display: grid; } .avis .who .pill { margin-left: auto; }
+.avis textarea { font: inherit; border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; min-height: 60px; background: var(--bg); color: var(--ink); resize: vertical; }
+.avis-grid.big { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
+.avis.big { padding: 24px; } .avis.big .stars span { width: 42px; height: 42px; font-size: 16px; }
+.shell.tablet { grid-template-columns: minmax(0, 1fr); } .shell.tablet .side { display: none; }
+.tablet-head { display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; align-items: center; padding: 22px 26px; border-radius: 26px; background: linear-gradient(120deg, color-mix(in oklab, var(--pri) 16%, var(--surface)), color-mix(in oklab, var(--sec) 18%, var(--surface))); }
+.avis .crit .row { grid-template-columns: 1fr; gap: 6px; }
 </style>
 <div id="app"></div>
 <script type="application/json" id="plan-data">{"assistants": [{"id": "Soraya", "daily": 456, "weekly": 1824, "couleur": ["#e0559a", "#f59ac0"], "resp": true, "jours": [1, 2, 3, 4], "off": "CP"}, {"id": "Laura", "daily": 456, "weekly": 2280, "couleur": ["#8a63e6", "#c4a8ff"], "jours": [1, 2, 3, 4, 5]}, {"id": "Lora", "daily": 408, "weekly": 2040, "couleur": ["#f07a5a", "#ffc09a"], "jours": [1, 2, 3, 4, 5]}, {"id": "Aytana", "daily": 380, "weekly": 1140, "couleur": ["#2fae9b", "#8fe3cf"]}, {"id": "Inès", "daily": 380, "weekly": 1140, "couleur": ["#d99a1e", "#f7d27a"]}], "rules": {"dentists": [{"code": "R", "name": "Rami", "days": {"1": "10:00-18:00", "2": "10:00-18:00", "3": "10:00-18:00", "4": "10:00-18:00"}, "assist": ["Laura", "Inès"], "exception": ["Soraya"], "need": true, "note": "1 vendredi par mois pour les implants, avec Soraya (heures sup.)", "extra": {"5": "implants avec Soraya"}}, {"code": "Z", "name": "Ziyed", "days": {"1": "09:30-17:30", "2": "09:30-17:30", "3": "09:30-17:30", "4": "09:30-17:30", "5": "10:00-14:00"}, "assist": ["Laura", "Aytana"], "need": true}, {"code": "MAJ", "name": "Majdi (orthodontiste)", "days": {"1": "10:00-18:00", "3": "10:00-18:00", "4": "10:00-18:00", "5": "10:00-18:00"}, "alt": ["1", "4"], "assist": ["Lora"], "strict": true, "need": true, "note": "Un lundi sur deux, un jeudi sur deux, jamais le mardi"}, {"code": "S", "name": "Salma", "days": {"2": ""}, "assist": ["Laura"], "strict": true, "need": true, "note": "2 mardis par mois, dates connues tard"}, {"code": "E", "name": "Emine", "days": {"1": "09:30-17:30", "2": "09:30-17:30", "3": "09:30-17:30", "4": "09:30-17:30", "5": "09:30-17:30", "6": "09:00-13:00"}, "assist": ["*"], "need": false, "note": "Assisté si quelqu'un est libre. Samedi : une seule assistante, en heures sup."}, {"code": "I", "name": "Ikram (hygiéniste)", "days": {"1": "", "4": ""}, "assist": [], "need": false}], "majRef": {"1": "2026-11-09", "4": "2026-11-05"}}, "months": [{"title": "Novembre 2026", "weeks": [{"label": "Semaine 1", "days": [{"date": "2026-11-02", "label": "Lundi 02/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "15:45", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E/Acc"}, "Inès": {"code": "/"}}}, {"date": "2026-11-03", "label": "Mardi 03/11", "sat": false, "holiday": false, "dentists": "R-Z-E", "note": "", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "15:45", "pause": "13h", "dent": "Acc/Z"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}}}, {"date": "2026-11-04", "label": "Mercredi 04/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}}}, {"date": "2026-11-05", "label": "Jeudi 05/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Acc"}}}, {"date": "2026-11-06", "label": "Vendredi 06/11", "sat": false, "holiday": false, "dentists": "Z-MAJ-E", "note": "", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h", "dent": "Z/Acc"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"code": "/"}, "Inès": {"code": "/"}}}, {"date": "2026-11-07", "label": "Samedi 07/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}, "Lora": null, "Aytana": null, "Inès": null}}]}, {"label": "Semaine 2", "days": [{"date": "2026-11-09", "label": "Lundi 09/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "Soraya : Relais R 17h06-17h30\nInès : Relais R 13h30-14h00 ; R fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h00–13h30, MAJ 13h30–14h00", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E/R"}}}, {"date": "2026-11-10", "label": "Mardi 10/11", "sat": false, "holiday": false, "dentists": "R-Z-S-E", "note": "Soraya : Relais S 13h00-13h30 (pause de Laura)\nLora : R 10h00-11h10 + relais 13h30-14h00 ; Z le reste\nLaura : S 10h-16h ; Z 16h00-17h30\n⚠ Seul : Z 9h30–11h10, Z 13h00–14h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "S ★"}, "Lora": {"start": "09:30", "end": "17:00", "pause": "13h", "dent": "Acc"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}}}, {"date": "2026-11-11", "label": "Mercredi 11/11", "sat": false, "holiday": true, "dentists": "MAJ (férié, 10h–15h)", "note": "Cabinet ouvert pour Majdi seul (Lora, sans pause)\nLora récupère le férié le ven 20", "cells": {"Soraya": {"code": "F"}, "Laura": {"code": "F"}, "Lora": {"start": "10:00", "end": "15:00", "pause": "sans", "dent": "Acc/ Maj"}, "Aytana": {"code": "/"}, "Inès": {"code": "/"}}}, {"date": "2026-11-12", "label": "Jeudi 12/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nInès : Relais Z 13h00-13h30 ; R 17h36-18h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "17:00", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "E"}}}, {"date": "2026-11-13", "label": "Vendredi 13/11", "sat": false, "holiday": false, "dentists": "Z-MAJ-E", "note": "Aytana : Relais MAJ 13h30-14h00\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h", "dent": "Z"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"code": "F"}, "Inès": {"code": "/"}}}, {"date": "2026-11-14", "label": "Samedi 14/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}, "Aytana": null, "Inès": null}}]}, {"label": "Semaine 3", "days": [{"date": "2026-11-16", "label": "Lundi 16/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "16:06", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}, "Inès": {"code": "/"}}}, {"date": "2026-11-17", "label": "Mardi 17/11", "sat": false, "holiday": false, "dentists": "R-Z-E", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nSoraya : Relais R 17h06-17h30\nInès : Z puis R en fin de journée\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "16:06", "pause": "13h", "dent": "Z"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}}}, {"date": "2026-11-18", "label": "Mercredi 18/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "Inès : Relais R 13h30-14h00 ; R fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h00–13h30, MAJ 13h30–14h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h30", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Z"}, "Inès": {"code": "/"}}}, {"date": "2026-11-19", "label": "Jeudi 19/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "Soraya : Relais R 13h30-14h00 et 17h06-17h30\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E/R"}}}, {"date": "2026-11-20", "label": "Vendredi 20/11", "sat": false, "holiday": false, "dentists": "Z-E", "note": "Inès : Relais Z 13h30-14h00", "cells": {"Soraya": {"code": "CP"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Z"}, "Lora": {"code": "F"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "Acc"}}}, {"date": "2026-11-21", "label": "Samedi 21/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": null, "Aytana": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}, "Inès": null}}]}, {"label": "Semaine 4", "days": [{"date": "2026-11-23", "label": "Lundi 23/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E-I", "note": "Soraya : Relais R 13h30-14h00 et 17h06-17h30\nInès : Z puis R en fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Z"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "R"}}}, {"date": "2026-11-24", "label": "Mardi 24/11", "sat": false, "holiday": false, "dentists": "R-Z-S-E", "note": "Soraya : Relais S 13h00-13h30 (pause de Laura)\nLora : R 10h00-11h10 + relais 13h30-14h00 ; Z le reste\nLaura : S 10h-16h ; Z 16h00-17h30\n⚠ Seul : Z 9h30–11h10, Z 13h00–14h00, Z 15h45–16h00", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Laura": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "S ★"}, "Lora": {"start": "09:30", "end": "15:45", "pause": "13h", "dent": "Acc"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "E"}, "Inès": {"code": "/"}}}, {"date": "2026-11-25", "label": "Mercredi 25/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "Soraya : Relais R 13h30-14h00 et 17h06-17h30\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 9h30–11h10, Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "17:36", "pause": "13h", "dent": "Acc"}, "Laura": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "R"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Z"}, "Inès": {"code": "/"}}}, {"date": "2026-11-26", "label": "Jeudi 26/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Soraya : Relais R 13h30-14h00\nLora : R 10h00-11h10 ; relais Z 13h00-13h30\n⚠ Seul : Z 9h30–11h10", "cells": {"Soraya": {"start": "10:00", "end": "18:06", "pause": "13h", "dent": "Acc"}, "Laura": {"code": "C"}, "Lora": {"start": "09:00", "end": "15:15", "pause": "13h30", "dent": "Z"}, "Aytana": {"code": "/"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "R"}}}, {"date": "2026-11-27", "label": "Vendredi 27/11", "sat": false, "holiday": false, "dentists": "R-Z-MAJ-E", "note": "⚠ Seul : Z 13h30–14h00, MAJ 13h00–13h30", "cells": {"Soraya": {"start": "09:30", "end": "14:30", "pause": "HS", "dent": "R ★"}, "Laura": {"code": "C"}, "Lora": {"start": "10:00", "end": "18:00", "pause": "13h", "dent": "MAJ"}, "Aytana": {"start": "09:00", "end": "15:50", "pause": "13h30", "dent": "Z"}, "Inès": {"start": "11:10", "end": "18:00", "pause": "13h30", "dent": "Acc"}}}, {"date": "2026-11-28", "label": "Samedi 28/11", "sat": true, "holiday": false, "dentists": "E", "note": "", "cells": {"Soraya": null, "Laura": null, "Lora": null, "Aytana": null, "Inès": {"start": "09:00", "end": "13:00", "pause": "HS", "dent": "E"}}}]}, {"label": "Semaine 5", "days": [{"date": "2026-11-30", "label": "Lundi 30/11", "sat": false, "holiday": false, "dentists": "R-Z-E-I", "note": "Lora : Z 9h30-11h10 ; relais R 13h30-14h00\nAytana : Z puis R en fin de journée\n⚠ Seul : Z 13h00–13h30", "cells": {"Soraya": {"start": "09:00", "end": "17:06", "pause": "13h30", "dent": "Acc"}, "Laura": {"start": "09:30", "end": "17:36", "pause": "13h30", "dent": "R"}, "Lora": {"start": "09:30", "end": "16:48", "pause": "13h", "dent": "Z"}, "Aytana": {"start": "11:10", "end": "18:00", "pause": "13h", "dent": "E"}, "Inès": {"code": "/"}}}], "contracts": {"Soraya": 456, "Laura": 456, "Lora": 408, "Aytana": 380, "Inès": 0}, "remark": "Seul le lundi 30 est en novembre : le reste de la semaine se fait avec le planning de décembre (Aytana 2 jours, Inès 3 jours)."}]}], "cur": 0, "savedAt": "2026-10-28T16:37:00.000Z"}</script>
@@ -605,7 +626,7 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
   var MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
   var FALLBACK = [["#e0559a", "#f59ac0"], ["#8a63e6", "#c4a8ff"], ["#f07a5a", "#ffc09a"], ["#2fae9b", "#8fe3cf"], ["#d99a1e", "#f7d27a"], ["#3f8fe0", "#9cc9ff"], ["#c2489b", "#f0a6d6"]];
   var PALETTES = [["rose", "Rose poudré", "#e0559a", "#a879f0"], ["lavande", "Lavande", "#8a63e6", "#e57fb4"], ["peche", "Pêche", "#ee7350", "#f2a8c0"], ["menthe", "Menthe lilas", "#2a9d8f", "#9b7ff0"]];
-  var ONGLETS = [["heures", "Mes heures"], ["taches", "Mes tâches"], ["suivi", "Suivi"], ["reunions", "Réunions"], ["news", "News"], ["boite", "Boîte à idées"], ["vote", "Vote du mois"]];
+  var ONGLETS = [["heures", "Mes heures"], ["taches", "Mes tâches"], ["suivi", "Mon auto-évaluation"], ["boite", "Boîte à idées"], ["reunions", "Réunions"], ["news", "News"], ["vote", "Vote du mois"]];
   var CRITERES = [
     ["comportement", "Comportement", "Respect, calme, discrétion"],
     ["attitude", "Attitude", "Sourire, motivation, positif"],
@@ -615,40 +636,38 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
     ["equipe", "Esprit d'équipe", "Entraide, relais, communication"],
     ["patients", "Relation patients", "Accueil, écoute, téléphone"]
   ];
+  var W = { enc: 30, ev: 30, dent: 25, vote: 15 }; // les 100 points de l'assistante du mois
+  var DQ = [["prep", "Préparation et anticipation"], ["fauteuil", "Aide au fauteuil"], ["patients", "Avec les patients"]];
   var QUESTIONS = [["aide", "Qui t'a le plus aidée ces derniers temps ?"], ["sourire", "Qui a mis la meilleure ambiance ?"], ["pro", "Qui a été la plus pro au fauteuil ou à l'accueil ?"]];
   var PRIX = [["Chèque de 50 €", "Le classique"], ["Restaurant", "Repas pour deux"], ["Bon spa / massage", "Un moment pour soi"], ["Demi-journée offerte", "Sans toucher aux congés"], ["Choix des congés en priorité", "Pour la période suivante"], ["Formation au choix", "Atelier ou certification"], ["Petit-déjeuner d'équipe", "Offert en son honneur"]];
   var CATS = [["idee", "Une idée", "Une façon de faire mieux"], ["souci", "Un souci", "Quelque chose qui coince"], ["ressenti", "Un ressenti", "Comment tu te sens"], ["merci", "Un merci", "Pour quelqu'un ou pour l'équipe"]];
-  var MOTS = [
-    "Merci pour tout ce que tu apportes au cabinet. Belle journée !",
-    "Aujourd'hui encore, ton sourire va rassurer des patients. Ça compte énormément.",
-    "Une journée à la fois, un patient à la fois. Tu gères.",
-    "Le cabinet tourne grâce à toi. Prends soin de toi aussi aujourd'hui.",
-    "Respire, bois de l'eau, et n'oublie pas ta pause. Belle journée !",
-    "Ton travail se voit, même quand personne ne le dit. Merci.",
-    "Nouveau jour, nouvelle énergie. On y va ensemble !",
-    "Un patient détendu, c'est souvent grâce à l'assistante. Bravo d'avance.",
-    "Fière de l'équipe que nous formons. Bonne journée à toi !",
-    "Petit rappel : tu fais un super boulot.",
-    "Aujourd'hui, choisis la bonne humeur, elle est contagieuse.",
-    "Merci pour ta rigueur : une stérilisation impeccable, c'est la base de tout.",
-    "Une équipe soudée, des patients heureux. Belle journée !",
-    "Tu as le droit d'être fière de toi. Vraiment.",
-    "Chaque petit geste compte : un mot gentil, un instrument prêt à temps. Merci.",
-    "Ta bienveillance fait la différence au fauteuil comme à l'accueil.",
-    "On avance ensemble, et c'est ce qui rend le cabinet si agréable.",
-    "Ton énergie illumine la salle d'attente. Merci d'être là.",
-    "Un café, un sourire, et c'est parti pour une belle journée.",
-    "La qualité de ton travail rassure toute l'équipe. Merci.",
-    "Aujourd'hui, sois douce avec toi-même. Tu le mérites.",
-    "Bravo pour ton professionnalisme, il ne passe pas inaperçu.",
-    "Encore une journée où tu vas faire la différence. Courage et bonne humeur !"
+  // Le mot du matin : 10 ouvertures x 40 encouragements = 400 phrases différentes.
+  // Chaque fille avance d'une phrase par jour à partir de son propre point de départ : 365 jours sans répétition, et jamais la même phrase que sa collègue le même jour.
+  var MOT_DEBUT = ["Belle journée à toi !", "Bonne nouvelle journée !", "Coucou, on y va ?", "Un nouveau jour commence.", "Bienvenue au cabinet !", "Respire un bon coup.", "Prête pour aujourd'hui ?", "Petit mot rien que pour toi :", "Bonjour bonjour !", "Avant de commencer :"];
+  var MOT_FIN = [
+    "Ton sourire rassure les patients plus que tu ne l'imagines.", "Le cabinet tourne aussi grâce à toi.", "Ton travail se voit, même quand personne ne le dit.",
+    "Une journée à la fois, un patient à la fois.", "Tu as le droit d'être fière de toi.", "Ta rigueur à la stérilisation protège tout le monde. Merci.",
+    "Chaque instrument prêt à temps, c'est un dentiste serein.", "Ta bienveillance fait la différence, au fauteuil comme à l'accueil.", "N'oublie pas ta pause : tu la mérites.",
+    "Bois de l'eau et prends soin de toi.", "On forme une belle équipe, et tu en fais partie.", "Ton calme est contagieux, garde-le précieusement.",
+    "Un patient détendu, c'est souvent grâce à l'assistante.", "Tu apprends chaque jour, et ça se voit.", "Demander de l'aide, c'est aussi être pro.",
+    "Ta bonne humeur illumine la salle d'attente.", "Merci pour ton énergie, elle porte l'équipe.", "Tes collègues comptent sur toi, et elles ont raison.",
+    "Aujourd'hui, sois douce avec toi-même.", "Ton professionnalisme ne passe pas inaperçu.", "Un mot gentil à un patient peut changer sa journée.",
+    "Tu fais partie de ce qui rend ce cabinet agréable.", "Chaque petit geste compte, et tu en fais beaucoup.", "Ton anticipation fait gagner du temps à tout le monde.",
+    "Les patients se souviennent de ta gentillesse.", "Tu gères, même les jours chargés.", "Aujourd'hui sera une bonne journée, on y croit.",
+    "Fais une chose à la fois, et fais-la bien.", "Ta présence compte vraiment pour l'équipe.", "Un sourire, un café, et c'est parti.",
+    "Tu progresses, même quand tu ne le remarques pas.", "Merci pour ta patience avec les patients anxieux.", "Ta façon d'accueillir donne envie de revenir.",
+    "Tu es une pièce essentielle du puzzle.", "Prends le temps de bien faire, c'est ta force.", "La qualité de ton travail rassure toute l'équipe.",
+    "Ton énergie positive fait du bien à tout le monde.", "Tu mérites toute la reconnaissance de l'équipe.", "Encore une journée où tu vas faire la différence.",
+    "Merci d'être toi, tout simplement."
   ];
+  var MOTS = [];
+  MOT_FIN.forEach(function (f, i) { MOT_DEBUT.forEach(function (d) { MOTS.push(d + " " + f); }); });
 
   /* données partagées (db) */
   var db = null, user = null, uid = null, owner = false;
   var S = { ready: false, link: null, acces: {}, myAcces: null, seen: {}, mine: {}, myProps: [], myValid: {}, myRecup: [], myTasks: {}, mySujets: {}, myAuto: {}, myResp: {}, myVote: {},
     news: [], reunions: [], cfg: null, mot: null, equipe: {}, palmares: {}, heures: {}, recup: {}, evals: {}, taches: {}, boite: [],
-    pt: {}, props: {}, auto: {}, votes: {}, recues: {}, sujets: {} };
+    pt: {}, props: {}, auto: {}, votes: {}, recues: {}, sujets: {}, avisDent: {}, demandes: {}, myDemandes: {} };
   var subs = {};
   var mgr = false;
   var ui = { person: null, newsDraft: "", boiteDraft: "", lockErr: "", period: null, viewAs: null, enter: true, help: false, withTeam: false, hrsTab: "valider" };
@@ -831,21 +850,28 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
       if (!first || first <= new Date(d.date + "T23:59:00").getTime() + 2 * 86400000) onTime++;
     });
     if (!due) return null;
-    return { due: due, done: done, onTime: onTime, pts: Math.round(40 * (0.7 * done / due + 0.3 * onTime / due)) };
+    return { due: due, done: done, onTime: onTime, pts: Math.round(W.enc * (0.7 * done / due + 0.3 * onTime / due)) };
   }
   function avgCrit(ev) { if (!ev || !ev.crit) return null; var v = CRITERES.map(function (c) { return ev.crit[c[0]]; }).filter(function (x) { return x; }); return v.length ? v.reduce(function (a, b) { return a + b; }, 0) / v.length : null; }
   function evalFor(aid, p) { return (S.evals[slug(aid)] || {})[p] || (S.link === aid ? S.myResp[p] : null) || null; }
-  function evalScore(aid, p) { var a = avgCrit(evalFor(aid, p)); return a == null ? null : { avg: a, pts: Math.round(40 * (a - 1) / 4) }; }
+  function evalScore(aid, p) { var a = avgCrit(evalFor(aid, p)); return a == null ? null : { avg: a, pts: Math.round(W.ev * (a - 1) / 4) }; }
   function voteTally(p) {
     var t = {}, voters = 0;
     Object.keys(S.votes).forEach(function (u) { var v = (S.votes[u] || {})[p]; if (!v) return; voters++; QUESTIONS.forEach(function (q) { if (v[q[0]]) t[v[q[0]]] = (t[v[q[0]]] || 0) + 1; }); });
     return { t: t, voters: voters };
   }
+  // L'avis des dentistes : moyenne des notes données par les dentistes qu'elle a assistés pendant la période.
+  function dentAvis(aid, p) { var all = S.avisDent[p] || {}; return Object.keys(all).map(function (k) { return all[k]; }).filter(function (v) { return v.assistante === aid && v.note; }); }
+  function dentScore(aid, p) {
+    var l = dentAvis(aid, p); if (!l.length) return null;
+    var avg = l.reduce(function (s, v) { return s + v.note; }, 0) / l.length;
+    return { avg: avg, n: l.length, pts: Math.round(W.dent * (avg - 1) / 4) };
+  }
   function scoreOf(aid, p) {
-    var enc = encodageScore(aid, p), ev = evalScore(aid, p), vt = voteTally(p);
+    var enc = encodageScore(aid, p), ev = evalScore(aid, p), de = dentScore(aid, p), vt = voteTally(p);
     var votes = vt.t[aid] || 0, possible = Math.max(1, vt.voters * QUESTIONS.length);
-    var votePts = vt.voters ? Math.min(20, Math.round(20 * votes / possible * 2)) : 0;
-    return { enc: enc, ev: ev, votes: votes, votePts: votePts, total: (enc ? enc.pts : 0) + (ev ? ev.pts : 0) + votePts };
+    var votePts = vt.voters ? Math.min(W.vote, Math.round(W.vote * votes / possible * 2)) : 0;
+    return { enc: enc, ev: ev, de: de, votes: votes, votePts: votePts, total: (enc ? enc.pts : 0) + (ev ? ev.pts : 0) + (de ? de.pts : 0) + votePts };
   }
   function medal(total) { return total >= 85 ? ["gold", "Or"] : total >= 70 ? ["silver", "Argent"] : total >= 55 ? ["bronze", "Bronze"] : null; }
 
@@ -886,7 +912,8 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
 
   /* ---------- coquille de l'application ---------- */
   var renderPending = false, main = null, idx = 0;
-  function busy() { var a = document.activeElement; return a && app.contains(a) && (a.tagName === "TEXTAREA" || (a.tagName === "INPUT" && a.type !== "checkbox" && a.type !== "radio")); }
+  // Tant qu'un champ a le focus (texte, notes en étoiles, liste), on ne redessine pas : rien de ce qui est en cours n'est perdu.
+  function busy() { var a = document.activeElement; return a && app.contains(a) && (a.tagName === "TEXTAREA" || a.tagName === "SELECT" || a.tagName === "INPUT"); }
   function soon() { if (busy()) { renderPending = true; return; } render(); }
   app.addEventListener("focusout", function () { if (renderPending) setTimeout(function () { if (!busy()) { renderPending = false; render(); } }, 0); });
   function add(n) { if (n) { n.style.setProperty("--i", String(Math.min(idx++, 12))); main.appendChild(n); } return n; }
@@ -931,17 +958,17 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
     ONGLETS.forEach(function (o) { if (on[o[0]] !== false) base.push(o); });
     return base;
   }
-  var MGR_TABS = [["accueil", "Tableau de bord"], ["planning", "Planning"], ["equipe", "Mon équipe"], ["heures", "Heures"], ["taches", "Tâches"], ["suivi", "Suivi"], ["recompenses", "Récompenses"], ["reunions", "Réunions"], ["news", "News"], ["boite", "Boîte à idées"], ["acces", "Accès & outils"]];
+  var MGR_TABS = [["accueil", "Tableau de bord"], ["planning", "Planning"], ["equipe", "Mon équipe"], ["heures", "Heures"], ["taches", "Tâches"], ["suivi", "Suivi"], ["dentistes", "Dentistes"], ["recompenses", "Récompenses"], ["reunions", "Réunions"], ["news", "News"], ["boite", "Boîte à idées"], ["acces", "Accès & outils"]];
   function tabsNow() { return isMgr() ? MGR_TABS : owner ? [["accueil", "Accueil"]] : S.link ? girlTabs() : [["accueil", "Accueil"]]; }
   function route() { var h = (location.hash || "").slice(1), t = tabsNow(); return t.some(function (x) { return x[0] === h; }) ? h : "accueil"; }
 
   // « Voir son interface » : Soraya voit exactement l'écran d'une assistante, sans rien pouvoir enregistrer à sa place.
-  var PKEYS = ["link", "mine", "myAuto", "myResp", "myVote", "myProps", "myValid", "myRecup", "myTasks", "mySujets", "myAcces"];
+  var PKEYS = ["link", "mine", "myAuto", "myResp", "myVote", "myProps", "myValid", "myRecup", "myTasks", "mySujets", "myAcces", "myDemandes"];
   function persona(aid) {
     var u = uidsOf(aid)[0] || null, k = slug(aid);
     var tasks = {}; Object.keys(S.taches).forEach(function (id) { var t = S.taches[id]; if ((t.pour || []).indexOf(aid) >= 0) tasks[id] = Object.assign({}, t, (u && S.recues[u] && S.recues[u][id]) || {}); });
     return { link: aid, mine: (u && S.pt[u]) || {}, myAuto: (u && S.auto[u]) || {}, myResp: S.evals[k] || {}, myVote: (u && S.votes[u]) || {},
-      myProps: (u && S.props[u]) || [], myValid: S.heures[k] || {}, myRecup: S.recup[k] || [], myTasks: tasks, mySujets: (u && S.sujets[u]) || {}, myAcces: (u && S.acces[u]) || { assistant: aid }, uid: u || "apercu" };
+      myProps: (u && S.props[u]) || [], myValid: S.heures[k] || {}, myRecup: S.recup[k] || [], myTasks: tasks, mySujets: (u && S.sujets[u]) || {}, myDemandes: (u && S.demandes[u]) || {}, myAcces: (u && S.acces[u]) || { assistant: aid }, uid: u || "apercu" };
   }
   function render() {
     if (ui.viewAs && owner) {
@@ -979,7 +1006,9 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
     ]);
     main = el("main", { class: "main" + (ui.enter ? " enter" : "") });
     ui.enter = false;
-    app.appendChild(el("div", { class: "shell" }, [side, main]));
+    var tabletOn = isMgr() && ui.tablet && tab === "dentistes";
+    if (!tabletOn) ui.tablet = null;
+    app.appendChild(el("div", { class: "shell" + (tabletOn ? " tablet" : "") }, [side, main]));
     if (ui.viewAs) add(el("div", { class: "preview" }, [avatar(ui.viewAs, 30), el("span", null, ["Tu vois l'écran de ", el("b", { text: ui.viewAs }), ", exactement comme elle."]),
       el("button", { class: "btn sm primary", type: "button", text: "Revenir à ma vue", onclick: function () { var a = ui.viewAs; ui.viewAs = null; ui.enter = true; ui.person = a; location.hash = "#equipe"; render(); } })]));
     if (!gate()) {
@@ -989,6 +1018,7 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
       else if (tab === "heures") viewHeures();
       else if (tab === "taches") viewTaches();
       else if (tab === "suivi") viewSuivi();
+      else if (tab === "dentistes") viewDentistes();
       else if (tab === "recompenses") viewRecompenses();
       else if (tab === "vote") viewVote();
       else if (tab === "reunions") viewReunions();
@@ -1080,7 +1110,13 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
     var out = []; for (var i = 0; i < n; i++) { var s = hashStr("s" + i); out.push(el("span", { class: "twinkle", style: "left:" + (6 + s % 86) + "%;top:" + (10 + (s >> 8) % 75) + "%;animation-delay:" + ((s >> 4) % 30) / 10 + "s" })); }
     return out;
   }
-  function motDuMatin(name) { return MOTS[hashStr(todayIso() + "|" + (name || "équipe")) % MOTS.length]; }
+  function dayOfYear() { var n = new Date(), s = new Date(n.getFullYear(), 0, 1); return Math.floor((new Date(n.getFullYear(), n.getMonth(), n.getDate()) - s) / 86400000); }
+  function motDuMatin(name) {
+    var i = state.assistants.map(function (a) { return a.id; }).indexOf(name);
+    var start = i >= 0 ? i * 73 : hashStr(name || "équipe") % MOTS.length;
+    var k = (start + dayOfYear()) % MOTS.length;
+    return MOTS[(k % 40) * 10 + Math.floor(k / 40)]; // l'encouragement change chaque jour, l'ouverture tous les 40 jours
+  }
   function birthdayOf(aid) { var e = S.equipe[slug(aid)]; return e && e.anniv ? e.anniv : null; }
   function daysUntil(mmdd) {
     var now = new Date(), y = now.getFullYear(), t = new Date(y, +mmdd.slice(0, 2) - 1, +mmdd.slice(3, 5), 12);
@@ -1107,12 +1143,17 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
     if (!bd.length) return null;
     return el("div", { class: "notice bday" }, bd.map(function (x) { return el("div", null, [avatar(x.a, 24), " ", x.n === 0 ? "C'est l'anniversaire de " + x.a + " aujourd'hui !" : "Anniversaire de " + x.a + " dans " + x.n + " jour" + (x.n > 1 ? "s" : "") + " (" + +x.b.slice(3) + " " + MOIS[+x.b.slice(0, 2) - 1] + ")"]); }));
   }
-  function winnerBanner() {
-    var today = todayIso(), lastWin = Object.keys(S.palmares).sort().pop();
-    if (!lastWin || !S.palmares[lastWin].gagnante || lastWin < prevPeriod(periodOf(today))) return null;
-    var w = S.palmares[lastWin];
-    return el("div", { class: "winner" }, [el("span", { class: "pill gold", text: "Assistante du mois" }), avatar(w.gagnante, 36), el("span", { class: "big", text: w.gagnante }), el("span", { text: periodLabel(lastWin) + (w.recompense ? " · " + w.recompense : "") })]);
+  // La gagnante d'une période garde le titre pendant les deux mois suivants.
+  function titleHolder() {
+    var p = prevPeriod(periodOf(todayIso())), w = S.palmares[p];
+    return w && w.gagnante ? { aid: w.gagnante, p: p, w: w } : null;
   }
+  function winnerBanner() {
+    var h = titleHolder(); if (!h) return null;
+    return el("div", { class: "winner" }, [el("span", { class: "pill gold", text: "Assistante du mois" }), avatar(h.aid, 36), el("span", { class: "big", text: h.aid }),
+      el("span", { text: "en titre jusqu'au " + sdate(periodRange(periodOf(todayIso()))[1]) + (h.w.recompense ? " · " + h.w.recompense : "") })]);
+  }
+
 
   /* ---------- tableau de bord de la responsable ---------- */
   function stat(n, label, href, tone) { return el("a", { class: "stat" + (tone ? " " + tone : ""), href: href }, [el("b", { text: String(n) }), el("span", { text: label })]); }
@@ -1141,6 +1182,7 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
       stat(pn, "news à valider", "#news", pn ? "hot" : ""),
       stat(late, "tâches en retard", "#taches", late ? "hot" : ""),
       stat(nb, "messages dans la boîte", "#boite", nb ? "soft" : ""),
+      pendingDemandes().length ? stat(pendingDemandes().length, "demande d'entretien", "#reunions", "hot") : null,
       pa ? stat(pa, "compte à activer", "#acces", "hot") : null
     ]));
     var g = add(el("div", { class: "grid-dash" }));
@@ -1180,6 +1222,15 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
         isWork(c) && c.dent ? el("span", { class: "role", text: c.dent.split("/").map(function (x) { return dName(normCode(x) || x); }).join(" + ") }) : null,
         isWork(c) && c.pause && c.pause !== "HS" && c.pause !== "sans" ? el("span", { class: "muted", text: "pause " + c.pause }) : null]);
     })) : empty("Rien de prévu pour l'instant"), el("a", { href: "#planning", text: "Voir mon mois" })])));
+    // deux raccourcis bien visibles : s'auto-évaluer et la boîte à idées
+    var p = periodOf(today), autoDone = !!S.myAuto[p], sc = [];
+    if (tabOn("suivi")) sc.push(el("a", { class: "shortcut sc-eval", href: "#suivi" }, [el("span", { class: "sc-ico", "aria-hidden": "true" }, [starIco()]), el("b", { text: "M'auto-évaluer" }),
+      el("span", { text: autoDone ? "Faite pour " + periodLabel(p).toLowerCase() + " · tu peux la modifier" : "7 petites questions sur toi, 2 minutes" }), autoDone ? el("span", { class: "pill ok", text: "faite" }) : el("span", { class: "pill am", text: "à faire" })]));
+    if (tabOn("boite")) sc.push(el("a", { class: "shortcut sc-boite", href: "#boite" }, [el("span", { class: "sc-ico", "aria-hidden": "true" }, [catIcon("idee")]), el("b", { text: "Boîte à idées" }),
+      el("span", { text: "Une idée, un souci, un merci ? C'est anonyme." }), el("span", { class: "pill mt", text: "écrire" })]));
+    if (tabOn("reunions")) sc.push(el("a", { class: "shortcut sc-talk", href: "#reunions" }, [el("span", { class: "sc-ico", "aria-hidden": "true" }, [catIcon("ressenti")]), el("b", { text: "Demander un entretien" }),
+      el("span", { text: "Un moment avec " + (respId() || "la responsable") + ", quand tu en as besoin" }), el("span", { class: "pill mt", text: "demander" })]));
+    if (sc.length) add(el("div", { class: "shortcuts" }, sc));
     var g = add(el("div", { class: "grid-dash" }));
     var tasks = openTasks(), todo = girlTodo();
     g.appendChild(card("À faire", null, el("div", { class: "card-body" }, [
@@ -1192,6 +1243,7 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
     if (tabOn("news") || next) g.appendChild(card("Les news", null, el("div", { class: "card-body" }, [next ? meetingCard(next) : null,
       news.length ? el("div", { class: "feed" }, news.map(function (n) { return post(n, "pub"); })) : empty("Pas encore de news"), tabOn("news") ? el("a", { href: "#news", text: "Toutes les news" }) : null])));
   }
+  function starIco() { return sv("svg", { viewBox: "0 0 24 24", width: "30", height: "30" }, [sv("path", { d: "M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z", fill: "none", stroke: "currentColor", "stroke-width": "1.8", "stroke-linejoin": "round" })]); }
   function tabOn(k) { return owner || !S.myAcces || !S.myAcces.onglets || S.myAcces.onglets[k] !== false; }
   function girlTodo() {
     var out = [], me = S.link, p = periodOf(todayIso()), left = daysLeft(p);
@@ -1897,7 +1949,7 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
       g.appendChild(card("Son auto-évaluation", auto ? "envoyée le " + new Date(auto.at).toLocaleDateString("fr-BE") : "pas encore envoyée", el("div", { class: "card-body" }, auto ? [critForm("au-", auto, true), textBlock("Ce qui s'est bien passé", auto.bien), textBlock("Ce qu'elle veut améliorer", auto.ameliorer), textBlock("Ce dont elle a besoin", auto.besoin)] : [empty("Pas encore remplie")])));
       return;
     }
-    pageHead("Suivi", null, periodNav(), helpBtn("Mon suivi", ["Tous les deux mois, note-toi sur 7 points (de 1 à 5) et dis ce qui a marché et ce que tu veux améliorer.", (respId() || "La responsable") + " remplit son avis de son côté. Personne d'autre ne voit ta fiche.", "Vous en parlez ensemble pendant ton tête-à-tête."]));
+    pageHead("Mon auto-évaluation", null, periodNav(), helpBtn("Mon auto-évaluation", ["Tous les deux mois, note-toi sur 7 points (de 1 à 5) et dis ce qui a marché et ce que tu veux améliorer.", (respId() || "La responsable") + " remplit son avis de son côté. Personne d'autre ne voit ta fiche.", "Vous en parlez ensemble pendant ton tête-à-tête."]));
     var mine = S.myAuto[p], resp = S.myResp[p];
     var fB = el("textarea", { id: "s-bien", placeholder: "Une réussite, un patient content, un nouveau geste maîtrisé…" }); fB.value = mine ? mine.bien || "" : "";
     var fA2 = el("textarea", { id: "s-amel", placeholder: "Ce que tu veux améliorer ces deux prochains mois" }); fA2.value = mine ? mine.ameliorer || "" : "";
@@ -1913,7 +1965,7 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
   /* ---------- récompenses (responsable) et vote (assistantes) ---------- */
   function viewRecompenses() {
     var p = curPeriod(), vt = voteTally(p);
-    pageHead("Récompenses", null, periodNav(), helpBtn("L'assistante du mois", ["Encodage des heures : 40 points (tout encodé, et dans les 2 jours).", "Ton évaluation : 40 points.", "Le vote des collègues : 20 points. Elles répondent à 3 questions, sans pouvoir voter pour elles-mêmes.", "Tu regardes le classement et tu décides : c'est toi qui désignes la gagnante."]));
+    pageHead("Récompenses", null, periodNav(), helpBtn("L'assistante du mois", ["Encodage des heures : 30 points (tout encodé, et dans les 2 jours).", "Ton évaluation : 30 points.", "L'avis des dentistes : 25 points (onglet Dentistes).", "Le vote des collègues : 15 points, sans pouvoir voter pour soi.", "Tu regardes le classement et tu désignes la gagnante : elle garde le titre pendant les deux mois suivants."]));
     var win = S.palmares[p];
     if (win && win.gagnante) add(el("div", { class: "winner" }, [el("span", { class: "pill gold", text: "Assistante du mois" }), avatar(win.gagnante, 36), el("span", { class: "big", text: win.gagnante }), el("span", { text: periodLabel(p) + (win.recompense ? " · " + win.recompense : "") })]));
     var ranked = state.assistants.filter(function (a) { return !a.resp; }).map(function (a) { return { a: a.id, sc: scoreOf(a.id, p) }; }).sort(function (x, y) { return y.sc.total - x.sc.total; });
@@ -1922,7 +1974,7 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
       var md = medal(r.sc.total);
       return el("article", { class: "rank" + (i === 0 ? " first" : "") }, [el("span", { class: "pos", text: String(i + 1) }), avatar(r.a, 44), el("b", { text: r.a }), el("span", { class: "score", text: String(r.sc.total) }),
         md ? el("span", { class: "pill " + md[0], text: md[1] }) : null,
-        el("div", { class: "bars" }, [bar("Heures", r.sc.enc ? r.sc.enc.pts : 0, 40), bar("Évaluation", r.sc.ev ? r.sc.ev.pts : 0, 40), bar("Votes", r.sc.votePts, 20)]),
+        el("div", { class: "bars" }, [bar("Heures", r.sc.enc ? r.sc.enc.pts : 0, W.enc), bar("Toi", r.sc.ev ? r.sc.ev.pts : 0, W.ev), bar("Dentistes", r.sc.de ? r.sc.de.pts : 0, W.dent), bar("Votes", r.sc.votePts, W.vote)]),
         el("button", { class: "btn sm" + (i === 0 ? " gold" : ""), type: "button", text: "Désigner", onclick: function () { openWinner(p, r.a); } })]);
     })));
     var why = [];
@@ -1977,13 +2029,14 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
   function meetLabel(r) { return (r.type === "equipe" ? "Réunion d'équipe" : "Tête-à-tête" + (owner ? " avec " + r.assistant : "")) + " · " + clock(r.debut) + (r.fin ? "–" + clock(r.fin) : ""); }
   function visibleMeeting(r) { return r.type === "equipe" || owner || r.assistant === S.link; }
   function nextMeeting() { var t = todayIso(); return S.reunions.filter(function (r) { return r.date >= t && visibleMeeting(r); }).sort(function (a, b) { return (a.date + a.debut) < (b.date + b.debut) ? -1 : 1; })[0]; }
-  function meetingCard(r) { return el("div", { class: "meet" }, [el("div", { class: "cal-ico" }, [el("span", { text: MOIS[+r.date.slice(5, 7) - 1].slice(0, 4) }), el("b", { text: String(+r.date.slice(8)) })]), el("div", null, [el("b", { text: meetLabel(r) }), el("span", { class: "muted", text: fdate(r.date) })])]); }
+  function meetingCard(r) { return el("div", { class: "meet" }, [el("div", { class: "cal-ico" }, [el("span", { text: new Date(r.date + "T12:00:00").toLocaleDateString("fr-BE", { month: "short" }) }), el("b", { text: String(+r.date.slice(8)) })]), el("div", null, [el("b", { text: meetLabel(r) }), el("span", { class: "muted", text: fdate(r.date) })])]); }
   function topicsFor(r) { var out = []; Object.keys(S.sujets).forEach(function (u) { var s = S.sujets[u] && S.sujets[u][r._id]; if (s && s.texte) out.push({ aid: (S.acces[u] || {}).assistant || "?", texte: s.texte }); }); return out; }
 
   function viewReunions() {
     var today = todayIso();
     if (!isMgr()) {
       pageHead("Réunions", null, null, helpBtn("Mes réunions", ["Une réunion d'équipe chaque fin de mois, et un tête-à-tête avec " + (respId() || "la responsable") + " tous les deux mois.", "Avant la réunion, note les thèmes que tu veux aborder. Ce n'est pas obligatoire, mais ça aide.", "Seule " + (respId() || "la responsable") + " lit tes thèmes."]));
+      add(demandeForm());
       var up = S.reunions.filter(function (r) { return r.date >= today && visibleMeeting(r); }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
       if (!up.length) { add(empty("Pas de réunion prévue", "Elles apparaîtront ici dès qu'elles sont placées.")); return; }
       up.forEach(function (r) {
@@ -1997,6 +2050,7 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
     }
     var m = M();
     pageHead("Réunions", null, monthNav(), helpBtn("Les réunions", ["Je les place pour toi quand tu prépares un mois : la réunion d'équipe un jour de fin de mois où tout le monde est là, pendant la pause des dentistes.", "Les tête-à-tête tournent : chaque fille tous les deux mois, un jour calme.", "Tu peux déplacer ou supprimer une réunion. Les thèmes notés par les filles s'affichent sous chaque réunion."]));
+    add(demandesMgr());
     add(el("div", { class: "row-acts" }, [el("button", { class: "btn primary", type: "button", text: "Placer les réunions de " + m.title.toLowerCase(), onclick: function () { placeMeetings(m).then(function (n) { if (n) confetti(); toast(n ? n + " réunion" + (n > 1 ? "s" : "") + " placée" + (n > 1 ? "s" : "") + "." : "Tout est déjà placé pour ce mois."); }, fail); } })]));
     var list2 = S.reunions.filter(function (r) { return r.date >= today; }).sort(function (a, b) { return (a.date + a.debut) < (b.date + b.debut) ? -1 : 1; });
     add(el("div", { class: "feed" }, list2.length ? list2.map(function (r) {
@@ -2013,9 +2067,18 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
     var who = el("p", { class: "ctx" });
     function upd() { var d = dayByDate(fDate.value); if (!d) { who.textContent = "Jour hors planning."; return; } var abs = state.assistants.filter(function (a) { return !isWork(d.cells[a.id]); }).map(function (a) { return a.id; }); who.textContent = r.type === "individuelle" ? (isWork(d.cells[r.assistant]) ? r.assistant + " travaille ce jour-là." : r.assistant + " ne travaille pas ce jour-là.") : abs.length ? "Absentes : " + abs.join(", ") : "Tout le monde est là."; }
     fDate.addEventListener("change", upd);
-    var form = el("form", { method: "dialog" }, [el("h3", { text: r.type === "equipe" ? "Réunion d'équipe" : "Tête-à-tête avec " + r.assistant }), el("label", { class: "field" }, ["Date", fDate]), who,
+    var form = el("form", { method: "dialog" }, [el("h3", { text: r.type === "equipe" ? "Réunion d'équipe" : (r.demande ? "Entretien avec " : "Tête-à-tête avec ") + r.assistant }), r.demande && r.demande.d.motif ? el("p", { class: "ctx", text: "Motif : " + r.demande.d.motif }) : null, el("label", { class: "field" }, ["Date", fDate]), who,
       el("div", { class: "grid2" }, [el("label", { class: "field" }, ["Début", fA]), el("label", { class: "field" }, ["Fin", fB])]), acts("Enregistrer")]);
-    form.addEventListener("submit", function (ev) { ev.preventDefault(); write(db.doc("reunions/" + r._id).set({ type: r.type, assistant: r.assistant || null, date: fDate.value, debut: fA.value, fin: fB.value, note: r.note || "", at: Date.now() })).then(function () { toast("Réunion déplacée."); }); closeDlg(); });
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var doc = { type: r.type, assistant: r.assistant || null, date: fDate.value, debut: fA.value, fin: fB.value, note: r.demande ? (r.demande.d.motif || "") : r.note || "", at: Date.now() };
+      var ref = r._id ? db.doc("reunions/" + r._id) : db.collection("reunions").doc();
+      write(ref.set(doc)).then(function () {
+        if (r.demande) db.doc("pointages/" + r.demande.u + "/demandes/" + r.demande.id).set(Object.assign({}, r.demande.d, { statut: "planifiée", date: fDate.value, reunion: ref.id })).catch(function () {});
+        toast(r._id ? "Réunion déplacée." : "Entretien planifié avec " + r.assistant + ".");
+      });
+      closeDlg();
+    });
     dlg.appendChild(form); upd(); showDlg();
   }
 
@@ -2052,7 +2115,7 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
   function pendingNews() { var out = []; Object.keys(S.props).forEach(function (u) { (S.props[u] || []).forEach(function (p) { out.push({ u: u, p: p }); }); }); return out; }
   function pendingHours() { var n = 0; allDays().forEach(function (d) { state.assistants.forEach(function (a) { var e = entry(a.id, d.date); if (e && e.statut === "à vérifier") n++; }); }); return n; }
   function pendingAccounts() { return Object.keys(S.seen).filter(function (u) { return !S.acces[u]; }); }
-  function pendingCount() { return pendingNews().length + pendingHours() + pendingAccounts().length + S.boite.filter(function (m) { return m.statut !== "traité"; }).length; }
+  function pendingCount() { return pendingNews().length + pendingHours() + pendingAccounts().length + pendingDemandes().length + S.boite.filter(function (m) { return m.statut !== "traité"; }).length; }
 
   /* ---------- boîte à idées ---------- */
   var CAT_ART = {
@@ -2089,6 +2152,90 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
           m.statut !== "traité" ? el("button", { class: "linkbtn", type: "button", text: "Traité", onclick: function () { write(db.doc("boite/" + m._id).set({ texte: m.texte, cat: m.cat, jour: m.jour, signe: m.signe || null, statut: "traité" })); } }) : el("span", { class: "pill ok", text: "traité" }),
           el("button", { class: "linkbtn", type: "button", text: "Supprimer", onclick: function () { write(db.doc("boite/" + m._id).delete()); } })])]);
     })) : empty("La boîte est vide", "Les messages des filles apparaîtront ici."));
+  }
+
+  /* ---------- l'avis des dentistes ---------- */
+  // La liste se remplit toute seule depuis le planning : pour chaque dentiste, les filles qui l'ont assisté pendant la période.
+  function dentistsToRate() { return state.rules.dentists.filter(function (r) { return r.need || r.code === "E"; }); }
+  function pairsFor(code, p) {
+    var r = periodRange(p), n = {};
+    allDays().forEach(function (d) {
+      if (d.date < r[0] || d.date > r[1]) return;
+      state.assistants.forEach(function (a) { var c = d.cells[a.id]; if (!a.resp && isWork(c) && assignedCodes(c).indexOf(code) >= 0) n[a.id] = (n[a.id] || 0) + 1; });
+    });
+    return Object.keys(n).map(function (aid) { return { aid: aid, jours: n[aid] }; }).sort(function (x, y) { return y.jours - x.jours; });
+  }
+  function avisId(code, aid) { return code + "__" + slug(aid); }
+  function avisCard(code, p, x, big) {
+    var cur = (S.avisDent[p] || {})[avisId(code, x.aid)];
+    var fC = el("textarea", { id: "dc-" + code + slug(x.aid), placeholder: "Un mot sur elle (facultatif)" }); fC.value = cur ? cur.commentaire || "" : "";
+    var form = el("form", { class: "avis" + (big ? " big" : "") + (cur ? " done" : "") }, [
+      el("div", { class: "who" }, [avatar(x.aid, big ? 52 : 38), el("div", null, [el("b", { text: x.aid }), el("span", { class: "muted", text: x.jours + " jour" + (x.jours > 1 ? "s" : "") + " ensemble" })]), cur ? el("span", { class: "pill ok", text: "avis donné" }) : null]),
+      el("div", { class: "crit" }, DQ.map(function (q) { return el("div", { class: "row" }, [el("div", { class: "lbl" }, [el("b", { text: q[1] })]), starsInput("dq-" + code + slug(x.aid) + q[0], cur && cur.crit ? cur.crit[q[0]] : 0, false)]); })),
+      fC, el("div", { class: "row-acts end" }, [el("button", { class: "btn primary sm", type: "submit", text: cur ? "Mettre à jour" : "Enregistrer l'avis" })])]);
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var crit = {}, vals = [];
+      DQ.forEach(function (q) { var i = form.querySelector("input[name='dq-" + code + slug(x.aid) + q[0] + "']:checked"); if (i) { crit[q[0]] = +i.value; vals.push(+i.value); } });
+      if (!vals.length) { toast("Donne au moins une note."); return; }
+      var note = vals.reduce(function (a, b) { return a + b; }, 0) / vals.length;
+      write(db.doc("dentistes/" + p + "/avis/" + avisId(code, x.aid)).set({ dentiste: code, assistante: x.aid, crit: crit, note: note, commentaire: fC.value.trim(), at: Date.now() })).then(function () { toast("Merci ! Avis enregistré pour " + x.aid + "."); });
+    });
+    return form;
+  }
+  function viewDentistes() {
+    var p = curPeriod(), dents = dentistsToRate();
+    if (ui.tablet) return tabletView(p);
+    pageHead("Dentistes", null, periodNav(), helpBtn("L'avis des dentistes", ["Tous les deux mois, demande à chaque dentiste son avis sur les filles qui l'ont assisté.", "La liste se remplit toute seule à partir du planning : tu n'as qu'à noter ses réponses.", "Ou tends-lui la tablette avec « Le dentiste remplit lui-même » : il ne voit que ses assistantes.", "Ces avis comptent pour 25 points dans l'assistante du mois."]));
+    if (!ui.dent || !dentist(ui.dent)) ui.dent = dents[0].code;
+    add(el("nav", { class: "people" }, dents.map(function (r) {
+      var pr = pairsFor(r.code, p), done = pr.filter(function (x) { return (S.avisDent[p] || {})[avisId(r.code, x.aid)]; }).length;
+      return el("button", { class: "tab", type: "button", "aria-current": String(r.code === ui.dent), onclick: function () { ui.dent = r.code; render(); } }, [r.name.split(" ")[0], el("span", { class: "tick", text: pr.length ? done + "/" + pr.length : "—" })]);
+    })));
+    var r = dentist(ui.dent), pr = pairsFor(r.code, p);
+    if (!pr.length) { add(empty("Personne ne l'a assisté sur cette période", "La liste se remplit dès que le planning est prêt.")); return; }
+    add(el("div", { class: "cta" }, [el("div", null, [el("b", { text: r.name.split(" ")[0] + " · " + periodLabel(p) }), el("span", { text: pr.length + " assistante" + (pr.length > 1 ? "s" : "") + " à noter, d'après le planning" })]),
+      el("button", { class: "btn primary", type: "button", text: "Le dentiste remplit lui-même", onclick: function () { ui.tablet = r.code; ui.enter = true; render(); } })]));
+    add(el("div", { class: "avis-grid" }, pr.map(function (x) { return avisCard(r.code, p, x, false); })));
+  }
+  // Mode tablette : écran épuré, sans menu, pour le dentiste.
+  function tabletView(p) {
+    var r = dentist(ui.tablet), pr = pairsFor(r.code, p);
+    add(el("div", { class: "tablet-head" }, [el("div", null, [el("h1", { text: "Bonjour " + r.name.split(" ")[0] + " !" }), el("p", { class: "sub", text: "Votre avis sur les assistantes qui ont travaillé avec vous en " + periodLabel(p).toLowerCase() + ". Trois notes de 1 à 5, c'est tout." })]),
+      el("button", { class: "btn", type: "button", text: "Terminer", onclick: function () { ui.tablet = null; ui.enter = true; render(); } })]));
+    add(el("div", { class: "avis-grid big" }, pr.map(function (x) { return avisCard(r.code, p, x, true); })));
+  }
+
+  /* ---------- demandes d'entretien ---------- */
+  var QUAND = [["vite", "Dès que possible"], ["semaine", "Cette semaine"], ["mois", "Ce mois-ci"]];
+  function pendingDemandes() { var out = []; Object.keys(S.demandes).forEach(function (u) { var all = S.demandes[u] || {}; Object.keys(all).forEach(function (id) { if (all[id].statut === "envoyée") out.push({ u: u, id: id, d: all[id], aid: (S.acces[u] || {}).assistant || "?" }); }); }); return out.sort(function (a, b) { return a.d.at - b.d.at; }); }
+  function demandeForm() {
+    var q = "vite";
+    var seg = el("div", { class: "seg", role: "radiogroup", "aria-label": "Quand" }, QUAND.map(function (x, i) { var r = el("input", { type: "radio", name: "quand", value: x[0], id: "q-" + x[0] }); if (!i) r.checked = true; return el("label", null, [r, el("span", { text: x[1] })]); }));
+    var fM = el("textarea", { id: "dem-motif", placeholder: "De quoi veux-tu parler ? (facultatif, seule " + (respId() || "la responsable") + " le lit)" });
+    var form = el("form", { class: "card-body" }, [seg, fM, el("div", { class: "row-acts end" }, [el("button", { class: "btn primary", type: "submit", text: "Envoyer ma demande" })])]);
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      q = (form.querySelector("input[name=quand]:checked") || {}).value || "vite";
+      write(db.collection("pointages/" + uid + "/demandes").add({ quand: q, motif: fM.value.trim(), statut: "envoyée", at: Date.now() })).then(function () { confetti(); toast("Demande envoyée à " + (respId() || "la responsable") + "."); });
+    });
+    var mine = Object.keys(S.myDemandes).map(function (id) { return S.myDemandes[id]; }).sort(function (a, b) { return b.at - a.at; }).slice(0, 3);
+    return card("Demander un entretien", "Un moment rien qu'à toi avec " + (respId() || "la responsable"), el("div", null, [form].concat(mine.length ? [el("div", { class: "card-body mini" }, mine.map(function (d) {
+      return el("div", { class: "line" }, [el("span", { text: "Demande du " + new Date(d.at).toLocaleDateString("fr-BE") }), d.statut === "planifiée" ? el("span", { class: "pill mt", text: "prévu le " + sdate(d.date) }) : el("span", { class: "pill am", text: "envoyée" })]);
+    }))] : [])));
+  }
+  function demandesMgr() {
+    var list2 = pendingDemandes();
+    if (!list2.length) return null;
+    var lbl = {}; QUAND.forEach(function (x) { lbl[x[0]] = x[1]; });
+    return card("Demandes d'entretien", list2.length + " en attente", el("div", { class: "card-body vlist" }, list2.map(function (x) {
+      return el("div", { class: "vrow" }, [avatar(x.aid, 34), el("div", null, [el("b", { text: x.aid + " · " + (lbl[x.d.quand] || "") }), el("span", { class: "muted", text: x.d.motif || "Pas de motif précisé" })]), el("span", { class: "muted", text: new Date(x.d.at).toLocaleDateString("fr-BE") }),
+        el("button", { class: "btn sm primary", type: "button", text: "Planifier", onclick: function () {
+          var quiet = null, today = todayIso();
+          allDays().forEach(function (d) { if (!quiet && !d.sat && d.date >= today && isWork(d.cells[x.aid])) quiet = d; });
+          openMeeting({ type: "individuelle", assistant: x.aid, date: quiet ? quiet.date : today, debut: "13:00", fin: "13:30", demande: x });
+        } })]);
+    })));
   }
 
   /* ---------- accès & outils (responsable) ---------- */
@@ -2271,6 +2418,7 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
     sub("vo-" + u, db.collection("votes/" + u + "/periodes"), function (x) { S.votes[u] = byId(x); });
     sub("rc-" + u, db.collection("pointages/" + u + "/recues"), function (x) { S.recues[u] = byId(x); });
     sub("sj-" + u, db.collection("pointages/" + u + "/sujets"), function (x) { S.sujets[u] = byId(x); });
+    sub("dm-" + u, db.collection("pointages/" + u + "/demandes"), function (x) { S.demandes[u] = byId(x); });
   }
   function connect() {
     sub("news", db.collection("news"), function (s) { S.news = docs(s); });
@@ -2287,6 +2435,8 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
     if (owner) {
       sub("boite", db.collection("boite"), function (s) { S.boite = docs(s); });
       sub("taches", db.collection("taches"), function (s) { S.taches = byId(s); });
+      var p0 = periodOf(todayIso());
+      [p0, prevPeriod(p0), prevPeriod(prevPeriod(p0))].forEach(function (p) { sub("ad-" + p, db.collection("dentistes/" + p + "/avis"), function (s) { S.avisDent[p] = byId(s); }); });
       sub("seen", db.collection("pointages"), function (s) { S.seen = byId(s); Object.keys(S.seen).forEach(watchAccount); });
       state.assistants.forEach(function (a) {
         var k = slug(a.id);
@@ -2304,6 +2454,7 @@ dialog:has(.wizard) { width: min(620px, calc(100vw - 24px)); }
       sub("myrecup", db.collection("pointages/" + uid + "/recup"), function (s) { S.myRecup = docs(s); });
       sub("mytasks", db.collection("pointages/" + uid + "/recues"), function (s) { S.myTasks = byId(s); });
       sub("mysujets", db.collection("pointages/" + uid + "/sujets"), function (s) { S.mySujets = byId(s); });
+      sub("mydem", db.collection("pointages/" + uid + "/demandes"), function (s) { S.myDemandes = byId(s); });
       // signale ce compte à la responsable, une seule fois
       db.doc("pointages/" + uid).get().then(function (s) { if (!s.exists) return db.doc("pointages/" + uid).set({ vu: Date.now() }); }).catch(function () {});
     }
