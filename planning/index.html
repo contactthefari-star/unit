@@ -3390,12 +3390,13 @@ details.later { margin-top: 6px; border-top: 1px dashed var(--line); padding-top
   /* ---------- contrats ---------- */
   var CT_TYPES = ["CDI", "CDD", "Étudiant", "Intérim", "Remplacement", "Stage / formation"];
   var CT_REGLE = "En Belgique, des CDD qui se suivent deviennent en principe un CDI. Exception : au maximum 4 CDD d'au moins 3 mois sur 2 ans (ou 6 CDD d'au moins 6 mois sur 3 ans avec l'accord de l'inspection). Vérifie toujours avec Liantis avant de signer.";
+  function deN(n) { return /^[AEIOUYHÀÂÉÈÊÎÏÔÛ]/i.test(n) ? "d'" + n : "de " + n; }
   function daysTo(iso) { return Math.round((new Date(iso + "T12:00:00") - new Date(todayIso() + "T12:00:00")) / 86400000); }
   function contratTxt(ct) { if (!ct) return "Contrat pas encore encodé"; return ct.type + (ct.debut ? " depuis le " + sdate(ct.debut) : "") + (ct.type !== "CDI" && ct.fin ? " · jusqu'au " + sdate(ct.fin) + " " + ct.fin.slice(0, 4) : ""); }
   function contratPill(aid, ct) {
     ct = ct || S.contrats[slug(aid)];
     var n = ct && ct.fin && ct.type !== "CDI" ? daysTo(ct.fin) : null;
-    var tone = !ct ? "am" : n != null && n <= 60 && !ct.decision ? "bad" : "mu";
+    var tone = !ct ? "am" : n != null && n <= 30 && !ct.decision ? "bad" : "mu";
     return el("button", { class: "m-ct", type: "button", onclick: function () { openContrat(aid); } }, [el("span", { class: "pill " + tone, text: !ct ? "à encoder" : ct.type }), el("span", { text: !ct ? "Encoder son contrat" : contratTxt(ct).replace(ct.type, "").replace(/^ · | · $/g, "").trim() + (n != null && !ct.decision ? (n < 0 ? " · terminé" : " · dans " + n + " j") : "") })]);
   }
   function openContrat(aid) {
@@ -3411,7 +3412,7 @@ details.later { margin-top: 6px; border-top: 1px dashed var(--line); padding-top
     var form = el("form", { method: "dialog" }, [el("div", { class: "dlg-title" }, [avatar(aid, 36), el("h3", { text: "Contrat de " + aid })]),
       el("label", { class: "field" }, ["Type", fT]), el("label", { class: "field" }, ["Début", fD]), finBox,
       el("label", { class: "field" }, ["Me rappeler le (facultatif)", fR]), el("label", { class: "field" }, ["Note", fX]),
-      el("p", { class: "ctx", text: "Je te préviens 60 jours avant la fin, et je te dis quoi faire." }), acts("Enregistrer")]);
+      el("p", { class: "ctx", text: "Je te préviens 30, 15 et 7 jours avant la fin, et je te dis quoi faire." }), acts("Enregistrer")]);
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
       var doc = Object.assign({}, ct, { type: fT.value, debut: fD.value, fin: fT.value === "CDI" ? "" : fF.value, renouvellements: +fN.value || 0, rappel: fR.value, rappelVu: fR.value !== ct.rappel ? null : ct.rappelVu || null, note: fX.value.trim(), at: Date.now() });
@@ -3725,7 +3726,11 @@ details.later { margin-top: 6px; border-top: 1px dashed var(--line); padding-top
     if (subs.contrats) state.assistants.forEach(function (a) {
       var k = slug(a.id), ct = S.contrats[k];
       if (!ct) { add2("Contrats", "Le contrat de " + a.id + " n'est pas encore encodé : je ne peux pas te prévenir de sa fin.", "L'encoder", function () { openContrat(a.id); }); return; }
-      if (ct.fin && ct.type !== "CDI" && !ct.decision) { var n = daysTo(ct.fin); if (n < 0) add2("Contrats", "Le " + ct.type + " de " + a.id + " est terminé depuis le " + sdate(ct.fin) + " et rien n'est décidé.", "Décider maintenant", function () { openDecision(a.id); }); else if (n <= 60) add2("Contrats", "Le " + ct.type + " de " + a.id + " se termine le " + sdate(ct.fin) + " (dans " + n + " jours). Je te dis quoi faire.", "Décider", function () { openDecision(a.id); }); }
+      if (ct.fin && ct.type !== "CDI" && !ct.decision) { var n = daysTo(ct.fin); if (n < 0) add2("Contrats", "Le " + ct.type + " " + deN(a.id) + " est terminé depuis le " + sdate(ct.fin) + " et rien n'est décidé.", "Décider maintenant", function () { openDecision(a.id); }); else if (n <= 30) {
+        // 3 paliers : J-30, J-15, J-7. Chaque palier est un rappel distinct (« Plus tard » sur l'un n'efface pas le suivant).
+        var pal = n <= 7 ? "Dernier rappel" : n <= 15 ? "Deuxième rappel" : "Premier rappel";
+        add2("Contrats", pal + " : le " + ct.type + " " + deN(a.id) + " se termine le " + fdate(ct.fin) + " (dans " + n + " jour" + (n > 1 ? "s" : "") + "). Je te dis quoi faire.", "Décider", function () { openDecision(a.id); });
+      } }
       if (ct.rappel && ct.rappel <= today && !ct.rappelVu) add2("Contrats", "Rappel pour le contrat de " + a.id + (ct.note ? " : " + ct.note : "."), "C'est fait", function () { write(db.doc("contrats/" + k).update({ rappelVu: Date.now() })); });
     });
     // brouillons de planning
