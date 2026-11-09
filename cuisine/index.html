@@ -14,6 +14,14 @@
 <link rel="apple-touch-icon" href="/cuisine/icon-192.png">
 <link rel="icon" href="/cuisine/icon-192.png">
 <base href="/cuisine/">
+<script>(function(){try{if(localStorage.getItem('keto:gate')!=='fb41a3d2be73593b4382cc93a9e1fb74ca7c9e7af15e3246f52ac73c38c7c40d')document.documentElement.classList.add('locked')}catch(e){document.documentElement.classList.add('locked')}})();</script>
+<style>html.locked .wrap,html.locked .tabbar{display:none!important}#gate{display:none}html.locked #gate{display:grid;min-height:100vh;place-items:center;padding:24px max(16px,env(safe-area-inset-left,0px));box-sizing:border-box}
+#gate .gbox{width:min(360px,100%);background:var(--surface);border-radius:24px;padding:28px 22px;box-shadow:var(--shadow-lg);text-align:center}
+#gate img{width:72px;height:72px;border-radius:20px}#gate h1{font-size:26px;margin:12px 0 4px}#gate p{color:var(--muted);margin:0 0 18px}
+#gate input{width:100%;box-sizing:border-box;text-align:center;font-size:28px;letter-spacing:.35em;padding:12px;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:var(--fg);font-variant-numeric:tabular-nums}
+#gate input:focus{outline:none;border-color:var(--accent)}#gate button{all:unset;cursor:pointer;display:block;box-sizing:border-box;width:100%;margin-top:12px;padding:15px;border-radius:14px;background:var(--accent);color:var(--bg);font-weight:800;font-size:16px}
+#gate .gerr{color:#C2452D;font-weight:700;min-height:22px;margin:10px 0 0}</style>
+
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700;800&display=swap">
@@ -481,6 +489,11 @@ body.helper .wrap{padding-bottom:calc(32px + env(safe-area-inset-bottom,0px))}
 
 </head>
 <body>
+<div id="gate" role="dialog" aria-label="Code familial"><form class="gbox" id="gateForm"><img src="icon-192.png" alt=""><h1>Ma cuisine keto</h1><p>Entre le code familial pour ouvrir l’app.</p><input id="gateIn" type="password" inputmode="numeric" autocomplete="off" maxlength="6" placeholder="••••••" aria-label="Code familial"><button type="submit">Ouvrir</button><p class="gerr" id="gateErr" role="alert"></p></form></div>
+<script>(function(){const H='fb41a3d2be73593b4382cc93a9e1fb74ca7c9e7af15e3246f52ac73c38c7c40d',f=document.getElementById('gateForm'),i=document.getElementById('gateIn'),er=document.getElementById('gateErr');
+async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+f.onsubmit=async e=>{e.preventDefault();const v=i.value.replace(/\D/g,'');if((await sha('cuisine-keto:'+v))===H){try{localStorage.setItem('keto:gate',H)}catch(x){}document.documentElement.classList.remove('locked');window.scrollTo(0,0)}else{er.textContent='Code incorrect. Réessaie.';i.value='';i.focus()}};
+if(document.documentElement.classList.contains('locked'))setTimeout(()=>i.focus(),300)})();</script>
 <div class="wrap">
 <header><div class="hello"><span id="todayLbl"></span><h1 id="hello">Ma cuisine keto</h1></div><span class="flame" id="flame" title="Jours d’affilée"></span></header>
 
