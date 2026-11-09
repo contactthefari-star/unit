@@ -3137,7 +3137,7 @@ details.later { margin-top: 6px; border-top: 1px dashed var(--line); padding-top
   /* ---------- sauvegardes automatiques ---------- */
   function backupPaths() {
     var p0 = periodOf(todayIso()), ps = [p0, prevPeriod(p0), prevPeriod(prevPeriod(p0))];
-    var cols = ["news", "reunions", "config", "equipe", "palmares", "impact", "acces", "boite", "taches", "codes", "photos", "pointages", "contrats", "moi/conges/items"];
+    var cols = ["news", "reunions", "config", "equipe", "palmares", "impact", "acces", "boite", "taches", "codes", "photos", "pointages", "contrats", "moi", "moi/conges/items", "moi/todo/items"];
     state.assistants.forEach(function (a) { var k = slug(a.id); cols.push("heures/" + k + "/jours", "recup/" + k + "/items", "evals/" + k + "/periodes", "maladies/" + k + "/jours", "dossiers/" + k + "/entretiens"); });
     ps.forEach(function (p) { cols.push("dentistes/" + p + "/avis", "dentistes/" + p + "/auto"); });
     Object.keys(S.acces).concat(Object.keys(S.seen)).filter(function (u, i, a) { return a.indexOf(u) === i; }).forEach(function (u) {
@@ -3175,6 +3175,35 @@ details.later { margin-top: 6px; border-top: 1px dashed var(--line); padding-top
       return ch.then(function () { if (withPlanning && j.planning) { state = j.planning; mark("restore|" + b.at); } render(); toast(n + " éléments restaurés." + (withPlanning ? " Publie pour remettre le planning." : "")); });
     }).catch(function () { toast("Impossible de lire cette sauvegarde."); });
   }
+  // Importer un fichier de sauvegarde (par exemple pour installer l'application sur un autre compte Claude).
+  // Ce qui dépend de l'ancien compte n'est pas repris : comptes personnels liés, code responsable, sauvegardes et photos.
+  function importBackupFile() {
+    var inp = el("input", { type: "file", accept: "application/json,.json", style: "display:none" });
+    inp.addEventListener("change", function () {
+      var f = inp.files && inp.files[0]; inp.remove(); if (!f) return;
+      f.text().then(function (t) {
+        var j = JSON.parse(t);
+        if (!j || j.app !== "lensdental" || !j.donnees) throw new Error("format");
+        var keys = Object.keys(j.donnees).filter(function (p) {
+          var seg = p.split("/");
+          if (seg[0] === "sauvegardes" || seg[0] === "photos" || p === "config/responsable") return false;
+          if ((seg[0] === "acces" || seg[0] === "pointages" || seg[0] === "propositions" || seg[0] === "suivi" || seg[0] === "votes") && seg[1] && seg[1].indexOf("k-") !== 0) return false;
+          return true;
+        });
+        dlg.textContent = "";
+        var form = el("form", { method: "dialog" }, [el("h3", { text: "Importer cette sauvegarde ?" }), el("p", { class: "ctx", text: "Sauvegarde du " + new Date(j.at).toLocaleString("fr-BE") + " · " + keys.length + " éléments" + (j.planning ? " + le planning" : "") + "." }),
+          el("p", { text: "Les données importées remplacent celles qui portent le même nom ici. Les codes tablette des filles sont repris ; tu choisiras ton propre code responsable." }), acts("Importer")]);
+        form.addEventListener("submit", function (ev) {
+          ev.preventDefault(); closeDlg(); toast("Import en cours…");
+          var ch = Promise.resolve(), n = 0;
+          keys.forEach(function (p) { ch = ch.then(function () { var v = j.donnees[p]; if (p === "config/ambiance" && v) { v = Object.assign({}, v); delete v.photos; } return db.doc(p).set(v).then(function () { n++; }, function () {}); }); });
+          ch.then(function () { if (j.planning && j.planning.months) { state = j.planning; mark("import|" + j.at); } render(); confetti(); toast(n + " éléments importés." + (j.planning ? " Clique sur « Publier » en bas pour enregistrer le planning." : "")); });
+        });
+        dlg.appendChild(form); showDlg();
+      }).catch(function () { toast("Ce fichier n'est pas une sauvegarde Lensdental."); });
+    });
+    document.body.appendChild(inp); inp.click();
+  }
   function downloadBackup(b) {
     fetch(b.url).then(function (r) { return r.text(); }).then(function (t) {
       if (!downloadsApi) { toast("Le téléchargement n'est pas disponible ici."); return; }
@@ -3184,7 +3213,7 @@ details.later { margin-top: 6px; border-top: 1px dashed var(--line); padding-top
   function backupCard() {
     var list2 = S.backups.slice().sort(function (a, b) { return b.at - a.at; });
     return card("Sauvegardes", "Automatique chaque jour quand tu ouvres ton espace · les 30 dernières sont gardées", el("div", { class: "card-body" }, [
-      el("div", { class: "row-acts" }, [el("button", { class: "btn primary sm", type: "button", text: "Sauvegarder maintenant", disabled: assetsApi ? null : "disabled", onclick: function () { toast("Sauvegarde en cours…"); doBackup(false).then(function () { confetti(); toast("Sauvegarde faite."); }, function () { toast("La sauvegarde n'a pas marché."); }); } }),
+      el("div", { class: "row-acts" }, [el("button", { class: "btn sm", type: "button", text: "Importer une sauvegarde (fichier)", onclick: importBackupFile }), el("button", { class: "btn primary sm", type: "button", text: "Sauvegarder maintenant", disabled: assetsApi ? null : "disabled", onclick: function () { toast("Sauvegarde en cours…"); doBackup(false).then(function () { confetti(); toast("Sauvegarde faite."); }, function () { toast("La sauvegarde n'a pas marché."); }); } }),
         assetsApi ? null : el("span", { class: "muted", text: "Disponible sur le compte de la responsable." })]),
       list2.length ? el("div", { class: "mini" }, list2.slice(0, 10).map(function (b) {
         var conf = ui.restoreAsk === b._id;
