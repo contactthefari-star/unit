@@ -1,0 +1,175 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Geist+Mono:wght@500;600&display=block">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0A0A0A}
+#v{position:relative;width:1080px;height:1920px;overflow:hidden;background:#0A0A0A;font-family:"Manrope",sans-serif;color:#fff}
+.S{position:absolute;inset:0;visibility:hidden;overflow:hidden}
+.full{position:absolute;inset:0;background:center/cover no-repeat}
+.fimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mono{font-family:"Geist Mono",monospace;letter-spacing:.18em;text-transform:uppercase;font-weight:500}
+.gold{color:#F2A91F}
+.T{position:absolute;left:80px;right:80px;font-weight:800;letter-spacing:-.04em;line-height:1.02}
+.ln{display:block;overflow:hidden;padding-bottom:.08em}
+.ln>span{display:inline-block}
+.neon{position:absolute;height:2px;background:#fff;box-shadow:0 0 12px rgba(255,255,255,.9),0 0 30px rgba(255,255,255,.5);transform-origin:left}
+.frame{position:absolute;border:2px solid rgba(255,255,255,.92);box-shadow:0 0 18px rgba(255,255,255,.45),inset 0 0 18px rgba(255,255,255,.15);border-radius:36px}
+.glass{position:absolute;border-radius:40px;background:linear-gradient(160deg,rgba(255,255,255,.12),rgba(255,255,255,.03));backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1.5px solid rgba(255,255,255,.18);box-shadow:0 40px 90px -30px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.25)}
+.shadeB{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.55) 0%,rgba(10,10,10,0) 28%,rgba(10,10,10,0) 50%,rgba(10,10,10,.85) 100%)}
+canvas{position:absolute;inset:0}
+#orb{position:absolute;left:540px;top:820px;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;
+  background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.95) 0,rgba(255,255,255,.35) 6%,rgba(255,255,255,0) 18%),
+  radial-gradient(circle at 50% 62%,rgba(255,196,90,.95) 0,rgba(242,169,31,.75) 22%,rgba(200,90,10,.35) 48%,rgba(20,12,6,.2) 70%,rgba(255,255,255,.08) 100%);
+  box-shadow:0 0 140px rgba(242,169,31,.55),0 0 320px rgba(242,169,31,.25),inset 0 0 60px rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.28)}
+#ray{position:absolute;left:540px;top:-200px;width:700px;height:1300px;margin-left:-350px;background:linear-gradient(180deg,rgba(255,240,210,.32),rgba(255,220,160,0));clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);filter:blur(40px)}
+.floor{position:absolute;left:0;right:0;bottom:0;height:760px;background:linear-gradient(180deg,#121212,#050505)}
+.ic{position:absolute;width:250px;height:290px;border-radius:34px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+.ic .av{width:150px;height:150px;border-radius:50%;background:center bottom/cover no-repeat,#1c1c1e;border:2px solid rgba(255,255,255,.25)}
+.ic b{font-size:30px;font-weight:700;letter-spacing:-.01em;color:rgba(255,255,255,.9)}
+.btn{display:inline-block;border:2px solid #fff;box-shadow:0 0 22px rgba(255,255,255,.45);border-radius:999px;padding:30px 56px;font-weight:800;font-size:50px;letter-spacing:-.02em}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+#grain{position:absolute;inset:0;opacity:.05;mix-blend-mode:overlay}
+</style></head><body><div id="v">
+
+<!-- 1 HOOK -->
+<div class="S" id="s1">
+  <div class="neon" id="n1" style="left:80px;top:1010px;width:920px"></div>
+  <div class="T" id="t1" style="top:860px;font-size:112px;white-space:nowrap"><span class="ln"><span>Tu sais vendre ?</span></span></div>
+</div>
+<!-- 2 ORB -->
+<div class="S" id="s2"><div id="ray"></div><canvas id="bk2" width="1080" height="1920"></canvas><div id="orb"></div>
+  <div class="T" id="t2" style="top:1240px;font-size:104px;text-align:center"><span class="ln"><span style="font-weight:500;color:rgba(255,255,255,.8)">Maintenant,</span></span><span class="ln"><span>vends <span class="gold">l’IA.</span></span></span></div>
+</div>
+<!-- 3 REAL photo -->
+<div class="S" id="s3"><div class="full" id="ph3" style="background-image:url(a/p_point.jpg);background-position:44% 40%"></div><div class="shadeB"></div>
+  <div class="neon" id="n3" style="left:80px;top:1480px;width:520px"></div>
+  <div class="mono" id="l3" style="position:absolute;left:80px;top:1505px;font-size:28px">29.10.2026 — Saint-Ghislain</div>
+  <div class="T" id="t3" style="top:1300px;font-size:84px"><span class="ln"><span>Le réseau belge <span class="gold">décolle.</span></span></span></div>
+</div>
+<!-- 4 REAL clips montage -->
+<div class="S" id="s4"><img class="fimg" id="v4"><div class="shadeB" style="opacity:.6"></div></div>
+<!-- 5 AGENTS dashboard -->
+<div class="S" id="s5"><canvas id="bk5" width="1080" height="1920"></canvas>
+  <div class="glass" id="dash" style="left:70px;top:430px;width:940px;height:1060px"></div>
+  <div id="icons"></div>
+  <div class="T" id="t5" style="top:1540px;font-size:84px;text-align:center"><span class="ln"><span>8 agents IA. <span class="gold">24h/24.</span></span></span></div>
+</div>
+<!-- 6 MAP -->
+<div class="S" id="s6"><canvas id="map" width="1080" height="1920"></canvas>
+  <div class="T" id="t6a" style="top:330px;font-size:300px;text-align:center;font-weight:800;letter-spacing:-.07em">2<span class="gold">/</span>3</div>
+  <div class="T" id="t6b" style="top:1510px;font-size:62px;text-align:center;line-height:1.12"><span class="ln"><span>des entreprises belges</span></span><span class="ln"><span style="color:rgba(255,255,255,.75);font-weight:600">n’utilisent pas encore l’IA.</span></span></div>
+</div>
+<!-- 7 MONEY -->
+<div class="S" id="s7"><canvas id="bk7" width="1080" height="1920"></canvas>
+  <div class="glass" id="g7" style="left:90px;top:480px;width:900px;height:980px"></div>
+  <div class="frame" id="f7" style="left:90px;top:480px;width:900px;height:980px;border-radius:40px"></div>
+  <div class="mono" id="k7" style="position:absolute;left:160px;top:560px;font-size:24px;color:rgba(255,255,255,.7)">Par client Business+ signé</div>
+  <div class="T" id="n7" style="left:150px;top:610px;font-size:260px;letter-spacing:-.07em"><span id="cnt">0</span><span class="gold"> €</span></div>
+  <div id="bars" style="position:absolute;left:160px;top:960px;width:760px;height:400px;display:flex;align-items:flex-end;gap:34px"></div>
+  <div class="T" id="t7" style="top:1500px;font-size:62px;text-align:center"><span class="ln"><span class="gold">+140 € / an</span></span><span class="ln"><span style="color:rgba(255,255,255,.8);font-weight:600;font-size:54px">tant que ton client reste.</span></span></div>
+</div>
+<!-- 8 REAL team -->
+<div class="S" id="s8"><img class="fimg" id="v8"><div class="full" id="ph8" style="background-image:url(a/p_wide.jpg);background-position:45% 50%;display:none"></div><div class="shadeB"></div>
+  <div class="T" id="t8" style="top:1360px;font-size:96px"></div>
+</div>
+<!-- 9 REAL crowd slow -->
+<div class="S" id="s9"><img class="fimg" id="v9"><div class="shadeB"></div>
+  <div class="T" id="t9" style="top:1330px;font-size:100px"><span class="ln"><span>Le réseau</span></span><span class="ln"><span class="gold">est lancé.</span></span></div>
+</div>
+<!-- 10 END -->
+<div class="S" id="s10"><div id="ray10" style="position:absolute;left:540px;top:-300px;width:800px;height:1500px;margin-left:-400px;background:linear-gradient(180deg,rgba(255,225,170,.28),rgba(255,225,170,0));clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);filter:blur(46px)"></div>
+  <div class="floor"></div>
+  <img src="a/img22.png" id="lg" style="position:absolute;left:540px;top:820px;width:170px;margin:-116px 0 0 -85px;filter:drop-shadow(0 0 40px rgba(242,169,31,.55))">
+  <img src="a/img22.png" id="lgr" style="position:absolute;left:540px;top:1060px;width:170px;margin:0 0 0 -85px;transform:scaleY(-1);opacity:.22;-webkit-mask-image:linear-gradient(180deg,transparent,#000);filter:blur(2px)">
+  <div class="T" id="e1" style="top:330px;font-size:96px;text-align:center"><span class="ln"><span>Deviens partenaire</span></span><span class="ln"><span class="gold">Limova Belgique.</span></span></div>
+  <div id="e2" style="position:absolute;left:0;right:0;top:1300px;text-align:center"><span class="btn">Commente « PARTENAIRE »</span></div>
+  <div class="mono" id="e3" style="position:absolute;left:0;right:0;top:1460px;text-align:center;font-size:24px;color:rgba(255,255,255,.55)">limovabelgique.com</div>
+</div>
+<canvas id="grain" width="540" height="960" style="width:1080px;height:1920px"></canvas>
+<div id="flash"></div>
+</div>
+<script>
+const C=x=>Math.max(0,Math.min(1,x)),eo=x=>1-Math.pow(1-x,5),eio=x=>x<.5?16*x**5:1-Math.pow(-2*x+2,5)/2,lerp=(a,b,p)=>a+(b-a)*p,P=(t,a,d)=>C((t-a)/d);
+const $=id=>document.getElementById(id);
+// seeded random
+function rng(s){return()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+// bokeh painter
+function makeBokeh(id,seed,n){const r=rng(seed);return Array.from({length:n},()=>({x:r()*1080,y:r()*1920,R:30+r()*110,a:.05+r()*.18,g:r()<.65,vx:(r()-.5)*14,vy:-6-r()*16}));}
+const BK={bk2:makeBokeh('bk2',3,26),bk5:makeBokeh('bk5',5,30),bk7:makeBokeh('bk7',7,34)};
+function bokeh(id,t){const c=$(id),x=c.getContext('2d');x.clearRect(0,0,1080,1920);
+  const g=x.createRadialGradient(540,700,0,540,700,1100);g.addColorStop(0,'#1C1C1E');g.addColorStop(1,'#0A0A0A');x.fillStyle=g;x.fillRect(0,0,1080,1920);
+  for(const b of BK[id]){const px=b.x+b.vx*t,py=((b.y+b.vy*t)%1920+1920)%1920;const gr=x.createRadialGradient(px,py,0,px,py,b.R);
+    const col=b.g?'242,169,31':'255,255,255';gr.addColorStop(0,`rgba(${col},${b.a})`);gr.addColorStop(.7,`rgba(${col},${b.a*.6})`);gr.addColorStop(1,`rgba(${col},0)`);x.fillStyle=gr;x.beginPath();x.arc(px,py,b.R,0,7);x.fill();}}
+// Belgium dot map
+const BE=[[2.54,51.09],[3.37,51.37],[3.9,51.21],[4.24,51.37],[4.78,51.5],[5.1,51.43],[5.85,51.16],[5.64,50.81],[6.03,50.72],[6.4,50.32],[6.13,50.13],[5.78,49.53],[5.47,49.5],[4.86,49.8],[4.8,50.15],[4.23,49.96],[4.15,50.26],[3.31,50.5],[2.65,50.8]];
+const proj=([lo,la])=>[90+(lo-2.45)/(6.45-2.45)*900,700+(51.55-la)/(51.55-49.45)*740];
+const poly=BE.map(proj);
+function inside(px,py){let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const[xi,yi]=poly[i],[xj,yj]=poly[j];if((yi>py)!=(yj>py)&&px<(xj-xi)*(py-yi)/(yj-yi)+xi)c=!c;}return c;}
+const DOTS=[];const rr=rng(11);for(let y=680;y<1460;y+=22)for(let x=60;x<1040;x+=22)if(inside(x,y))DOTS.push({x,y,lit:rr()<1/3,d:rr()});
+const SG=proj([3.82,50.45]);
+function map(t){const c=$('map'),x=c.getContext('2d');x.fillStyle='#0A0A0A';x.fillRect(0,0,1080,1920);
+  const rev=P(t,12.05,.9),lit=P(t,12.9,.8);
+  for(const d of DOTS){const k=C((rev*1.6)-(Math.hypot(d.x-SG[0],d.y-SG[1])/900));if(k<=0)continue;
+    const on=d.lit&&lit>d.d;x.fillStyle=on?`rgba(242,169,31,${.95*k})`:`rgba(255,255,255,${.22*k})`;x.beginPath();x.arc(d.x,d.y,on?6:4.5,0,7);x.fill();
+    if(on){x.fillStyle=`rgba(242,169,31,${.18*k})`;x.beginPath();x.arc(d.x,d.y,14,0,7);x.fill();}}
+  const pu=(t*1.2)%1;x.strokeStyle=`rgba(242,169,31,${(1-pu)*rev})`;x.lineWidth=3;x.beginPath();x.arc(SG[0],SG[1],12+60*pu,0,7);x.stroke();
+  x.fillStyle=`rgba(255,255,255,${rev})`;x.beginPath();x.arc(SG[0],SG[1],10,0,7);x.fill();}
+// grain
+function grain(f){const c=$('grain'),x=c.getContext('2d'),im=x.createImageData(540,960),r=rng(1000+f);for(let i=0;i<im.data.length;i+=4){const v=r()*255;im.data[i]=im.data[i+1]=im.data[i+2]=v;im.data[i+3]=255;}x.putImageData(im,0,0);}
+// icons grid
+const AG=[['img05','Téléphone'],['img04','Réseaux'],['img03','SEO'],['img06','Général'],['img01','Compta'],['img02','Juridique'],['img07','RH'],['img08','Commercial']];
+const icons=AG.map(([n,l],i)=>{const d=document.createElement('div');d.className='ic';const col=i%3,row=Math.floor(i/3);
+  d.style.left=(110+col*290)+'px';d.style.top=(480+row*330)+'px';if(i>=6){d.style.left=(255+(i-6)*290)+'px';}
+  d.innerHTML=`<div class="av" style="background-image:url(a/${n}.webp)"></div><b>${l}</b>`;$('icons').appendChild(d);return d;});
+// bars
+const bars=[['An 1',280],['An 2',420],['An 3',560]].map(([l,v],i)=>{const w=document.createElement('div');w.style.cssText='flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center';
+  w.innerHTML=`<div class="v" style="font-weight:800;font-size:48px;margin-bottom:14px">${v} €</div><div class="b" style="width:100%;height:${v/560*290}px;border-radius:18px 18px 6px 6px;transform-origin:bottom;background:${i?'linear-gradient(180deg,rgba(255,255,255,.9),rgba(255,255,255,.35))':'linear-gradient(180deg,#F7C64A,#E08A12)'};box-shadow:0 0 30px ${i?'rgba(255,255,255,.25)':'rgba(242,169,31,.5)'}"></div><div class="mono" style="font-size:22px;margin-top:16px;color:rgba(255,255,255,.65)">${l}</div>`;
+  $('bars').appendChild(w);return w;});
+// text helpers
+function lines(el,t,a,stag=.08,dur=.45){el.querySelectorAll('.ln>span').forEach((s,i)=>{const p=eo(P(t,a+i*stag,dur));s.style.transform=`translateY(${(1-p)*105}%)`;});}
+function out(el,t,b,d=.2){const q=P(t,b-d,d);el.style.opacity=1-q;el.style.filter=q?`blur(${q*8}px)`:'none';el.style.transform=(el.dataset.base||'')+` scale(${1-q*.04})`;}
+const scenes=[['s1',0,1.5],['s2',1.5,3],['s3',3,6],['s4',6,9],['s5',9,12],['s6',12,15],['s7',15,19],['s8',19,23],['s9',23,26],['s10',26,30]];
+async function frame(img,clip,idx){idx=Math.max(1,Math.min(78,Math.round(idx)));const src=`hd/${clip}/${String(idx).padStart(3,'0')}.jpg`;if(!img.src.endsWith(src)){img.src=src;await img.decode().catch(()=>{});}}
+window.seek=async function(t){
+  const f=Math.round(t*30);
+  for(const[id,a,b]of scenes)$(id).style.visibility=(t>=a&&t<b)?'visible':'hidden';
+  let fl=0;const W=[];
+  if(t<1.5){$('n1').style.transform=`scaleX(${eio(P(t,.05,.6))})`;lines($('t1'),t,.35,0,.5);}
+  else if(t<3){const z=1-eo(P(t,1.5,.22));$('s2').style.transform=`scale(${1+z*2.5})`;$('s2').style.filter=z>.02?`blur(${z*24}px)`:'none';
+    bokeh('bk2',t);const pu=1+.03*Math.sin(t*5);$('orb').style.transform=`scale(${pu*lerp(.85,1,eo(P(t,1.5,.8)))})`;lines($('t2'),t,1.85,.12);out($('t2'),t,3,.15);
+    if(t<1.57)fl=.6*(1-P(t,1.5,.07));}
+  else if(t<6){const p=P(t,3,3);$('ph3').style.transform=`scale(${1.12-.08*eo(p)})`;$('ph3').style.filter=`blur(${(1-eo(P(t,3,.6)))*18}px)`;
+    $('n3').style.transform=`scaleX(${eio(P(t,3.5,.6))})`;const lp=eo(P(t,3.8,.5));$('l3').style.opacity=lp;$('l3').style.transform=`translateX(${(1-lp)*-24}px)`;lines($('t3'),t,3.6);out($('t3'),t,6);}
+  else if(t<9){const k=Math.floor((t-6)/.75),lt=(t-6)-k*.75;const clip=['arrive','crowd','bar','coat'][Math.min(3,k)];
+    let idx=lt*30+8; if(k===3){const r=lt/.75;idx=8+(r<.3?r*.75*30:(r<.7?.225*30+(r-.3)*.75*30*.3:.225*30+.09*30+(r-.7)*.75*30*1.6));}
+    W.push(frame($('v4'),clip,idx));$('v4').style.transform=`scale(${1.06+.04*(lt/.75)})`;if(lt<.07&&k>0)fl=.25*(1-lt/.07);}
+  else if(t<12){bokeh('bk5',t);const dp=eo(P(t,9,.6));$('dash').style.opacity=dp;$('dash').style.transform=`translateY(${(1-dp)*80}px) scale(${lerp(.94,1,dp)})`;
+    icons.forEach((d,i)=>{const p=eo(P(t,9.35+i*.17,.5));const on=t>9.5+i*.17;d.style.opacity=p;d.style.transform=`translateY(${(1-p)*40}px)`;
+      d.querySelector('.av').style.boxShadow=on?`0 0 0 3px #F2A91F,0 0 40px rgba(242,169,31,${.5+.2*Math.sin(t*6+i)})`:'none';
+      d.querySelector('.av').style.borderColor=on?'#F2A91F':'rgba(255,255,255,.25)';d.style.background=on?'rgba(242,169,31,.07)':'transparent';});
+    lines($('t5'),t,10.3);out($('t5'),t,12);}
+  else if(t<15){map(t);const p=eo(P(t,12.2,.6));const n=$('t6a');n.style.opacity=p;n.style.transform=`scale(${lerp(.7,1,p)})`;lines($('t6b'),t,13.1,.15);out($('t6b'),t,15);}
+  else if(t<19){bokeh('bk7',t);const gp=eo(P(t,15,.5));$('g7').style.opacity=gp;$('g7').style.transform=`scale(${lerp(.95,1,gp)})`;
+    const fp=P(t,15.2,.7);$('f7').style.opacity=fp>0?1:0;$('f7').style.clipPath=`inset(0 ${100-fp*100}% 0 0 round 40px)`;
+    $('k7').style.opacity=eo(P(t,15.3,.4));$('cnt').textContent=Math.round(280*eo(P(t,15.25,1.2)));$('n7').style.opacity=eo(P(t,15.2,.3));
+    if(t>=16.45&&t<16.52)fl=.5*(1-(t-16.45)/.07);
+    bars.forEach((w,i)=>{const p=eo(P(t,16.6+i*.35,.6));w.querySelector('.b').style.transform=`scaleY(${p})`;w.querySelector('.v').style.opacity=C((p-.5)*2);w.style.opacity=C(p*3);});
+    lines($('t7'),t,17.7);out($('t7'),t,19);}
+  else if(t<23){const words=['Formation.','CRM.','Leads.'];const k=Math.min(2,Math.floor((t-19)/1.333)),lt=(t-19)-k*1.333;
+    const clip=[['speak',8],['p',0],['bald',8]][k];const v=$('v8'),ph=$('ph8');
+    if(clip[0]==='p'){v.style.display='none';ph.style.display='block';ph.style.transform=`scale(${1.12-.06*lt/1.333})`;}
+    else{v.style.display='block';ph.style.display='none';W.push(frame(v,clip[0],clip[1]+lt*30));v.style.transform=`scale(${1.04+.04*lt/1.333})`;}
+    const T8=$('t8');T8.innerHTML=`<span class="ln"><span class="${k==2?'gold':''}">${words[k]}</span></span>`;lines(T8,t,19+k*1.333+.05,0,.35);if(lt<.06&&k>0)fl=.25*(1-lt/.06);}
+  else if(t<26){W.push(frame($('v9'),'smile',4+(t-23)*30*.5));$('v9').style.transform=`scale(${1.05+.05*(t-23)/3})`;lines($('t9'),t,23.4,.12);
+    const q=P(t,25.8,.2);$('s9').style.opacity=1-q;}
+  else{const p=eo(P(t,26,1.2));$('ray10').style.opacity=p;$('lg').style.opacity=eo(P(t,26.3,.8));$('lg').style.transform=`scale(${lerp(.8,1,eo(P(t,26.3,.8)))})`;$('lgr').style.opacity=.22*eo(P(t,26.3,.8));
+    lines($('e1'),t,26.7,.12);const bp=eo(P(t,27.4,.5));$('e2').style.opacity=bp;$('e2').style.transform=`translateY(${(1-bp)*30}px)`;$('e3').style.opacity=eo(P(t,27.8,.5));
+    $('v').style.filter=t>29.3?`brightness(${1-P(t,29.3,.7)})`:'none';}
+  if(t<29.3)$('v').style.filter='none';
+  $('flash').style.opacity=fl;grain(f%12);
+  await Promise.all(W);
+};
+window.ready=document.fonts.ready.then(async()=>{const urls=new Set();document.querySelectorAll('*').forEach(e=>{const b=getComputedStyle(e).backgroundImage;if(b&&b.startsWith('url('))urls.add(b.slice(5,-2));});
+  await Promise.all([...urls].map(u=>new Promise(r=>{const i=new Image();i.onload=i.onerror=r;i.src=u;})));await Promise.all([...document.images].filter(i=>i.src).map(i=>i.decode().catch(()=>{})));});
+</script></body></html>
