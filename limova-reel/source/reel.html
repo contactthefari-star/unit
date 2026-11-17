@@ -1,0 +1,200 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Geist+Mono:wght@500;600&display=block">
+<style>
+:root{
+  --or:#F07C1B; --ink:#1C1611; --paper:#FFFAF3;
+  --grad:linear-gradient(118deg,#F7CF35 0%,#F59A23 46%,#EC6614 100%);
+  --gt:linear-gradient(100deg,#F7CF35 0%,#F59A23 45%,#EC6614 100%);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --f:"Manrope","Inter Display",sans-serif; --m:"Geist Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0E0A07}
+#v{position:relative;width:1080px;height:1920px;overflow:hidden;background:#0E0A07;font-family:var(--f);color:#fff}
+.sc{position:absolute;inset:0;overflow:hidden;opacity:0;animation:sc var(--d) linear both;animation-delay:var(--s)}
+/* each scene visible for --d, with 0.25s cross-fade at ends */
+@keyframes sc{0%{opacity:0}4%{opacity:1}96%{opacity:1}100%{opacity:0}}
+.ph{position:absolute;inset:-4%;background-size:cover;animation:kb var(--d) linear both;animation-delay:var(--s)}
+@keyframes kb{from{transform:scale(1.04) translate(var(--x0,0),0)}to{transform:scale(1.16) translate(var(--x1,0),0)}}
+.shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,10,7,.75) 0%,rgba(14,10,7,.15) 35%,rgba(14,10,7,.2) 55%,rgba(14,10,7,.92) 100%)}
+.shade.top{background:linear-gradient(180deg,rgba(14,10,7,.92) 0%,rgba(14,10,7,.55) 38%,rgba(14,10,7,.1) 60%,rgba(14,10,7,.6) 100%)}
+.in{position:absolute;left:84px;right:84px}
+.tag{font-family:var(--m);font-size:30px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#FFC46E;display:flex;align-items:center;gap:18px}
+.tag::before{content:"";width:44px;height:5px;border-radius:5px;background:var(--grad)}
+.h{font-weight:800;letter-spacing:-.045em;line-height:.98}
+.gt{background:var(--gt);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.u{opacity:0;animation:up .8s var(--ease) both;animation-delay:calc(var(--s) + var(--t,0s))}
+@keyframes up{from{opacity:0;transform:translateY(60px);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+.p{opacity:0;animation:pop .9s cubic-bezier(.34,1.56,.64,1) both;animation-delay:calc(var(--s) + var(--t,0s))}
+@keyframes pop{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:none}}
+.chip{display:inline-flex;align-items:center;gap:14px;font-family:var(--m);font-size:28px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.25);border-radius:999px;padding:14px 26px;backdrop-filter:blur(10px)}
+.flag{display:inline-flex;width:46px;height:30px;border-radius:5px;overflow:hidden}
+.flag span{flex:1}
+.logo{position:absolute;top:120px;right:84px;width:96px;opacity:.95}
+/* progress bar */
+#bar{position:absolute;left:0;top:0;height:8px;background:var(--grad);z-index:50;width:0;animation:bar var(--total) linear both}
+@keyframes bar{to{width:100%}}
+
+/* S1 hook */
+#s1 .big{font-size:150px}
+/* S3 eco */
+.rank{font-size:420px;font-weight:800;letter-spacing:-.07em;line-height:.8}
+.rank sup{font-size:150px;vertical-align:top;letter-spacing:-.03em;position:relative;top:40px}
+.pills{display:flex;flex-wrap:wrap;gap:16px;margin-top:36px}
+.pills span{font-size:36px;font-weight:800;letter-spacing:-.02em;background:#fff;color:var(--ink);border-radius:18px;padding:16px 26px}
+/* S4 agents */
+#s4{background:radial-gradient(900px 900px at 50% 45%,#3A2614,#0E0A07 70%)}
+.ag{display:grid;grid-template-columns:repeat(3,1fr);gap:28px 22px;margin-top:60px}
+.ag div{text-align:center}
+.ag i{display:block;width:250px;height:250px;margin:0 auto;border-radius:50%;background:radial-gradient(circle at 50% 35%,#FFF7EC,#FFD9A8);border:6px solid #fff;background-size:cover;overflow:hidden;position:relative;box-shadow:0 24px 50px -16px rgba(236,102,20,.6)}
+.ag i b{position:absolute;inset:8% 0 -6% 0;background-size:contain;background-position:50% 100%;background-repeat:no-repeat}
+.ag em{display:block;font-style:normal;font-size:34px;font-weight:800;margin-top:16px;letter-spacing:-.02em}
+/* S5 2/3 */
+#s5{background:var(--grad)}
+#s5 .big{font-size:560px;font-weight:800;letter-spacing:-.08em;line-height:.8;color:#fff;text-shadow:0 30px 80px rgba(160,60,0,.4)}
+#s5 .ink{color:var(--ink)}
+/* S6 money */
+.money{font-size:330px;font-weight:800;letter-spacing:-.07em;line-height:.85}
+.card{background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);border-radius:34px;padding:34px 40px;backdrop-filter:blur(14px)}
+.yr{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.yr div{text-align:center;border-radius:26px;padding:26px 10px;background:var(--grad);color:#fff}
+.yr small{display:block;font-family:var(--m);font-size:24px;letter-spacing:.14em;text-transform:uppercase;opacity:.9}
+.yr b{display:block;font-size:72px;font-weight:800;letter-spacing:-.04em;margin-top:6px}
+/* S8 CTA */
+#s8{background:var(--paper);color:var(--ink)}
+#s8 .sun{position:absolute;width:1300px;height:1300px;border-radius:50%;left:-110px;top:1080px;background:var(--grad);opacity:.95}
+#s8 .who{position:absolute;left:50%;top:1010px;width:720px;height:720px;margin-left:-360px;border-radius:50%;border:10px solid #fff;background:url(a/img19.webp) 50% 18%/cover no-repeat;box-shadow:0 40px 90px -30px rgba(120,50,0,.6)}
+#s8 .sun{display:none}
+.btn{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:30px 50px;font-size:46px;font-weight:800;letter-spacing:-.02em}
+</style></head>
+<body><div id="v">
+<div id="bar"></div>
+
+<!-- S1 HOOK 0 - 3.4 -->
+<section class="sc" id="s1" style="--s:0s;--d:3.4s">
+  <div class="ph" style="background-image:url(a/cover.jpg);background-position:50% 30%;--x0:0;--x1:-2%"></div>
+  <div class="shade top" style="background:linear-gradient(180deg,rgba(14,10,7,.95) 0%,rgba(14,10,7,.85) 40%,rgba(14,10,7,.2) 62%,rgba(14,10,7,.6) 100%)"></div>
+  <div class="in" style="top:250px">
+    <div class="u" style="--t:.15s"><span class="chip"><span class="flag"><span style="background:#000"></span><span style="background:#FAE042"></span><span style="background:#ED2939"></span></span>Limova Belgique</span></div>
+    <div class="h big u" style="--t:.35s;margin-top:44px;font-size:140px">Tu sais vendre&nbsp;?</div>
+    <div class="h big gt u" style="--t:1.2s;margin-top:20px;font-size:132px;padding-bottom:12px">Maintenant, vends&nbsp;l’IA.</div>
+  </div>
+</section>
+
+<!-- S2 LAUNCH 3.2 - 7.0 -->
+<section class="sc" id="s2" style="--s:3.2s;--d:3.8s">
+  <div class="ph" style="background-image:url(a/open1.jpg);background-position:42% 50%;--x0:2%;--x1:-2%"></div>
+  <div class="shade top"></div>
+  <div class="in" style="top:250px">
+    <div class="tag u" style="--t:.2s">29 octobre 2026 · Saint-Ghislain</div>
+    <div class="h u" style="--t:.4s;font-size:118px;margin-top:30px">Le réseau belge</div>
+    <div class="h gt u" style="--t:.65s;font-size:118px;padding-bottom:10px">a décollé.</div>
+    <div class="u" style="--t:1.1s;font-size:42px;font-weight:700;margin-top:30px;opacity:.9;line-height:1.3">De Nice à Saint-Ghislain.<br>Et de Saint-Ghislain, à toute la Belgique.</div>
+  </div>
+  <img id="plane" src="a/img21.webp" style="position:absolute;width:760px;left:0;top:1250px;opacity:0;filter:drop-shadow(0 30px 40px rgba(0,0,0,.5))">
+</section>
+
+<!-- S3 CREDIBILITY 6.8 - 11.0 -->
+<section class="sc" id="s3" style="--s:6.8s;--d:4.2s">
+  <div class="ph" style="background-image:url(a/eco2.jpg);background-position:55% 50%;--x0:0;--x1:-3%"></div>
+  <div class="shade top" style="background:linear-gradient(180deg,rgba(14,10,7,.94) 0%,rgba(14,10,7,.7) 45%,rgba(14,10,7,.25) 70%,rgba(14,10,7,.8) 100%)"></div>
+  <div class="in" style="top:230px">
+    <div class="tag u" style="--t:.15s">LinkedIn Top Startups 2026</div>
+    <div class="rank gt p" style="--t:.3s;margin-top:20px">8<sup>e</sup></div>
+    <div class="h u" style="--t:.7s;font-size:64px;margin-top:10px;line-height:1.08">startup française<br>du classement.</div>
+    <div class="pills">
+      <span class="p" style="--t:1.3s">OpenAI</span>
+      <span class="p" style="--t:1.45s">Bpifrance</span>
+      <span class="p" style="--t:1.6s">OGC Nice</span>
+      <span class="p" style="--t:1.75s">French Tech</span>
+    </div>
+  </div>
+</section>
+
+<!-- S4 AGENTS 10.8 - 15.0 -->
+<section class="sc" id="s4" style="--s:10.8s;--d:4.2s">
+  <div class="in" style="top:220px">
+    <div class="tag u" style="--t:.1s">Ce que tu vends</div>
+    <div class="h u" style="--t:.25s;font-size:92px;margin-top:24px">Une équipe d’<span class="gt">agents IA</span> pour chaque PME.</div>
+    <div class="ag">
+      <div class="p" style="--t:.6s"><i><b style="background-image:url(a/img05.webp)"></b></i><em>Téléphone</em></div>
+      <div class="p" style="--t:.72s"><i><b style="background-image:url(a/img04.webp)"></b></i><em>Réseaux sociaux</em></div>
+      <div class="p" style="--t:.84s"><i><b style="background-image:url(a/img03.webp)"></b></i><em>SEO</em></div>
+      <div class="p" style="--t:.96s"><i><b style="background-image:url(a/img01.webp)"></b></i><em>Comptabilité</em></div>
+      <div class="p" style="--t:1.08s"><i><b style="background-image:url(a/img02.webp)"></b></i><em>Juridique</em></div>
+      <div class="p" style="--t:1.2s"><i><b style="background-image:url(a/img08.webp)"></b></i><em>Commercial</em></div>
+    </div>
+    <div class="u" style="--t:1.6s;font-size:46px;font-weight:700;margin-top:56px;text-align:center;color:#FFC46E">Ils répondent, relancent, publient. 24h/24.</div>
+  </div>
+</section>
+
+<!-- S5 MARKET 14.8 - 18.6 -->
+<section class="sc" id="s5" style="--s:14.8s;--d:3.8s">
+  <div class="in" style="top:300px">
+    <div class="tag u" style="--t:.1s;color:var(--ink)">Le marché belge</div>
+    <div class="big p" style="--t:.25s;margin-top:40px">2/3</div>
+    <div class="h ink u" style="--t:.7s;font-size:88px;margin-top:40px">des entreprises belges n’utilisent pas encore l’IA.</div>
+    <div class="u" style="--t:1.5s;font-size:48px;font-weight:800;margin-top:44px;color:#fff;background:var(--ink);display:inline-block;padding:18px 30px;border-radius:20px">Personne n’y vend encore Limova.</div>
+  </div>
+</section>
+
+<!-- S6 MONEY 18.4 - 23.0 -->
+<section class="sc" id="s6" style="--s:18.4s;--d:4.6s">
+  <div class="ph" style="background-image:url(a/plan.jpg);background-position:66% 50%;--x0:0;--x1:-2%"></div>
+  <div class="shade top" style="background:linear-gradient(180deg,rgba(14,10,7,.95) 0%,rgba(14,10,7,.75) 55%,rgba(14,10,7,.35) 75%,rgba(14,10,7,.85) 100%)"></div>
+  <div class="in" style="top:230px">
+    <div class="tag u" style="--t:.1s">Ce que tu gagnes</div>
+    <div class="money gt u" style="--t:.25s;margin-top:20px;padding-bottom:10px"><span id="cnt">0</span>&nbsp;€</div>
+    <div class="h u" style="--t:.5s;font-size:58px;line-height:1.1">par client Business+ signé.</div>
+    <div class="u" style="--t:1.4s;font-size:46px;font-weight:700;margin-top:44px">Et <span class="gt" style="font-weight:800">+140 €</span> chaque année où il reste.</div>
+    <div class="yr">
+      <div class="p" style="--t:1.9s"><small>Année 1</small><b>280 €</b></div>
+      <div class="p" style="--t:2.1s"><small>Année 2</small><b>+140 €</b></div>
+      <div class="p" style="--t:2.3s"><small>Année 3</small><b>+140 €</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- S7 TEAM 22.8 - 26.6 -->
+<section class="sc" id="s7" style="--s:22.8s;--d:3.8s">
+  <div class="ph" style="background-image:url(a/eco1.jpg);background-position:25% 50%;--x0:2%;--x1:-1%"></div>
+  <div class="shade top"></div>
+  <div class="in" style="top:250px">
+    <div class="tag u" style="--t:.15s">Formation · CRM · Leads</div>
+    <div class="h u" style="--t:.35s;font-size:116px;margin-top:30px">Sur le terrain,</div>
+    <div class="h gt u" style="--t:.6s;font-size:116px;padding-bottom:10px">tu n’es jamais seul.</div>
+  </div>
+</section>
+
+<!-- S8 CTA 26.4 - 31 -->
+<section class="sc" id="s8" style="--s:26.4s;--d:4.6s;animation-name:scEnd">
+  <div class="sun p" style="--t:.1s"></div>
+  <div class="who u" style="--t:.3s"></div>
+  <div class="in" style="top:200px;text-align:center">
+    <img src="a/img09.png" class="p" style="--t:.1s;width:230px">
+    <div class="h u" style="--t:.3s;font-size:104px;margin-top:40px">Deviens partenaire</div>
+    <div class="h gt u" style="--t:.5s;font-size:104px;padding-bottom:10px">Limova Belgique.</div>
+    <div class="u" style="--t:1.0s;margin-top:40px"><span class="btn">limovabelgique.com</span></div>
+  </div>
+</section>
+</div>
+<style>@keyframes scEnd{0%{opacity:0}4%{opacity:1}100%{opacity:1}}</style>
+<script>
+const TOTAL=31;
+document.documentElement.style.setProperty('--total',TOTAL+'s');
+document.getElementById('bar').style.setProperty('--total',TOTAL+'s');
+const ease=t=>1-Math.pow(1-t,3);
+window.seek=function(t){
+  for(const a of document.getAnimations()){a.pause();a.currentTime=t*1000;}
+  // counter 0 -> 280 between 18.7s and 20.0s
+  const k=Math.min(1,Math.max(0,(t-18.7)/1.3));
+  document.getElementById('cnt').textContent=Math.round(280*ease(k));
+  // plane across scene 2
+  const p=Math.min(1,Math.max(0,(t-3.6)/3.0)), pl=document.getElementById('plane');
+  pl.style.opacity=p>0&&p<1?Math.min(1,p*6,(1-p)*6):0;
+  pl.style.transform=`translate(${-800+2000*p}px,${-260*p}px) rotate(-8deg)`;
+};
+window.ready=document.fonts.ready.then(()=>Promise.all([...document.images].map(i=>i.decode().catch(()=>{}))));
+</script>
+</body></html>
