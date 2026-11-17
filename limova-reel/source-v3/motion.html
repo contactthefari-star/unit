@@ -1,0 +1,241 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Geist+Mono:wght@500;600&display=block">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0D0A08}
+#v{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:"Manrope","Noto Color Emoji",sans-serif;color:#fff;background:#0D0A08}
+.abs{position:absolute}
+.L{position:absolute;inset:0;will-change:transform,opacity,filter}
+/* ambient background */
+#bg{position:absolute;inset:0;background:radial-gradient(900px 700px at 80% 10%,rgba(240,124,27,.22),transparent 60%),radial-gradient(900px 800px at 10% 95%,rgba(247,190,45,.10),transparent 60%),#0D0A08}
+.blurbg{position:absolute;inset:-80px;background-size:cover;background-position:center;filter:blur(60px) saturate(1.1) brightness(.45)}
+.full{position:absolute;inset:0;background-size:cover;background-position:center}
+/* cards */
+.card{position:absolute;border-radius:40px;overflow:hidden;background:#000 center/cover;box-shadow:0 50px 90px -30px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.08)}
+.card img{width:100%;height:100%;object-fit:cover;display:block}
+/* glass pill (reference style) */
+.pill{position:absolute;left:50%;top:300px;transform:translateX(-50%);white-space:nowrap;padding:34px 56px 38px;border-radius:64px;
+  background:rgba(255,255,255,.16);backdrop-filter:blur(26px) saturate(1.4);-webkit-backdrop-filter:blur(26px) saturate(1.4);
+  border:1.5px solid rgba(255,255,255,.32);box-shadow:0 30px 60px -25px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.35);
+  font-weight:800;font-size:64px;letter-spacing:-.03em;line-height:1;text-shadow:0 2px 14px rgba(0,0,0,.25);opacity:0}
+.pill::before{content:"";position:absolute;left:50%;top:13px;width:46px;height:5px;margin-left:-23px;border-radius:5px;background:rgba(255,255,255,.55)}
+.pill .em{font-family:"Noto Color Emoji";font-size:.82em;margin-left:14px;vertical-align:2px}
+/* word captions (reference style) */
+.cap{position:absolute;left:0;right:0;text-align:center;top:1250px;font-weight:800;font-size:76px;letter-spacing:-.025em;line-height:1.05;opacity:0;
+  text-shadow:0 4px 24px rgba(0,0,0,.55),0 1px 3px rgba(0,0,0,.4)}
+.or{color:#F7A23A}
+.mono{font-family:"Geist Mono",monospace;letter-spacing:.16em;text-transform:uppercase}
+/* map */
+#map{position:absolute;left:90px;top:1190px;width:900px;height:330px}
+/* orbit */
+.bub{position:absolute;width:190px;height:190px;margin:-95px 0 0 -95px;border-radius:50%;background:radial-gradient(circle at 50% 35%,#FFF7EC,#FFD6A0);border:5px solid #fff;overflow:hidden;box-shadow:0 24px 50px -16px rgba(236,102,20,.55)}
+.bub i{position:absolute;inset:8% 0 -6% 0;background:center bottom/contain no-repeat}
+#logoGlow{position:absolute;left:540px;top:900px;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;background:radial-gradient(circle,rgba(247,162,58,.45),transparent 65%)}
+/* glass cards */
+.glass{position:absolute;border-radius:44px;background:rgba(255,255,255,.10);backdrop-filter:blur(30px) saturate(1.3);-webkit-backdrop-filter:blur(30px) saturate(1.3);border:1.5px solid rgba(255,255,255,.22);box-shadow:0 40px 80px -30px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.25)}
+.bigN{font-weight:800;letter-spacing:-.06em;line-height:.9}
+.chip{display:inline-block;padding:20px 34px;border-radius:999px;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.3);backdrop-filter:blur(20px);font-weight:800;font-size:52px;letter-spacing:-.02em;margin:0 8px}
+/* end */
+#endbg{position:absolute;inset:0;background:#FFFAF3;clip-path:circle(0% at 50% 50%)}
+.grad{background:linear-gradient(100deg,#F2A91F,#EE7A18 55%,#E2560C);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+</style></head><body><div id="v">
+<div id="bg"></div>
+
+<!-- S1 hook: full-bleed photo that becomes a card -->
+<div class="L" id="s1"><div class="card" id="heroCard" style="background-image:url(a/p_point.jpg);background-position:42% 40%"></div>
+  <div class="abs" id="heroShade" style="inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,0) 30%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55))"></div></div>
+
+<!-- S2 launch -->
+<div class="L" id="s2">
+  <div class="card" id="c2a" style="left:60px;top:520px;width:960px;height:540px;background-image:url(a/p_screen2.jpg)"></div>
+  <svg id="map" viewBox="0 0 900 330">
+    <path id="route" d="M120 270 C 300 40, 520 20, 690 120" fill="none" stroke="#F7A23A" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 16"/>
+    <circle cx="120" cy="270" r="14" fill="#fff"/><circle id="dest" cx="690" cy="120" r="14" fill="#F07C1B"/>
+    <circle id="ping" cx="690" cy="120" r="14" fill="none" stroke="#F07C1B" stroke-width="4"/>
+    <text x="120" y="324" text-anchor="middle" fill="#fff" font-family="Manrope" font-weight="800" font-size="46">Nice</text>
+    <text x="690" y="185" text-anchor="middle" fill="#fff" font-family="Manrope" font-weight="800" font-size="46">Saint-Ghislain</text>
+    <g id="planeG"><text font-size="54" font-family="Noto Color Emoji" x="-27" y="18">✈️</text></g>
+  </svg>
+</div>
+
+<!-- S3 evening: three live clips -->
+<div class="L" id="s3"><div class="blurbg" style="background-image:url(a/p_wide.jpg)"></div>
+  <div class="card" id="k1" style="width:300px;height:533px"><img data-clip="arrive"></div>
+  <div class="card" id="k2" style="width:300px;height:533px"><img data-clip="crowd"></div>
+  <div class="card" id="k3" style="width:300px;height:533px"><img data-clip="bar"></div>
+</div>
+
+<!-- S4 product -->
+<div class="L" id="s4"><div id="logoGlow"></div>
+  <img id="logoL" src="a/img22.png" class="abs" style="left:540px;top:900px;width:150px;margin:-102px 0 0 -75px">
+  <div id="orbit"></div>
+</div>
+
+<!-- S5 market -->
+<div class="L" id="s5"><div class="blurbg" style="background-image:url(a/p_screen1.jpg)"></div>
+  <div class="glass" id="g5" style="left:90px;top:560px;width:900px;height:640px"></div>
+  <div class="abs bigN" id="n23" style="left:0;right:0;top:640px;text-align:center;font-size:330px">2/3</div>
+  <div class="abs" id="blocks" style="left:0;right:0;top:1000px;display:flex;justify-content:center;gap:28px"></div>
+</div>
+
+<!-- S6 money -->
+<div class="L" id="s6"><div class="blurbg" style="background-image:url(a/p_eco.jpg)"></div>
+  <div class="glass" id="g6" style="left:90px;top:520px;width:900px;height:900px"></div>
+  <div class="abs mono" id="m6k" style="left:150px;top:590px;font-size:24px;color:rgba(255,255,255,.7)">Par client Business+ signé</div>
+  <div class="abs bigN" id="m6n" style="left:146px;top:640px;font-size:250px"><span id="cnt">0</span><span class="or"> €</span></div>
+  <div class="abs" id="bars" style="left:150px;top:960px;width:780px;height:380px;display:flex;align-items:flex-end;gap:30px"></div>
+</div>
+
+<!-- S7 team -->
+<div class="L" id="s7"><div class="blurbg" style="background-image:url(a/p_point2.jpg)"></div>
+  <div class="card" id="t1" style="width:470px;height:836px"><img data-clip="speak"></div>
+  <div class="card" id="t2" style="width:420px;height:400px;background-image:url(a/p_wide.jpg)"></div>
+  <div class="card" id="t3" style="width:420px;height:400px;background-image:url(a/p_screen1.jpg);background-position:70% 50%"></div>
+</div>
+
+<!-- S8 end -->
+<div class="L" id="s8"><div id="endbg"></div>
+  <div class="abs" id="e8" style="left:0;right:0;top:470px;text-align:center;color:#1C1611">
+    <img src="a/img22.png" id="eL" style="width:130px">
+    <div id="eT1" style="font-weight:800;font-size:108px;letter-spacing:-.045em;line-height:1;margin-top:56px">Deviens partenaire</div>
+    <div id="eT2" class="grad" style="font-weight:800;font-size:108px;letter-spacing:-.045em;line-height:1.08;padding-bottom:8px">Limova Belgique.</div>
+    <div id="eC" style="display:inline-block;margin-top:70px;background:#1C1611;color:#fff;border-radius:999px;padding:34px 60px;font-weight:800;font-size:54px;letter-spacing:-.02em">Commente « PARTENAIRE » <span style="font-family:'Noto Color Emoji'">👇</span></div>
+    <div id="eU" class="mono" style="margin-top:44px;font-size:26px;color:#8a7d70">limovabelgique.com</div>
+  </div>
+  <div class="bub" id="eAv" style="left:540px;top:1440px;width:220px;height:220px;margin:-110px 0 0 -110px"><i style="background-image:url(a/img07.webp)"></i></div>
+</div>
+
+<div id="pills"></div>
+<div id="caps"></div>
+</div>
+<script>
+const C=(x)=>Math.max(0,Math.min(1,x)), eo=x=>1-Math.pow(1-x,4), eio=x=>x<.5?8*x*x*x*x:1-Math.pow(-2*x+2,4)/2, bk=x=>{const c1=1.5,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const P=(t,a,d)=>C((t-a)/d), lerp=(a,b,p)=>a+(b-a)*p;
+const $=id=>document.getElementById(id);
+// ---------- pills & captions ----------
+const PILLS=[[0.15,2.85,'Tu sais vendre ?','🇧🇪'],[3.15,6.35,'Le réseau belge démarre','🛫'],[6.65,9.35,'La soirée de lancement','✨'],
+ [9.65,12.85,'Ce que tu vends','🤖'],[13.15,15.75,'Le marché belge','🇧🇪'],[15.85,17.85,'Personne n’y vend Limova','👀'],
+ [18.15,22.85,'Ce que tu gagnes','💶'],[23.15,25.85,'Tu n’es jamais seul','🤝']];
+const CAPS=[[0.55,1.3,'Maintenant,'],[1.3,2.85,'vends <span class="or">l’IA.</span>'],
+ [6.95,7.9,'Ils sont venus'],[7.9,9.35,'pour <span class="or">vendre l’IA.</span>'],
+ [10.2,10.95,'Ils répondent,'],[10.95,11.6,'relancent,'],[11.6,12.85,'publient. <span class="or">24h/24.</span>'],
+ [13.9,15.75,'des entreprises belges<br>n’utilisent pas encore l’IA.'],
+ [20.2,21.4,'Et <span class="or">+140 €</span> par an'],[21.4,22.85,'tant que ton client reste.'],
+ [23.6,24.3,'Formation.'],[24.3,25.0,'CRM.'],[25.0,25.85,'<span class="or">Leads.</span>']];
+const pillEls=PILLS.map(([a,b,txt,em])=>{const d=document.createElement('div');d.className='pill';d.innerHTML=`${txt}<span class="em">${em}</span>`;$('pills').appendChild(d);return d;});
+const capEls=CAPS.map(([a,b,h])=>{const d=document.createElement('div');d.className='cap';d.innerHTML=h;$('caps').appendChild(d);return d;});
+// caption positions per scene
+function capTop(a){return a<3?1180:a<6.5?1250:a<9.5?1330:a<13?1440:a<18?1250:a<23?1520:1560;}
+CAPS.forEach((c,i)=>capEls[i].style.top=capTop(c[0])+'px');
+// ---------- orbit bubbles ----------
+const AG=['img05','img04','img03','img01','img02','img08','img06','img07'];
+const bubs=AG.map(n=>{const d=document.createElement('div');d.className='bub';d.innerHTML=`<i style="background-image:url(a/${n}.webp)"></i>`;$('orbit').appendChild(d);return d;});
+// ---------- 2/3 blocks ----------
+const blocks=[0,1,2].map(i=>{const d=document.createElement('div');d.style.cssText=`width:150px;height:120px;border-radius:26px;${i<2?'background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.3)':'background:linear-gradient(135deg,#F7CF35,#EC6614)'}`;$('blocks').appendChild(d);return d;});
+// ---------- bars ----------
+const BARS=[['An 1',280],['An 2',420],['An 3',560]];
+const bars=BARS.map(([l,v],i)=>{const w=document.createElement('div');w.style.cssText='flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center';
+  w.innerHTML=`<div class="v" style="font-weight:800;font-size:46px;letter-spacing:-.03em;margin-bottom:14px">${v} €</div><div class="b" style="width:100%;border-radius:22px 22px 10px 10px;background:${i==0?'linear-gradient(180deg,#F7CF35,#EC6614)':'linear-gradient(180deg,rgba(247,162,58,.95),rgba(236,102,20,.65))'};height:${v/560*270}px;transform-origin:bottom"></div><div class="mono" style="font-size:22px;margin-top:16px;color:rgba(255,255,255,.7)">${l}</div>`;
+  $('bars').appendChild(w);return w;});
+// ---------- clip frames ----------
+const clipStart={arrive:6.5,crowd:6.5,bar:6.5,speak:23.0};
+// layer visibility helper: fade/blur in & out
+function layer(el,t,a,b,{fi=.4,fo=.3,y=0,s=1}={}){
+  if(t<a-0.001||t>b){el.style.opacity=0;el.style.visibility='hidden';return 0;}
+  el.style.visibility='visible';
+  const pi=eo(P(t,a,fi)), po=eio(P(t,b-fo,fo));
+  el.style.opacity=Math.min(pi,1-po);
+  el.style.filter=po>0?`blur(${po*14}px)`:'none';
+  el.style.transform=`translateY(${(1-pi)*y-po*40}px) scale(${lerp(s,1,pi)*(1-po*0.06)})`;
+  return pi;
+}
+function setCard(el,x,y,w,h,r=0,s=1,rad=40){el.style.left=x+'px';el.style.top=y+'px';el.style.width=w+'px';el.style.height=h+'px';el.style.transform=`rotate(${r}deg) scale(${s})`;el.style.borderRadius=rad+'px';}
+
+window.seek=async function(t){
+  const waits=[];
+  // pills
+  PILLS.forEach(([a,b],i)=>{const el=pillEls[i];if(t<a||t>b){el.style.opacity=0;return;}
+    const pi=bk(P(t,a,.45)), po=P(t,b-.18,.18);el.style.opacity=Math.min(C((t-a)/.15),1-po);
+    el.style.transform=`translateX(-50%) translateY(${(1-C(pi))*-30}px) scale(${lerp(.82,1,pi)*(1-po*.08)})`;el.style.filter=po>0?`blur(${po*8}px)`:'none';});
+  CAPS.forEach(([a,b],i)=>{const el=capEls[i];if(t<a||t>b){el.style.opacity=0;return;}
+    const pi=bk(P(t,a,.28)), po=P(t,b-.1,.1);el.style.opacity=Math.min(C((t-a)/.08),1-po);el.style.transform=`translateY(${(1-C(pi))*24}px) scale(${lerp(.86,1,pi)})`;});
+  // S1 hero -> card
+  const s1=$('s1');
+  if(t<3.45){s1.style.visibility='visible';s1.style.opacity=1-P(t,3.2,.25);
+    const k=eio(P(t,2.55,.75));const push=1.0+0.07*C(t/2.6);
+    setCard($('heroCard'),lerp(0,90,k),lerp(0,470,k),lerp(1080,900,k),lerp(1920,1200,k),lerp(0,-4,k),k>0?1:push,lerp(0,44,k));
+    $('heroShade').style.opacity=1-k;}
+  else{s1.style.visibility='hidden';}
+  // S2
+  if(layer($('s2'),t,3.05,6.5,{y:80})>=0&&t>=3.05&&t<=6.5){
+    $('c2a').style.transform=`scale(${1.0+0.05*P(t,3.05,3.4)})`;
+    const r=$('route'),len=r.getTotalLength(),p=eio(P(t,3.6,1.8));
+    r.style.strokeDasharray=`2 16`;r.setAttribute('stroke-dashoffset',0);
+    r.style.clipPath='none';
+    const pt=r.getPointAtLength(len*p),pt2=r.getPointAtLength(Math.min(len,len*p+2));
+    const ang=Math.atan2(pt2.y-pt.y,pt2.x-pt.x)*180/Math.PI+45;
+    $('planeG').setAttribute('transform',`translate(${pt.x},${pt.y}) rotate(${ang-90})`);
+    $('planeG').style.opacity=p<1?1:0;
+    r.setAttribute('stroke-dasharray',`2 16`);r.style.opacity=1;
+    r.setAttribute('d',r.getAttribute('d'));
+    r.style.strokeDashoffset=0;
+    // reveal route by mask: use pathLength trick
+    r.setAttribute('pathLength',1000);r.style.strokeDasharray=`${1000*p} 1000`;
+    const pg=P(t,5.4,1.0);$('ping').setAttribute('r',14+50*pg);$('ping').style.opacity=p>=1?1-pg:0;
+  }
+  // S3 clips
+  if(layer($('s3'),t,6.45,9.55,{y:0})&&t>=6.45&&t<=9.55){
+    const ks=[$('k1'),$('k2'),$('k3')];
+    ks.forEach((k,i)=>{const p=eo(P(t,6.55+i*.12,.8));const x=60+i*330,y=[640,560,640][i]+(1-p)*900-(t-6.5)*[18,34,18][i];
+      setCard(k,x,y,300,533,[-3,0,3][i]*(1-p*.4),1,34);});
+  }
+  // S4 orbit
+  if(layer($('s4'),t,9.45,13.05,{s:.9})&&t>=9.45&&t<=13.05){
+    const lp=bk(P(t,9.5,.6));$('logoL').style.transform=`scale(${lerp(.3,1,lp)})`;$('logoGlow').style.transform=`scale(${lerp(.4,1,C(lp))*(1+.06*Math.sin(t*4))})`;
+    bubs.forEach((b,i)=>{const p=bk(P(t,9.75+i*.11,.5));const a=(i/8)*Math.PI*2-Math.PI/2+(t-9.5)*.35;const R=lerp(80,350,C(p));
+      b.style.left=(540+R*Math.cos(a))+'px';b.style.top=(900+R*Math.sin(a))+'px';b.style.transform=`scale(${lerp(.2,1,p)})`;b.style.opacity=C(p*3);});
+  }
+  // S5 market
+  if(layer($('s5'),t,12.95,18.05,{s:1.05})&&t>=12.95&&t<=18.05){
+    const p=bk(P(t,13.2,.6));$('n23').style.transform=`scale(${lerp(.6,1,p)})`;$('n23').style.opacity=C(p*2);
+    blocks.forEach((b,i)=>{const q=bk(P(t,13.6+i*.15,.5));b.style.transform=`translateY(${(1-C(q))*40}px) scale(${lerp(.5,1,q)})`;b.style.opacity=C(q*2);
+      if(i<2){const dim=P(t,14.6,.4);b.style.opacity=C(q*2)*(1-dim*.55);}});
+  }
+  // S6 money
+  if(layer($('s6'),t,17.95,23.05,{y:60})&&t>=17.95&&t<=23.05){
+    $('cnt').textContent=Math.round(280*eo(P(t,18.2,1.2)));
+    bars.forEach((w,i)=>{const p=eo(P(t,19.4+i*.35,.7));w.querySelector('.b').style.transform=`scaleY(${p})`;w.querySelector('.v').style.opacity=C((p-.6)/.4);w.style.opacity=C(p*3);});
+  }
+  // S7 team
+  if(layer($('s7'),t,22.95,26.1,{})&&t>=22.95&&t<=26.1){
+    const p=[0,1,2].map(i=>eo(P(t,23.0+i*.15,.75)));
+    setCard($('t1'),lerp(-500,70,p[0]),470+(t-23)*-12,470,836,-2,1,40);
+    setCard($('t2'),lerp(1100,570,p[1]),470+(t-23)*-22,440,404,3,1,36);
+    setCard($('t3'),lerp(1100,570,p[2]),902+(t-23)*-22,440,404,-2,1,36);
+  }
+  // S8 end
+  const s8=$('s8');
+  if(t>=25.85){s8.style.visibility='visible';s8.style.opacity=1;
+    $('endbg').style.clipPath=`circle(${eio(P(t,25.85,.7))*120}% at 50% 55%)`;
+    const it=(id,a)=>{const p=eo(P(t,a,.6));const e=$(id);e.style.opacity=p;e.style.transform=`translateY(${(1-p)*50}px)`;e.style.filter=`blur(${(1-p)*8}px)`;};
+    it('eL',26.3);it('eT1',26.45);it('eT2',26.6);it('eU',27.3);
+    const cp=bk(P(t,26.95,.55));$('eC').style.opacity=C(cp*2);$('eC').style.transform=`scale(${lerp(.7,1,cp)*(1+0.025*Math.sin((t-27.5)*6)*(t>27.5?1:0))})`;
+    const ap=bk(P(t,27.4,.6));$('eAv').style.transform=`scale(${lerp(.3,1,ap)}) translateY(${Math.sin(t*2.4)*8}px)`;$('eAv').style.opacity=C(ap*2);
+  } else {s8.style.visibility='hidden';}
+  // final dip
+  $('v').style.filter=t>29.4?`brightness(${1-P(t,29.4,.6)})`:'none';
+  // clip frames
+  document.querySelectorAll('img[data-clip]').forEach(im=>{const c=im.dataset.clip;const vis=im.closest('.L').style.visibility!=='hidden';if(!vis)return;
+    const f=Math.min(96,Math.max(1,Math.floor((t-clipStart[c])*30)+1));const src=`clips/${c}/${String(f).padStart(3,'0')}.jpg`;
+    if(!im.src.endsWith(src)){im.src=src;waits.push(im.decode().catch(()=>{}));}});
+  await Promise.all(waits);
+};
+// hide everything initially
+['s2','s3','s4','s5','s6','s7','s8'].forEach(id=>{$(id).style.opacity=0;$(id).style.visibility='hidden';});
+window.ready=document.fonts.ready.then(async()=>{
+  const urls=new Set();document.querySelectorAll('*').forEach(e=>{const b=getComputedStyle(e).backgroundImage;if(b&&b.startsWith('url('))urls.add(b.slice(5,-2));});
+  await Promise.all([...urls].map(u=>new Promise(r=>{const i=new Image();i.onload=i.onerror=r;i.src=u;})));
+  await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));
+});
+</script></body></html>
