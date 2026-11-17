@@ -1,0 +1,100 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=block">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;background:transparent;overflow:hidden}
+#v{position:relative;width:1080px;height:1920px;font-family:"Manrope","Inter Display",sans-serif;color:#fff}
+.mono{font-family:"Geist Mono",monospace;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+/* chrome */
+.chrome{position:absolute;top:150px;left:72px;right:72px;display:flex;justify-content:space-between;font-size:22px;color:rgba(255,255,255,.82);text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.chrome div:last-child{text-align:right}
+.chrome small{display:block;margin-top:8px;color:rgba(255,255,255,.5);font-size:20px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:#F07C1B;margin-right:12px;vertical-align:1px}
+.hair{position:absolute;left:72px;right:72px;top:232px;height:1px;background:rgba(255,255,255,.22);transform-origin:left}
+.scrim{position:absolute;left:0;right:0;bottom:0;height:1150px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.35) 45%,rgba(0,0,0,.62) 100%)}
+/* titles */
+.cue{position:absolute;left:72px;right:72px;top:1060px;opacity:0}
+.k{font-size:22px;color:rgba(255,255,255,.75);display:flex;align-items:center;gap:16px;margin-bottom:26px}
+.k::before{content:"";width:48px;height:2px;background:#F07C1B}
+.ln{display:block;overflow:hidden;padding-bottom:.06em}
+.ln>span{display:inline-block;will-change:transform}
+.t{font-weight:700;font-size:96px;line-height:1.02;letter-spacing:-.035em}
+.t.l{font-weight:400;color:rgba(255,255,255,.85)}
+.or{color:#F28A1F}
+.big{font-weight:600;font-size:250px;line-height:.9;letter-spacing:-.06em}
+.sub{font-size:40px;font-weight:500;line-height:1.3;color:rgba(255,255,255,.85);margin-top:22px;letter-spacing:-.01em}
+/* end card */
+#end{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;opacity:0;padding-bottom:120px}
+#end img{width:120px}
+#end .t{font-size:100px;margin-top:56px}
+.pill{margin-top:60px;border:1.5px solid rgba(255,255,255,.7);border-radius:999px;padding:24px 44px;font-size:30px;font-weight:600;letter-spacing:.01em}
+.pill b{color:#F28A1F;font-weight:800}
+#end .mono{margin-top:34px;font-size:22px;color:rgba(255,255,255,.6)}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+#bl{position:absolute;inset:0;background:#000;opacity:0}
+</style></head><body><div id="v">
+<div class="scrim" id="scrim"></div>
+<div class="chrome" id="chrome">
+  <div><span class="dot"></span>Limova — Belgique<small>Saint-Ghislain, BE</small></div>
+  <div>29.10.2026<small id="tc">00:00:00:00</small></div>
+</div>
+<div class="hair" id="hair"></div>
+
+<div class="cue" data-in="0.25" data-out="2.42"><div class="k mono">Lancement officiel</div>
+  <span class="ln"><span class="t">Vous savez</span></span><span class="ln"><span class="t">vendre.</span></span></div>
+<div class="cue" data-in="2.5" data-out="4.42"><div class="k mono">Le pitch du soir</div>
+  <span class="ln"><span class="t l">Maintenant,</span></span><span class="ln"><span class="t">vendez <span class="or">l’IA.</span></span></span></div>
+<div class="cue" data-in="4.6" data-out="7.9"><div class="k mono">MAH Hotel · 18h</div>
+  <span class="ln"><span class="t">Une soirée.</span></span><span class="ln"><span class="t l">Un réseau qui démarre.</span></span></div>
+<div class="cue" data-in="9.5" data-out="12.92"><div class="k mono">Ils sont venus pour</div>
+  <span class="ln"><span class="t">vendre l’IA</span></span><span class="ln"><span class="t l">en Belgique.</span></span></div>
+<div class="cue" data-in="13.1" data-out="17.92"><div class="k mono">Le marché</div>
+  <span class="ln"><span class="big">2/3</span></span>
+  <span class="ln"><span class="sub">des entreprises belges n’utilisent<br>pas encore l’IA.</span></span></div>
+<div class="cue" data-in="18.05" data-out="20.42"><div class="k mono">Par client Business+ signé</div>
+  <span class="ln"><span class="big"><span id="cnt">0</span><span class="or"> €</span></span></span></div>
+<div class="cue" data-in="20.55" data-out="22.92"><div class="k mono">Et chaque année</div>
+  <span class="ln"><span class="t">+140 € / an</span></span><span class="ln"><span class="t l">tant que ton client reste.</span></span></div>
+<div class="cue" data-in="23.1" data-out="25.92"><div class="k mono">On recrute</div>
+  <span class="ln"><span class="t">Le réseau</span></span><span class="ln"><span class="t">est lancé.</span></span></div>
+
+<div id="end">
+  <span class="ln"><span><img src="img22.png"></span></span>
+  <span class="ln"><span class="t">Deviens partenaire</span></span>
+  <span class="ln"><span class="t l">Limova Belgique.</span></span>
+  <span class="ln"><span class="pill">Commente <b>PARTENAIRE</b></span></span>
+  <span class="ln"><span class="mono">limovabelgique.com</span></span>
+</div>
+<div id="flash"></div><div id="bl"></div>
+</div>
+<script>
+const eo=x=>1-Math.pow(1-x,4), cl=x=>Math.max(0,Math.min(1,x));
+const cues=[...document.querySelectorAll('.cue')];
+function reveal(root,t0,t,stag){
+  root.querySelectorAll('.ln>span').forEach((s,i)=>{const p=eo(cl((t-t0-i*stag)/0.6));s.style.transform=`translateY(${(1-p)*110}%)`;});
+  const k=root.querySelector('.k'); if(k){const p=eo(cl((t-t0)/0.5)); k.style.opacity=p; k.style.transform=`translateX(${(1-p)*-20}px)`;}
+}
+window.seek=function(t){
+  const f=Math.round(t*30);
+  document.getElementById('tc').textContent=`00:00:${String(Math.floor(f/30)).padStart(2,'0')}:${String(f%30).padStart(2,'0')}`;
+  const endIn=26.15;
+  const chromeOp=cl(t/0.4)*(1-cl((t-25.9)/0.3));
+  document.getElementById('chrome').style.opacity=chromeOp;
+  const h=document.getElementById('hair'); h.style.opacity=chromeOp; h.style.transform=`scaleX(${eo(cl((t-0.1)/1.2))})`;
+  document.getElementById('scrim').style.opacity=t<26?1:1-cl((t-26)/.4);
+  for(const c of cues){
+    const a=+c.dataset.in,b=+c.dataset.out;
+    if(t<a||t>b){c.style.opacity=0;continue;}
+    c.style.opacity=1-cl((t-(b-0.22))/0.22);
+    c.style.filter=`blur(${cl((t-(b-0.22))/0.22)*8}px)`;
+    reveal(c,a,t,0.09);
+  }
+  const k=cl((t-18.15)/1.1); document.getElementById('cnt').textContent=Math.round(280*eo(k));
+  const e=document.getElementById('end'); e.style.opacity=t>=endIn?1:0; reveal(e,endIn,t,0.12);
+  // 2-frame white flash on the "280 €" hit and soft dip at the end
+  document.getElementById('flash').style.opacity=(t>=18.0&&t<18.1)?0.55*(1-(t-18)/0.1):0;
+  document.getElementById('bl').style.opacity=cl((t-29.3)/0.7);
+};
+window.ready=document.fonts.ready.then(()=>Promise.all([...document.images].map(i=>i.decode().catch(()=>{}))));
+</script></body></html>
