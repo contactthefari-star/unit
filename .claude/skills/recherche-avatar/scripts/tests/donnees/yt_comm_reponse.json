@@ -1,0 +1,40 @@
+{
+ "items": [
+  {
+   "snippet": {
+    "totalReplyCount": 1,
+    "topLevelComment": {
+     "snippet": {
+      "textDisplay": "Je dors mal depuis des mois, la nuque me tire le matin.",
+      "likeCount": 12,
+      "publishedAt": "2025-02-03T08:00:00Z",
+      "authorDisplayName": "Lectrice A"
+     }
+    }
+   },
+   "replies": {
+    "comments": [
+     {
+      "snippet": {
+       "textDisplay": "Merci pour la r\u00e9ponse !",
+       "likeCount": 1
+      }
+     }
+    ]
+   }
+  },
+  {
+   "snippet": {
+    "totalReplyCount": 0,
+    "topLevelComment": {
+     "snippet": {
+      "textDisplay": "Mon kin\u00e9 m'a dit d'arr\u00eater les gros oreillers.",
+      "likeCount": 4,
+      "publishedAt": "2025-02-04T08:00:00Z",
+      "authorDisplayName": "Lectrice B"
+     }
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,44 @@
+{
+ "query": "oreiller cervical",
+ "country": "US",
+ "total_ads_parsed": 4,
+ "result_count": "~1 200 results",
+ "ads": [
+  {
+   "library_id": "9000000000001",
+   "advertiser": "Page Un",
+   "body": "I'd nearly given up on sleeping. A friend told me about this pillow.",
+   "started_running": "2026-05-01",
+   "status": "active",
+   "ads_using_creative": 5,
+   "landing_domain": "www.marque-exemple.test",
+   "cta": "Learn more"
+  },
+  {
+   "library_id": "9000000000002",
+   "advertiser": "Page Deux",
+   "body": "I'd nearly given up on sleeping. A friend told me about this pillow.",
+   "started_running": "Jun 10, 2026",
+   "ads_using_creative": 1,
+   "landing_url": "https://marque-exemple.test/produit",
+   "cta": "Shop now"
+  },
+  {
+   "library_id": "9000000000003",
+   "advertiser": "Page Trois",
+   "body": "Offre de lancement sur nos oreillers",
+   "started_running": "1 septembre 2026",
+   "stopped_running": "10 septembre 2026",
+   "ads_using_creative": 1,
+   "landing_domain": "autre-marque.test"
+  },
+  {
+   "library_id": "9000000000004",
+   "advertiser": "Page Quatre",
+   "body": "Texte sans date lisible",
+   "started_running": "bientot",
+   "status": "active",
+   "landing_domain": "autre-marque.test"
+  }
+ ]
+}

@@ -1,0 +1,9 @@
+code;groupe;marche;domaine;id;jours;variantes;cartes_meme_texte;portee_ue_uk;porte_parole;enjeu_famille;methode;accroche
+C1;a;US;marque-un.test;1;120;7;4;;pair;enfants;vu;fictif un
+C2;a;US;marque-un.test;2;100;3;3;;pair;;vu;fictif deux
+C3;a;US;marque-deux.test;3;95;1;2;;pair;;texte;fictif trois
+C4;a;US;marque-trois.test;4;130;4;4;;specialiste;;vu;fictif quatre
+C5;a;UE;marque-quatre.test;5;58;2;3;1200000;pair;;texte;fictif cinq
+C6;a;UE;marque-cinq.test;6;300;3;3;400000;marque_texte;;vu;fictif six
+C7;a;US;marque-six.test;7;40;1;1;;enfant_adulte;;vu;fictif sept
+C8;b;US;marque-un.test;8;200;9;9;;marque_texte;;vu;fictif huit

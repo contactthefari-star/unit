@@ -1,0 +1,26 @@
+{
+ "credits_charged": 1,
+ "credits_remaining": 99,
+ "has_more": false,
+ "cursor": 0,
+ "comments": [
+  {
+   "aweme_id": "7000000000000000001",
+   "text": "Moi aussi je me réveille avec la nuque raide, c'est l'horreur.",
+   "digg_count": 5,
+   "create_time": 1735689600,
+   "user": {
+    "unique_id": "lectrice_c"
+   }
+  },
+  {
+   "aweme_id": "7000000000000000001",
+   "text": "Où trouver ce modèle ?",
+   "digg_count": 2,
+   "create_time": 1735689700,
+   "user": {
+    "unique_id": "lectrice_d"
+   }
+  }
+ ]
+}

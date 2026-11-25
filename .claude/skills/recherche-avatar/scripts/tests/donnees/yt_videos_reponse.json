@@ -1,0 +1,40 @@
+{
+ "items": [
+  {
+   "id": "VID00000001",
+   "snippet": {
+    "title": "Dormir sans douleur",
+    "channelTitle": "Cha\u00eene Test",
+    "channelId": "CHAN001",
+    "publishedAt": "2025-02-01T10:00:00Z",
+    "description": "x"
+   },
+   "statistics": {
+    "viewCount": "120000",
+    "likeCount": "3000",
+    "commentCount": "250"
+   },
+   "contentDetails": {
+    "duration": "PT8M30S"
+   }
+  },
+  {
+   "id": "VID00000002",
+   "snippet": {
+    "title": "Mon oreiller",
+    "channelTitle": "Cha\u00eene Test",
+    "channelId": "CHAN001",
+    "publishedAt": "2025-03-01T10:00:00Z",
+    "description": "y"
+   },
+   "statistics": {
+    "viewCount": "9000",
+    "likeCount": "100",
+    "commentCount": "20"
+   },
+   "contentDetails": {
+    "duration": "PT45S"
+   }
+  }
+ ]
+}

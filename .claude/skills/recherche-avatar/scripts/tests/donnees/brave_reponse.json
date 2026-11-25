@@ -1,0 +1,21 @@
+{
+ "web": {
+  "results": [
+   {
+    "title": "Avis oreiller cervical <b>forum</b>",
+    "url": "https://forum-exemple.test/fil/1",
+    "age": "2025-03-02",
+    "description": "Je dors très mal depuis que j'ai mal à la nuque, je me réveille à trois heures.",
+    "extra_snippets": [
+     "Mon kiné m'a conseillé un oreiller plus ferme, mais ça n'a rien changé pour moi."
+    ]
+   },
+   {
+    "title": "Test blog",
+    "url": "https://blog-exemple.test/article",
+    "age": "2025-01-10",
+    "description": "Après deux ans à dormir sur le dos, j'ai enfin trouvé un oreiller qui tient ma nuque."
+   }
+  ]
+ }
+}
