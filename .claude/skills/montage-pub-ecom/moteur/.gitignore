@@ -1,0 +1,33 @@
+# Ce qui est cree chez toi par l'usage du moteur. Rien de tout cela ne se partage.
+
+# tes videos et tes films
+rushes/*
+!rushes/.gitkeep
+sorties/*
+!sorties/.gitkeep
+
+# tes montages, leur historique, leurs planches
+recettes/projets/*
+!recettes/projets/.gitkeep
+
+# tes voix off et les pistes separees
+voix/
+sons_separes/
+
+# le journal de tout ce que tu as dit, et le bilan de l'outil
+demandes.jsonl
+demandes.jsonl.*
+a_faire.jsonl
+A_AMELIORER.md
+*.log
+
+# un certificat eventuel (mode --telephone)
+tls/
+
+# fichiers de travail
+venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+*.avant_*
+*.bak
