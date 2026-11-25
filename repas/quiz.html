@@ -367,7 +367,7 @@
     var out = [], ex = A.exclus.filter(function (x) { return x !== "aucun"; }), so = A.soirs.filter(function (x) { return x !== "aucun"; });
     out.push(li("🍽️", "Les repas de la semaine pour <b>" + A.adultes + " adulte" + (A.adultes > 1 ? "s" : "") + (A.enfants ? " et " + A.enfants + " enfant" + (A.enfants > 1 ? "s" : "") : "") + "</b>, quantités comprises."));
     if (A.gouts === "oui") out.push(li("🙋", "Les goûts de <b>chaque enfant</b> pris en compte, un par un."));
-    if (ex.length) out.push(li("🚫", "Jamais de " + list(ex, EXCL, "ni de") + "."));
+    if (ex.length) out.push(li("🚫", "Jamais au menu : " + list(ex, EXCL, "ni") + "."));
     if (so.length) out.push(li("⏰", "Un repas rapide le " + list(so, DAYS) + " soir, avec la <b>prépa faite la veille</b>."));
     out.push(li("🛒", "Ta liste de courses pour <b>" + A.magasin + "</b>, rangée par rayon."));
     out.push(li("💶", "Une semaine calée sur ton budget de <b>" + BUD[A.budget] + "</b>. Les prix sont des estimations."));
