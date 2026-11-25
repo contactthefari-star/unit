@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="fr-BE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crée ta semaine · Ma Semaine</title>
+<meta name="description" content="Quelques questions, et ta semaine de repas est réglée sur ta famille, ton budget et ton magasin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbf7f1; --surface: #ffffff; --ink: #1f1b16; --muted: #6b6259; --line: #ebe3d8;
+    --accent: #e0592a; --accent-ink: #ffffff; --accent-soft: #fde8df;
+    --green: #2f7a4f; --green-soft: #e3f1e8; --radius: 18px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17130f; --surface: #221c17; --ink: #f4ede4; --muted: #b3a79a; --line: #3a3129;
+      --accent: #f07444; --accent-soft: #3a2219; --green: #6cc492; --green-soft: #1d3026;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17130f; --surface: #221c17; --ink: #f4ede4; --muted: #b3a79a; --line: #3a3129;
+    --accent: #f07444; --accent-soft: #3a2219; --green: #6cc492; --green-soft: #1d3026;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.5 Inter, system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  h1, h2 { font-family: Fraunces, Georgia, serif; line-height: 1.15; margin: 0; letter-spacing: -0.01em; }
+  h1 { font-size: clamp(26px, 5vw, 34px); }
+  button { font: inherit; color: inherit; }
+
+  .top { position: sticky; top: 0; background: var(--bg); z-index: 5; padding: 14px 16px 10px; }
+  .bar { display: flex; align-items: center; justify-content: space-between; max-width: 1040px; margin: 0 auto; gap: 12px; }
+  .logo { font-family: Fraunces, Georgia, serif; font-weight: 700; font-size: 20px; text-decoration: none; color: var(--ink); }
+  .logo span { color: var(--accent); }
+  .icon { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; cursor: pointer; font-size: 20px; text-decoration: none; color: var(--ink); }
+  .icon[hidden] { visibility: hidden; display: grid; }
+  .progress { max-width: 1040px; margin: 12px auto 0; height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
+  .progress i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 99px; transition: width .3s ease; }
+
+  .layout { max-width: 1040px; margin: 0 auto; padding: 28px 16px 120px; display: grid; grid-template-columns: 1fr 360px; gap: 48px; align-items: start; }
+  .step { display: none; }
+  .step.on { display: block; animation: in .25s ease; }
+  @keyframes in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .step .sub { color: var(--muted); margin: 8px 0 22px; }
+
+  .opts { display: grid; gap: 12px; }
+  .opt { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; background: var(--surface); border: 2px solid var(--line); border-radius: 16px; padding: 14px 16px; cursor: pointer; min-height: 64px; }
+  .opt .em { font-size: 26px; width: 34px; text-align: center; flex-shrink: 0; }
+  .opt b { display: block; font-size: 16px; }
+  .opt small { display: block; color: var(--muted); font-size: 14px; }
+  .opt .ck { margin-left: auto; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--line); flex-shrink: 0; display: grid; place-items: center; font-size: 14px; color: transparent; }
+  .opt[aria-pressed="true"] { border-color: var(--green); background: var(--green-soft); }
+  .opt[aria-pressed="true"] .ck { background: var(--green); border-color: var(--green); color: #fff; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { border: 2px solid var(--line); background: var(--surface); border-radius: 999px; padding: 10px 16px; cursor: pointer; font-weight: 600; min-height: 46px; }
+  .chip[aria-pressed="true"] { border-color: var(--green); background: var(--green-soft); color: var(--green); }
+
+  .counter { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 2px solid var(--line); border-radius: 16px; padding: 12px 16px; margin-bottom: 12px; gap: 12px; }
+  .counter .lbl { display: flex; align-items: center; gap: 12px; font-weight: 600; }
+  .counter .lbl small { display: block; font-weight: 400; color: var(--muted); font-size: 13px; }
+  .counter .ctl { display: flex; align-items: center; gap: 14px; }
+  .counter button { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--line); background: transparent; cursor: pointer; font-size: 20px; }
+  .counter output { font-weight: 700; font-size: 20px; min-width: 22px; text-align: center; }
+  .note { font-size: 14px; color: var(--muted); margin-top: 4px; }
+
+  .next { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: linear-gradient(to top, var(--bg) 70%, transparent); }
+  .next .in { max-width: 1040px; margin: 0 auto; display: grid; grid-template-columns: 1fr 360px; gap: 48px; }
+  .btn { display: flex; align-items: center; justify-content: center; width: 100%; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 999px; font-weight: 700; font-size: 17px; min-height: 56px; padding: 0 22px; cursor: pointer; text-decoration: none; }
+  .btn:disabled { opacity: .4; cursor: not-allowed; }
+  .btn.ghost { background: transparent; color: var(--ink); border: 2px solid var(--line); }
+
+  .peek { position: sticky; top: 110px; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 20px; box-shadow: 0 18px 44px rgba(60, 40, 20, .10); }
+  .peek h2 { font-size: 20px; margin-bottom: 12px; }
+  .peek .big { font-family: Fraunces, Georgia, serif; font-size: 40px; font-weight: 700; color: var(--green); line-height: 1; }
+  .peek .row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+  .peek .row:last-child { border-bottom: 0; }
+  .peek .row span:first-child { color: var(--muted); }
+  .peek .row span:last-child { font-weight: 600; text-align: right; }
+  .peek .k { color: var(--muted); font-size: 14px; margin: 4px 0 14px; }
+
+  .result { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 6px 18px; margin-bottom: 16px; }
+  .result li { padding: 10px 0; border-bottom: 1px solid var(--line); list-style: none; display: flex; gap: 12px; }
+  .result li:last-child { border-bottom: 0; }
+  .result ul { margin: 0; padding: 0; }
+
+  .plans { display: grid; gap: 12px; margin: 18px 0; }
+  .plan { position: relative; display: flex; align-items: center; gap: 14px; background: var(--surface); border: 2px solid var(--line); border-radius: 16px; padding: 16px; cursor: pointer; text-align: left; width: 100%; }
+  .plan[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+  .plan .p { margin-left: auto; text-align: right; }
+  .plan .p b { font-family: Fraunces, Georgia, serif; font-size: 26px; display: block; line-height: 1; }
+  .plan .p small { color: var(--muted); font-size: 13px; }
+  .plan .badge { position: absolute; top: -11px; left: 16px; background: var(--accent); color: var(--accent-ink); font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+  .guar { display: flex; gap: 12px; background: var(--green-soft); border-radius: 16px; padding: 14px 16px; font-size: 15px; }
+  .guar strong { color: var(--green); }
+  .warn { background: var(--accent-soft); border-radius: 14px; padding: 12px 14px; font-size: 14px; margin-top: 14px; }
+
+  @media (max-width: 860px) {
+    .layout, .next .in { grid-template-columns: 1fr; gap: 0; }
+    .peek, .next .in > .sp { display: none; }
+    .layout { padding-top: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="bar">
+    <button class="icon" id="back" aria-label="Question précédente" hidden>←</button>
+    <a class="logo" href="./">Ma <span>Semaine</span></a>
+    <a class="icon" href="./" aria-label="Fermer">×</a>
+  </div>
+  <div class="progress"><i id="prog"></i></div>
+</div>
+
+<main class="layout">
+  <div id="steps">
+
+    <section class="step" data-step="goal">
+      <h1>Qu'est-ce qui compte le plus pour toi ?</h1>
+      <p class="sub">On règle ta semaine là-dessus.</p>
+      <div class="opts" data-key="goal" data-single>
+        <button class="opt" data-v="budget"><span class="em">💶</span><span><b>Dépenser moins en courses</b><small>Tenir mon budget sans me priver</small></span><span class="ck">✓</span></button>
+        <button class="opt" data-v="tete"><span class="em">🧠</span><span><b>Ne plus y penser</b><small>Fini le « on mange quoi ce soir ? »</small></span><span class="ck">✓</span></button>
+        <button class="opt" data-v="temps"><span class="em">⏱️</span><span><b>Gagner du temps le soir</b><small>Tout est préparé à l'avance</small></span><span class="ck">✓</span></button>
+        <button class="opt" data-v="famille"><span class="em">👨‍👩‍👧</span><span><b>Que tout le monde mange</b><small>Même les enfants difficiles</small></span><span class="ck">✓</span></button>
+      </div>
+    </section>
+
+    <section class="step" data-step="foyer">
+      <h1>Tu cuisines pour qui ?</h1>
+      <p class="sub">On calcule les quantités et les courses pour ton foyer.</p>
+      <div class="counter"><span class="lbl"><span class="em">🧑</span><span>Adultes<small>Et les ados qui mangent comme un adulte</small></span></span><span class="ctl"><button data-c="adultes" data-d="-1" aria-label="Un adulte de moins">−</button><output id="o-adultes">2</output><button data-c="adultes" data-d="1" aria-label="Un adulte de plus">+</button></span></div>
+      <div class="counter"><span class="lbl"><span class="em">🧒</span><span>Enfants<small>Une demi-portion d'adulte</small></span></span><span class="ctl"><button data-c="enfants" data-d="-1" aria-label="Un enfant de moins">−</button><output id="o-enfants">2</output><button data-c="enfants" data-d="1" aria-label="Un enfant de plus">+</button></span></div>
+    </section>
+
+    <section class="step" data-step="gouts">
+      <h1>Les enfants ont-ils des goûts différents ?</h1>
+      <p class="sub">L'un n'aime pas l'oignon, l'autre pas le poisson… On en tient compte pour chacun.</p>
+      <div class="opts" data-key="gouts" data-single>
+        <button class="opt" data-v="oui"><span class="em">🙋</span><span><b>Oui, chacun ses goûts</b><small>Tu pourras régler chaque enfant ensuite</small></span><span class="ck">✓</span></button>
+        <button class="opt" data-v="non"><span class="em">🙂</span><span><b>Non, ils mangent pareil</b></span><span class="ck">✓</span></button>
+      </div>
+    </section>
+
+    <section class="step" data-step="exclus">
+      <h1>Ce que ta famille ne mange pas</h1>
+      <p class="sub">Choisis tout ce qui compte. Ces aliments ne seront jamais proposés.</p>
+      <div class="chips" data-key="exclus" data-none="aucun">
+        <button class="chip" data-v="porc">Porc</button>
+        <button class="chip" data-v="boeuf">Bœuf</button>
+        <button class="chip" data-v="poisson">Poisson</button>
+        <button class="chip" data-v="fruits-de-mer">Fruits de mer</button>
+        <button class="chip" data-v="champignons">Champignons</button>
+        <button class="chip" data-v="oignon">Oignon</button>
+        <button class="chip" data-v="epice">Plats épicés</button>
+        <button class="chip" data-v="aucun">Rien, on mange de tout</button>
+      </div>
+      <p class="note">Une allergie ? Tu pourras l'indiquer pour chaque personne. Elle sera traitée comme une interdiction stricte.</p>
+    </section>
+
+    <section class="step" data-step="soirs">
+      <h1>Quels soirs sont chargés ?</h1>
+      <p class="sub">Sport, retour tard, réunion… Ces soirs-là, on te prévoit un repas rapide, préparé la veille.</p>
+      <div class="chips" data-key="soirs" data-none="aucun">
+        <button class="chip" data-v="lun">Lundi</button>
+        <button class="chip" data-v="mar">Mardi</button>
+        <button class="chip" data-v="mer">Mercredi</button>
+        <button class="chip" data-v="jeu">Jeudi</button>
+        <button class="chip" data-v="ven">Vendredi</button>
+        <button class="chip" data-v="sam">Samedi</button>
+        <button class="chip" data-v="dim">Dimanche</button>
+        <button class="chip" data-v="aucun">Aucun en particulier</button>
+      </div>
+    </section>
+
+    <section class="step" data-step="temps">
+      <h1>Combien de temps pour cuisiner en semaine ?</h1>
+      <p class="sub">Les autres soirs.</p>
+      <div class="opts" data-key="temps" data-single>
+        <button class="opt" data-v="15"><span class="em">⚡</span><span><b>15 minutes max</b></span><span class="ck">✓</span></button>
+        <button class="opt" data-v="30"><span class="em">🍳</span><span><b>Environ 30 minutes</b></span><span class="ck">✓</span></button>
+        <button class="opt" data-v="45"><span class="em">🍲</span><span><b>45 minutes ou plus</b><small>J'aime cuisiner</small></span><span class="ck">✓</span></button>
+      </div>
+    </section>
+
+    <section class="step" data-step="magasin">
+      <h1>Tu fais tes courses où ?</h1>
+      <p class="sub">Ta liste sera faite pour un seul magasin.</p>
+      <div class="opts" data-key="magasin" data-single>
+        <button class="opt" data-v="Colruyt"><span class="em">🛒</span><span><b>Colruyt</b></span><span class="ck">✓</span></button>
+        <button class="opt" data-v="Delhaize"><span class="em">🛒</span><span><b>Delhaize</b></span><span class="ck">✓</span></button>
+        <button class="opt" data-v="Carrefour"><span class="em">🛒</span><span><b>Carrefour</b></span><span class="ck">✓</span></button>
+        <button class="opt" data-v="Lidl"><span class="em">🛒</span><span><b>Lidl</b></span><span class="ck">✓</span></button>
+        <button class="opt" data-v="Aldi"><span class="em">🛒</span><span><b>Aldi</b></span><span class="ck">✓</span></button>
+      </div>
+    </section>
+
+    <section class="step" data-step="budget">
+      <h1>Ton budget courses par semaine ?</h1>
+      <p class="sub">Pour les repas de toute la famille.</p>
+      <div class="opts" data-key="budget" data-single>
+        <button class="opt" data-v="60"><span class="em">💶</span><span><b>Moins de 60 €</b></span><span class="ck">✓</span></button>
+        <button class="opt" data-v="90"><span class="em">💶</span><span><b>60 à 90 €</b></span><span class="ck">✓</span></button>
+        <button class="opt" data-v="130"><span class="em">💶</span><span><b>90 à 130 €</b></span><span class="ck">✓</span></button>
+        <button class="opt" data-v="180"><span class="em">💶</span><span><b>Plus de 130 €</b></span><span class="ck">✓</span></button>
+      </div>
+    </section>
+
+    <section class="step" data-step="resultat">
+      <h1>Ta semaine peut être réglée sur ta famille</h1>
+      <p class="sub">Voici ce que Ma Semaine fera pour toi, avec tes réponses.</p>
+      <div class="result"><ul id="resList"></ul></div>
+    </section>
+
+    <section class="step" data-step="paywall">
+      <h1>Débloque ta semaine</h1>
+      <p class="sub">Tes menus, ta liste de courses et ta prépa de la semaine.</p>
+      <div class="plans" data-key="plan" data-single>
+        <button class="plan" data-v="vie"><span class="badge">Le plus choisi</span><span><b>À vie</b><br><small class="muted">Payé une fois, à toi pour toujours</small></span><span class="p"><b>59 €</b><small>une seule fois</small></span></button>
+        <button class="plan" data-v="mensuel"><span><b>Au mois</b><br><small>Sans engagement</small></span><span class="p"><b>9,90 €</b><small>par mois</small></span></button>
+      </div>
+      <div class="guar"><span>🛡️</span><span><strong>Garantie économies.</strong> Si tu n'économises pas au moins 10 € sur tes courses de la 1re semaine, on te rembourse.</span></div>
+      <p class="note">Ton compte est créé avec l'e-mail que tu donnes au paiement. Rien à remplir avant.</p>
+      <div class="warn" id="noPay" hidden>Le paiement n'est pas encore ouvert. Tes réponses sont gardées sur ce téléphone.</div>
+    </section>
+
+  </div>
+
+  <aside class="peek" aria-live="polite">
+    <h2>Ta semaine</h2>
+    <div id="pkBudget"><div class="big">–</div><p class="k">par personne et par jour, avec ton budget</p></div>
+    <div id="pkRows"></div>
+  </aside>
+</main>
+
+<div class="next"><div class="in"><button class="btn" id="go">Continuer</button><span class="sp"></span></div></div>
+
+<script>
+(function () {
+  // Liens de paiement Stripe (Payment Links). Vides tant qu'ils ne sont pas créés.
+  var LIENS_PAIEMENT = { mensuel: "", vie: "" };
+
+  var KEY = "masemaine:quiz";
+  var steps = [].slice.call(document.querySelectorAll(".step"));
+  var order = steps.map(function (s) { return s.dataset.step; });
+  var A = load();
+  var i = 0;
+
+  function load() {
+    var d = { adultes: 2, enfants: 2, exclus: [], soirs: [], plan: "vie" };
+    try { var s = JSON.parse(localStorage.getItem(KEY)); if (s) for (var k in s) d[k] = s[k]; } catch (e) {}
+    var q = new URLSearchParams(location.search).get("magasin");
+    if (q) d.magasin = q;
+    return d;
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(A)); } catch (e) {} }
+
+  // Choix uniques et multiples
+  document.querySelectorAll("[data-key]").forEach(function (g) {
+    var key = g.dataset.key, single = g.hasAttribute("data-single"), none = g.dataset.none;
+    g.querySelectorAll("[data-v]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var v = b.dataset.v;
+        if (single) { A[key] = v; }
+        else {
+          var arr = (A[key] || []).slice();
+          if (v === none) arr = arr.indexOf(none) > -1 ? [] : [none];
+          else {
+            arr = arr.filter(function (x) { return x !== none; });
+            var at = arr.indexOf(v); if (at > -1) arr.splice(at, 1); else arr.push(v);
+          }
+          A[key] = arr;
+        }
+        save(); paint();
+        if (single && key !== "plan") setTimeout(function () { move(1); }, 220);
+      });
+    });
+  });
+
+  // Compteurs du foyer
+  document.querySelectorAll("[data-c]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var k = b.dataset.c, min = k === "adultes" ? 1 : 0;
+      A[k] = Math.max(min, Math.min(12, (A[k] || 0) + Number(b.dataset.d)));
+      save(); paint();
+    });
+  });
+
+  function answered(step) {
+    switch (step) {
+      case "goal": return !!A.goal;
+      case "gouts": return !!A.gouts;
+      case "exclus": return A.exclus.length > 0;
+      case "soirs": return A.soirs.length > 0;
+      case "temps": return !!A.temps;
+      case "magasin": return !!A.magasin;
+      case "budget": return !!A.budget;
+      default: return true;
+    }
+  }
+
+  function visible() {
+    // La question sur les goûts n'a de sens qu'avec au moins 2 enfants.
+    return order.filter(function (s) { return s !== "gouts" || A.enfants >= 2; });
+  }
+
+  function move(d) {
+    var list = visible(), cur = list.indexOf(order[i]);
+    var nx = list[Math.max(0, Math.min(list.length - 1, cur + d))];
+    i = order.indexOf(nx);
+    paint(); window.scrollTo(0, 0);
+  }
+
+  var DAYS = { lun: "lundi", mar: "mardi", mer: "mercredi", jeu: "jeudi", ven: "vendredi", sam: "samedi", dim: "dimanche" };
+  var EXCL = { porc: "porc", boeuf: "bœuf", poisson: "poisson", "fruits-de-mer": "fruits de mer", champignons: "champignons", oignon: "oignon", epice: "plats épicés" };
+  var BUD = { "60": "moins de 60 €", "90": "60 à 90 €", "130": "90 à 130 €", "180": "plus de 130 €" };
+
+  function parts() { return (A.adultes || 0) + 0.5 * (A.enfants || 0); }
+  function perDay() {
+    if (!A.budget) return null;
+    var b = Number(A.budget); if (b === 180) b = 130;
+    return b / 7 / parts();
+  }
+  function eur(n) { return n.toFixed(2).replace(".", ",") + " €"; }
+  function list(a, map, last) { var w = a.map(function (x) { return map[x]; }); return w.length < 2 ? w.join("") : w.slice(0, -1).join(", ") + " " + (last || "et") + " " + w[w.length - 1]; }
+
+  function paint() {
+    var list2 = visible(), cur = list2.indexOf(order[i]), step = order[i];
+    steps.forEach(function (s, n) { s.classList.toggle("on", n === i); });
+    document.getElementById("prog").style.width = Math.round(((cur + 1) / list2.length) * 100) + "%";
+    document.getElementById("back").hidden = cur === 0;
+
+    document.querySelectorAll("[data-key]").forEach(function (g) {
+      var v = A[g.dataset.key];
+      g.querySelectorAll("[data-v]").forEach(function (b) {
+        b.setAttribute("aria-pressed", Array.isArray(v) ? v.indexOf(b.dataset.v) > -1 : v === b.dataset.v);
+      });
+    });
+    document.getElementById("o-adultes").textContent = A.adultes;
+    document.getElementById("o-enfants").textContent = A.enfants;
+
+    var go = document.getElementById("go");
+    go.disabled = !answered(step);
+    go.textContent = step === "resultat" ? "Voir mon accès" : step === "paywall" ? (A.plan === "mensuel" ? "Commencer à 9,90 €/mois" : "Prendre l'accès à vie (59 €)") : "Continuer";
+
+    // Aperçu
+    var pd = perDay(), pk = document.getElementById("pkBudget");
+    pk.querySelector(".big").textContent = pd ? (A.budget === "180" ? "+ de " : "") + eur(pd) : "–";
+    var rows = [["Foyer", A.adultes + " adulte" + (A.adultes > 1 ? "s" : "") + (A.enfants ? ", " + A.enfants + " enfant" + (A.enfants > 1 ? "s" : "") : "")]];
+    if (A.magasin) rows.push(["Magasin", A.magasin]);
+    if (A.budget) rows.push(["Budget", BUD[A.budget] + " / sem."]);
+    var ex = A.exclus.filter(function (x) { return x !== "aucun"; });
+    if (ex.length) rows.push(["Jamais", list(ex, EXCL)]);
+    var so = A.soirs.filter(function (x) { return x !== "aucun"; });
+    if (so.length) rows.push(["Soirs rapides", so.length + " par semaine"]);
+    document.getElementById("pkRows").innerHTML = rows.map(function (r) { return '<div class="row"><span>' + r[0] + "</span><span>" + r[1] + "</span></div>"; }).join("");
+
+    if (step === "resultat") result();
+  }
+
+  function li(em, txt) { return "<li><span>" + em + "</span><span>" + txt + "</span></li>"; }
+  function result() {
+    var out = [], ex = A.exclus.filter(function (x) { return x !== "aucun"; }), so = A.soirs.filter(function (x) { return x !== "aucun"; });
+    out.push(li("🍽️", "Les repas de la semaine pour <b>" + A.adultes + " adulte" + (A.adultes > 1 ? "s" : "") + (A.enfants ? " et " + A.enfants + " enfant" + (A.enfants > 1 ? "s" : "") : "") + "</b>, quantités comprises."));
+    if (A.gouts === "oui") out.push(li("🙋", "Les goûts de <b>chaque enfant</b> pris en compte, un par un."));
+    if (ex.length) out.push(li("🚫", "Jamais de " + list(ex, EXCL, "ni de") + "."));
+    if (so.length) out.push(li("⏰", "Un repas rapide le " + list(so, DAYS) + " soir, avec la <b>prépa faite la veille</b>."));
+    out.push(li("🛒", "Ta liste de courses pour <b>" + A.magasin + "</b>, rangée par rayon."));
+    out.push(li("💶", "Une semaine calée sur ton budget de <b>" + BUD[A.budget] + "</b>. Les prix sont des estimations."));
+    document.getElementById("resList").innerHTML = out.join("");
+  }
+
+  document.getElementById("go").addEventListener("click", function () {
+    var step = order[i];
+    if (step !== "paywall") { move(1); return; }
+    var lien = LIENS_PAIEMENT[A.plan];
+    if (lien) { location.href = lien; return; }
+    document.getElementById("noPay").hidden = false;
+  });
+  document.getElementById("back").addEventListener("click", function () { move(-1); });
+
+  paint();
+})();
+</script>
+</body>
+</html>
