@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="fr-BE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ma Semaine : tes menus dans ton budget</title>
+<meta name="description" content="Les recettes que tu enregistres sur TikTok, enfin dans ton assiette. Menus de la semaine adaptés à tes enfants, dans ton budget, avec ta liste Colruyt, Delhaize, Carrefour, Lidl ou Aldi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbf7f1;
+    --surface: #ffffff;
+    --ink: #1f1b16;
+    --muted: #6b6259;
+    --line: #ebe3d8;
+    --accent: #e0592a;
+    --accent-ink: #ffffff;
+    --accent-soft: #fde8df;
+    --green: #2f7a4f;
+    --green-soft: #e3f1e8;
+    --radius: 18px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17130f; --surface: #221c17; --ink: #f4ede4; --muted: #b3a79a;
+      --line: #3a3129; --accent: #f07444; --accent-soft: #3a2219;
+      --green: #6cc492; --green-soft: #1d3026;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17130f; --surface: #221c17; --ink: #f4ede4; --muted: #b3a79a;
+    --line: #3a3129; --accent: #f07444; --accent-soft: #3a2219;
+    --green: #6cc492; --green-soft: #1d3026;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 400 17px/1.55 Inter, system-ui, -apple-system, sans-serif;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+  h1, h2, h3 { font-family: Fraunces, Georgia, serif; line-height: 1.12; margin: 0; letter-spacing: -0.01em; }
+  h1 { font-size: clamp(34px, 7vw, 58px); }
+  h2 { font-size: clamp(27px, 5vw, 40px); margin-bottom: 14px; }
+  h3 { font-size: 21px; margin-bottom: 6px; }
+  p { margin: 0 0 12px; }
+  .muted { color: var(--muted); }
+  section { padding: 64px 0; }
+
+  header.top { padding: 18px 0; }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .logo { font-family: Fraunces, Georgia, serif; font-weight: 700; font-size: 22px; }
+  .logo span { color: var(--accent); }
+  .flag { font-size: 14px; color: var(--muted); }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--accent); color: var(--accent-ink); text-decoration: none;
+    font-weight: 700; font-size: 17px; padding: 16px 24px; border-radius: 999px;
+    border: 0; cursor: pointer; min-height: 52px; text-align: center;
+  }
+  .btn:hover { filter: brightness(1.05); }
+  .btn.ghost { background: transparent; color: var(--ink); border: 2px solid var(--line); }
+
+  .hero { padding: 28px 0 56px; }
+  .hero .grid { display: grid; gap: 36px; align-items: center; grid-template-columns: 1.15fr 0.85fr; }
+  .eyebrow {
+    display: inline-block; background: var(--accent-soft); color: var(--accent);
+    font-weight: 700; font-size: 14px; padding: 6px 12px; border-radius: 999px; margin-bottom: 16px;
+  }
+  .hero p.lead { font-size: 19px; color: var(--muted); margin: 18px 0 26px; max-width: 34ch; }
+  .hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .reassure { font-size: 14px; color: var(--muted); margin-top: 14px; }
+
+  .phone {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 30px;
+    padding: 18px; box-shadow: 0 20px 50px rgba(60, 40, 20, 0.12); max-width: 360px; margin: 0 auto; width: 100%;
+  }
+  .phone .row { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--line); gap: 10px; }
+  .phone .row:last-of-type { border-bottom: 0; }
+  .day { font-weight: 700; font-size: 13px; color: var(--muted); width: 34px; flex-shrink: 0; }
+  .dish { flex: 1; font-weight: 600; font-size: 15px; }
+  .tag { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+  .tag.tt { background: var(--ink); color: var(--bg); }
+  .tag.kid { background: var(--green-soft); color: var(--green); }
+  .phone .total {
+    margin-top: 12px; background: var(--green-soft); color: var(--green); border-radius: 14px;
+    padding: 12px 14px; font-weight: 700; display: flex; justify-content: space-between; gap: 10px; font-size: 15px;
+  }
+  .phone .head { font-weight: 700; margin-bottom: 4px; display: flex; justify-content: space-between; gap: 10px; }
+  .phone .head small { color: var(--muted); font-weight: 500; }
+
+  .pains { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 26px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+  .card .q { font-family: Fraunces, Georgia, serif; font-size: 21px; font-weight: 600; margin-bottom: 8px; }
+
+  .steps { counter-reset: s; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 26px; }
+  .step { counter-increment: s; }
+  .step::before {
+    content: counter(s); display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink); font-weight: 700; margin-bottom: 14px;
+  }
+
+  .shops { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .shop { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+
+  .pricing { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 26px; max-width: 760px; }
+  .plan { position: relative; display: flex; flex-direction: column; gap: 8px; }
+  .plan.best { border: 2px solid var(--accent); }
+  .plan .badge {
+    position: absolute; top: -13px; left: 22px; background: var(--accent); color: var(--accent-ink);
+    font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 999px;
+  }
+  .price { font-family: Fraunces, Georgia, serif; font-size: 44px; font-weight: 700; line-height: 1; }
+  .price small { font-family: Inter, sans-serif; font-size: 16px; font-weight: 500; color: var(--muted); }
+  .plan ul { margin: 6px 0 14px; padding-left: 20px; }
+  .plan li { margin-bottom: 4px; }
+  .plan .btn { margin-top: auto; width: 100%; }
+
+  .guarantee {
+    margin-top: 22px; max-width: 760px; display: flex; gap: 16px; align-items: flex-start;
+    background: var(--green-soft); color: var(--ink); border-radius: var(--radius); padding: 20px 22px;
+  }
+  .guarantee .icon { font-size: 30px; line-height: 1; }
+  .guarantee strong { color: var(--green); }
+
+  details { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; margin-bottom: 10px; max-width: 760px; }
+  summary { font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--accent); font-size: 22px; line-height: 1; }
+  details[open] summary::after { content: "–"; }
+  details p { margin: 10px 0 0; color: var(--muted); }
+
+  .final { text-align: center; }
+  .final p { max-width: 40ch; margin: 0 auto 24px; color: var(--muted); }
+  footer { padding: 30px 0 40px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); }
+
+  @media (max-width: 820px) {
+    .hero .grid, .pains, .steps, .pricing { grid-template-columns: 1fr; }
+    section { padding: 48px 0; }
+    .hero .ctas .btn { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="logo">Ma <span>Semaine</span></div>
+    <div class="flag">Fait pour la Belgique 🇧🇪</div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap grid">
+      <div>
+        <span class="eyebrow">Fini le « on mange quoi ce soir ? »</span>
+        <h1>Les recettes que tu enregistres sur TikTok, enfin dans ton assiette.</h1>
+        <p class="lead">Tes menus de la semaine, adaptés aux goûts de chaque enfant, dans ton budget, avec ta liste de courses Colruyt, Delhaize, Carrefour, Lidl ou Aldi.</p>
+        <div class="ctas">
+          <a class="btn" href="#tarifs">Je veux ma semaine organisée</a>
+        </div>
+        <p class="reassure">C'est un site : rien à télécharger. Ça marche sur ton téléphone.</p>
+      </div>
+
+      <div class="phone" aria-label="Exemple de semaine">
+        <div class="head">Ta semaine <small>Famille de 4</small></div>
+        <div class="row"><span class="day">Lun</span><span class="dish">Pâtes crémeuses au poulet</span><span class="tag tt">TikTok</span></div>
+        <div class="row"><span class="day">Mar</span><span class="dish">Boulettes sauce tomate</span><span class="tag kid">Sans oignon pour Léa</span></div>
+        <div class="row"><span class="day">Mer</span><span class="dish">Stoemp saucisse</span><span class="tag kid">Plat belge</span></div>
+        <div class="row"><span class="day">Jeu</span><span class="dish">Wraps de la semaine</span><span class="tag tt">Insta</span></div>
+        <div class="row"><span class="day">Ven</span><span class="dish">Gratin de légumes</span><span class="tag kid">Validé par Noah</span></div>
+        <div class="total"><span>Budget estimé · Lidl</span><span>dans ton budget ✓</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Tu te reconnais ?</h2>
+      <div class="pains">
+        <div class="card">
+          <div class="q">« On mange quoi ce soir ? »</div>
+          <p class="muted">Tous les jours, la même question. Et c'est toujours à toi d'y répondre.</p>
+        </div>
+        <div class="card">
+          <div class="q">Des dizaines de recettes enregistrées.</div>
+          <p class="muted">Sur TikTok et Insta. Tu n'en as cuisiné aucune.</p>
+        </div>
+        <div class="card">
+          <div class="q">« J'aime pas ça. »</div>
+          <p class="muted">L'un ne mange pas d'oignon, l'autre pas de poisson. Tu fais deux repas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Comment ça marche</h2>
+      <div class="steps">
+        <div class="card step">
+          <h3>Tu ajoutes tes recettes</h3>
+          <p class="muted">Tu partages une vidéo TikTok ou Insta. Les ingrédients et les étapes sont ajoutés tout seuls.</p>
+        </div>
+        <div class="card step">
+          <h3>Tu dis qui mange quoi</h3>
+          <p class="muted">Le nombre d'enfants, ce que chacun aime et n'aime pas, et ton budget de la semaine.</p>
+        </div>
+        <div class="card step">
+          <h3>Tu reçois ta semaine</h3>
+          <p class="muted">Tes menus et ta liste de courses pour un seul magasin. Tu n'as plus qu'à cuisiner.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Tes magasins, un seul à la fois</h2>
+      <p class="muted">Tu choisis ton magasin. Ta liste est faite pour lui : pas besoin de courir partout.</p>
+      <div class="shops">
+        <span class="shop">Colruyt</span><span class="shop">Delhaize</span><span class="shop">Carrefour</span><span class="shop">Lidl</span><span class="shop">Aldi</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="tarifs">
+    <div class="wrap">
+      <h2>Ton prix</h2>
+      <p class="muted">Sans engagement. Pas de carte cachée, pas de surprise.</p>
+      <div class="pricing">
+        <div class="card plan">
+          <h3>Au mois</h3>
+          <div class="price">9,90 € <small>/ mois</small></div>
+          <ul>
+            <li>Toutes les fonctionnalités</li>
+            <li>Tu arrêtes quand tu veux</li>
+          </ul>
+          <a class="btn ghost" data-plan="mensuel" href="#tarifs">Je commence au mois</a>
+        </div>
+        <div class="card plan best">
+          <span class="badge">Le plus choisi</span>
+          <h3>À vie</h3>
+          <div class="price">59 € <small>une seule fois</small></div>
+          <ul>
+            <li>Toutes les fonctionnalités, pour toujours</li>
+            <li>Rentabilisé en 6 mois</li>
+          </ul>
+          <a class="btn" data-plan="vie" href="#tarifs">Je prends l'accès à vie</a>
+        </div>
+      </div>
+      <div class="guarantee">
+        <div class="icon">🛡️</div>
+        <div>
+          <strong>Garantie économies.</strong>
+          Si tu n'économises pas au moins 10 € sur tes courses de la 1re semaine, on te rembourse. Un e-mail suffit.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Tes questions</h2>
+      <details>
+        <summary>C'est une application ?</summary>
+        <p>C'est un site qui s'utilise comme une app. Rien à chercher sur l'App Store ou le Play Store : tu l'ouvres sur ton téléphone et tu peux l'ajouter à ton écran d'accueil.</p>
+      </details>
+      <details>
+        <summary>Pourquoi pas ChatGPT, c'est gratuit ?</summary>
+        <p>ChatGPT ne connaît pas les goûts de tes enfants, ne garde pas tes recettes TikTok et ne fait pas ta liste pour ton magasin. Ici, tout est déjà réglé : tu ouvres, ta semaine est prête.</p>
+      </details>
+      <details>
+        <summary>Les prix sont exacts ?</summary>
+        <p>Ce sont des prix estimés pour chaque magasin, pour t'aider à tenir ton budget. Le prix exact peut varier un peu en caisse.</p>
+      </details>
+      <details>
+        <summary>Ça marche pour une grande famille ?</summary>
+        <p>Oui. Tu ajoutes chaque membre de la famille, avec ce qu'il aime et ce qu'il n'aime pas.</p>
+      </details>
+      <details>
+        <summary>Ça marche en Belgique ?</summary>
+        <p>C'est fait pour la Belgique : plats belges, magasins belges, prix en euros.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <h2>Ce soir, tu sais déjà ce qu'on mange.</h2>
+      <p>Tes recettes, tes enfants, ton budget. Ta semaine est prête en quelques minutes.</p>
+      <a class="btn" href="#tarifs">Je veux ma semaine organisée</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Ma Semaine · Fait en Belgique 🇧🇪</div>
+</footer>
+
+<script>
+  // Colle ici tes liens de paiement Stripe (Payment Links) quand ils sont prêts.
+  // Tant qu'ils sont vides, les boutons restent sur la section des prix.
+  var LIENS_PAIEMENT = {
+    mensuel: "",
+    vie: ""
+  };
+  document.querySelectorAll("[data-plan]").forEach(function (a) {
+    var lien = LIENS_PAIEMENT[a.getAttribute("data-plan")];
+    if (lien) a.setAttribute("href", lien);
+  });
+</script>
+</body>
+</html>
