@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ma Semaine : économise sur tes courses</title>
+<title>SHANI : économise sur tes courses</title>
 <meta name="description" content="Économise sur tes courses sans y penser. Tu mets ton budget, tu reçois les menus de la semaine pour toute la famille et ta liste Colruyt, Delhaize, Carrefour, Lidl ou Aldi.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,24 +15,24 @@
     --ink: #1b211d;
     --muted: #5f6660;
     --line: #e8ebe6;
-    --accent: #e0592a;
+    --accent: #3f6f1d;
     --accent-ink: #ffffff;
-    --accent-soft: #fde8df;
-    --green: #2f7a4f;
-    --green-soft: #e3f1e8;
+    --accent-soft: #eaf2e0;
+    --green: #3f6f1d;
+    --green-soft: #eaf2e0;
     --radius: 18px;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #121614; --alt: #181d1a; --surface: #1d2320; --ink: #f4ede4; --muted: #b3a79a;
-      --line: #3a3129; --accent: #f07444; --accent-soft: #3a2219;
-      --green: #6cc492; --green-soft: #1d3026;
+      --line: #3a3129; --accent: #8cc45a; --accent-soft: #23301a;
+      --green: #8cc45a; --green-soft: #23301a;
     }
   }
   :root[data-theme="dark"] {
     --bg: #121614; --alt: #181d1a; --surface: #1d2320; --ink: #f4ede4; --muted: #b3a79a;
-    --line: #3a3129; --accent: #f07444; --accent-soft: #3a2219;
-    --green: #6cc492; --green-soft: #1d3026;
+    --line: #3a3129; --accent: #8cc45a; --accent-soft: #23301a;
+    --green: #8cc45a; --green-soft: #23301a;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -52,8 +52,8 @@
 
   header.top { padding: 18px 0; }
   header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  .logo { font-family: Nunito, system-ui, sans-serif; font-weight: 700; font-size: 22px; }
-  .logo span { color: var(--accent); }
+  .logo { font-family: Nunito, system-ui, sans-serif; font-weight: 700; font-size: 22px;  display: inline-flex; align-items: center; gap: 6px; font-weight: 900; letter-spacing: .02em; }
+  .logo .leaf { width: 24px; height: 24px; color: var(--accent); }
   .flag { font-size: 14px; color: var(--muted); }
 
   .btn {
@@ -65,7 +65,7 @@
   .btn:hover { filter: brightness(1.05); }
   .btn.ghost { background: transparent; color: var(--ink); border: 2px solid var(--line); }
 
-  .hero { padding: 28px 0 72px; background: linear-gradient(135deg, #fff3ec 0%, #ffffff 55%, #fff6ef 100%); }
+  .hero { padding: 28px 0 72px; background: linear-gradient(135deg, #f1f7ea 0%, #ffffff 55%, #f6faf1 100%); }
   h1 .hl { color: var(--accent); }
   .phone .cover { position: relative; border-radius: 18px; overflow: hidden; margin: 8px 0 6px; }
   .phone .cover img { width: 100%; height: 150px; object-fit: cover; display: block; }
@@ -154,7 +154,7 @@
 
 <header class="top">
   <div class="wrap">
-    <div class="logo">Ma <span>Semaine</span></div>
+    <div class="logo"><svg class="leaf" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z" fill="currentColor"/><path d="M5 19c3-4 6-7 10-10" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>SHANI</div>
     <div class="flag">Fait pour la Belgique 🇧🇪</div>
   </div>
 </header>
@@ -306,7 +306,7 @@
 </main>
 
 <footer>
-  <div class="wrap">Ma Semaine · Fait en Belgique 🇧🇪</div>
+  <div class="wrap">SHANI · Fait en Belgique 🇧🇪</div>
 </footer>
 
 <script>

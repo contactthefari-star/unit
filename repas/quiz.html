@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Crée ta semaine · Ma Semaine</title>
+<title>Crée ta semaine · SHANI</title>
 <meta name="description" content="Quelques questions, et ta semaine de repas est réglée sur ta famille, ton budget et ton magasin.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,18 +11,18 @@
 <style>
   :root {
     --bg: #ffffff; --alt: #f5f7f4; --surface: #ffffff; --ink: #1b211d; --muted: #5f6660; --line: #e8ebe6;
-    --accent: #e0592a; --accent-ink: #ffffff; --accent-soft: #fde8df;
-    --green: #2f7a4f; --green-soft: #e3f1e8; --radius: 18px;
+    --accent: #3f6f1d; --accent-ink: #ffffff; --accent-soft: #eaf2e0;
+    --green: #3f6f1d; --green-soft: #eaf2e0; --radius: 18px;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #121614; --alt: #181d1a; --surface: #1d2320; --ink: #f4ede4; --muted: #b3a79a; --line: #3a3129;
-      --accent: #f07444; --accent-soft: #3a2219; --green: #6cc492; --green-soft: #1d3026;
+      --accent: #8cc45a; --accent-soft: #23301a; --green: #8cc45a; --green-soft: #23301a;
     }
   }
   :root[data-theme="dark"] {
     --bg: #121614; --alt: #181d1a; --surface: #1d2320; --ink: #f4ede4; --muted: #b3a79a; --line: #3a3129;
-    --accent: #f07444; --accent-soft: #3a2219; --green: #6cc492; --green-soft: #1d3026;
+    --accent: #8cc45a; --accent-soft: #23301a; --green: #8cc45a; --green-soft: #23301a;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -33,8 +33,8 @@
 
   .top { position: sticky; top: 0; background: var(--bg); z-index: 5; padding: 14px 16px 10px; }
   .bar { display: flex; align-items: center; justify-content: space-between; max-width: 1040px; margin: 0 auto; gap: 12px; }
-  .logo { font-family: Nunito, system-ui, sans-serif; font-weight: 700; font-size: 20px; text-decoration: none; color: var(--ink); }
-  .logo span { color: var(--accent); }
+  .logo { font-family: Nunito, system-ui, sans-serif; font-weight: 700; font-size: 20px; text-decoration: none; color: var(--ink);  display: inline-flex; align-items: center; gap: 6px; font-weight: 900; letter-spacing: .02em; }
+  .logo .leaf { width: 24px; height: 24px; color: var(--accent); }
   .icon { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; cursor: pointer; font-size: 20px; text-decoration: none; color: var(--ink); }
   .icon[hidden] { visibility: hidden; display: grid; }
   .progress { max-width: 1040px; margin: 12px auto 0; height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
@@ -112,7 +112,7 @@
 <div class="top">
   <div class="bar">
     <button class="icon" id="back" aria-label="Question précédente" hidden>←</button>
-    <a class="logo" href="./">Ma <span>Semaine</span></a>
+    <a class="logo" href="./"><svg class="leaf" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z" fill="currentColor"/><path d="M5 19c3-4 6-7 10-10" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>SHANI</a>
     <a class="icon" href="./" aria-label="Fermer">×</a>
   </div>
   <div class="progress"><i id="prog"></i></div>
@@ -214,7 +214,7 @@
 
     <section class="step" data-step="resultat">
       <h1>Ta semaine peut être réglée sur ta famille</h1>
-      <p class="sub">Voici ce que Ma Semaine fera pour toi, avec tes réponses.</p>
+      <p class="sub">Voici ce que SHANI fera pour toi, avec tes réponses.</p>
       <div class="result"><ul id="resList"></ul></div>
     </section>
 
