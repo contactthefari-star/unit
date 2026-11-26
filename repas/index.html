@@ -70,7 +70,13 @@
   .phone .cover { position: relative; border-radius: 18px; overflow: hidden; margin: 8px 0 6px; }
   .phone .cover img { width: 100%; height: 150px; object-fit: cover; display: block; }
   .phone .cover span { position: absolute; left: 10px; bottom: 10px; background: rgba(255,255,255,.94); color: var(--ink); font-weight: 800; font-size: 13px; padding: 6px 10px; border-radius: 999px; }
-  .hero .grid { display: grid; gap: 36px; align-items: center; grid-template-columns: 1.15fr 0.85fr; }
+  .hero .grid { display: grid; gap: 36px; align-items: center; grid-template-columns: 0.85fr 1.15fr; }
+  .heroimg { margin: 0; border-radius: 28px; overflow: hidden; box-shadow: 0 30px 70px rgba(30, 50, 20, .18); }
+  .heroimg img { width: 100%; height: auto; display: block; }
+  .week { display: grid; grid-template-columns: 1fr 360px; gap: 48px; align-items: center; }
+  .pts { margin: 16px 0 26px; padding: 0; list-style: none; }
+  .pts li { padding: 10px 0 10px 32px; position: relative; border-bottom: 1px solid var(--line); }
+  .pts li::before { content: "✓"; position: absolute; left: 0; top: 9px; width: 22px; height: 22px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); font-weight: 800; font-size: 13px; display: grid; place-items: center; }
   .eyebrow {
     display: inline-block; background: var(--accent-soft); color: var(--accent);
     font-weight: 700; font-size: 14px; padding: 6px 12px; border-radius: 999px; margin-bottom: 16px;
@@ -144,7 +150,8 @@
   footer { padding: 30px 0 40px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); }
 
   @media (max-width: 820px) {
-    .hero .grid, .pains, .steps, .pricing { grid-template-columns: 1fr; }
+    .hero .grid, .pains, .steps, .pricing, .week { grid-template-columns: 1fr; }
+    .heroimg { border-radius: 20px; }
     section { padding: 48px 0; }
     .hero .ctas .btn { width: 100%; }
   }
@@ -172,16 +179,7 @@
         <p class="reassure">Sans compte, sans carte. C'est un site : rien à télécharger.</p>
       </div>
 
-      <div class="phone" aria-label="Exemple de semaine">
-        <div class="head">Ta semaine est prête <small>Famille de 4</small></div>
-        <div class="cover"><img src="img/d14.jpg" alt="Curry de poulet au lait de coco"><span>Ce soir · Curry de poulet coco</span></div>
-        <div class="row"><img src="img/d14.jpg" alt=""><span class="day">Lun</span><span class="dish">Curry de poulet coco</span><span class="tag tt">TikTok</span></div>
-        <div class="row"><img src="img/d2.jpg" alt=""><span class="day">Mar</span><span class="dish">Boulettes tomate-mozza</span><span class="tag kid">Sans oignon pour Léa</span></div>
-        <div class="row"><img src="img/d7.jpg" alt=""><span class="day">Mer</span><span class="dish">Poulet crémeux</span><span class="tag kid">Prépa la veille</span></div>
-        <div class="row"><img src="img/d9.jpg" alt=""><span class="day">Jeu</span><span class="dish">Gratin brocoli-poulet</span><span class="tag kid">Validé par Noah</span></div>
-        <div class="row"><img src="img/d4.jpg" alt=""><span class="day">Ven</span><span class="dish">Gratin bœuf-fromage</span><span class="tag tt">Insta</span></div>
-        <div class="total"><span>Budget estimé · Lidl</span><span>dans ton budget ✓</span></div>
-      </div>
+      <figure class="heroimg"><img src="img/famille.jpg" alt="Un couple détendu sur le canapé, la tablette affiche le menu de la semaine SHANI" width="1671" height="941"></figure>
     </div>
   </section>
 
@@ -201,6 +199,32 @@
           <div class="q">« J'aime pas ça. »</div>
           <p class="muted">L'un ne mange pas d'oignon, l'autre pas de poisson. Tu fais deux repas.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap week">
+      <div>
+        <h2>Ta semaine, <span class="hl">déjà prête</span>.</h2>
+        <p class="muted">Ce que tu reçois, réglé sur ta famille :</p>
+        <ul class="pts">
+          <li><b>Les goûts de chaque enfant</b> : sans oignon pour Léa, validé par Noah.</li>
+          <li><b>La prépa la veille</b> pour tes soirs chargés.</li>
+          <li><b>Tes recettes TikTok et Insta</b> ajoutées à ta semaine.</li>
+          <li><b>Ta liste de courses</b> pour un seul magasin, dans ton budget.</li>
+        </ul>
+        <a class="btn" href="quiz">Je crée ma semaine, gratuitement</a>
+      </div>
+      <div class="phone" aria-label="Exemple de semaine">
+        <div class="head">Ta semaine est prête <small>Famille de 4</small></div>
+        <div class="cover"><img src="img/d14.jpg" alt="Curry de poulet au lait de coco"><span>Ce soir · Curry de poulet coco</span></div>
+        <div class="row"><img src="img/d14.jpg" alt=""><span class="day">Lun</span><span class="dish">Curry de poulet coco</span><span class="tag tt">TikTok</span></div>
+        <div class="row"><img src="img/d2.jpg" alt=""><span class="day">Mar</span><span class="dish">Boulettes tomate-mozza</span><span class="tag kid">Sans oignon pour Léa</span></div>
+        <div class="row"><img src="img/d7.jpg" alt=""><span class="day">Mer</span><span class="dish">Poulet crémeux</span><span class="tag kid">Prépa la veille</span></div>
+        <div class="row"><img src="img/d9.jpg" alt=""><span class="day">Jeu</span><span class="dish">Gratin brocoli-poulet</span><span class="tag kid">Validé par Noah</span></div>
+        <div class="row"><img src="img/d4.jpg" alt=""><span class="day">Ven</span><span class="dish">Gratin bœuf-fromage</span><span class="tag tt">Insta</span></div>
+        <div class="total"><span>Budget estimé · Lidl</span><span>dans ton budget ✓</span></div>
       </div>
     </div>
   </section>
