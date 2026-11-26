@@ -223,7 +223,7 @@
   .marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); padding: 6px 0; }
   .marquee .track { display: flex; gap: 14px; width: max-content; animation: slide 38s linear infinite; }
   .marquee.rev .track { animation-direction: reverse; animation-duration: 44s; }
-  .marquee:hover .track { animation-play-state: paused; }
+  @media (hover: hover) and (pointer: fine) { .marquee:hover .track { animation-play-state: paused; } }
   @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   .store { width: 168px; height: 84px; display: grid; place-items: center; padding: 0 22px; border-radius: 18px; background: #fff; box-shadow: 0 6px 18px rgba(30, 50, 20, .06); }
   .store img { max-width: 118px; max-height: 44px; width: auto; height: auto; object-fit: contain; }
@@ -263,8 +263,8 @@
   .dishes-sec { padding-bottom: 60px; }
   .marquee.dishes { margin-top: 18px; padding: 6px 0; }
   .marquee.dishes:first-of-type { margin-top: 36px; }
-  .marquee.dishes .track { animation-duration: 55s; gap: 16px; }
-  .marquee.dishes.rev .track { animation-duration: 65s; }
+  .marquee.dishes .track { animation-duration: 42s; gap: 16px; }
+  .marquee.dishes.rev .track { animation-duration: 42s; }
   .dish { width: 200px; height: 200px; flex-shrink: 0; border-radius: 24px; overflow: hidden; box-shadow: 0 12px 28px rgba(30, 50, 20, .14); }
   .dish img { width: 100%; height: 100%; object-fit: cover; }
   @media (max-width: 900px) { .dish { width: 150px; height: 150px; border-radius: 20px; } }
