@@ -259,6 +259,16 @@
   @media (prefers-reduced-motion: reduce) {
     .marquee .track, .float { animation: none; }
   }
+
+  .dishes-sec { padding-bottom: 60px; }
+  .marquee.dishes { margin-top: 36px; padding: 10px 0 18px; }
+  .marquee.dishes .track { animation-duration: 60s; gap: 18px; }
+  .dish { width: 240px; flex-shrink: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; box-shadow: 0 12px 30px rgba(30, 50, 20, .10); text-align: left; }
+  .dish img { width: 100%; height: 170px; object-fit: cover; }
+  .dish .db { padding: 12px 14px 14px; }
+  .dish b { display: block; font-family: Nunito, system-ui, sans-serif; font-weight: 800; font-size: 16px; line-height: 1.25; min-height: 40px; }
+  .dish .meta { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 13px; color: var(--muted); }
+  .dish .px { background: var(--accent-soft); color: var(--accent); font-weight: 800; padding: 4px 10px; border-radius: 999px; font-size: 13px; }
 </style>
 </head>
 <body>
@@ -334,7 +344,17 @@
     </div>
   </section>
 
-  <section>
+  <section class="dishes-sec">
+    <div class="wrap center">
+      <span class="kick">Au menu cette semaine</span>
+      <h2>Des plats du quotidien, <span class="hl">bons et pas chers</span></h2>
+      <p class="sub">Chaque plat avec sa photo, son temps de préparation et son prix estimé par personne.</p>
+    </div>
+    <div class="marquee dishes"><div class="track" id="dishTrack"></div></div>
+    <p class="est center">Prix estimés par portion adulte chez Lidl ou Aldi. Le prix exact peut varier en caisse.</p>
+  </section>
+
+  <section class="alt">
     <div class="wrap spot">
       <div>
         <span class="kick">Le frigo malin · bientôt</span>
@@ -355,7 +375,7 @@
     </div>
   </section>
 
-  <section class="alt">
+  <section>
     <div class="wrap spot">
       <div>
         <span class="kick">La prépa la veille</span>
@@ -378,7 +398,7 @@
     </div>
   </section>
 
-  <section>
+  <section class="alt">
     <div class="wrap spot rev">
       <div>
         <span class="kick">Les goûts de chacun</span>
@@ -401,7 +421,7 @@
     </div>
   </section>
 
-  <section class="alt">
+  <section>
     <div class="wrap center">
       <span class="kick">Ton budget</span>
       <h2>Tu choisis ton budget. <span class="hl">SHANI s'adapte.</span></h2>
@@ -419,7 +439,7 @@
     </div>
   </section>
 
-  <section id="prix">
+  <section class="alt" id="prix">
     <div class="wrap center">
       <span class="kick">Ton prix</span>
       <h2>Simple et <span class="hl">sans surprise</span></h2>
@@ -443,7 +463,7 @@
     </div>
   </section>
 
-  <section class="alt" id="faq">
+  <section id="faq">
     <div class="wrap">
       <div class="center"><span class="kick">Bon à savoir</span><h2>Tes questions</h2></div>
       <div class="faq">
@@ -486,6 +506,18 @@
     }
     btns.forEach(function (b) { b.addEventListener("click", function () { show(Number(b.dataset.t)); }); });
     show(0);
+  })();
+</script>
+<script src="/repas/app/data.js"></script>
+<script>
+  (function () {
+    var S = window.SHANI, track = document.getElementById("dishTrack");
+    if (!S || !track) return;
+    function eur(n) { return n.toFixed(2).replace(".", ",") + " €"; }
+    var cards = S.RECETTES.filter(function (r) { return r.img; }).map(function (r) {
+      return '<div class="dish"><img src="/repas/img/' + r.img + '.jpg" alt="' + r.n + '" loading="lazy"><div class="db"><b>' + r.n + '</b><div class="meta"><span>' + r.total + ' min</span><span class="px">≈ ' + eur(S.coutPortion(r, "Lidl")) + ' / pers.</span></div></div></div>';
+    }).join("");
+    track.innerHTML = cards + cards.replace(/<div class="dish">/g, '<div class="dish" aria-hidden="true">');
   })();
 </script>
 </body>
