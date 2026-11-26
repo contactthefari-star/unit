@@ -65,7 +65,11 @@
   .btn:hover { filter: brightness(1.05); }
   .btn.ghost { background: transparent; color: var(--ink); border: 2px solid var(--line); }
 
-  .hero { padding: 28px 0 64px; background: radial-gradient(80% 60% at 85% 20%, #fff1ea 0%, var(--bg) 70%); }
+  .hero { padding: 28px 0 72px; background: linear-gradient(135deg, #fff3ec 0%, #ffffff 55%, #fff6ef 100%); }
+  h1 .hl { color: var(--accent); }
+  .phone .cover { position: relative; border-radius: 18px; overflow: hidden; margin: 8px 0 6px; }
+  .phone .cover img { width: 100%; height: 150px; object-fit: cover; display: block; }
+  .phone .cover span { position: absolute; left: 10px; bottom: 10px; background: rgba(255,255,255,.94); color: var(--ink); font-weight: 800; font-size: 13px; padding: 6px 10px; border-radius: 999px; }
   .hero .grid { display: grid; gap: 36px; align-items: center; grid-template-columns: 1.15fr 0.85fr; }
   .eyebrow {
     display: inline-block; background: var(--accent-soft); color: var(--accent);
@@ -160,7 +164,7 @@
     <div class="wrap grid">
       <div>
         <span class="eyebrow">Ton budget courses tenu, sans réfléchir</span>
-        <h1>Économise sur tes courses. Sans y penser.</h1>
+        <h1>Économise sur tes <span class="hl">courses</span>. Sans y penser.</h1>
         <p class="lead">Tu mets ton budget. Tu reçois les menus de la semaine pour toute la famille et ta liste de courses Colruyt, Delhaize, Carrefour, Lidl ou Aldi. Même avec tes recettes TikTok.</p>
         <div class="ctas">
           <a class="btn" href="quiz">Je crée ma semaine, gratuitement</a>
@@ -169,7 +173,8 @@
       </div>
 
       <div class="phone" aria-label="Exemple de semaine">
-        <div class="head">Ta semaine <small>Famille de 4</small></div>
+        <div class="head">Ta semaine est prête <small>Famille de 4</small></div>
+        <div class="cover"><img src="img/d14.jpg" alt="Curry de poulet au lait de coco"><span>Ce soir · Curry de poulet coco</span></div>
         <div class="row"><img src="img/d14.jpg" alt=""><span class="day">Lun</span><span class="dish">Curry de poulet coco</span><span class="tag tt">TikTok</span></div>
         <div class="row"><img src="img/d2.jpg" alt=""><span class="day">Mar</span><span class="dish">Boulettes tomate-mozza</span><span class="tag kid">Sans oignon pour Léa</span></div>
         <div class="row"><img src="img/d7.jpg" alt=""><span class="day">Mer</span><span class="dish">Poulet crémeux</span><span class="tag kid">Prépa la veille</span></div>
