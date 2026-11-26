@@ -8,3 +8,11 @@
 
 # Dépendances (si un jour on ajoute un build)
 node_modules/
+
+# Python
+__pycache__/
+*.pyc
+
+# Python
+__pycache__/
+*.pyc
