@@ -4,103 +4,106 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Crée ta semaine · Ma Semaine</title>
-<meta name="theme-color" content="#0e0c0a">
 <meta name="description" content="Quelques questions, et ta semaine de repas est réglée sur ta famille, ton budget et ton magasin.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0e0c0a; --surface: rgba(255,255,255,.06); --surface-2: rgba(255,255,255,.1);
-    --ink: #f5efe6; --muted: rgba(245,239,230,.68); --line: rgba(245,239,230,.16);
-    --or: #d8b26a; --or-2: #f0d39a; --or-ink: #1a1206; --ok: #d8b26a; --radius: 18px;
+    --bg: #ffffff; --alt: #f5f7f4; --surface: #ffffff; --ink: #1b211d; --muted: #5f6660; --line: #e8ebe6;
+    --accent: #e0592a; --accent-ink: #ffffff; --accent-soft: #fde8df;
+    --green: #2f7a4f; --green-soft: #e3f1e8; --radius: 18px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121614; --alt: #181d1a; --surface: #1d2320; --ink: #f4ede4; --muted: #b3a79a; --line: #3a3129;
+      --accent: #f07444; --accent-soft: #3a2219; --green: #6cc492; --green-soft: #1d3026;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121614; --alt: #181d1a; --surface: #1d2320; --ink: #f4ede4; --muted: #b3a79a; --line: #3a3129;
+    --accent: #f07444; --accent-soft: #3a2219; --green: #6cc492; --green-soft: #1d3026;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.5 Manrope, system-ui, -apple-system, sans-serif; min-height: 100vh; transition: background-color .5s ease; }
-  h1, h2 { font-family: "Playfair Display", Georgia, serif; font-weight: 700; line-height: 1.1; margin: 0; letter-spacing: -0.01em; }
-  h1 { font-size: clamp(30px, 6vw, 44px); }
-  h1 em { color: var(--or); font-weight: 500; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.5 Inter, system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  h1, h2 { font-family: Nunito, system-ui, sans-serif; font-weight: 900; line-height: 1.12; margin: 0; letter-spacing: -0.02em; }
+  h1 { font-size: clamp(26px, 5vw, 34px); }
   button { font: inherit; color: inherit; }
 
-  .top { position: sticky; top: 0; background: var(--bg); z-index: 5; padding: 14px 16px 10px; transition: background-color .5s ease; }
-  .bar { display: flex; align-items: center; justify-content: space-between; max-width: 1080px; margin: 0 auto; gap: 12px; }
-  .logo { font-family: "Playfair Display", Georgia, serif; font-weight: 700; font-size: 22px; text-decoration: none; color: var(--ink); }
-  .logo span { color: var(--or); font-style: italic; font-weight: 500; }
+  .top { position: sticky; top: 0; background: var(--bg); z-index: 5; padding: 14px 16px 10px; }
+  .bar { display: flex; align-items: center; justify-content: space-between; max-width: 1040px; margin: 0 auto; gap: 12px; }
+  .logo { font-family: Nunito, system-ui, sans-serif; font-weight: 700; font-size: 20px; text-decoration: none; color: var(--ink); }
+  .logo span { color: var(--accent); }
   .icon { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; cursor: pointer; font-size: 20px; text-decoration: none; color: var(--ink); }
   .icon[hidden] { visibility: hidden; display: grid; }
-  .progress { max-width: 1080px; margin: 12px auto 0; height: 4px; background: var(--line); border-radius: 99px; overflow: hidden; }
-  .progress i { display: block; height: 100%; width: 0; background: var(--or); border-radius: 99px; transition: width .3s ease; }
+  .progress { max-width: 1040px; margin: 12px auto 0; height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
+  .progress i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 99px; transition: width .3s ease; }
 
-  .layout { max-width: 1080px; margin: 0 auto; padding: 36px 16px 130px; display: grid; grid-template-columns: 1fr 380px; gap: 56px; align-items: start; }
+  .layout { max-width: 1040px; margin: 0 auto; padding: 28px 16px 120px; display: grid; grid-template-columns: 1fr 360px; gap: 48px; align-items: start; }
   .step { display: none; }
-  .step.on { display: block; animation: in .3s ease; }
-  @keyframes in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-  .step .sub { color: var(--muted); margin: 10px 0 26px; }
-  .kick { display: block; text-transform: uppercase; letter-spacing: .2em; font-size: 12px; font-weight: 800; color: var(--or); margin-bottom: 12px; }
+  .step.on { display: block; animation: in .25s ease; }
+  @keyframes in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .step .sub { color: var(--muted); margin: 8px 0 22px; }
 
   .opts { display: grid; gap: 12px; }
-  .opt { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; background: var(--surface); border: 1.5px solid var(--line); border-radius: 16px; padding: 14px 16px; cursor: pointer; min-height: 66px; transition: border-color .15s ease, background .15s ease; }
-  .opt:hover { border-color: rgba(216,178,106,.5); }
+  .opt { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; background: var(--surface); border: 2px solid var(--line); border-radius: 16px; padding: 14px 16px; cursor: pointer; min-height: 64px; }
   .opt .em { font-size: 26px; width: 34px; text-align: center; flex-shrink: 0; }
   .opt b { display: block; font-size: 16px; }
   .opt small { display: block; color: var(--muted); font-size: 14px; }
-  .opt .ck { margin-left: auto; width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--line); flex-shrink: 0; display: grid; place-items: center; font-size: 13px; color: transparent; }
-  .opt[aria-pressed="true"] { border-color: var(--or); background: rgba(216,178,106,.12); }
-  .opt[aria-pressed="true"] .ck { background: var(--or); border-color: var(--or); color: var(--or-ink); font-weight: 800; }
+  .opt .ck { margin-left: auto; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--line); flex-shrink: 0; display: grid; place-items: center; font-size: 14px; color: transparent; }
+  .opt[aria-pressed="true"] { border-color: var(--green); background: var(--green-soft); }
+  .opt[aria-pressed="true"] .ck { background: var(--green); border-color: var(--green); color: #fff; }
 
   .chips { display: flex; flex-wrap: wrap; gap: 10px; }
-  .chip { border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px; padding: 10px 18px; cursor: pointer; font-weight: 700; min-height: 46px; }
-  .chip[aria-pressed="true"] { border-color: var(--or); background: var(--or); color: var(--or-ink); }
+  .chip { border: 2px solid var(--line); background: var(--surface); border-radius: 999px; padding: 10px 16px; cursor: pointer; font-weight: 600; min-height: 46px; }
+  .chip[aria-pressed="true"] { border-color: var(--green); background: var(--green-soft); color: var(--green); }
 
-  .counter { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1.5px solid var(--line); border-radius: 16px; padding: 12px 16px; margin-bottom: 12px; gap: 12px; }
-  .counter .lbl { display: flex; align-items: center; gap: 12px; font-weight: 700; }
-  .counter .lbl .em { font-size: 24px; }
+  .counter { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 2px solid var(--line); border-radius: 16px; padding: 12px 16px; margin-bottom: 12px; gap: 12px; }
+  .counter .lbl { display: flex; align-items: center; gap: 12px; font-weight: 600; }
   .counter .lbl small { display: block; font-weight: 400; color: var(--muted); font-size: 13px; }
   .counter .ctl { display: flex; align-items: center; gap: 14px; }
-  .counter button { width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--line); background: transparent; cursor: pointer; font-size: 20px; }
-  .counter output { font-family: "Playfair Display", serif; font-weight: 700; font-size: 24px; min-width: 22px; text-align: center; }
-  .note { font-size: 14px; color: var(--muted); margin-top: 10px; }
+  .counter button { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--line); background: transparent; cursor: pointer; font-size: 20px; }
+  .counter output { font-weight: 700; font-size: 20px; min-width: 22px; text-align: center; }
+  .note { font-size: 14px; color: var(--muted); margin-top: 4px; }
 
-  .next { position: fixed; left: 0; right: 0; bottom: 0; padding: 14px 16px calc(14px + env(safe-area-inset-bottom)); background: linear-gradient(to top, var(--bg) 65%, transparent); transition: background .5s ease; }
-  .next .in { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 1fr 380px; gap: 56px; }
-  .btn { display: flex; align-items: center; justify-content: center; width: 100%; background: var(--or); color: var(--or-ink); border: 0; border-radius: 999px; font-weight: 800; font-size: 17px; min-height: 58px; padding: 0 22px; cursor: pointer; text-decoration: none; }
-  .btn:hover { background: var(--or-2); }
-  .btn:disabled { opacity: .35; cursor: not-allowed; }
+  .next { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: linear-gradient(to top, var(--bg) 70%, transparent); }
+  .next .in { max-width: 1040px; margin: 0 auto; display: grid; grid-template-columns: 1fr 360px; gap: 48px; }
+  .btn { display: flex; align-items: center; justify-content: center; width: 100%; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 999px; font-weight: 700; font-size: 17px; min-height: 56px; padding: 0 22px; cursor: pointer; text-decoration: none; }
+  .btn:disabled { opacity: .4; cursor: not-allowed; }
+  .btn.ghost { background: transparent; color: var(--ink); border: 2px solid var(--line); }
 
-  .peek { position: sticky; top: 110px; background: rgba(0,0,0,.28); border: 1px solid var(--line); border-radius: 26px; overflow: hidden; }
-  .peek .photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
-  .peek .photos img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
-  .peek .body { padding: 20px; }
-  .peek h2 { font-size: 20px; margin-bottom: 10px; }
-  .peek .big { font-family: "Playfair Display", Georgia, serif; font-size: 44px; font-weight: 700; color: var(--or); line-height: 1; }
+  .peek { position: sticky; top: 110px; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 20px; box-shadow: 0 18px 44px rgba(60, 40, 20, .10); }
+  .peek .photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 16px; }
+  .peek .photos img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; display: block; }
+  .peek h2 { font-size: 20px; margin-bottom: 12px; }
+  .peek .big { font-family: Nunito, system-ui, sans-serif; font-size: 40px; font-weight: 700; color: var(--green); line-height: 1; }
   .peek .row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
   .peek .row:last-child { border-bottom: 0; }
   .peek .row span:first-child { color: var(--muted); }
-  .peek .row span:last-child { font-weight: 700; text-align: right; }
-  .peek .k { color: var(--muted); font-size: 14px; margin: 6px 0 12px; }
+  .peek .row span:last-child { font-weight: 600; text-align: right; }
+  .peek .k { color: var(--muted); font-size: 14px; margin: 4px 0 14px; }
 
   .result { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 6px 18px; margin-bottom: 16px; }
-  .result li { padding: 12px 0; border-bottom: 1px solid var(--line); list-style: none; display: flex; gap: 12px; }
+  .result li { padding: 10px 0; border-bottom: 1px solid var(--line); list-style: none; display: flex; gap: 12px; }
   .result li:last-child { border-bottom: 0; }
-  .result li b { color: var(--or); }
   .result ul { margin: 0; padding: 0; }
 
-  .plans { display: grid; gap: 14px; margin: 22px 0 18px; }
-  .plan { position: relative; display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1.5px solid var(--line); border-radius: 18px; padding: 18px; cursor: pointer; text-align: left; width: 100%; }
-  .plan small { color: var(--muted); }
-  .plan[aria-pressed="true"] { border-color: var(--or); background: rgba(216,178,106,.12); }
+  .plans { display: grid; gap: 12px; margin: 18px 0; }
+  .plan { position: relative; display: flex; align-items: center; gap: 14px; background: var(--surface); border: 2px solid var(--line); border-radius: 16px; padding: 16px; cursor: pointer; text-align: left; width: 100%; }
+  .plan[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
   .plan .p { margin-left: auto; text-align: right; }
-  .plan .p b { font-family: "Playfair Display", serif; font-size: 30px; display: block; line-height: 1; }
-  .plan .badge { position: absolute; top: -11px; left: 16px; background: var(--or); color: var(--or-ink); font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 999px; letter-spacing: .05em; }
-  .guar { display: flex; gap: 12px; border: 1px dashed rgba(216,178,106,.5); border-radius: 16px; padding: 14px 16px; font-size: 15px; }
-  .guar strong { color: var(--or); }
-  .warn { background: rgba(216,178,106,.14); border: 1px solid rgba(216,178,106,.4); border-radius: 14px; padding: 12px 14px; font-size: 14px; margin-top: 14px; }
+  .plan .p b { font-family: Nunito, system-ui, sans-serif; font-size: 26px; display: block; line-height: 1; }
+  .plan .p small { color: var(--muted); font-size: 13px; }
+  .plan .badge { position: absolute; top: -11px; left: 16px; background: var(--accent); color: var(--accent-ink); font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+  .guar { display: flex; gap: 12px; background: var(--green-soft); border-radius: 16px; padding: 14px 16px; font-size: 15px; }
+  .guar strong { color: var(--green); }
+  .warn { background: var(--accent-soft); border-radius: 14px; padding: 12px 14px; font-size: 14px; margin-top: 14px; }
 
-  @media (max-width: 880px) {
+  @media (max-width: 860px) {
     .layout, .next .in { grid-template-columns: 1fr; gap: 0; }
     .peek, .next .in > .sp { display: none; }
-    .layout { padding-top: 22px; }
+    .layout { padding-top: 18px; }
   }
 </style>
 </head>
@@ -119,7 +122,6 @@
   <div id="steps">
 
     <section class="step" data-step="goal">
-      <span class="kick">Ton objectif</span>
       <h1>Qu'est-ce qui compte le plus pour toi ?</h1>
       <p class="sub">On règle ta semaine là-dessus.</p>
       <div class="opts" data-key="goal" data-single>
@@ -131,7 +133,6 @@
     </section>
 
     <section class="step" data-step="foyer">
-      <span class="kick">Ton foyer</span>
       <h1>Tu cuisines pour qui ?</h1>
       <p class="sub">On calcule les quantités et les courses pour ton foyer.</p>
       <div class="counter"><span class="lbl"><span class="em">🧑</span><span>Adultes<small>Et les ados qui mangent comme un adulte</small></span></span><span class="ctl"><button data-c="adultes" data-d="-1" aria-label="Un adulte de moins">−</button><output id="o-adultes">2</output><button data-c="adultes" data-d="1" aria-label="Un adulte de plus">+</button></span></div>
@@ -139,7 +140,6 @@
     </section>
 
     <section class="step" data-step="gouts">
-      <span class="kick">Les enfants</span>
       <h1>Les enfants ont-ils des goûts différents ?</h1>
       <p class="sub">L'un n'aime pas l'oignon, l'autre pas le poisson… On en tient compte pour chacun.</p>
       <div class="opts" data-key="gouts" data-single>
@@ -149,7 +149,6 @@
     </section>
 
     <section class="step" data-step="exclus">
-      <span class="kick">Les interdits</span>
       <h1>Ce que ta famille ne mange pas</h1>
       <p class="sub">Choisis tout ce qui compte. Ces aliments ne seront jamais proposés.</p>
       <div class="chips" data-key="exclus" data-none="aucun">
@@ -166,7 +165,6 @@
     </section>
 
     <section class="step" data-step="soirs">
-      <span class="kick">Ta semaine</span>
       <h1>Quels soirs sont chargés ?</h1>
       <p class="sub">Sport, retour tard, réunion… Ces soirs-là, on te prévoit un repas rapide, préparé la veille.</p>
       <div class="chips" data-key="soirs" data-none="aucun">
@@ -182,7 +180,6 @@
     </section>
 
     <section class="step" data-step="temps">
-      <span class="kick">Le temps</span>
       <h1>Combien de temps pour cuisiner en semaine ?</h1>
       <p class="sub">Les autres soirs.</p>
       <div class="opts" data-key="temps" data-single>
@@ -193,7 +190,6 @@
     </section>
 
     <section class="step" data-step="magasin">
-      <span class="kick">Ton magasin</span>
       <h1>Tu fais tes courses où ?</h1>
       <p class="sub">Ta liste sera faite pour un seul magasin.</p>
       <div class="opts" data-key="magasin" data-single>
@@ -206,7 +202,6 @@
     </section>
 
     <section class="step" data-step="budget">
-      <span class="kick">Ton budget</span>
       <h1>Ton budget courses par semaine ?</h1>
       <p class="sub">Pour les repas de toute la famille.</p>
       <div class="opts" data-key="budget" data-single>
@@ -218,18 +213,16 @@
     </section>
 
     <section class="step" data-step="resultat">
-      <span class="kick">Ton résultat</span>
       <h1>Ta semaine peut être réglée sur ta famille</h1>
       <p class="sub">Voici ce que Ma Semaine fera pour toi, avec tes réponses.</p>
       <div class="result"><ul id="resList"></ul></div>
     </section>
 
     <section class="step" data-step="paywall">
-      <span class="kick">Ton accès</span>
       <h1>Débloque ta semaine</h1>
       <p class="sub">Tes menus, ta liste de courses et ta prépa de la semaine.</p>
       <div class="plans" data-key="plan" data-single>
-        <button class="plan" data-v="vie"><span class="badge">Le plus choisi</span><span><b>À vie</b><br><small>Payé une fois, à toi pour toujours</small></span><span class="p"><b>59 €</b><small>une seule fois</small></span></button>
+        <button class="plan" data-v="vie"><span class="badge">Le plus choisi</span><span><b>À vie</b><br><small class="muted">Payé une fois, à toi pour toujours</small></span><span class="p"><b>59 €</b><small>une seule fois</small></span></button>
         <button class="plan" data-v="mensuel"><span><b>Au mois</b><br><small>Sans engagement</small></span><span class="p"><b>9,90 €</b><small>par mois</small></span></button>
       </div>
       <div class="guar"><span>🛡️</span><span><strong>Garantie économies.</strong> Si tu n'économises pas au moins 10 € sur tes courses de la 1re semaine, on te rembourse.</span></div>
@@ -240,12 +233,10 @@
   </div>
 
   <aside class="peek" aria-live="polite">
-    <div class="photos"><img src="img/d12.jpg" alt=""><img src="img/d14.jpg" alt=""><img src="img/d2.jpg" alt=""><img src="img/d7.jpg" alt=""><img src="img/d3.jpg" alt=""><img src="img/s1.jpg" alt=""></div>
-    <div class="body">
-      <h2>Ta semaine</h2>
-      <div id="pkBudget"><div class="big">–</div><p class="k">par personne et par jour, avec ton budget</p></div>
-      <div id="pkRows"></div>
-    </div>
+    <div class="photos"><img src="img/d14.jpg" alt=""><img src="img/d2.jpg" alt=""><img src="img/d9.jpg" alt=""><img src="img/d7.jpg" alt=""><img src="img/d4.jpg" alt=""><img src="img/s1.jpg" alt=""></div>
+    <h2>Ta semaine</h2>
+    <div id="pkBudget"><div class="big">–</div><p class="k">par personne et par jour, avec ton budget</p></div>
+    <div id="pkRows"></div>
   </aside>
 </main>
 
@@ -340,13 +331,7 @@
   function eur(n) { return n.toFixed(2).replace(".", ",") + " €"; }
   function list(a, map, last) { var w = a.map(function (x) { return map[x]; }); return w.length < 2 ? w.join("") : w.slice(0, -1).join(", ") + " " + (last || "et") + " " + w[w.length - 1]; }
 
-  // Un fond par étape
-  var BG = { goal: "#0e0c0a", foyer: "#10241b", gouts: "#2a0f14", exclus: "#24160f", soirs: "#0f1a2b", temps: "#1f1a10", magasin: "#10241b", budget: "#14201a", resultat: "#0e0c0a", paywall: "#2a0f14" };
-
   function paint() {
-    var bg = BG[order[i]] || "#0e0c0a";
-    document.documentElement.style.setProperty("--bg", bg);
-    var tc = document.querySelector('meta[name="theme-color"]'); if (tc) tc.setAttribute("content", bg);
     var list2 = visible(), cur = list2.indexOf(order[i]), step = order[i];
     steps.forEach(function (s, n) { s.classList.toggle("on", n === i); });
     document.getElementById("prog").style.width = Math.round(((cur + 1) / list2.length) * 100) + "%";

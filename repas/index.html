@@ -5,139 +5,144 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ma Semaine : économise sur tes courses</title>
 <meta name="description" content="Économise sur tes courses sans y penser. Tu mets ton budget, tu reçois les menus de la semaine pour toute la famille et ta liste Colruyt, Delhaize, Carrefour, Lidl ou Aldi.">
-<meta name="theme-color" content="#0e0c0a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --noir: #0e0c0a; --noir-2: #1a1613;
-    --foret: #10241b; --foret-2: #183428;
-    --choco: #24160f; --choco-2: #33211a;
-    --bordeaux: #2a0f14;
-    --or: #d8b26a; --or-2: #f0d39a; --or-ink: #1a1206;
-    --texte: #f5efe6; --doux: rgba(245, 239, 230, .68); --trait: rgba(245, 239, 230, .14);
-    --vert: #7fd1a0;
-    --radius: 22px;
+    --bg: #ffffff; --alt: #f5f7f4;
+    --surface: #ffffff;
+    --ink: #1b211d;
+    --muted: #5f6660;
+    --line: #e8ebe6;
+    --accent: #e0592a;
+    --accent-ink: #ffffff;
+    --accent-soft: #fde8df;
+    --green: #2f7a4f;
+    --green-soft: #e3f1e8;
+    --radius: 18px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121614; --alt: #181d1a; --surface: #1d2320; --ink: #f4ede4; --muted: #b3a79a;
+      --line: #3a3129; --accent: #f07444; --accent-soft: #3a2219;
+      --green: #6cc492; --green-soft: #1d3026;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121614; --alt: #181d1a; --surface: #1d2320; --ink: #f4ede4; --muted: #b3a79a;
+    --line: #3a3129; --accent: #f07444; --accent-soft: #3a2219;
+    --green: #6cc492; --green-soft: #1d3026;
   }
   * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-  body { margin: 0; background: var(--noir); color: var(--texte); font: 400 17px/1.6 Manrope, system-ui, -apple-system, sans-serif; }
-  img { display: block; max-width: 100%; }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
-  h1, h2, h3 { font-family: "Playfair Display", Georgia, serif; font-weight: 700; line-height: 1.08; margin: 0; letter-spacing: -0.01em; }
-  h1 { font-size: clamp(42px, 8vw, 78px); }
-  h2 { font-size: clamp(32px, 5.5vw, 52px); }
-  h3 { font-size: 22px; }
-  em.or, .or { color: var(--or); font-style: italic; font-weight: 500; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 400 17px/1.55 Inter, system-ui, -apple-system, sans-serif;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+  h1, h2, h3 { font-family: Nunito, system-ui, sans-serif; font-weight: 900; line-height: 1.1; margin: 0; letter-spacing: -0.02em; }
+  h1 { font-size: clamp(34px, 7vw, 58px); }
+  h2 { font-size: clamp(27px, 5vw, 40px); margin-bottom: 14px; }
+  h3 { font-size: 21px; margin-bottom: 6px; }
   p { margin: 0 0 12px; }
-  .doux { color: var(--doux); }
-  .kicker { text-transform: uppercase; letter-spacing: .2em; font-size: 12px; font-weight: 800; color: var(--or); margin-bottom: 16px; display: block; }
-  section { padding: 88px 0; position: relative; overflow: hidden; }
+  .muted { color: var(--muted); }
+  section { padding: 64px 0; }
+  section.alt { background: var(--alt); }
 
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--or); color: var(--or-ink); text-decoration: none; font-weight: 800; font-size: 17px; padding: 0 28px; min-height: 58px; border-radius: 999px; border: 0; cursor: pointer; transition: transform .15s ease, background .15s ease; }
-  .btn:hover { background: var(--or-2); transform: translateY(-1px); }
-  .btn .fl { width: 28px; height: 28px; border-radius: 50%; background: var(--or-ink); color: var(--or); display: grid; place-items: center; font-size: 15px; }
-  .btn.line { background: transparent; color: var(--texte); border: 1.5px solid var(--trait); }
-
-  /* En-tête */
-  header.top { position: absolute; top: 0; left: 0; right: 0; z-index: 3; padding: 20px 0; }
+  header.top { padding: 18px 0; }
   header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  .logo { font-family: "Playfair Display", Georgia, serif; font-size: 24px; font-weight: 700; color: var(--texte); text-decoration: none; }
-  .logo i { color: var(--or); font-weight: 500; }
-  .flag { font-size: 13px; color: var(--doux); border: 1px solid var(--trait); border-radius: 999px; padding: 6px 12px; }
+  .logo { font-family: Nunito, system-ui, sans-serif; font-weight: 700; font-size: 22px; }
+  .logo span { color: var(--accent); }
+  .flag { font-size: 14px; color: var(--muted); }
 
-  /* Hero : noir */
-  .hero { background: radial-gradient(120% 80% at 80% 30%, #2a1d12 0%, var(--noir) 60%); padding: 130px 0 90px; }
-  .hero .grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items: center; }
-  .hero p.lead { font-size: 19px; color: var(--doux); margin: 22px 0 32px; max-width: 34ch; }
-  .reassure { font-size: 14px; color: var(--doux); margin-top: 16px; display: flex; gap: 18px; flex-wrap: wrap; }
-  .reassure span::before { content: "✓ "; color: var(--or); font-weight: 800; }
-  .plate { position: relative; aspect-ratio: 1; max-width: 520px; margin-left: auto; width: 100%; }
-  .plate .main { position: absolute; inset: 6%; border-radius: 50%; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.65), 0 0 0 10px rgba(255,255,255,.04); }
-  .plate .main img { width: 100%; height: 100%; object-fit: cover; }
-  .plate .tag { position: absolute; background: rgba(14,12,10,.82); backdrop-filter: blur(8px); border: 1px solid var(--trait); border-radius: 16px; padding: 12px 16px; font-size: 14px; }
-  .plate .tag b { display: block; font-size: 15px; }
-  .plate .tag small { color: var(--doux); }
-  .plate .t1 { left: -4%; bottom: 14%; }
-  .plate .t2 { right: -2%; top: 8%; }
-  .plate .t2 b { color: var(--or); font-family: "Playfair Display", serif; font-size: 26px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--accent); color: var(--accent-ink); text-decoration: none;
+    font-weight: 700; font-size: 17px; padding: 16px 24px; border-radius: 999px;
+    border: 0; cursor: pointer; min-height: 52px; text-align: center;
+  }
+  .btn:hover { filter: brightness(1.05); }
+  .btn.ghost { background: transparent; color: var(--ink); border: 2px solid var(--line); }
 
-  /* Douleurs : vert forêt */
-  .pain { background: var(--foret); }
-  .pain .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; }
-  .pcard { background: var(--foret-2); border: 1px solid var(--trait); border-radius: var(--radius); padding: 28px; }
-  .pcard .n { font-family: "Playfair Display", serif; font-style: italic; color: var(--or); font-size: 40px; line-height: 1; display: block; margin-bottom: 14px; }
-  .pcard h3 { margin-bottom: 10px; }
+  .hero { padding: 28px 0 64px; background: radial-gradient(80% 60% at 85% 20%, #fff1ea 0%, var(--bg) 70%); }
+  .hero .grid { display: grid; gap: 36px; align-items: center; grid-template-columns: 1.15fr 0.85fr; }
+  .eyebrow {
+    display: inline-block; background: var(--accent-soft); color: var(--accent);
+    font-weight: 700; font-size: 14px; padding: 6px 12px; border-radius: 999px; margin-bottom: 16px;
+  }
+  .hero p.lead { font-size: 19px; color: var(--muted); margin: 18px 0 26px; max-width: 34ch; }
+  .hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .reassure { font-size: 14px; color: var(--muted); margin-top: 14px; }
 
-  /* Comment : chocolat */
-  .how { background: var(--choco); }
-  .how .grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items: center; }
-  .steps { display: grid; gap: 14px; margin-top: 32px; }
-  .step { display: grid; grid-template-columns: 52px 1fr; gap: 16px; padding: 18px; border-radius: 18px; background: var(--choco-2); border: 1px solid var(--trait); }
-  .step .num { width: 52px; height: 52px; border-radius: 50%; border: 1.5px solid var(--or); color: var(--or); display: grid; place-items: center; font-family: "Playfair Display", serif; font-size: 22px; font-style: italic; }
-  .step h3 { font-size: 20px; margin-bottom: 4px; }
-  .mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .mosaic figure { margin: 0; border-radius: 20px; overflow: hidden; position: relative; aspect-ratio: 4/5; }
-  .mosaic figure:nth-child(2) { margin-top: 40px; }
-  .mosaic figure:nth-child(3) { margin-top: -40px; }
-  .mosaic img { width: 100%; height: 100%; object-fit: cover; }
-  .mosaic figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 14px 12px; background: linear-gradient(to top, rgba(0,0,0,.8), transparent); font-weight: 700; font-size: 14px; }
-  .mosaic figcaption small { display: block; color: var(--or); font-weight: 600; }
+  .phone {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 30px;
+    padding: 18px; box-shadow: 0 20px 50px rgba(60, 40, 20, 0.12); max-width: 360px; margin: 0 auto; width: 100%;
+  }
+  .phone .row img { width: 44px; height: 44px; border-radius: 12px; object-fit: cover; flex-shrink: 0; }
+  .phone .row { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--line); gap: 10px; }
+  .phone .row:last-of-type { border-bottom: 0; }
+  .day { font-weight: 700; font-size: 13px; color: var(--muted); width: 34px; flex-shrink: 0; }
+  .dish { flex: 1; font-weight: 700; font-size: 15px; min-width: 0; }
+  .tag { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+  .tag.tt { background: var(--ink); color: var(--bg); }
+  .tag.kid { background: var(--green-soft); color: var(--green); }
+  .phone .total {
+    margin-top: 12px; background: var(--green-soft); color: var(--green); border-radius: 14px;
+    padding: 12px 14px; font-weight: 700; display: flex; justify-content: space-between; gap: 10px; font-size: 15px;
+  }
+  .phone .head { font-weight: 700; margin-bottom: 4px; display: flex; justify-content: space-between; gap: 10px; }
+  .phone .head small { color: var(--muted); font-weight: 500; }
 
-  /* Magasins : noir */
-  .shops { background: var(--noir); text-align: center; }
-  .shops .list { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 30px; }
-  .shop { color: var(--texte); text-decoration: none; border: 1px solid var(--trait); border-radius: 999px; padding: 14px 26px; font-weight: 700; transition: all .15s ease; background: var(--noir-2); }
-  .shop:hover { border-color: var(--or); color: var(--or); }
+  .pains { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 26px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+  .card .q { font-family: Nunito, system-ui, sans-serif; font-size: 21px; font-weight: 600; margin-bottom: 8px; }
 
-  /* Prix : bordeaux */
-  .prix { background: radial-gradient(90% 70% at 50% 0%, #4a1820 0%, var(--bordeaux) 65%); }
-  .prix .head { text-align: center; max-width: 620px; margin: 0 auto; }
-  .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 40px auto 0; max-width: 820px; }
-  .plan { position: relative; background: rgba(0,0,0,.28); border: 1px solid var(--trait); border-radius: var(--radius); padding: 30px; display: flex; flex-direction: column; gap: 10px; }
-  .plan.best { border: 1.5px solid var(--or); background: rgba(216,178,106,.08); }
-  .plan .badge { position: absolute; top: -14px; left: 28px; background: var(--or); color: var(--or-ink); font-size: 12px; font-weight: 800; padding: 5px 12px; border-radius: 999px; letter-spacing: .04em; }
-  .price { font-family: "Playfair Display", serif; font-size: 56px; line-height: 1; }
-  .price small { font-family: Manrope, sans-serif; font-size: 15px; color: var(--doux); font-weight: 500; }
-  .plan ul { margin: 8px 0 18px; padding: 0; list-style: none; }
-  .plan li { padding: 6px 0; color: var(--doux); }
-  .plan li::before { content: "— "; color: var(--or); }
+  .steps { counter-reset: s; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 26px; }
+  .step { counter-increment: s; }
+  .step::before {
+    content: counter(s); display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink); font-weight: 700; margin-bottom: 14px;
+  }
+
+  .shops { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .shop { color: var(--ink); text-decoration: none; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+
+  .pricing { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 26px; max-width: 760px; }
+  .plan { position: relative; display: flex; flex-direction: column; gap: 8px; }
+  .plan.best { border: 2px solid var(--accent); }
+  .plan .badge {
+    position: absolute; top: -13px; left: 22px; background: var(--accent); color: var(--accent-ink);
+    font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 999px;
+  }
+  .price { font-family: Nunito, system-ui, sans-serif; font-size: 44px; font-weight: 700; line-height: 1; }
+  .price small { font-family: Inter, sans-serif; font-size: 16px; font-weight: 500; color: var(--muted); }
+  .plan ul { margin: 6px 0 14px; padding-left: 20px; }
+  .plan li { margin-bottom: 4px; }
   .plan .btn { margin-top: auto; width: 100%; }
-  .guar { max-width: 820px; margin: 18px auto 0; display: flex; gap: 16px; align-items: center; border: 1px dashed rgba(216,178,106,.5); border-radius: var(--radius); padding: 20px 24px; }
-  .guar .ic { font-size: 30px; }
-  .guar strong { color: var(--or); }
 
-  /* FAQ : vert forêt */
-  .faq { background: var(--foret); }
-  .faq .wrap { max-width: 820px; }
-  details { border-bottom: 1px solid var(--trait); padding: 22px 0; }
-  summary { font-family: "Playfair Display", serif; font-size: 21px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  .guarantee {
+    margin-top: 22px; max-width: 760px; display: flex; gap: 16px; align-items: flex-start;
+    background: var(--green-soft); color: var(--ink); border-radius: var(--radius); padding: 20px 22px;
+  }
+  .guarantee .icon { font-size: 30px; line-height: 1; }
+  .guarantee strong { color: var(--green); }
+
+  details { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; margin-bottom: 10px; max-width: 760px; }
+  summary { font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
   summary::-webkit-details-marker { display: none; }
-  summary::after { content: "+"; color: var(--or); font-size: 28px; line-height: 1; font-family: Manrope, sans-serif; }
-  details[open] summary::after { content: "−"; }
-  details p { margin: 12px 0 0; color: var(--doux); }
+  summary::after { content: "+"; color: var(--accent); font-size: 22px; line-height: 1; }
+  details[open] summary::after { content: "–"; }
+  details p { margin: 10px 0 0; color: var(--muted); }
 
-  /* Final : noir + photo */
-  .final { background: var(--noir); text-align: center; padding: 110px 0; }
-  .final .bg { position: absolute; inset: 0; opacity: .22; }
-  .final .bg img { width: 100%; height: 100%; object-fit: cover; }
-  .final .wrap { position: relative; }
-  .final p { max-width: 40ch; margin: 18px auto 30px; color: var(--doux); }
-  footer { background: var(--noir); border-top: 1px solid var(--trait); padding: 28px 0 40px; font-size: 14px; color: var(--doux); }
+  .final { text-align: center; }
+  .final p { max-width: 40ch; margin: 0 auto 24px; color: var(--muted); }
+  footer { padding: 30px 0 40px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); }
 
-  @media (max-width: 860px) {
-    section { padding: 64px 0; }
-    .hero { padding: 104px 0 64px; }
-    .hero .grid, .how .grid, .pain .grid, .plans { grid-template-columns: 1fr; }
-    .plate { max-width: 300px; margin: 0 auto 8px; order: -1; }
-    .plate .tag { padding: 9px 12px; }
-    .plate .t2 b { font-size: 19px; }
-    .plate .t2 { top: 2%; }
-    .plate .t1 { left: 0; }
-    .plate .t2 { right: 0; }
-    .hero .btn { width: 100%; }
-    .how .grid { gap: 36px; }
+  @media (max-width: 820px) {
+    .hero .grid, .pains, .steps, .pricing { grid-template-columns: 1fr; }
+    section { padding: 48px 0; }
+    .hero .ctas .btn { width: 100%; }
   }
 </style>
 </head>
@@ -145,8 +150,8 @@
 
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="./">Ma <i>Semaine</i></a>
-    <span class="flag">Fait pour la Belgique 🇧🇪</span>
+    <div class="logo">Ma <span>Semaine</span></div>
+    <div class="flag">Fait pour la Belgique 🇧🇪</div>
   </div>
 </header>
 
@@ -154,115 +159,162 @@
   <section class="hero">
     <div class="wrap grid">
       <div>
-        <span class="kicker">Ton budget courses, tenu sans réfléchir</span>
-        <h1>Économise sur tes courses. <em class="or">Sans y penser.</em></h1>
+        <span class="eyebrow">Ton budget courses tenu, sans réfléchir</span>
+        <h1>Économise sur tes courses. Sans y penser.</h1>
         <p class="lead">Tu mets ton budget. Tu reçois les menus de la semaine pour toute la famille et ta liste de courses Colruyt, Delhaize, Carrefour, Lidl ou Aldi. Même avec tes recettes TikTok.</p>
-        <a class="btn" href="quiz">Je crée ma semaine <span class="fl">→</span></a>
-        <div class="reassure"><span>Gratuit pour commencer</span><span>Sans compte</span><span>Rien à télécharger</span></div>
+        <div class="ctas">
+          <a class="btn" href="quiz">Je crée ma semaine, gratuitement</a>
+        </div>
+        <p class="reassure">Sans compte, sans carte. C'est un site : rien à télécharger.</p>
       </div>
-      <div class="plate">
-        <div class="main"><img src="img/d12.jpg" alt="Poêlée de scampis au parmesan" width="575" height="424"></div>
-        <div class="tag t2"><small>Ce soir</small><b>Scampis au parmesan</b></div>
-        <div class="tag t1"><b>Prépa faite la veille ✓</b><small>Mercredi, soir chargé</small></div>
+
+      <div class="phone" aria-label="Exemple de semaine">
+        <div class="head">Ta semaine <small>Famille de 4</small></div>
+        <div class="row"><img src="img/d14.jpg" alt=""><span class="day">Lun</span><span class="dish">Curry de poulet coco</span><span class="tag tt">TikTok</span></div>
+        <div class="row"><img src="img/d2.jpg" alt=""><span class="day">Mar</span><span class="dish">Boulettes tomate-mozza</span><span class="tag kid">Sans oignon pour Léa</span></div>
+        <div class="row"><img src="img/d7.jpg" alt=""><span class="day">Mer</span><span class="dish">Poulet crémeux</span><span class="tag kid">Prépa la veille</span></div>
+        <div class="row"><img src="img/d9.jpg" alt=""><span class="day">Jeu</span><span class="dish">Gratin brocoli-poulet</span><span class="tag kid">Validé par Noah</span></div>
+        <div class="row"><img src="img/d4.jpg" alt=""><span class="day">Ven</span><span class="dish">Gratin bœuf-fromage</span><span class="tag tt">Insta</span></div>
+        <div class="total"><span>Budget estimé · Lidl</span><span>dans ton budget ✓</span></div>
       </div>
     </div>
   </section>
 
-  <section class="pain">
+  <section class="alt">
     <div class="wrap">
-      <span class="kicker">Tu te reconnais ?</span>
-      <h2>La semaine qui t'épuise <em class="or">avant même de commencer.</em></h2>
-      <div class="grid">
-        <div class="pcard"><span class="n">01</span><h3>Le ticket qui explose</h3><p class="doux">Tu fais attention, et pourtant ça monte chaque semaine. Sans savoir où part l'argent.</p></div>
-        <div class="pcard"><span class="n">02</span><h3>« On mange quoi ce soir ? »</h3><p class="doux">Tous les jours, la même question. Et c'est toujours à toi d'y répondre.</p></div>
-        <div class="pcard"><span class="n">03</span><h3>« J'aime pas ça. »</h3><p class="doux">L'un ne mange pas d'oignon, l'autre pas de poisson. Tu finis par faire deux repas.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="how">
-    <div class="wrap grid">
-      <div>
-        <span class="kicker">Comment ça marche</span>
-        <h2>Ta semaine, <em class="or">pensée à l'avance.</em></h2>
-        <div class="steps">
-          <div class="step"><span class="num">1</span><div><h3>Tu nous dis qui mange quoi</h3><p class="doux">Le nombre d'enfants, ce que chacun aime et n'aime pas, les soirs chargés et ton budget.</p></div></div>
-          <div class="step"><span class="num">2</span><div><h3>Tu reçois ta semaine</h3><p class="doux">Les repas de 7 jours et ta liste de courses pour un seul magasin. Tu peux ajouter tes recettes TikTok.</p></div></div>
-          <div class="step"><span class="num">3</span><div><h3>Tu prépares la veille</h3><p class="doux">Les soirs chargés, tout est déjà prêt. On te dit quoi sortir du congélo, et quand.</p></div></div>
+      <h2>Tu te reconnais ?</h2>
+      <div class="pains">
+        <div class="card">
+          <div class="q">Le ticket de caisse qui explose.</div>
+          <p class="muted">Tu fais attention, et pourtant ça monte chaque semaine. Sans savoir où part l'argent.</p>
+        </div>
+        <div class="card">
+          <div class="q">« On mange quoi ce soir ? »</div>
+          <p class="muted">Tous les jours, la même question. Et c'est toujours à toi d'y répondre.</p>
+        </div>
+        <div class="card">
+          <div class="q">« J'aime pas ça. »</div>
+          <p class="muted">L'un ne mange pas d'oignon, l'autre pas de poisson. Tu fais deux repas.</p>
         </div>
       </div>
-      <div class="mosaic">
-        <figure><img src="img/d14.jpg" alt="Curry de poulet au lait de coco" loading="lazy" width="575" height="424"><figcaption><small>Lundi</small>Curry de poulet coco</figcaption></figure>
-        <figure><img src="img/d2.jpg" alt="Boulettes de bœuf à la tomate et mozzarella" loading="lazy" width="900" height="938"><figcaption><small>Mardi</small>Boulettes tomate-mozza</figcaption></figure>
-        <figure><img src="img/d7.jpg" alt="Poulet crémeux ail et parmesan" loading="lazy" width="542" height="353"><figcaption><small>Mercredi · préparé la veille</small>Poulet crémeux</figcaption></figure>
-        <figure><img src="img/s1.jpg" alt="Brownie au chocolat" loading="lazy" width="575" height="428"><figcaption><small>Dessert du week-end</small>Brownie chocolat</figcaption></figure>
-      </div>
     </div>
   </section>
 
-  <section class="shops">
+  <section>
     <div class="wrap">
-      <span class="kicker">Tes magasins</span>
-      <h2>Touche ton magasin <em class="or">pour commencer.</em></h2>
-      <p class="doux" style="margin-top:14px">Ta liste est faite pour un seul magasin : pas besoin de courir partout.</p>
-      <div class="list">
-        <a class="shop" href="quiz?magasin=Colruyt">Colruyt</a>
-        <a class="shop" href="quiz?magasin=Delhaize">Delhaize</a>
-        <a class="shop" href="quiz?magasin=Carrefour">Carrefour</a>
-        <a class="shop" href="quiz?magasin=Lidl">Lidl</a>
-        <a class="shop" href="quiz?magasin=Aldi">Aldi</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="prix" id="tarifs">
-    <div class="wrap">
-      <div class="head">
-        <span class="kicker">Ton prix</span>
-        <h2>Payé une fois. <em class="or">À toi pour toujours.</em></h2>
-        <p class="doux" style="margin-top:14px">Sans engagement. Pas de surprise.</p>
-      </div>
-      <div class="plans">
-        <div class="plan best">
-          <span class="badge">LE PLUS CHOISI</span>
-          <h3>À vie</h3>
-          <div class="price">59 € <small>une seule fois</small></div>
-          <ul><li>Toutes les fonctionnalités, pour toujours</li><li>Rentabilisé en 6 mois</li></ul>
-          <a class="btn" href="quiz">Je prends l'accès à vie</a>
+      <h2>Comment ça marche</h2>
+      <div class="steps">
+        <div class="card step">
+          <h3>Tu ajoutes tes recettes</h3>
+          <p class="muted">Tu partages une vidéo TikTok ou Insta. Les ingrédients et les étapes sont ajoutés tout seuls.</p>
         </div>
-        <div class="plan">
+        <div class="card step">
+          <h3>Tu dis qui mange quoi</h3>
+          <p class="muted">Le nombre d'enfants, ce que chacun aime et n'aime pas, et ton budget de la semaine.</p>
+        </div>
+        <div class="card step">
+          <h3>Tu reçois ta semaine</h3>
+          <p class="muted">Tes menus et ta liste de courses pour un seul magasin. Tu n'as plus qu'à cuisiner.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <h2>Tes magasins, un seul à la fois</h2>
+      <p class="muted">Touche ton magasin pour commencer. Ta liste est faite pour lui : pas besoin de courir partout.</p>
+      <div class="shops">
+        <a class="shop" href="quiz?magasin=Colruyt">Colruyt</a><a class="shop" href="quiz?magasin=Delhaize">Delhaize</a><a class="shop" href="quiz?magasin=Carrefour">Carrefour</a><a class="shop" href="quiz?magasin=Lidl">Lidl</a><a class="shop" href="quiz?magasin=Aldi">Aldi</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="tarifs">
+    <div class="wrap">
+      <h2>Ton prix</h2>
+      <p class="muted">Sans engagement. Pas de carte cachée, pas de surprise.</p>
+      <div class="pricing">
+        <div class="card plan">
           <h3>Au mois</h3>
           <div class="price">9,90 € <small>/ mois</small></div>
-          <ul><li>Toutes les fonctionnalités</li><li>Tu arrêtes quand tu veux</li></ul>
-          <a class="btn line" href="quiz">Je commence au mois</a>
+          <ul>
+            <li>Toutes les fonctionnalités</li>
+            <li>Tu arrêtes quand tu veux</li>
+          </ul>
+          <a class="btn ghost" data-plan="mensuel" href="#tarifs">Je commence au mois</a>
+        </div>
+        <div class="card plan best">
+          <span class="badge">Le plus choisi</span>
+          <h3>À vie</h3>
+          <div class="price">59 € <small>une seule fois</small></div>
+          <ul>
+            <li>Toutes les fonctionnalités, pour toujours</li>
+            <li>Rentabilisé en 6 mois</li>
+          </ul>
+          <a class="btn" data-plan="vie" href="#tarifs">Je prends l'accès à vie</a>
         </div>
       </div>
-      <div class="guar"><span class="ic">🛡️</span><div><strong>Garantie économies.</strong> Si tu n'économises pas au moins 10 € sur tes courses de la 1re semaine, on te rembourse. Un e-mail suffit.</div></div>
+      <div class="guarantee">
+        <div class="icon">🛡️</div>
+        <div>
+          <strong>Garantie économies.</strong>
+          Si tu n'économises pas au moins 10 € sur tes courses de la 1re semaine, on te rembourse. Un e-mail suffit.
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="faq">
+  <section class="alt">
     <div class="wrap">
-      <span class="kicker">Tes questions</span>
-      <h2 style="margin-bottom:20px">On te répond.</h2>
-      <details><summary>C'est une application ?</summary><p>C'est un site qui s'utilise comme une app. Rien à chercher sur l'App Store ou le Play Store : tu l'ouvres sur ton téléphone et tu peux l'ajouter à ton écran d'accueil.</p></details>
-      <details><summary>Pourquoi pas ChatGPT, c'est gratuit ?</summary><p>ChatGPT ne connaît pas les goûts de tes enfants, ne garde pas tes recettes TikTok et ne fait pas ta liste pour ton magasin. Ici, tout est déjà réglé : tu ouvres, ta semaine est prête.</p></details>
-      <details><summary>Les prix sont exacts ?</summary><p>Ce sont des prix estimés pour chaque magasin, pour t'aider à tenir ton budget. Le prix exact peut varier un peu en caisse.</p></details>
-      <details><summary>Ça marche pour une grande famille ?</summary><p>Oui. Tu ajoutes chaque membre de la famille, avec ce qu'il aime et ce qu'il n'aime pas.</p></details>
-      <details><summary>Ça marche en Belgique ?</summary><p>C'est fait pour la Belgique : magasins belges, prix en euros.</p></details>
+      <h2>Tes questions</h2>
+      <details>
+        <summary>C'est une application ?</summary>
+        <p>C'est un site qui s'utilise comme une app. Rien à chercher sur l'App Store ou le Play Store : tu l'ouvres sur ton téléphone et tu peux l'ajouter à ton écran d'accueil.</p>
+      </details>
+      <details>
+        <summary>Pourquoi pas ChatGPT, c'est gratuit ?</summary>
+        <p>ChatGPT ne connaît pas les goûts de tes enfants, ne garde pas tes recettes TikTok et ne fait pas ta liste pour ton magasin. Ici, tout est déjà réglé : tu ouvres, ta semaine est prête.</p>
+      </details>
+      <details>
+        <summary>Les prix sont exacts ?</summary>
+        <p>Ce sont des prix estimés pour chaque magasin, pour t'aider à tenir ton budget. Le prix exact peut varier un peu en caisse.</p>
+      </details>
+      <details>
+        <summary>Ça marche pour une grande famille ?</summary>
+        <p>Oui. Tu ajoutes chaque membre de la famille, avec ce qu'il aime et ce qu'il n'aime pas.</p>
+      </details>
+      <details>
+        <summary>Ça marche en Belgique ?</summary>
+        <p>C'est fait pour la Belgique : plats belges, magasins belges, prix en euros.</p>
+      </details>
     </div>
   </section>
 
   <section class="final">
-    <div class="bg"><img src="img/d13.jpg" alt="" loading="lazy"></div>
     <div class="wrap">
-      <h2>Moins de dépenses.<br><em class="or">Moins de charge mentale.</em></h2>
+      <h2>Moins de dépenses. Moins de charge mentale.</h2>
       <p>Ton budget, tes enfants, tes recettes. Ta semaine est prête en quelques minutes.</p>
-      <a class="btn" href="quiz">Je crée ma semaine <span class="fl">→</span></a>
+      <a class="btn" href="quiz">Je crée ma semaine, gratuitement</a>
     </div>
   </section>
 </main>
 
-<footer><div class="wrap">Ma Semaine · Fait en Belgique 🇧🇪</div></footer>
+<footer>
+  <div class="wrap">Ma Semaine · Fait en Belgique 🇧🇪</div>
+</footer>
+
+<script>
+  // Colle ici tes liens de paiement Stripe (Payment Links) quand ils sont prêts.
+  // Tant qu'ils sont vides, les boutons restent sur la section des prix.
+  var LIENS_PAIEMENT = {
+    mensuel: "",
+    vie: ""
+  };
+  document.querySelectorAll("[data-plan]").forEach(function (a) {
+    var lien = LIENS_PAIEMENT[a.getAttribute("data-plan")];
+    if (lien) a.setAttribute("href", lien);
+  });
+</script>
 </body>
 </html>
