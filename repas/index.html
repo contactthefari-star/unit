@@ -261,14 +261,13 @@
   }
 
   .dishes-sec { padding-bottom: 60px; }
-  .marquee.dishes { margin-top: 36px; padding: 10px 0 18px; }
-  .marquee.dishes .track { animation-duration: 60s; gap: 18px; }
-  .dish { width: 240px; flex-shrink: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; box-shadow: 0 12px 30px rgba(30, 50, 20, .10); text-align: left; }
-  .dish img { width: 100%; height: 170px; object-fit: cover; }
-  .dish .db { padding: 12px 14px 14px; }
-  .dish b { display: block; font-family: Nunito, system-ui, sans-serif; font-weight: 800; font-size: 16px; line-height: 1.25; min-height: 40px; }
-  .dish .meta { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 13px; color: var(--muted); }
-  .dish .px { background: var(--accent-soft); color: var(--accent); font-weight: 800; padding: 4px 10px; border-radius: 999px; font-size: 13px; }
+  .marquee.dishes { margin-top: 18px; padding: 6px 0; }
+  .marquee.dishes:first-of-type { margin-top: 36px; }
+  .marquee.dishes .track { animation-duration: 55s; gap: 16px; }
+  .marquee.dishes.rev .track { animation-duration: 65s; }
+  .dish { width: 200px; height: 200px; flex-shrink: 0; border-radius: 24px; overflow: hidden; box-shadow: 0 12px 28px rgba(30, 50, 20, .14); }
+  .dish img { width: 100%; height: 100%; object-fit: cover; }
+  @media (max-width: 900px) { .dish { width: 150px; height: 150px; border-radius: 20px; } }
 </style>
 </head>
 <body>
@@ -348,10 +347,10 @@
     <div class="wrap center">
       <span class="kick">Au menu cette semaine</span>
       <h2>Des plats du quotidien, <span class="hl">bons et pas chers</span></h2>
-      <p class="sub">Chaque plat avec sa photo, son temps de préparation et son prix estimé par personne.</p>
+      <p class="sub">Des plats simples et sains que toute la famille aime.</p>
     </div>
     <div class="marquee dishes"><div class="track" id="dishTrack"></div></div>
-    <p class="est center">Prix estimés par portion adulte chez Lidl ou Aldi. Le prix exact peut varier en caisse.</p>
+    <div class="marquee dishes rev"><div class="track" id="dishTrack2"></div></div>
   </section>
 
   <section class="alt">
@@ -516,10 +515,11 @@
     var sec = track.closest("section");
     if (!S.RECETTES.some(function (r) { return r.img; })) { sec.hidden = true; return; }
     function eur(n) { return n.toFixed(2).replace(".", ",") + " €"; }
-    var cards = S.RECETTES.filter(function (r) { return r.img; }).map(function (r) {
-      return '<div class="dish"><img src="/repas/img/' + r.img + '.jpg" alt="' + r.n + '" loading="lazy"><div class="db"><b>' + r.n + '</b><div class="meta"><span>' + r.total + ' min</span><span class="px">≈ ' + eur(S.coutPortion(r, "Lidl")) + ' / pers.</span></div></div></div>';
-    }).join("");
-    track.innerHTML = cards + cards.replace(/<div class="dish">/g, '<div class="dish" aria-hidden="true">');
+    var list = S.RECETTES.filter(function (r) { return r.img; });
+    function tiles(arr, hidden) { return arr.map(function (r) { return '<div class="dish"' + (hidden ? ' aria-hidden="true"' : '') + '><img src="/repas/img/' + r.img + '.jpg" alt="' + (hidden ? '' : r.n) + '" loading="lazy"></div>'; }).join(""); }
+    var a = list, b = list.slice(Math.ceil(list.length / 2)).concat(list.slice(0, Math.ceil(list.length / 2))).reverse();
+    track.innerHTML = tiles(a) + tiles(a, true);
+    var t2 = document.getElementById("dishTrack2"); if (t2) t2.innerHTML = tiles(b) + tiles(b, true);
   })();
 </script>
 </body>
