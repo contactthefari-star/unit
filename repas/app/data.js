@@ -94,7 +94,11 @@
     confiture:     ["Confiture", "epicerie", "g", 3.5, []],
     sucre:         ["Sucre", "epicerie", "g", 1.2, []],
     sirop_liege:   ["Sirop de Liège", "epicerie", "g", 6, []],
-    beurre_cacahuete: ["Beurre de cacahuète", "epicerie", "g", 6.5, ["arachide"]]
+    beurre_cacahuete: ["Beurre de cacahuète", "epicerie", "g", 6.5, ["arachide"]],
+    compote:       ["Compote de pommes", "epicerie", "g", 2.4, []],
+    quinoa:        ["Quinoa", "epicerie", "g", 6, []],
+    asperges:      ["Asperges vertes", "legumes", "g", 10, []],
+    ailes_poulet:  ["Pilons et ailes de poulet", "viande", "g", 5, []]
   };
 
   var RAYONS = {
@@ -188,22 +192,22 @@
       e: ["Étale la pâte dans un moule.", "Mélange œufs, crème, lardons et fromage, puis verse sur la pâte.", "Fais cuire 35 minutes à 190 °C et sers avec la salade."] },
 
     // ---------- Soupers ----------
-    { id: "s1", n: "Spaghetti bolognaise aux légumes", r: "souper", prep: 15, cuis: 30, k: true, garde: 3,
+    { id: "s1", n: "Spaghetti bolognaise aux légumes", r: "souper", prep: 15, cuis: 30, k: true, garde: 3, img: "plats/s1",
       i: [["spaghetti", 400], ["hache_mixte", 500], ["tomates_conc", 800], ["carotte", 200], ["oignon", 100], ["ail", 2], ["fromage_rape", 60], ["huile", 20]],
       v: ["Prépare la sauce bolognaise (elle se garde 3 jours)", 40],
       e: ["Fais revenir l'oignon, l'ail et les carottes en dés dans l'huile.", "Ajoute le haché et fais-le dorer.", "Verse les tomates et laisse mijoter 20 minutes.", "Sers sur les spaghetti avec le fromage râpé."] },
-    { id: "s2", n: "Boulettes sauce tomate et mozzarella", r: "souper", prep: 20, cuis: 30, k: true, garde: 3,
-      i: [["hache_mixte", 500], ["chapelure", 40], ["oeuf", 1], ["coulis", 700], ["oignon", 80], ["mozzarella", 125], ["riz", 300]],
+    { id: "s2", n: "Boulettes sauce tomate et riz", r: "souper", prep: 20, cuis: 30, k: true, garde: 3, img: "plats/s2",
+      i: [["hache_mixte", 500], ["chapelure", 40], ["oeuf", 1], ["coulis", 700], ["oignon", 80], ["riz", 300]],
       v: ["Forme les boulettes et prépare la sauce", 20],
-      e: ["Mélange le haché, la chapelure, l'œuf et l'oignon haché, puis forme des boulettes.", "Fais-les dorer, puis ajoute le coulis et laisse mijoter 20 minutes.", "Ajoute la mozzarella, couvre 2 minutes et sers avec le riz."] },
-    { id: "s3", n: "Poulet rôti, pommes de terre et haricots", r: "souper", prep: 15, cuis: 55, k: true,
+      e: ["Mélange le haché, la chapelure, l'œuf et l'oignon haché, puis forme des boulettes.", "Fais-les dorer, puis ajoute le coulis et laisse mijoter 20 minutes.", "Sers avec le riz et un peu de persil."] },
+    { id: "s3", n: "Poulet rôti, pommes de terre et haricots", r: "souper", prep: 15, cuis: 55, k: true, img: "plats/s3",
       i: [["poulet_cuisses", 1200], ["pdt", 1000], ["haricots_verts", 500], ["huile", 30], ["ail", 2], ["epices", 1]],
       v: ["Fais mariner les cuisses de poulet", 5],
       e: ["Mets les cuisses et les pommes de terre en quartiers dans un plat, avec l'huile, l'ail et les épices.", "Enfourne 55 minutes à 200 °C.", "Fais cuire les haricots verts 8 minutes à l'eau et sers."] },
-    { id: "s4", n: "Stoemp aux carottes et saucisses", r: "souper", prep: 15, cuis: 25, k: true,
-      i: [["pdt", 1000], ["carotte", 600], ["saucisse", 600], ["lait", 100], ["beurre", 30], ["oignon", 100]],
+    { id: "s4", n: "Stoemp carottes, saucisses et compote", r: "souper", prep: 15, cuis: 25, k: true, img: "plats/s4",
+      i: [["pdt", 1000], ["carotte", 600], ["saucisse", 600], ["lait", 100], ["beurre", 30], ["oignon", 100], ["compote", 400]],
       v: ["Épluche et coupe les pommes de terre et les carottes", 15],
-      e: ["Fais cuire les pommes de terre et les carottes 20 minutes à l'eau salée.", "Pendant ce temps, fais dorer les saucisses et l'oignon.", "Écrase les légumes avec le lait et le beurre, et sers avec les saucisses."] },
+      e: ["Fais cuire les pommes de terre et les carottes 20 minutes à l'eau salée.", "Pendant ce temps, fais dorer les saucisses et l'oignon.", "Écrase les légumes avec le lait et le beurre, et sers avec les saucisses et la compote."] },
     { id: "s5", n: "Wok de poulet aux légumes et riz", r: "souper", prep: 10, cuis: 15, k: true,
       i: [["poulet_filet", 500], ["legumes_wok", 600], ["riz", 300], ["sauce_soja", 50], ["huile", 20], ["ail", 2]],
       v: ["Coupe le poulet en lanières et garde-le au frigo", 10],
@@ -226,13 +230,13 @@
     { id: "s10", n: "Poulet pesto, tomates et mozzarella", r: "souper", prep: 10, cuis: 25, k: true,
       i: [["poulet_filet", 600], ["pesto", 100], ["tomate", 400], ["mozzarella", 250], ["pates", 300]],
       e: ["Mets le poulet dans un plat et nappe-le de pesto.", "Couvre de rondelles de tomate et de mozzarella.", "Enfourne 25 minutes à 200 °C et sers avec les pâtes."] },
-    { id: "s11", n: "Lasagne maison", r: "souper", prep: 30, cuis: 40, k: true, garde: 3,
+    { id: "s11", n: "Lasagne maison", r: "souper", prep: 30, cuis: 40, k: true, garde: 3, img: "plats/s11",
       i: [["lasagne", 300], ["hache_mixte", 500], ["coulis", 700], ["lait", 500], ["beurre", 40], ["farine", 40], ["fromage_rape", 100], ["oignon", 80]],
       v: ["Monte la lasagne et garde-la au frigo", 40],
       e: ["Prépare la sauce : oignon, haché et coulis, 15 minutes.", "Prépare la béchamel : beurre, farine, puis lait en fouettant.", "Alterne pâtes, sauce et béchamel, couvre de fromage et enfourne 40 minutes à 180 °C."] },
-    { id: "s12", n: "Saumon, riz et brocoli", r: "souper", prep: 10, cuis: 20, k: true,
-      i: [["saumon", 500], ["riz", 300], ["brocoli", 500], ["citron", 1], ["huile", 20]],
-      e: ["Fais cuire le riz et le brocoli.", "Fais cuire le saumon 4 minutes de chaque côté dans l'huile.", "Sers avec un filet de citron."] },
+    { id: "s12", n: "Saumon, quinoa et asperges vertes", r: "souper", prep: 10, cuis: 20, k: true, img: "plats/s12",
+      i: [["saumon", 500], ["quinoa", 250], ["asperges", 500], ["citron", 1], ["huile", 20]],
+      e: ["Fais cuire le quinoa 12 minutes dans deux fois son volume d'eau.", "Fais rôtir les asperges 10 minutes à la poêle avec un peu d'huile.", "Fais cuire le saumon 4 minutes de chaque côté et sers avec un filet de citron."] },
     { id: "s13", n: "Cabillaud, purée et petits pois", r: "souper", prep: 15, cuis: 25, k: true,
       i: [["cabillaud", 600], ["pdt", 1000], ["lait", 150], ["beurre", 30], ["petits_pois", 400]],
       v: ["Sors le cabillaud du congélateur et mets-le au frigo", 1],
@@ -242,7 +246,7 @@
       t: ["epice"],
       v: ["Prépare le chili (il est meilleur le lendemain)", 40],
       e: ["Fais revenir l'oignon, le poivron et le haché.", "Ajoute les tomates, les épices, les haricots et le maïs.", "Laisse mijoter 25 minutes et sers avec le riz."] },
-    { id: "s15", n: "Pâtes carbonara", r: "souper", prep: 10, cuis: 15, k: true,
+    { id: "s15", n: "Pâtes carbonara", r: "souper", prep: 10, cuis: 15, k: true, img: "plats/s15",
       i: [["spaghetti", 400], ["lardons", 200], ["oeuf", 3], ["creme", 200], ["fromage_rape", 80]],
       e: ["Fais cuire les pâtes.", "Fais dorer les lardons.", "Hors du feu, mélange les pâtes avec les lardons, les œufs battus, la crème et le fromage."] },
     { id: "s16", n: "Tortilla de pommes de terre et salade", r: "souper", prep: 15, cuis: 25, k: true, garde: 2,
@@ -295,7 +299,15 @@
       e: ["Fais revenir l'oignon et le poivron.", "Ajoute les tomates et les épices, puis laisse mijoter 10 minutes.", "Casse les œufs dans la sauce, couvre 6 minutes et sers avec le pain."] },
     { id: "s29", n: "Pâtes courgettes et feta", r: "souper", prep: 10, cuis: 15, k: true,
       i: [["pates", 400], ["courgette", 600], ["feta", 150], ["ail", 2], ["huile", 30], ["citron", 1]],
-      e: ["Fais cuire les pâtes.", "Fais revenir les courgettes en dés avec l'ail dans l'huile.", "Mélange avec les pâtes, la feta émiettée et un filet de citron."] }
+      e: ["Fais cuire les pâtes.", "Fais revenir les courgettes en dés avec l'ail dans l'huile.", "Mélange avec les pâtes, la feta émiettée et un filet de citron."] },
+    { id: "s30", n: "Courgettes farcies au haché", r: "souper", prep: 20, cuis: 30, k: true, img: "plats/s30", garde: 2,
+      i: [["courgette", 1000], ["hache_mixte", 400], ["coulis", 300], ["oignon", 80], ["fromage_rape", 100], ["salade", 0.5], ["tomate", 200]],
+      v: ["Prépare la farce et évide les courgettes", 20],
+      e: ["Coupe les courgettes en deux dans la longueur et évide-les.", "Fais revenir l'oignon, le haché et la chair des courgettes, puis ajoute le coulis.", "Garnis les courgettes, couvre de fromage et enfourne 30 minutes à 200 °C. Sers avec la salade."] },
+    { id: "s31", n: "Pilons de poulet au four, frites et salade", r: "souper", prep: 15, cuis: 40, k: true, img: "plats/s31",
+      i: [["ailes_poulet", 1200], ["pdt", 1200], ["huile", 40], ["epices", 2], ["salade", 1], ["tomate", 200]],
+      v: ["Fais mariner les pilons avec les épices", 5],
+      e: ["Coupe les pommes de terre en frites et mélange-les avec la moitié de l'huile.", "Enrobe le poulet d'huile et d'épices, puis enfourne le tout 40 minutes à 210 °C.", "Sers avec la salade et les tomates."] }
   ];
 
   // ---------- Calculs ----------
