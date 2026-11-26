@@ -237,8 +237,8 @@
     </section>
 
     <section class="step" data-step="resultat">
-      <h1>Ta semaine peut être réglée sur ta famille</h1>
-      <p class="sub">Voici ce que SHANI fera pour toi, avec tes réponses.</p>
+      <h1>Ta semaine est prête</h1>
+      <p class="sub">Voici comment elle est réglée sur ta famille.</p>
       <div class="result"><ul id="resList"></ul></div>
     </section>
 
@@ -372,7 +372,7 @@
 
     var go = document.getElementById("go");
     go.disabled = !answered(step);
-    go.textContent = step === "resultat" ? "Voir mon accès" : step === "paywall" ? (A.plan === "mensuel" ? "Commencer à 9,90 €/mois" : "Prendre l'accès à vie (59 €)") : "Continuer";
+    go.textContent = step === "resultat" ? "Voir ma semaine" : step === "paywall" ? (A.plan === "mensuel" ? "Commencer à 9,90 €/mois" : "Prendre l'accès à vie (59 €)") : "Continuer";
 
     // Aperçu
     var pd = perDay(), pk = document.getElementById("pkBudget");
@@ -403,6 +403,7 @@
 
   document.getElementById("go").addEventListener("click", function () {
     var step = order[i];
+    if (step === "resultat") { location.href = "/repas/app"; return; }
     if (step !== "paywall") { move(1); return; }
     var lien = LIENS_PAIEMENT[A.plan];
     if (lien) { location.href = lien; return; }
