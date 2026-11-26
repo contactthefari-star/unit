@@ -513,6 +513,8 @@
   (function () {
     var S = window.SHANI, track = document.getElementById("dishTrack");
     if (!S || !track) return;
+    var sec = track.closest("section");
+    if (!S.RECETTES.some(function (r) { return r.img; })) { sec.hidden = true; return; }
     function eur(n) { return n.toFixed(2).replace(".", ",") + " €"; }
     var cards = S.RECETTES.filter(function (r) { return r.img; }).map(function (r) {
       return '<div class="dish"><img src="/repas/img/' + r.img + '.jpg" alt="' + r.n + '" loading="lazy"><div class="db"><b>' + r.n + '</b><div class="meta"><span>' + r.total + ' min</span><span class="px">≈ ' + eur(S.coutPortion(r, "Lidl")) + ' / pers.</span></div></div></div>';
