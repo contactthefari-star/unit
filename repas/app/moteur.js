@@ -27,7 +27,11 @@
     return a;
   }
 
-  function portions(p) { return Math.max(1, (p.adultes || 0) + 0.5 * (p.enfants || 0)); }
+  // Portions d'adulte : un ado compte pour 1, un enfant pour 0,6, un petit pour 0,4.
+  function portions(p) {
+    if (Array.isArray(p.ages)) return Math.max(1, (p.adultes || 0) + p.ages.reduce(function (s, a) { return s + (a >= 12 ? 1 : a >= 4 ? 0.6 : 0.4); }, 0));
+    return Math.max(1, (p.adultes || 0) + 0.5 * (p.enfants || 0));
+  }
   function parId(id) { for (var i = 0; i < S.RECETTES.length; i++) if (S.RECETTES[i].id === id) return S.RECETTES[i]; return null; }
 
   // Une recette est-elle permise pour ce foyer ? (interdits = règle stricte)
@@ -101,7 +105,7 @@
 
   // Remplace les soupers les plus chers jusqu'à tenir le budget.
   function ajusterBudget(sem, p) {
-    var max = BUDGET_MAX[p.budget];
+    var max = BUDGET_MAX.hasOwnProperty(p.budget) ? BUDGET_MAX[p.budget] : Number(p.budget) || null;
     if (!max) return;
     for (var essai = 0; essai < 20 && coutSemaine(sem, p) > max; essai++) {
       var pire = null;
