@@ -307,7 +307,25 @@
     { id: "s31", n: "Pilons de poulet au four, frites et salade", r: "souper", prep: 15, cuis: 40, k: true, img: "plats/s31",
       i: [["ailes_poulet", 1200], ["pdt", 1200], ["huile", 40], ["epices", 2], ["salade", 1], ["tomate", 200]],
       v: ["Fais mariner les pilons avec les épices", 5],
-      e: ["Coupe les pommes de terre en frites et mélange-les avec la moitié de l'huile.", "Enrobe le poulet d'huile et d'épices, puis enfourne le tout 40 minutes à 210 °C.", "Sers avec la salade et les tomates."] }
+      e: ["Coupe les pommes de terre en frites et mélange-les avec la moitié de l'huile.", "Enrobe le poulet d'huile et d'épices, puis enfourne le tout 40 minutes à 210 °C.", "Sers avec la salade et les tomates."] },
+
+    // Soupers rapides (25 minutes maximum)
+    { id: "s32", n: "Pâtes thon-tomate", r: "souper", prep: 5, cuis: 15, k: true,
+      i: [["pates", 400], ["thon", 250], ["tomates_conc", 800], ["ail", 2], ["huile", 20], ["fromage_rape", 60]],
+      e: ["Fais cuire les pâtes.", "Fais revenir l'ail dans l'huile, ajoute les tomates et laisse réduire 8 minutes.", "Ajoute le thon émietté, mélange avec les pâtes et sers avec le fromage."] },
+    { id: "s33", n: "Quesadillas poulet-fromage", r: "souper", prep: 10, cuis: 10, k: true,
+      i: [["wraps", 8], ["poulet_filet", 400], ["fromage_rape", 150], ["mais", 150], ["poivron", 150], ["salade", 0.5]],
+      e: ["Fais cuire le poulet en petits dés.", "Garnis la moitié de chaque wrap de poulet, maïs, poivron et fromage, puis replie.", "Fais dorer 2 minutes de chaque côté et sers avec la salade."] },
+    { id: "s34", n: "Omelette aux légumes et pain gris", r: "souper", prep: 10, cuis: 10, k: true,
+      i: [["oeuf", 8], ["courgette", 300], ["tomate", 200], ["fromage_rape", 80], ["pain_gris", 240], ["huile", 15]],
+      e: ["Fais revenir la courgette en dés dans l'huile, 5 minutes.", "Verse les œufs battus avec le fromage et ajoute les tomates.", "Fais cuire à feu doux et sers avec le pain gris."] },
+    { id: "s35", n: "Pâtes pesto et poulet", r: "souper", prep: 5, cuis: 15, k: true,
+      i: [["pates", 400], ["poulet_filet", 400], ["pesto", 120], ["tomate", 250]],
+      e: ["Fais cuire les pâtes.", "Fais dorer le poulet en dés.", "Mélange tout avec le pesto et les tomates en dés."] },
+    { id: "s36", n: "Riz sauté aux légumes et œufs", r: "souper", prep: 5, cuis: 15, k: true,
+      i: [["riz", 300], ["oeuf", 4], ["legumes_wok", 500], ["sauce_soja", 40], ["huile", 20]],
+      v: ["Fais cuire le riz (il saute mieux froid)", 15],
+      e: ["Fais sauter les légumes dans l'huile, 5 minutes.", "Ajoute le riz cuit, puis les œufs battus en remuant.", "Termine avec la sauce soja."] }
   ];
 
   // ---------- Calculs ----------
