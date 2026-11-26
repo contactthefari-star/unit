@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SHANI : économise sur tes courses</title>
-<meta name="description" content="Économise sur tes courses sans y penser. Tu mets ton budget, tu reçois les menus de la semaine pour toute la famille et ta liste Colruyt, Delhaize, Carrefour, Lidl ou Aldi.">
+<title>SHANI : fini le « on mange quoi ce soir ? »</title>
+<meta name="description" content="Petit-déj, lunch et souper de toute la semaine pour ta famille, dès 5 € par personne et par jour, avec ta liste de courses Colruyt, Delhaize, Carrefour, Lidl ou Aldi.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -67,6 +67,8 @@
 
   .hero { padding: 28px 0 72px; background: linear-gradient(135deg, #f1f7ea 0%, #ffffff 55%, #f6faf1 100%); }
   h1 .hl { color: var(--accent); }
+  .price-line { font-family: Nunito, system-ui, sans-serif; font-weight: 800; font-size: clamp(22px, 3.4vw, 30px); line-height: 1.25; margin: 14px 0 0; }
+  .price-line b { color: var(--accent); }
   .phone .cover { position: relative; border-radius: 18px; overflow: hidden; margin: 8px 0 6px; }
   .phone .cover img { width: 100%; height: 150px; object-fit: cover; display: block; }
   .phone .cover span { position: absolute; left: 10px; bottom: 10px; background: rgba(255,255,255,.94); color: var(--ink); font-weight: 800; font-size: 13px; padding: 6px 10px; border-radius: 999px; }
@@ -170,9 +172,10 @@
   <section class="hero">
     <div class="wrap grid">
       <div>
-        <span class="eyebrow">Ton budget courses tenu, sans réfléchir</span>
-        <h1>Économise sur tes <span class="hl">courses</span>. Sans y penser.</h1>
-        <p class="lead">Tu mets ton budget. Tu reçois les menus de la semaine pour toute la famille et ta liste de courses Colruyt, Delhaize, Carrefour, Lidl ou Aldi. Même avec tes recettes TikTok.</p>
+        <span class="eyebrow">Petit-déj, lunch et souper · toute la semaine</span>
+        <h1>Fini le « on mange quoi <span class="hl">ce soir</span> ? »</h1>
+        <p class="price-line">Tes plats dès <b>5 €</b> par personne et par jour.</p>
+        <p class="lead">Le matin, le midi et le soir, pour toute la famille. Tu reçois les repas de la semaine et ta liste de courses Colruyt, Delhaize, Carrefour, Lidl ou Aldi, dans ton budget.</p>
         <div class="ctas">
           <a class="btn" href="quiz">Je crée ma semaine, gratuitement</a>
         </div>
